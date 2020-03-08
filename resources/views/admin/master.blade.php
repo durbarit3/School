@@ -22,8 +22,11 @@
     <link rel="stylesheet" href="{{asset('public/admins/plugins/chartjs-bar-chart/chart.css')}}">
     <!-- donut-chart -->
     <link rel="stylesheet" href="{{asset('public/admins/plugins/donut-chart/dist/style.css')}}">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <!-- drofy image -->
+    <link rel="stylesheet" href="{{asset('public/admins/plugins')}}/dist/css/demo.css">
+    <link rel="stylesheet" href="{{asset('public/admins/plugins')}}/dist/css/dropify.min.css">
+
     <!--Custom CSS-->
     <link rel="stylesheet" href="{{asset('public/admins/css/style.css')}}">
     {{-- Select2 Css Link --}}
@@ -104,8 +107,52 @@
     <script src="{{asset('public/admins/plugins/donut-chart/dist/script.js')}}"></script>
 
     <script src="{{asset('public/admins/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+    <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>
 
+    <script>
+        $(document).ready(function(){
+            // Basic
+            $('.dropify').dropify();
+
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez',
+                    replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                    remove:  'Supprimer',
+                    error:   'Désolé, le fichier trop volumineux'
+                }
+            });
+
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+
+            drEvent.on('dropify.beforeClear', function(event, element){
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+
+            drEvent.on('dropify.afterClear', function(event, element){
+                alert('File deleted');
+            });
+
+            drEvent.on('dropify.errors', function(event, element){
+                console.log('Has Errors');
+            });
+
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function(e){
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                } else {
+                    drDestroy.init();
+                }
+            })
+        });
+    </script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>

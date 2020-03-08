@@ -150,7 +150,7 @@ button,
   display: block;
   overflow:hidden;
   padding:5px;
-  margin-bottom: 35px;
+  margin-bottom: 5px;
 }
 .last_panel:last-child{
   margin-bottom: 0px;
@@ -162,7 +162,7 @@ button,
   background-color: #353C48;
 }
 .panel_header .panel_title{
-  padding:0px;
+  padding: 0px 15px;
   margin:0px;
   color:#fff;
   text-transform: capitalize;

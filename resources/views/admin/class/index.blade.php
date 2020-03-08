@@ -33,8 +33,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>
-                                        <label class="chech_container mb-1 p-0">
-                                            Select all
+                                        <label class="chech_container mb-1 p-0">     
                                             <input type="checkbox" id="check_all">
                                             <span class="checkmark"></span>
                                         </label>
@@ -159,8 +158,6 @@
 @endsection
 
 @push('js')
-
-
 <script type="text/javascript">
 
     $(document).ready(function () {

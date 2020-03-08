@@ -137,5 +137,11 @@ Route::group(['prefix'=>'admin/hostel','namespace'=>'Admin'],function(){
     Route::get('room/type/','RoomTypeController@index')->name('room.type');
 });
 // Hostel area end
+// student ad mission
+
+Route::get(md5('admin/student/admission'), 'Admin\StudentController@create')->name('admin.student.admission');
+Route::post('admin/student/submit', 'Admin\StudentController@store');
+
+
 
 Auth::routes();
