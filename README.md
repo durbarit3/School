@@ -2,6 +2,7 @@
 ## Harision
 ** Academic Section
 ** Employee Section
+** Studend Attendance
 
 ## Qayum Hasan
 ** Inventory Section
