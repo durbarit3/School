@@ -14,3 +14,4 @@
 ** Inventory Section
 ** Library Section
 ** Homework
+** Fees Collection
