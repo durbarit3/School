@@ -6,9 +6,9 @@
 ** Academic Section
 ** Employee Section
 ** Studend Attendance
-** Exam master
 ** Attachment book
 ** Office Accounting
+** Exammination
 
 ## Qayum Hasan
 ** Inventory Section
