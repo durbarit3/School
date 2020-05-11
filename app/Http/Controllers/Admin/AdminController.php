@@ -21,6 +21,8 @@ class AdminController extends Controller
     
     public function index()
     {
+        //$query = @unserialize (file_get_contents('http://ip-api.com/php/'));
+        //dd($query);
         return view('admin.home.home');
     }
 

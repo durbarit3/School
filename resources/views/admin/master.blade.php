@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('public/admins/images/favicon.png')}}">
     <!--Page title-->
     <title>@yield('title', 'DurbarIT School Manage System')</title>
 
     <!--bootstrap-->
     <link rel="stylesheet" href="{{asset('public/admins/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/admins/plugins/timePicker/css/timepicki.css')}}">
+    <link rel="stylesheet" href="{{asset('public/admins/plugins/bootstrap_time_picker/css/bootstrap-datepicker3.css')}}">
     <!--font awesome-->
+
     <link rel="stylesheet" href="{{asset('public/admins/css/all.css')}}">
     <!--@DataTable_CSS_Link-->
     <link href="{{asset('public/admins/plugins/datatables/dataTables.min.css')}}" rel="stylesheet" type="text/css">
@@ -32,13 +36,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     {{-- Select2 Css Link --}}
     <link rel="stylesheet" href="{{asset('public/admins/plugins/select2/css/select2.min.css')}}">
+    {{--  Date Picker Css Link CDN  --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @stack('css')
 </head>
 
 <body id="page-top">
     <!-- preloader -->
     <div class="preloader">
-        <img src="{{asset('public/admins/images/preloader3.gif')}}" alt="">
+        <img height="180" width="180" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
     </div>
     <!-- wrapper -->
     <div class="wrapper">
@@ -111,6 +117,8 @@
     <script src="{{asset('public/admins/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- drofify -->
       <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>
+      {{--  Date picker Link Js CDN  --}}
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
         $(document).ready(function(){
@@ -221,10 +229,12 @@
             });
         });
     </script>
-
-
     <!-- Main js -->
     <script src="{{asset('public/admins/js/main.js')}}"></script>
+    <script src="{{asset('public/admins/plugins/timePicker/js/timepicki.js')}}"></script>
+    <script src="{{asset('public/admins/plugins/bootstrap_time_picker/js/bootstrap-datepicker.js')}}"></script>
+    
+    
     @stack('js')
 
 </body>

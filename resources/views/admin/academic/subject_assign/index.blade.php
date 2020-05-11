@@ -56,7 +56,7 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <a onclick="subjectInfo( {{ $classSection->id }} )" class="edit_assign_subject btn btn-sm btn-blue text-white" data-id="{{ $classSection->id }}" title="edit" data-toggle="modal"
+                                            <a onclick="subjectInfo( {{ $classSection->id }}, {{ $classSection->class->id }} )" class="edit_assign_subject btn btn-sm btn-blue text-white" data-id="{{ $classSection->id }}" title="edit" data-toggle="modal"
                                                 data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
                                             <a id="delete" href="{{ route('admin.academic.assign.subject.class.delete', $classSection->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
                                                     <i class="far fa-trash-alt"></i>
@@ -91,7 +91,7 @@
                     <div class="form-group row">
 
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class="col-form-label text-right">Class :</label>
+                            <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Class</b> :</label>
                             <select required class="form-control select_class" name="class_id">
                                 <option value="">Select class</option>
                                 @foreach ($formClasses as $class)
@@ -103,16 +103,16 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class=" col-form-label text-right">Select Section :</label>
+                            <label for="inputEmail3" class=" col-form-label p-0 m-0"><b>Select Section</b> :</label>
                             <select required class="form-control" id="sections" name="section_id">
-
+                                <option value="">Select section</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class=" col-form-label text-right">Select Section :</label>
+                            <label for="inputEmail3" class=" col-form-label p-0 m-0"><b>Select Sbujects</b>  (Multiple) :</label>
                             <select class="select2" multiple="multiple" name="subject_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
                                 @foreach ($formSubjects as $subject)
                                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
@@ -122,8 +122,8 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close </button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -148,6 +148,7 @@
                     @csrf
                     @method('PATCH')
                     <input type="hidden" id="class_section_id" name="class_section_id" value="">
+                    <input type="hidden" id="class_id" name="class_id" value="">
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <select required class="select2 subjects" id="subjects" multiple="multiple" name="subject_ids[]" data-placeholder="Subjects" data-dropdown-css-class="select2-purple" style="width: 100%;">
@@ -157,8 +158,8 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Update</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Update</button>
                     </div>
                 </form>
             </div>
@@ -219,9 +220,11 @@
 </script>
 
 <script>
-   function subjectInfo(classSectionId){
+   function subjectInfo(classSectionId, classId){
     var class_section_id = classSectionId;
     $('#class_section_id').val(class_section_id);
+    var class_id = classId;
+    $('#class_id').val(classId);
     $.ajax({
         url:"{{ url('admin/academic/assign/subjects/get/assigned/subject') }}"+"/"+class_section_id,
         type:'get',

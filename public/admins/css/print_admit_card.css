@@ -1,0 +1,141 @@
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.offset-1 {
+    margin-left: 8.333333%;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.col-md-6 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+.col-md-3 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
+.col-md-5 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    max-width: 41.666667%;
+}
+
+.col-md-7 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    max-width: 58.333333%;
+}
+
+.col-md-12 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.col-md-10 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    max-width: 83.333333%;
+}
+
+
+.text-center {
+    text-align: center!important;
+}
+
+
+.admin_card_demo_area{
+    position: relative;
+}
+
+.backgroud_photo_area {
+    position: absolute;
+    top: 27%;
+    bottom: 0;
+    left: 40%;
+    right: 0%;
+    z-index: 0;
+}
+
+.backgroud_photo img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 0.2;
+    height: 250px;
+    width: 250px;
+    border-radius: 194px;
+}
+
+
+.school_name {
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.school_name h3 {
+    font-size: 32px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #000000;
+    font-family: -webkit-body;
+}
+
+.right_logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.left_logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.admit_card_title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: #000000;
+    font-family: -webkit-body;
+}
+
+.admit_card_title h5 {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.student_details h6 {
+    font-size: 12px;
+    color: #000;
+    font-weight: 400;
+    font-family: sans-serif;
+}
+
+.student_details  {
+    margin-top: 15px;
+}

@@ -10,7 +10,8 @@ $(document).ready(function () {
             {extend: 'excel', title: 'ExampleFile', className: 'btn-sm'},
             {extend: 'pdf', title: 'ExampleFile', className: 'btn-sm'},
             {extend: 'print', className: 'btn-sm'}
-        ]
+        ],
+        sort:false
     });
 
 });

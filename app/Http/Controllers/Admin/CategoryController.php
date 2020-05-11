@@ -102,7 +102,6 @@ class CategoryController extends Controller
     }
 
 
-
     public function getCategoryNameByAjax($categoryId)
     {
         $category = Category::where('id', $categoryId)->first();

@@ -1,5 +1,6 @@
 @extends('admin.master')
 @push('css')
+
     <style>
     .dropify-wrapper {
         height: 79px!important;
@@ -82,7 +83,7 @@
                         <div class="col-sm-4">
                             <label for="inputEmail3" class="text-center">Date Of Birth<span
                                 style="color: red">*</span></label>
-                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                            <input type="text" class="form-control pick_date_of_birth" id="date_of_birth" name="date_of_birth" required>
                             <span class="text-danger">{{ $errors->first('date_of_birth') }}</span>
                         </div>
 
@@ -116,8 +117,8 @@
                         <div class="col-sm-4">
                             <label for="inputEmail3" class="text-center">Photo<span
                                 style="color: red">*</span></label>
-                            <input required type="file" id="photo" name="photo" id="input-file-now"
-                                class="form-control dropify" size="20" />
+                            <input required accept=".jpg, .jpeg, .png, .gif" type="file" id="photo" name="photo" id="input-file-now"
+                                class="form-control dropify" size="20" required/>
                             <span class="text-danger">{{ $errors->first('photo') }}</span>
                         </div>
                     </div>
@@ -136,14 +137,14 @@
                             <label for="inputEmail3" class="text-center">Password<span
                                     style="color: red">*</span></label>
                             <input type="password" id="password"
-                                name="password" class="form-control" required />
+                                name="password" value="{{ old('password') }}" class="form-control" required />
                             <span class="text-danger">{{ $errors->first('password') }}</span>
                         </div>
                         <div class="col-sm-4">
                             <label for="inputEmail3" class="text-center">Confirm Password<span
                                     style="color: red">*</span></label>
                             <input type="password" id="pasword_confirmation"
-                                name="password_confirmation" class="form-control" required/>
+                                name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control" required/>
                         </div>
                     </div>
 
@@ -179,7 +180,7 @@
                         <div class="col-sm-3">
                             <label for="inputEmail3" class="text-center">Joining Date <span
                                     style="color: red">*</span></label>
-                            <input type="date" name="joining_date" id="joining_date" class="form-control" required />
+                            <input type="text" value="{{ date('d-m-Y') }}" name="joining_date" id="joining_date" class="form-control date_picker" required />
                             <span class="text-danger">{{ $errors->first('joining_date') }}</span>
                         </div>
 
@@ -287,13 +288,13 @@
 @push('js')
     <script>
         @error('account_holder')
-        toastr.error("{{ $errors->first('ifsc_code') }}");
+        toastr.error("{{ $errors->first('account_holder') }}");
         @enderror
         @error('bank_branch')
-        toastr.error("{{ $errors->first('ifsc_code') }}");
+        toastr.error("{{ $errors->first('bank_branch') }}");
         @enderror
         @error('bank_address')
-        toastr.error("{{ $errors->first('ifsc_code') }}");
+        toastr.error("{{ $errors->first('bank_address') }}");
         @enderror
         @error('ifsc_code')
         toastr.error("{{ $errors->first('ifsc_code') }}");
@@ -301,5 +302,17 @@
         @error('account_no')
         toastr.error("{{ $errors->first('account_no') }}");
         @enderror
+
+        $(document).ready(function(){
+            $(".date_picker").flatpickr({
+                dateFormat: "d-m-Y",
+            });
+
+            $(".pick_date_of_birth").flatpickr({
+                dateFormat: "Y-m-d",
+                readonly:false,
+            });
+        });
     </script>
+    
 @endpush

@@ -2,7 +2,7 @@
 <header class="header_area">
     <!-- logo -->
     <div class="sidebar_logo">
-        <a href="index.html">
+        <a href="{{ route('admin.home') }}">
             <img src="{{asset('public/admins/')}}/images/logo.png" alt="" class="img-fluid logo1">
             <img src="{{asset('public/admins/')}}/images/logo_small.png" alt="" class="img-fluid logo2">
         </a>
@@ -36,7 +36,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user1.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user1.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Madelyn <span><i class="far fa-clock"></i> today</span></h6>
@@ -47,7 +47,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user2.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user2.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Melvin <span><i class="far fa-clock"></i> today</span></h6>
@@ -58,7 +58,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user3.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user3.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Olinda <span><i class="far fa-clock"></i> today</span></h6>
@@ -69,7 +69,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user1.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user1.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Johnson <span><i class="far fa-clock"></i> today</span></h6>
@@ -80,7 +80,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user3.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user3.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Madelyn <span><i class="far fa-clock"></i> today</span></h6>
@@ -91,7 +91,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user2.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user2.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Melvin <span><i class="far fa-clock"></i> today</span></h6>
@@ -102,7 +102,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user3.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user3.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Olinda <span><i class="far fa-clock"></i> today</span></h6>
@@ -113,7 +113,7 @@
                     <li>
                         <a href="#">
                             <div class="img-part">
-                                <img src="assets/images/user1.jpg" alt="" class="img-fluid">
+                                <img src="{{asset('public/admins/images/user1.jpg')}}" alt="" class="img-fluid">
                             </div>
                             <div class="text-part">
                                 <h6>Johnson <span><i class="far fa-clock"></i> today</span></h6>
@@ -222,7 +222,7 @@
         <li><a data-toggle="dropdown" href="#"><i class="far fa-user"></i></a>
             <div class="user_item dropdown-menu dropdown-menu-right">
                 <div class="admin">
-                    <a href="#" class="user_link"><img src="assets/images/admin.jpg" alt=""></a>
+                    <a href="#" class="user_link"><img src="{{asset('public/admins/images/admin.jpg')}}" alt=""></a>
                 </div>
                 <ul>
 
