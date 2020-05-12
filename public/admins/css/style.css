@@ -1825,7 +1825,7 @@ div.dataTables_wrapper div.dataTables_length label{
 ===========================================================================================================*/
 .modal.show .modal-dialog {
     -webkit-transform: translate(0,0);
-    transform: translate(0px,60px);
+    transform: translate(0px,40px);
 }
 .modal-header{
   background-color: #353C48;
@@ -1994,7 +1994,8 @@ div.dataTables_wrapper div.dataTables_length label{
 .inbox-avatar {
     padding-top: 12.5px;
     padding-bottom: 12.5px;
-    padding: 25px;
+    padding: 10px;
+    position: relative;
 }
 
 .inbox-avatar .i-check {
@@ -2036,7 +2037,7 @@ div.dataTables_wrapper div.dataTables_length label{
     color: #CDCCC8;
     text-align: right;
     position: absolute;
-    bottom:3%;
+    bottom: 18%;
     right:3%;
 }
 
@@ -2085,5 +2086,5 @@ label.chech_container {
 /* Edit modal Style */
 
 .edit_content {
-    margin-top: 10rem;
+    
 }

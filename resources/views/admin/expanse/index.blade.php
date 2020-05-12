@@ -70,7 +70,7 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>{{$expanse->amount}}</td>
-                                    <td>
+                                    <td data-id="{{$loop->index}}">
                                         @if($expanse->status==1)
                                         <a href="{{ route('admin.expanse.status.update', $expanse->id ) }}"
                                             class="btn btn-success btn-sm ">
@@ -81,8 +81,10 @@
                                             <i class="fas fa-thumbs-down"></i>
                                         </a>
                                         @endif
-                                    | <a href="#" data-id="{{ $expanse->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal" class="edit_expanse btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
+                                    | <a href="#" data-id="{{ $expanse->id }}" title="edit" class="edit_expanse btn btn-sm btn-blue text-white">
+                                        <i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i>
+                                        <img height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
+                                    </a> |
                                         <a id="delete" href="{{ route('admin.expanse.delete', $expanse->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
                                             <i class="far fa-trash-alt"></i>
@@ -115,14 +117,21 @@
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right">Invoice No :</label>
-                            <input type="text" class="form-control" value="{{$invoiceId}}" name="invoice_no" readonly>
+                            <label class="col-form-label"><b>Invoice No </b> :</label>
+                            <input type="text" class="form-control" value="SE{{$invoiceId}}" name="invoice_no" readonly>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label  class="col-form-label text-right">Header :</label>
-                            {{-- <input type="text" class="form-control" placeholder="Category name" name="name" required> --}}
+                            <label class="col-form-label"><b> Date </b>:</label>
+                            <input type="text" class="form-control add_ex_date_picker" value="{{ date('d-m-Y') }}" name="date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label  class="col-form-label"><b>Header </b>:</label>
                             <select required name="header_id" class="form-control">
                                 <option value="">Select Header</option>
                                 @foreach ($headers as $header)
@@ -134,21 +143,14 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right">Date :</label>
-                        <input type="date" class="form-control" value="{{date('Y-m-d')}}" name="date" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <label class="col-form-label text-right">Amount :</label>
+                            <label class="col-form-label"><b>Amount </b> :</label>
                             <input type="number" class="form-control" placeholder="Amount" name="amount" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right">Note (Optional) :</label>
+                            <label class="col-form-label"><b>Note</b> (Optional) :</label>
                             <textarea name="note" id="" cols="10" placeholder="Note" rows="3" class="form-control"></textarea>
                         </div>
                     </div>
@@ -165,7 +167,7 @@
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update Expanse</h5>
@@ -203,18 +205,31 @@
 
 <script>
     $(document).ready(function () {
-       $(document).on('click', '.edit_expanse', function(){
-           var expanse_id = $(this).data('id');
-           $.ajax({
-               url:"{{ url('admin/expanses/edit') }}" + "/" + expanse_id,
-               type:'get',
-               success:function(data){
-                   $('.edit_modal_body').empty();
-                   $('.edit_modal_body').append(data);
-               }
-           });
-       });
+        $('.loading').hide();
+        $(document).on('click', '.edit_expanse', function(){
+            var expanse_id = $(this).data('id');
+            var id = $(this).closest('td').data('id');
+            $('.previous-'+id).hide();
+            $('.button_loader-'+id).show();
+            $.ajax({
+                url:"{{ url('admin/expanses/edit') }}" + "/" + expanse_id,
+                type:'get',
+                success:function(data){
+                    $('.edit_modal_body').empty();
+                    $('.edit_modal_body').append(data);
+                    $('#editModal').modal('show');
+                    $('.previous-'+id).show();
+                    $('.button_loader-'+id).hide();
+                }
+            });
+        });
    });
+
+   $(document).ready(function(){
+        $(".add_ex_date_picker").flatpickr({
+            dateFormat: "d-m-Y",
+        });
+    });
 </script>
 
 @endpush

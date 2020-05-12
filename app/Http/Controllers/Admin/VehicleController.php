@@ -10,7 +10,7 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        $vehicles = Vehicle::latest()->active();
+        $vehicles = Vehicle::with('driver')->latest()->active();
         return view('admin.transport.vehicle.index', compact('vehicles'));
     }
 

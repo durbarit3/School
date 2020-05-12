@@ -210,7 +210,7 @@ a.anchor-collaps.collapsed {
 								    </div>
 								    <div class="col-sm-3">
 								    	<label for="inputEmail3" class="text-center">Father Photo</label>
-								      <input type="file" name="father_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off"/>
+								      <input type="file" name="father_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off" required/>
 								    </div>
 								  </div>
 								  <div class="form-group row">
@@ -228,7 +228,7 @@ a.anchor-collaps.collapsed {
 								    </div>
   									<div class="col-sm-3">
 								    	<label for="inputEmail3" class="text-center">Mother Photo</label>
-								      <input type="file" name="mother_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off"/>
+								      <input type="file" name="mother_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off" required/>
 								    </div>
 								  </div>
 								  <div class="form-group row">
@@ -272,7 +272,7 @@ a.anchor-collaps.collapsed {
 									    </div>
 									   	 <div class="col-sm-3">
 									    	<label for="inputEmail3" class="text-center">Guardian Photo</label>
-									       <input type="file" name="guardian_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off"/>
+									       <input type="file" name="guardian_pic" id="input-file-now" class="form-control dropify" size="20" height="10px" autocomplete="off" required/>
 									    </div>
 								  </div>
 

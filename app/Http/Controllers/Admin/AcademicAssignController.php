@@ -47,6 +47,7 @@ class AcademicAssignController extends Controller
             $assignSubject = new ClassSubject();
             $assignSubject->class_section_id = $ClassSection->id;
             $assignSubject->subject_id = $subjectId;
+            $assignSubject->class_id = $request->class_id;
             $assignSubject->save();
         }
         $ClassSection->is_assigned_subject = 1;
@@ -77,6 +78,7 @@ class AcademicAssignController extends Controller
             $assignSubject = new ClassSubject();
             $assignSubject->class_section_id = $request->class_section_id;
             $assignSubject->subject_id = $subjectId;
+            $assignSubject->class_id = $request->class_id;
             $assignSubject->save();
         }
 

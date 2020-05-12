@@ -40,9 +40,15 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Group::class);
     }
+
     public function bloodGroup()
     {
         return $this->belongsTo(BloodGroup::class);
+    }
+
+    public function vehicle()
+    {
+        return $this->hasOne(Vehicle::class,'id', 'vehicle_id');
     }
 
 }

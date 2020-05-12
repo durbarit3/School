@@ -3,7 +3,7 @@
 namespace App;
 
 
-use App\Employee;
+use App\Admin;
 use Illuminate\Database\Eloquent\Model;
 
 class ClassTeacher extends Model
@@ -13,6 +13,6 @@ class ClassTeacher extends Model
     
     public function employee()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Admin::class, 'employee_id', 'id');
     }
 }

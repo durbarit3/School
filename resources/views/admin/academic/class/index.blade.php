@@ -1,4 +1,18 @@
 @extends('admin.master')
+@push('css')
+<style>
+    .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        height: 35px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 32px;
+    }
+</style> 
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -111,15 +125,15 @@
                 <form class="form-horizontal" action="{{ route('admin.class.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Name</b> :</label>
                             <input type="text" class="form-control" placeholder="name" name="name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Section:</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Select section</b> (Multiple) :</label>
                             <select name="sectionIds[]" class="select2" multiple="multiple" id="section" data-placeholder="Sections" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
                                 <option value="">Select Sections</option>
                                 @foreach ($sections as $section)
@@ -130,8 +144,8 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>

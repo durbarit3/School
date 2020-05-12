@@ -108,28 +108,29 @@
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right">Subject Name :</label>
+                            <label class="col-form-label"><b>Subject Name</b> :</label>
                             <input type="text" class="form-control" value="{{ old('name') }}" placeholder="Subject Name" name="name" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                           <input type="radio" value="1" class="mr-1" name="type" required> <b> Theory </b>
-                           <input type="radio"  value="2" class="mr-1" name="type" required><b> Practical </b>
+                            <label class="col-form-label p-0 m-0"><b>Subject Type</b> :</label><br>
+                           <input type="radio" value="1" class="mr-1" name="type" required>  Theory &ensp;
+                           <input type="radio"  value="2" class="mr-1" name="type" required> Practical 
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right">Subject Code :</label>
+                            <label class="col-form-label"><b>Subject Code </b> :</label>
                             <input type="text" class="form-control" value="{{ old('code') }}" placeholder="Subject Code" name="code" required>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
