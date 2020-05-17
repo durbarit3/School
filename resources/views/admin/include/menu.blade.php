@@ -62,6 +62,28 @@
                     <li><a href="">Student transport report (pending)</a></li>
                 </ul>
             </li>
+             <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="menu-text">Event</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{ route('event.index.all') }}">All Event</a></li>
+                    <li><a href="{{ route('event.create') }}">Add Event</a></li>
+                
+                </ul>
+            </li>
+             <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="menu-text">Human Resorce</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{ route('admin.department.index') }}">Department</a></li>
+                    <li><a href="{{ route('admin.secdesignation.index') }}">Designation</a></li>
+                
+                </ul>
+            </li>
 
             <li class="single-nav-wrapper {{ Request::is('admin/expanses*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">

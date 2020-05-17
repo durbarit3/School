@@ -197,6 +197,22 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
     Route::get('delete/{employeeId}', 'EmployeeController@delete')->name('admin.employee.delete');
 });
 
+Route::group(['prefix' => 'admin/secdepartment', 'namespace' => 'Admin'], function () {
+    Route::get('/add', 'DepartmentController@index')->name('admin.department.index');
+    Route::post('/submit', 'DepartmentController@store')->name('admin.department.store');
+    Route::get('/active/{id}', 'DepartmentController@active');
+    Route::get('/deactive/{id}', 'DepartmentController@deactive');
+    Route::get('/delete/{id}', 'DepartmentController@delete');
+    Route::get('/edit/{categoryId}', 'DepartmentController@edit');
+    Route::post('/update', 'DepartmentController@update')->name('admin.secdepartment.update');
+ 
+}); 
+Route::group(['prefix' => 'admin/secdesignation', 'namespace' => 'Admin'], function () {
+    
+    Route::get('/add', 'DepartmentController@designationindex')->name('admin.secdesignation.index');
+   
+ 
+});
 // Hostel  area start
 Route::group(['prefix'=>'admin/hostel','namespace'=>'Admin'],function(){
 
@@ -239,6 +255,15 @@ Route::group(['prefix' => 'admin/student', 'namespace' => 'Admin'], function () 
     Route::get('/section/all/{id}', 'StudentAdmissionController@getsection');
     Route::get('/route/{id}', 'StudentAdmissionController@getbus');
     Route::get('/get/hostel/{id}','StudentAdmissionController@getroom');
+
+});
+
+Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
+
+    Route::get('/create', 'EventController@create')->name('event.create');
+    Route::post('/create/submit', 'EventController@store')->name('event.submit');
+    Route::get('/all', 'EventController@index')->name('event.index.all');
+ 
 
 });
 
