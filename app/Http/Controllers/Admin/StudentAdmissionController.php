@@ -35,7 +35,7 @@ class StudentAdmissionController extends Controller
     //create
     public function create(){
 
-    	$allClass=Classes::where('is_deleted',0)->where('status',1)->select(['id','name'])->get();
+    	$allClass=Classes::where('deleted_status', NULL)->where('status',1)->select(['id','name'])->get();
     	$gender=Gender::select(['id','name'])->get();
     	$category=Category::where('status',1)->select(['id','name'])->active();
     	$routes=Route::where('status',1)->select(['id','name'])->get();

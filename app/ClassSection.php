@@ -14,20 +14,20 @@ class ClassSection extends Model
     protected $hidden = ['created_at', 'updated_at'];
     public function section()
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(Section::class, 'section_id' ,'id');
     }
     public function class()
     {
-        return $this->belongsTo(Classes::class);
+        return $this->belongsTo(Classes::class, 'class_id', 'id');
     }
 
     public function classSubjects()
     {
-        return $this->hasMany(ClassSubject::class, 'class_section_id');
+        return $this->hasMany(ClassSubject::class);
     }
     public function classTeachers()
     {
-        return $this->hasMany(ClassTeacher::class, 'class_section_id');
+        return $this->hasMany(ClassTeacher::class);
     }
 
      public function sections()

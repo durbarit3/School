@@ -46,7 +46,7 @@
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="btn btn-blue float-right">Update</button>
+                <button type="submit" class="btn btn-sm btn-blue float-right">Update</button>
               </form>
         </div>
     </div>

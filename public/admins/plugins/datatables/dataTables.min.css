@@ -17,9 +17,9 @@ div.dataTables_wrapper div.dataTables_filter{
 	float:right;
 }
 div.dt-buttons .btn-default{
-color: #333;
-background-color: #fff;
-border-color: #e4e5e7;
+	color: #333;
+	background-color: #fff;
+	border-color: #e4e5e7;
 }
 div.dataTables_wrapper div.dataTables_paginate{
 	display:block;
@@ -68,7 +68,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination{
 }
 div.dataTables_wrapper div.dataTables_paginate ul.pagination li{
 	float:left;
-	display: inline-block;
+	display: contents;
 }
 div.dataTables_wrapper div.dataTables_paginate ul.pagination li a{
 	position: relative;
