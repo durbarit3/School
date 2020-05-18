@@ -190,6 +190,28 @@
                     <li><a href="">Student transport report (pending)</a></li>
                 </ul>
             </li>
+
+             <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="menu-text">Event</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{ route('event.index.all') }}">All Event</a></li>
+                    <li><a href="{{ route('event.create') }}">Add Event</a></li>
+                
+                </ul>
+            </li>
+             <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="menu-text">Human Resorce</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{ route('admin.department.index') }}">Department</a></li>
+                    <li><a href="{{ route('admin.secdesignation.index') }}">Designation</a></li>
+                
+
             
             <li class="single-nav-wrapper {{ Request::is('admin/incomes*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
@@ -200,6 +222,7 @@
                     <li><a class="{{ Request::is('admin/incomes/all') ? 'text_active' : '' }}" href="{{ route('admin.income.index') }}">Income</a></li>
                     <li><a class="{{ Request::is('admin/incomes/search') ? 'text_active' : '' }}" href="{{ route('admin.income.search') }}">Search income</a></li>
                     <li><a class="{{ Request::is('admin/incomes/headers') ? 'text_active' : '' }}" href="{{ route('admin.income.header.all') }}">Income header</a></li>
+
                 </ul>
             </li>
 

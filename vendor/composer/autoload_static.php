@@ -545,6 +545,11 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\ClassTimetable' => __DIR__ . '/../..' . '/app/ClassTimetable.php',
         'App\\Classes' => __DIR__ . '/../..' . '/app/Classes.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+
+        'App\\Department' => __DIR__ . '/../..' . '/app/Department.php',
+        'App\\Designation' => __DIR__ . '/../..' . '/app/Designation.php',
+        'App\\Event' => __DIR__ . '/../..' . '/app/Event.php',
+
         'App\\Contract' => __DIR__ . '/../..' . '/app/Contract.php',
         'App\\CurrentDayAttendance' => __DIR__ . '/../..' . '/app/CurrentDayAttendance.php',
         'App\\Department' => __DIR__ . '/../..' . '/app/Department.php',
@@ -555,6 +560,7 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\ExamSchedule' => __DIR__ . '/../..' . '/app/ExamSchedule.php',
         'App\\ExamTerm' => __DIR__ . '/../..' . '/app/ExamTerm.php',
         'App\\ExamType' => __DIR__ . '/../..' . '/app/ExamType.php',
+
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Expanse' => __DIR__ . '/../..' . '/app/Expanse.php',
         'App\\ExpanseHeader' => __DIR__ . '/../..' . '/app/ExpanseHeader.php',
@@ -577,6 +583,11 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Http\\Controllers\\Admin\\BankAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BankAccountController.php',
         'App\\Http\\Controllers\\Admin\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CategoryController.php',
         'App\\Http\\Controllers\\Admin\\ClassController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ClassController.php',
+
+        'App\\Http\\Controllers\\Admin\\DepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DepartmentController.php',
+        'App\\Http\\Controllers\\Admin\\EmployeeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EmployeeController.php',
+        'App\\Http\\Controllers\\Admin\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EventController.php',
+
         'App\\Http\\Controllers\\Admin\\ClassTimetableController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ClassTimetableController.php',
         'App\\Http\\Controllers\\Admin\\CurrentDayAttendanceByDateController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CurrentDayAttendanceByDateController.php',
         'App\\Http\\Controllers\\Admin\\CurrentDayAttendanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CurrentDayAttendanceController.php',
@@ -589,6 +600,7 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Http\\Controllers\\Admin\\ExamScheduleAddController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamScheduleAddController.php',
         'App\\Http\\Controllers\\Admin\\ExamScheduleCheckController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamScheduleCheckController.php',
         'App\\Http\\Controllers\\Admin\\ExamTermController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamTermController.php',
+
         'App\\Http\\Controllers\\Admin\\ExpanseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExpanseController.php',
         'App\\Http\\Controllers\\Admin\\ExpanseHeaderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExpanseHeaderController.php',
         'App\\Http\\Controllers\\Admin\\HostelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HostelController.php',
@@ -644,6 +656,8 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Route' => __DIR__ . '/../..' . '/app/Route.php',
         'App\\RouteVehicle' => __DIR__ . '/../..' . '/app/RouteVehicle.php',
         'App\\Section' => __DIR__ . '/../..' . '/app/Section.php',
+        'App\\SectionDepartment' => __DIR__ . '/../..' . '/app/SectionDepartment.php',
+        'App\\SectionDesignation' => __DIR__ . '/../..' . '/app/SectionDesignation.php',
         'App\\StockItemIndex' => __DIR__ . '/../..' . '/app/StockItemIndex.php',
         'App\\StudentAdmission' => __DIR__ . '/../..' . '/app/StudentAdmission.php',
         'App\\Subject' => __DIR__ . '/../..' . '/app/Subject.php',

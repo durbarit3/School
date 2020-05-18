@@ -21,6 +21,11 @@ return array(
     'App\\ClassTimetable' => $baseDir . '/app/ClassTimetable.php',
     'App\\Classes' => $baseDir . '/app/Classes.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+
+    'App\\Department' => $baseDir . '/app/Department.php',
+    'App\\Designation' => $baseDir . '/app/Designation.php',
+    'App\\Event' => $baseDir . '/app/Event.php',
+
     'App\\Contract' => $baseDir . '/app/Contract.php',
     'App\\CurrentDayAttendance' => $baseDir . '/app/CurrentDayAttendance.php',
     'App\\Department' => $baseDir . '/app/Department.php',
@@ -31,6 +36,7 @@ return array(
     'App\\ExamSchedule' => $baseDir . '/app/ExamSchedule.php',
     'App\\ExamTerm' => $baseDir . '/app/ExamTerm.php',
     'App\\ExamType' => $baseDir . '/app/ExamType.php',
+
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Expanse' => $baseDir . '/app/Expanse.php',
     'App\\ExpanseHeader' => $baseDir . '/app/ExpanseHeader.php',
@@ -53,6 +59,11 @@ return array(
     'App\\Http\\Controllers\\Admin\\BankAccountController' => $baseDir . '/app/Http/Controllers/Admin/BankAccountController.php',
     'App\\Http\\Controllers\\Admin\\CategoryController' => $baseDir . '/app/Http/Controllers/Admin/CategoryController.php',
     'App\\Http\\Controllers\\Admin\\ClassController' => $baseDir . '/app/Http/Controllers/Admin/ClassController.php',
+
+    'App\\Http\\Controllers\\Admin\\DepartmentController' => $baseDir . '/app/Http/Controllers/Admin/DepartmentController.php',
+    'App\\Http\\Controllers\\Admin\\EmployeeController' => $baseDir . '/app/Http/Controllers/Admin/EmployeeController.php',
+    'App\\Http\\Controllers\\Admin\\EventController' => $baseDir . '/app/Http/Controllers/Admin/EventController.php',
+
     'App\\Http\\Controllers\\Admin\\ClassTimetableController' => $baseDir . '/app/Http/Controllers/Admin/ClassTimetableController.php',
     'App\\Http\\Controllers\\Admin\\CurrentDayAttendanceByDateController' => $baseDir . '/app/Http/Controllers/Admin/CurrentDayAttendanceByDateController.php',
     'App\\Http\\Controllers\\Admin\\CurrentDayAttendanceController' => $baseDir . '/app/Http/Controllers/Admin/CurrentDayAttendanceController.php',
@@ -65,6 +76,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\ExamScheduleAddController' => $baseDir . '/app/Http/Controllers/Admin/ExamScheduleAddController.php',
     'App\\Http\\Controllers\\Admin\\ExamScheduleCheckController' => $baseDir . '/app/Http/Controllers/Admin/ExamScheduleCheckController.php',
     'App\\Http\\Controllers\\Admin\\ExamTermController' => $baseDir . '/app/Http/Controllers/Admin/ExamTermController.php',
+
     'App\\Http\\Controllers\\Admin\\ExpanseController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseController.php',
     'App\\Http\\Controllers\\Admin\\ExpanseHeaderController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseHeaderController.php',
     'App\\Http\\Controllers\\Admin\\HostelController' => $baseDir . '/app/Http/Controllers/Admin/HostelController.php',
@@ -120,6 +132,8 @@ return array(
     'App\\Route' => $baseDir . '/app/Route.php',
     'App\\RouteVehicle' => $baseDir . '/app/RouteVehicle.php',
     'App\\Section' => $baseDir . '/app/Section.php',
+    'App\\SectionDepartment' => $baseDir . '/app/SectionDepartment.php',
+    'App\\SectionDesignation' => $baseDir . '/app/SectionDesignation.php',
     'App\\StockItemIndex' => $baseDir . '/app/StockItemIndex.php',
     'App\\StudentAdmission' => $baseDir . '/app/StudentAdmission.php',
     'App\\Subject' => $baseDir . '/app/Subject.php',
