@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudentAdmission extends Model
 {
 
+    
     public function Class()
     {
         return $this->belongsTo('App\Classes','class','id');
@@ -31,6 +32,5 @@ class StudentAdmission extends Model
     {
         return $this->hasMany(PeriodAttendance::class, 'id', 'student_id');
     }
-
 
 }
