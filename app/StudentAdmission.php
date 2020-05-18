@@ -7,18 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class StudentAdmission extends Model
 {
 
-
-    public function Classes()
+    public function Class()
     {
         return $this->belongsTo('App\Classes','class','id');
     }
 
     public function Section()
     {
-        return $this->belongsTo('App\Section','section','id');
+        return $this->belongsTo(Section::class, 'section','id');
     }
 
-     public function Gender()
+    public function Gender()
     {
         return $this->belongsTo('App\Gender','gender','id');
     }
@@ -28,13 +27,9 @@ class StudentAdmission extends Model
         return $this->belongsTo('App\Category','category','id');
     }
 
-     public function getNameAttribute()
+    public function period_attendances()
     {
-        return $this->first_name.' '.$this->last_name;
-    }
-    public function thiislsfds($value='')
-    {
-        return 'test';
+        return $this->hasMany(PeriodAttendance::class, 'id', 'student_id');
     }
 
 
