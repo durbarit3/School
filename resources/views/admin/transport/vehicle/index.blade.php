@@ -40,6 +40,7 @@
                                     <th>Vehicle Model</th>
                                     <th>Year Made</th>
                                     <th>Driver</th>
+                                    <th>Driver Contract</th>
                                     <th>Sit Quantity</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -58,7 +59,8 @@
                                     <td>{{ $vehicle->vehicle_number }}</td>
                                     <td>{{ $vehicle->vehicle_model }}</td>
                                     <td>{{ $vehicle->year_made }}</td>
-                                    <td>N/A</td>
+                                    <td>{{ $vehicle->driver_id ? $vehicle->driver->adminname : 'N/A'  }}</td>
+                                    <td>{{ $vehicle->driver_id ? $vehicle->driver->phone : 'N/A'  }}</td>
                                     <td>{{ $vehicle->sit_quantity }}</td>
                                     @if($vehicle->status==1)
                                     <td class="center"><span class="btn btn-sm btn-success">Active</span></td>

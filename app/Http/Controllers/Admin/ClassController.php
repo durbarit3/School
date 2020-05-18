@@ -43,7 +43,7 @@ class ClassController extends Controller
 
     public function edit($classId)
     {
-        $class = Classes::with('classSections')->where('id', $classId)->firstOrFail();
+        $class = Classes::with('classSections')->select(['id', 'name'])->where('id', $classId)->firstOrFail();
         $sections = Section::select(['id', 'name'])->where('status', 1)->get();
         return view('admin.academic.class.ajax_view.edit_modal_view', compact('class', 'sections'));
     }
@@ -61,14 +61,27 @@ class ClassController extends Controller
         $allPreviousClassSections = ClassSection::where('class_id', $classId)->get();
 
         foreach ($allPreviousClassSections as $value) {
-            $value->delete();
+            $value->prepare_to_update = 1;
+            $value->save();
         }
 
         foreach ($request->sectionIds as $sectionId) {
-           $addClassSections = new ClassSection();
-           $addClassSections->class_id = $updateClass->id;
-           $addClassSections->section_id = $sectionId;
-           $addClassSections->save();
+           $classSection = ClassSection::where('class_id', $classId)->where('section_id', $sectionId)->first();
+           if ($classSection) {
+                $classSection->prepare_to_update = 0;
+                $classSection->save();
+           }else{
+                $updateClassSections = new ClassSection();
+                $updateClassSections->class_id = $updateClass->id;
+                $updateClassSections->section_id = $sectionId;
+                $updateClassSections->save();
+           }
+           
+        }
+        $OldClassSections = ClassSection::where('class_id', $classId)->where('prepare_to_update', 1)
+        ->select(['id'])->get();
+        foreach ($OldClassSections as $value) {
+            $value->delete();
         }
 
         $notification = array(
@@ -109,6 +122,7 @@ class ClassController extends Controller
 
     public function hardDelete($classId)
     {
+        
         Classes::where('id', $classId)->singleDelete();
         $notification = array(
             'messege' => 'Class is deleted permanently',

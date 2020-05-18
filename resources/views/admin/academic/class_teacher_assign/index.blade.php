@@ -1,14 +1,6 @@
 @extends('admin.master')
 @section('content')
 
-@push('css')
-<style>
-
-
-
-</style>
-@endpush
-
 <div class="middle_content_wrapper">
     <section class="page_content">
         <!-- panel -->
@@ -17,19 +9,19 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Assigned Subject</span>
+                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Assigned Class Teacher</span>
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
                             <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign Subject</span></a>
+                                    class="fas fa-plus"></i></span> <span>Assign Class teacher</span></a>
                         </div>
                     </div>
                 </div>
             </div>
 
-        <form action="" id="multiple_delete" method="post">
+       
                 <div class="panel_body">
                     <div class="table-responsive">
                         <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
@@ -37,7 +29,7 @@
                                 <tr class="text-left">
                                     <th>Class</th>
                                     <th>Section</th>
-                                    <th>Subjects</th>
+                                    <th>Teacher</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -45,18 +37,18 @@
                                 @foreach ($classSections as $classSection)
 
                                     <tr class="text-left">
-                                        <td>{{ $classSection->class->name }}</td>
-                                        <td>{{ $classSection->section->name }}</td>
+                                        <td>{{ $classSection['class'] }}</td>
+                                        <td>{{ $classSection['section'] }}</td>
                                         <td class="text-left">
-                                            @foreach ($classSection->classTeachers as $classTeacher)
-                                            <b>- {{ $classSubject->classTeacher->name }}</b> <br/>
+                                            @foreach ($classSection['classTeachers'] as $teacher)
+                                            <b>- {{ $teacher['name'] }}</b> <br/>
                                             @endforeach
                                         </td>
 
                                         <td class="text-center">
-                                            <a onclick="subjectInfo( {{ $classSection->id }} )" class="edit_assign_subject btn btn-sm btn-blue text-white" data-id="{{ $classSection->id }}" title="edit" data-toggle="modal"
+                                            <a onclick="subjectInfo( {{ $classSection['id'] }} )" class="edit_assigned_teacher btn btn-sm btn-blue text-white" data-id="{{ $classSection['id'] }}" title="edit" data-toggle="modal"
                                                 data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                            <a id="delete" href="{{ route('admin.academic.assign.subject.class.delete', $classSection->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <a id="delete" href="{{ route('academic.assign.class.teacher.delete', $classSection['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
                                                     <i class="far fa-trash-alt"></i>
                                             </a>
                                         </td>
@@ -67,7 +59,6 @@
                         </table>
                     </div>
                 </div>
-            </form>
         </div>
     </section>
 </div>
@@ -78,17 +69,17 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Assign Subject To Class</h4>
+                <h4 class="modal-title">Assign Teacher To Class</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-            <form class="form-horizontal" action="" method="POST">
+            <form class="form-horizontal" action="{{ route('admin.academic.assign.class.teacher.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class="col-form-label text-right">Class :</label>
+                            <label for="inputEmail3" class="col-form-label text-right"><b>Class</b> :</label>
                             <select required class="form-control select_class" name="class_id">
                                 <option value="">Select class</option>
                                 @foreach ($formClasses as $class)
@@ -100,27 +91,28 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class=" col-form-label text-right">Select Section :</label>
+                            <label for="inputEmail3" class=" col-form-label text-right"><b>Select Section</b> :</label>
                             <select required class="form-control" id="sections" name="section_id">
-
+                                <option value="">Select section</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label for="inputEmail3" class=" col-form-label text-right">Select Section :</label>
-                            <select class="select2" multiple="multiple" name="subject_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
-                                @foreach ($formSubjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                            <label for="inputEmail3" class=" col-form-label text-right"><b>Select teacher</b> :</label>
+                            <select class="select2" multiple="multiple" name="teacher_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                                <option value="">----Select Teacher----</option>
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->adminname }}</option>  
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close </button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -134,30 +126,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Assign Subject</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Assigned Class Teacher</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-            <form class="form-horizontal" action="" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-                    <input type="hidden" id="class_section_id" name="class_section_id" value="">
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <select required class="select2 subjects" id="subjects" multiple="multiple" name="subject_ids[]" data-placeholder="Subjects" data-dropdown-css-class="select2-purple" style="width: 100%;">
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Update</button>
-                    </div>
-                </form>
+            <div class="modal-body edit_modal_body">
+          
             </div>
         </div>
     </div>
@@ -171,24 +146,10 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
-        });
-    });
-
-</script>
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
        $('.select_class').on('change', function () {
             var classId = $(this).val();
             $.ajax({
-                url:"{{ url('admin/academic/assign/class/teacher/get/sections/by/') }}"+"/"+classId,
+                url:"{{ url('admin/academic/assign/class/teachers/get/sections/by/') }}"+"/"+classId,
                 type:'get',
                 dataType:'json',
                 success:function(data){
@@ -214,5 +175,23 @@
     });
 
 </script>
+
+<script>
+    $(document).ready(function () {
+       $(document).on('click', '.edit_assigned_teacher', function(){
+           var class_section_id = $(this).data('id');
+           $.ajax({
+               url:"{{ url('admin/academic/assign/class/teachers/edit') }}" + "/" + class_section_id,
+               type:'get',
+               success:function(data){
+                   $('.edit_modal_body').empty();
+                   $('.edit_modal_body').append(data);
+               }
+           });
+       });
+   });
+</script>
+
+
 
 @endpush

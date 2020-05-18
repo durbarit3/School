@@ -22,8 +22,8 @@ class CreateClassTeachersTable extends Migration
             $table->string('deleted_at')->timestamps();
             $table->string('deleted_by')->nullable();
             $table->timestamps();
-            // $table->foreign('class_section_id')->references('id')->on('class_sections')->onDelete('cascade');
-            // $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+             $table->foreign('class_section_id')->references('id')->on('class_sections')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('admins')->onDelete('cascade');
         });
     }
 

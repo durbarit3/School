@@ -38,7 +38,7 @@ class ExpanseController extends Controller
         $addExpanse->invoice_no = $request->invoice_no;
         $addExpanse->expanse_header_id = $request->header_id;
         $addExpanse->amount = $request->amount;
-        $addExpanse->date = date('d/m/Y', strtotime($request->date));
+        $addExpanse->date = $request->date;
         $addExpanse->month = date('F');
         $addExpanse->year = date('Y');
         $addExpanse->note = $request->note;
@@ -71,7 +71,7 @@ class ExpanseController extends Controller
 
         $updateExpanse->expanse_header_id = $request->header_id;
         $updateExpanse->amount = $request->amount;
-        $updateExpanse->date = date('d/m/Y', strtotime($request->date));
+        $updateExpanse->date = $request->date;
         $updateExpanse->month = date('F');
         $updateExpanse->year = date('Y');
         $updateExpanse->note = $request->note;
@@ -139,7 +139,7 @@ class ExpanseController extends Controller
     public function search(Request $request)
     {
         date_default_timezone_set('Asia/Dhaka');
-        $searchExpanses = Expanse::where('year', $request->year)->where('date', date('d/m/Y', strtotime($request->date)))->get();
+        $searchExpanses = Expanse::where('year', $request->year)->where('date', date('d-m-Y', strtotime($request->date)))->get();
 
        return view('admin.expanse.search_expanse', compact('searchExpanses'));
     }

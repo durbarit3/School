@@ -166,18 +166,12 @@
     $(document).ready(function () {
 
         $('#check_all').on('click', function (e) {
-
             if ($(this).is(':checked', true)) {
                 $(".checkbox").prop('checked', true);
-
             } else {
-
                 $(".checkbox").prop('checked', false);
-
             }
-
         });
-
     });
 
 </script>
@@ -188,14 +182,12 @@
             var categoryId = $(this).data('id');
             if (categoryId) {
                 $.ajax({
-                    url: "{{ url('admin/category/edit/') }}/" + categoryId,
+                    url: "{{ url('admin/categories/edit/') }}/" + categoryId,
                     type: "GET",
                     dataType: "json",
                     success: function (data) {
-
                         $("#name").val(data.name);
                         $("#id").val(data.id);
-
                     }
                 });
             } else {
@@ -205,5 +197,4 @@
         });
     });
 </script>
-
 @endpush

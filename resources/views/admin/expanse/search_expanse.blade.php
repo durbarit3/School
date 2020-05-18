@@ -48,59 +48,56 @@
                 <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
         </form>
         </div>
+        @if ($searchExpanses)
+            @if ($searchExpanses->count() > 0)
 
-        @if ($searchExpanses->count() > 0)
-
-        <div class="panel_body">
-            <div class="table-responsive">
-                <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
-                    <thead>
-                        <tr class="text-center">
-                            <th>
-                                <label class="chech_container mb-1 p-0">
-                                    Select all
-                                    <input type="checkbox" id="check_all">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </th>
-                            <th>Invoice No</th>
-                            <th>Date</th>
-                            <th>Month</th>
-                            <th>Year</th>
-                            <th>Expanse Head</th>
-                            <th>Note</th>
-                            <th>Status</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($searchExpanses as $expanse)
-                        <tr class="text-center">
-                            <td>
-                                <label class="chech_container mb-4">
-                                    <input type="checkbox" name="deleteId[]" class="checkbox"
-                                        value="{{$expanse->id}}">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>{{ $expanse->invoice_no }}</td>
-                            <td>{{ $expanse->date }}</td>
-                            <td>{{ $expanse->month }}</td>
-                            <td>{{ $expanse->year }}</td>
-                            <td>{{ $expanse->ExpanseHeader->name }}</td>
-                            <td>{{ $expanse->note }}</td>
-                            @if($expanse->status==1)
-                            <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
-                            @else
-                            <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
-                            @endif
-                            <td>{{$expanse->amount}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="panel_body">
+                
+                <div class="table-responsive">
+                        <div class="text-center">
+                            <h6 class="">Search results</h6>
+                            <hr>
+                        </div>
+                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Invoice No</th>
+                                <th>Date</th>
+                                <th>Month</th>
+                                <th>Year</th>
+                                <th>Expanse Head</th>
+                                <th>Note</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($searchExpanses as $expanse)
+                            <tr class="text-center">
+                                
+                                <td>{{ $expanse->invoice_no }}</td>
+                                <td>{{ $expanse->date }}</td>
+                                <td>{{ $expanse->month }}</td>
+                                <td>{{ $expanse->year }}</td>
+                                <td>{{ $expanse->ExpanseHeader->name }}</td>
+                                <td>{{ $expanse->note }}</td>
+                                @if($expanse->status==1)
+                                <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
+                                @else
+                                <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
+                                @endif
+                                <td>{{$expanse->amount}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            @else
+            <div class="text-center mt-3 text-light bg-secondary p-2">
+                <h6>No Date Found!</h6>
+            </div>
+            @endif
         @endif
     </div>
 </div>

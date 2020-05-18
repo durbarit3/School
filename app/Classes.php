@@ -4,6 +4,7 @@ namespace App;
 
 use App\ClassSection;
 use App\ClassSubject;
+use App\Admins;
 use Illuminate\Database\Eloquent\Model;
 
 class Classes extends Model
@@ -16,8 +17,16 @@ class Classes extends Model
     {
         return $this->hasMany(ClassSection::class, 'class_id');
     }
+
     public function classSubjects()
     {
-        return $this->hasMany(ClassSubject::class, 'class_id');
+        return $this->hasMany(ClassSubject::class);
     }
+
+    public function students()
+    {
+        return $this->hasMany(StudentAdmission::class, 'class_id');
+    }
+
+    
 }

@@ -105,21 +105,23 @@
                 <form class="form-horizontal" action="{{ route('admin.academic.section.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder=" Name" name="name" required>
+                       
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Name </b>:</label>
+                            <input type="text" class="form-control" placeholder="Section name" name="name" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Capacity :</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" placeholder="Capatity" name="capacity" required>
+                        
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Capacity</b> :</label>
+                            <input type="number" class="form-control" placeholder="Section capatity" name="capacity" required>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -143,22 +145,24 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group row">
-                        <label for="name" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
+                        
+                        <div class="col-sm-12">
+                            <label for="name" class="col-form-label p-0 m-0"><b> Name</b> :</label>
                             <input type="text" class="form-control" name="name" id="name" required>
                             <input type="hidden" name="id" id="id">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="capacity" class="col-sm-3 col-form-label text-right">Capacity:</label>
-                        <div class="col-sm-8">
+                        
+                        <div class="col-sm-12">
+                            <label for="capacity" class="col-form-label p-0 m-0"><b>Capacity</b> :</label>
                             <input type="text" class="form-control" name="capacity" id="capacity" required>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
