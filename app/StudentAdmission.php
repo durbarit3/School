@@ -2,24 +2,23 @@
 
 namespace App;
 
-use App\Section;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentAdmission extends Model
 {
 
 
-    public function Class()
+    public function Classes()
     {
         return $this->belongsTo('App\Classes','class','id');
     }
 
     public function Section()
     {
-        return $this->belongsTo(Section::class, 'section','id');
+        return $this->belongsTo('App\Section','section','id');
     }
 
-    public function Gender()
+     public function Gender()
     {
         return $this->belongsTo('App\Gender','gender','id');
     }
@@ -29,9 +28,14 @@ class StudentAdmission extends Model
         return $this->belongsTo('App\Category','category','id');
     }
 
-    public function period_attendances()
+     public function getNameAttribute()
     {
-        return $this->hasMany(PeriodAttendance::class, 'id', 'student_id');
+        return $this->first_name.' '.$this->last_name;
     }
+    public function thiislsfds($value='')
+    {
+        return 'test';
+    }
+
 
 }
