@@ -379,6 +379,34 @@
 
             <!-- Hostel area end -->
 
+               <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-text">Library</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.book.index')}}">Book List</a></li>
+                    <li><a href="{{route('admin.library.members')}}">Library Member</a></li>
+                    <li><a href="{{route('admin.library.staff')}}">Library Staff</a></li>
+                </ul>
+            </li>
+
+
+               <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-text">Fees Collection</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.fees.reminder')}}">Fees Reminder</a></li>
+                    <li><a href="{{route('admin.fees.type')}}">Fees Types</a></li>
+                    <li><a href="{{route('admin.fees.discount')}}">Fees Discount</a></li>
+                    <li><a href="{{route('admin.fees.group')}}">Fees Group</a></li>
+                    <li><a href="{{route('admin.fees.master')}}">Fees Master</a></li>
+                    <li><a href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
+                </ul>
+            </li>
+
 
             <!-- online user -->
             <li class="single-nav-wrapper">

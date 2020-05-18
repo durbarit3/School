@@ -40,6 +40,11 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Expanse' => $baseDir . '/app/Expanse.php',
     'App\\ExpanseHeader' => $baseDir . '/app/ExpanseHeader.php',
+    'App\\FeesDiscount' => $baseDir . '/app/FeesDiscount.php',
+    'App\\FeesGroup' => $baseDir . '/app/FeesGroup.php',
+    'App\\FeesMaster' => $baseDir . '/app/FeesMaster.php',
+    'App\\FeesReminder' => $baseDir . '/app/FeesReminder.php',
+    'App\\FeesType' => $baseDir . '/app/FeesType.php',
     'App\\Gender' => $baseDir . '/app/Gender.php',
     'App\\Group' => $baseDir . '/app/Group.php',
     'App\\Hostel' => $baseDir . '/app/Hostel.php',
@@ -79,14 +84,19 @@ return array(
 
     'App\\Http\\Controllers\\Admin\\ExpanseController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseController.php',
     'App\\Http\\Controllers\\Admin\\ExpanseHeaderController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseHeaderController.php',
+    'App\\Http\\Controllers\\Admin\\FeesCotroller' => $baseDir . '/app/Http/Controllers/Admin/FeesCotroller.php',
     'App\\Http\\Controllers\\Admin\\HostelController' => $baseDir . '/app/Http/Controllers/Admin/HostelController.php',
     'App\\Http\\Controllers\\Admin\\IncomeController' => $baseDir . '/app/Http/Controllers/Admin/IncomeController.php',
     'App\\Http\\Controllers\\Admin\\IncomeHeaderController' => $baseDir . '/app/Http/Controllers/Admin/IncomeHeaderController.php',
     'App\\Http\\Controllers\\Admin\\InventoryController' => $baseDir . '/app/Http/Controllers/Admin/InventoryController.php',
+
+    'App\\Http\\Controllers\\Admin\\LibraryController' => $baseDir . '/app/Http/Controllers/Admin/LibraryController.php',
+
     'App\\Http\\Controllers\\Admin\\MarkEntireController' => $baseDir . '/app/Http/Controllers/Admin/MarkEntireController.php',
     'App\\Http\\Controllers\\Admin\\MarkRangeController' => $baseDir . '/app/Http/Controllers/Admin/MarkRangeController.php',
     'App\\Http\\Controllers\\Admin\\PeriodAttendanceController' => $baseDir . '/app/Http/Controllers/Admin/PeriodAttendanceController.php',
     'App\\Http\\Controllers\\Admin\\PeriodAttendanceModifyController' => $baseDir . '/app/Http/Controllers/Admin/PeriodAttendanceModifyController.php',
+
     'App\\Http\\Controllers\\Admin\\RoomTypeController' => $baseDir . '/app/Http/Controllers/Admin/RoomTypeController.php',
     'App\\Http\\Controllers\\Admin\\RouteController' => $baseDir . '/app/Http/Controllers/Admin/RouteController.php',
     'App\\Http\\Controllers\\Admin\\SectionController' => $baseDir . '/app/Http/Controllers/Admin/SectionController.php',
@@ -117,9 +127,14 @@ return array(
     'App\\InventoryItem' => $baseDir . '/app/InventoryItem.php',
     'App\\Item' => $baseDir . '/app/Item.php',
     'App\\ItemSupplier' => $baseDir . '/app/ItemSupplier.php',
+
+    'App\\LibraryBook' => $baseDir . '/app/LibraryBook.php',
+    'App\\LibraryMember' => $baseDir . '/app/LibraryMember.php',
+
     'App\\MailDraft' => $baseDir . '/app/MailDraft.php',
     'App\\MarkEntires' => $baseDir . '/app/MarkEntires.php',
     'App\\MarkRange' => $baseDir . '/app/MarkRange.php',
+
     'App\\Menu' => $baseDir . '/app/Menu.php',
     'App\\PeriodAttendance' => $baseDir . '/app/PeriodAttendance.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
