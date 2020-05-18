@@ -28,11 +28,6 @@ class StudentAdmission extends Model
         return $this->belongsTo('App\Category','category','id');
     }
 
-     public function period_attendances()
-    {
-        return $this->hasMany(PeriodAttendance::class, 'id', 'student_id');
-    }
-
      public function getNameAttribute()
     {
         return $this->first_name.' '.$this->last_name;
