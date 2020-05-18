@@ -297,6 +297,115 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
 });
 
 
+
+// deleted route
+
+
+
+Route::group(['prefix'=>'admin/library','namespace'=>'Admin'],function(){
+
+    Route::group(['prefix'=>'books'],function(){
+
+        Route::get('/','LibraryController@bookList')->name('admin.book.index');
+        Route::get('/delete/{id}','LibraryController@bookDelete')->name('admin.book.delete');
+        Route::get('/status/{id}','LibraryController@bookStatus')->name('admin.book.status');
+        Route::get('/edit/{id}','LibraryController@bookEdit');
+        Route::post('/store','LibraryController@bookStore')->name('admin.library.book.store');
+        Route::post('/muli/delete','LibraryController@bookMultiDelete')->name('admin.book.multidelete');
+        Route::PATCH('/update','LibraryController@bookUpdate')->name('admin.library.book.update');
+        
+    });
+
+    Route::group(['prefix'=>'member'],function(){
+        Route::get('/','LibraryController@libraryList')->name('admin.library.members');
+        Route::post('/store','LibraryController@libraryMemberStore')->name('admin.library.members.store');
+        Route::get('/name/{id}','LibraryController@libraryMemberName');
+        Route::get('/info/{id}','LibraryController@libraryMemberInfo');
+        Route::get('/status/{id}','LibraryController@libraryMemberStatus')->name('admin.library.status');
+        Route::get('/edit/{id}','LibraryController@libraryMemberEdit');
+        Route::get('/delete/{id}','LibraryController@libraryMemberDelete')->name('admin.library.member.delete');
+        Route::post('/update','LibraryController@libraryMemberUpdate')->name('admin.library.members.update');
+        Route::post('/multi/delete','LibraryController@libraryMemberMultiDelete')->name('admin.library.member.multidelete');
+    });
+
+    Route::group(['prefix' => 'staff'],function(){
+        Route::get('/','LibraryController@libraryStaffList')->name('admin.library.staff');
+        Route::get('/edit/{id}','LibraryController@libraryStaffEdit');
+        Route::post('/store','LibraryController@libraryStaffStore')->name('admin.library.staff.store');
+        Route::patch('/update','LibraryController@libraryStaffUpdate')->name('admin.staff.update');
+        Route::get('/status/{id}','LibraryController@libraryStaffStatus')->name('admin.staff.status.update');
+        Route::get('/delete/{id}','LibraryController@libraryStaffDelete')->name('admin.staff.delete');
+        Route::post('/staff/multidelete','LibraryController@libraryStaffMultiDelete')->name('admin.staff.multidelete');
+    });
+
+});
+
+
+// fees route start from here
+
+Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
+
+    Route::get('/reminder','FeesCotroller@feesReminder')->name('admin.fees.reminder');
+    Route::get('/reminder/status/{id}','FeesCotroller@feesReminderStatus')->name('admin.fees.reminder.status.update');
+    Route::get('/reminder/edit/{id}','FeesCotroller@feesReminderEdit');
+    Route::PATCH('/reminder/update/','FeesCotroller@feesReminderUpdate')->name('admin.fees.remider.update');
+
+
+
+    // type area start
+    
+    Route::get('/type','FeesCotroller@feesType')->name('admin.fees.type');
+    Route::get('/type/edit/{id}','FeesCotroller@feesTypeEdit');
+    Route::post('/type/multi/delete','FeesCotroller@feesTypeMultidelete')->name('admin.fees.type.multi.delete');
+    Route::post('/type/store','FeesCotroller@feesTypeStore')->name('admin.fees.type.store');
+    Route::patch('/type/update','FeesCotroller@feesTypeUpdate')->name('admin.fees.type.update');
+    Route::get('/type/status/{id}','FeesCotroller@feesTypeStatus')->name('fees.type.status.update');
+    Route::get('/type/delete/{id}','FeesCotroller@feesTypeDelete')->name('admin.fees.type.delete');
+
+    // fees discount
+
+    Route::get('/discount','FeesCotroller@feesDiscount')->name('admin.fees.discount');
+    Route::get('/discount/edit/{id}','FeesCotroller@feesdiscountEdit');
+    Route::post('/discount/multi/delete','FeesCotroller@feesdiscountMultidelete')->name('admin.fees.discount.multi.delete');
+    Route::post('/discount/store','FeesCotroller@feesdiscountStore')->name('admin.fees.discount.store');
+    Route::patch('/discount/update','FeesCotroller@feesdiscountUpdate')->name('admin.fees.discount.update');
+    Route::get('/discount/status/{id}','FeesCotroller@feesdiscountStatus')->name('fees.discount.status.update');
+    Route::get('/discount/delete/{id}','FeesCotroller@feesdiscountDelete')->name('admin.fees.discount.delete');
+
+    // fees group type
+
+      Route::get('/group','FeesCotroller@feesgroup')->name('admin.fees.group');
+    Route::get('/group/edit/{id}','FeesCotroller@feesgroupEdit');
+    Route::post('/group/multi/delete','FeesCotroller@feesgroupMultidelete')->name('admin.fees.group.multi.delete');
+    Route::post('/group/store','FeesCotroller@feesgroupStore')->name('admin.fees.group.store');
+    Route::patch('/group/update','FeesCotroller@feesgroupUpdate')->name('admin.fees.group.update');
+    Route::get('/group/status/{id}','FeesCotroller@feesgroupStatus')->name('fees.group.status.update');
+    Route::get('/group/delete/{id}','FeesCotroller@feesgroupDelete')->name('admin.fees.group.delete');
+
+    // fees master 
+
+
+    Route::get('/master','FeesCotroller@feesmaster')->name('admin.fees.master');
+    Route::get('/master/edit/{id}','FeesCotroller@feesmasterEdit');
+    Route::post('/master/multi/delete','FeesCotroller@feesmasterMultidelete')->name('admin.fees.master.multi.delete');
+    Route::post('/master/store','FeesCotroller@feesmasterStore')->name('admin.fees.master.store');
+    Route::patch('/master/update','FeesCotroller@feesmasterUpdate')->name('admin.fees.master.update');
+    Route::get('/master/status/{id}','FeesCotroller@feesmasterStatus')->name('fees.master.status.update');
+    Route::get('/master/delete/{id}','FeesCotroller@feesmasterDelete')->name('admin.fees.master.delete');
+
+
+    // collect fees
+
+    Route::get('/collect','FeesCotroller@feesCollect')->name('admin.fees.collect');
+    Route::get('/collect/search/{id}','FeesCotroller@feesCollectSearch');
+    Route::post('/collect/search/','FeesCotroller@feesCollectSectionSearch')->name('admin.fees.students.collection.search');
+
+
+
+});
+
+
+
 Route::get('/online/user', 'HomeController@onlineUser')->name('online.user');
 
 

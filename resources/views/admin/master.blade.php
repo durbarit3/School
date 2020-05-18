@@ -80,6 +80,8 @@
     <script src="{{asset('public/admins/js/all.min.js')}}"></script>
     <!-- custom js -->
     <script src="{{asset('public/admins/js/custom.js')}}"></script>
+    <script src="{{asset('public/admins/js/sweetalert.js')}}"></script>
+    <script src="{{asset('public/admins/js/toster.js')}}"></script>
     <!-- metis menu -->
     <script src="https://unpkg.com/metismenu"></script>
 

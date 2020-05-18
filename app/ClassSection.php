@@ -30,5 +30,10 @@ class ClassSection extends Model
         return $this->hasMany(ClassTeacher::class, 'class_section_id');
     }
 
+     public function sections()
+    {
+        return $this->hasMany(Section::class, 'id','section_id');
+    }
+
 
 }
