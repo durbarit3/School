@@ -7,18 +7,18 @@
         <div class="row">
                     <div class="col-md-6">
                         <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Event List</span>
+                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>gallery List</span>
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
                             <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Events</span></a>
+                                    class="fas fa-plus"></i></span> <span>Add gallerys</span></a>
                         </div>
                     </div>
                 </div>
         </div>
-        <form action="{{route('room.type.multidelete')}}" method="post">
+        <form action="{{route('admin.front.gallery.multidelete')}}" method="post">
             @csrf
         <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
@@ -36,44 +36,45 @@
                                 </label>
                             </th>
                             <th>Title</th>
-                            <th>Date</th>
-                            <th>Venue </th>
-                            <th>Status </th>
+                            <th>Details</th>
+                            <th>Status</th>
                             <th>Action </th>
                         </tr>
                     </thead>
                     <tbody>
 
-                   
+                        @foreach($gallerys as $row)
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
-                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="">
+                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="{{$row->id}}">
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>dsfgdsf</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
+                            <td>{{$row->title}}</td>
+                            <td>{{$row->description}}</td>
+                    
+                            
                             <td>
-                                
-                                <a href="{{ route('room.type.status.update', 1) }}" class="btn btn-success btn-sm ">
+                                @if($row->status == 1)
+                                <a href="{{ route('admin.gallery.status', $row->id) }}" class="btn btn-success btn-sm ">
                                     <i class="fas fa-thumbs-up"></i></a>
-                                
-                                <a href="{{ route('room.type.status.update', 2 ) }}" class="btn btn-danger btn-sm">
+                                @else
+                                <a href="{{ route('admin.gallery.status', $row->id ) }}" class="btn btn-danger btn-sm">
                                     <i class="fas fa-thumbs-down"></i>
                                 </a>
+                                @endif
                                 
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
+                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a id="delete" href="{{route('admin.gallery.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
-
+                        @endforeach
                     
                        
 
@@ -94,40 +95,24 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Event</h4>
+                <h4 class="modal-title">Add gallery</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('hostel.room.type.store') }}" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.front.gallery.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Event Title" name="title" required>
+                            <input required type="text" class="form-control" placeholder="gallery Title" name="title" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Venue:</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Event Venue" name="venue" required>
-                        </div>
-                    </div>
+                
 
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event Start Date:</label>
-                        <div class="col-sm-8">
-                            <input required type="date" class="form-control" placeholder="Event Start" name="start_date" required>
-                        </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event End Date:</label>
-                        <div class="col-sm-8">
-                            <input required type="date" class="form-control" placeholder="Event End Date" name="end_date" required>
-                        </div>
-                    </div>
+                    
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
@@ -164,41 +149,26 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Event</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update gallery</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('room.type.update') }}" method="POST" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('admin.front.gallery.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="title" placeholder="Event Title" name="title" required>
+                            <input type="text" id="id" name="id">
+                            <input required type="text" class="form-control" id="title" placeholder="gallery Title" name="title" required>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Venue:</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="venue" placeholder="Event Venue" name="venue" required>
-                        </div>
-                    </div>
+                   
 
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event Start Date:</label>
-                        <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="start" placeholder="Event Start" name="start_date" required>
-                        </div>
-                    </div>
+                    
 
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event End Date:</label>
-                        <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="end" placeholder="Event End Date" name="end_date" required>
-                        </div>
-                    </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
@@ -240,16 +210,22 @@
     $(document).ready(function() {
         $('.edit_route').on('click', function() {
             var id = $(this).data('id');
+
             
             if (id) {
                 $.ajax({
-                    url: "{{ url('admin/hostel/room/type/edit/') }}/" + id,
+                    url: "{{ url('/admin/front/cms/gallery/edit/') }}/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
+                        console.log(data);
 
-                        $("#room_type").val(data.room_type);
+                        $("#title").val(data.title);
+                        $("#start_date").val(data.start_date);
+                        $("#end_date").val(data.end_date);
                         $("#description").val(data.description);
+                        $("#venue").val(data.venue);
+                        $("#media").val(data.media);
                         $("#id").val(data.id);
                     }
                 });

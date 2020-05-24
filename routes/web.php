@@ -868,6 +868,48 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
 
 });
 
+Route::group(['prefix'=>'admin/front/cms','namespace'=>'Admin'],function(){
+    Route::group(['prefix'=>'event'],function(){
+        Route::get('/delete/{id}','FrontCmsController@eventDelete')->name('admin.event.delete');
+        Route::get('/edit/{id}','FrontCmsController@eventEdit');
+        Route::get('/','FrontCmsController@eventList')->name('admin.event.list');
+        Route::get('/status/{id}','FrontCmsController@eventStatus')->name('admin.event.status');
+        Route::post('/store','FrontCmsController@eventStore')->name('admin.front.event.store');
+        Route::post('/multi/delete','FrontCmsController@eventMultiDelete')->name('admin.front.event.multidelete');
+        Route::PATCH('/update','FrontCmsController@eventUpdate')->name('admin.front.event.update');
+    });
+
+    Route::group(['prefix'=>'gallery'],function(){
+        Route::get('/delete/{id}','FrontCmsController@galleryDelete')->name('admin.gallery.delete');
+        Route::get('/edit/{id}','FrontCmsController@galleryEdit');
+        Route::get('/','FrontCmsController@galleryList')->name('admin.gallery.list');
+        Route::get('/status/{id}','FrontCmsController@galleryStatus')->name('admin.gallery.status');
+        Route::post('/store','FrontCmsController@galleryStore')->name('admin.front.gallery.store');
+        Route::post('/multi/delete','FrontCmsController@galleryMultiDelete')->name('admin.front.gallery.multidelete');
+        Route::PATCH('/update','FrontCmsController@galleryUpdate')->name('admin.front.gallery.update');
+    });
+
+     Route::group(['prefix'=>'news'],function(){
+        Route::get('/delete/{id}','FrontCmsController@newsDelete')->name('admin.news.delete');
+        Route::get('/edit/{id}','FrontCmsController@newsEdit');
+        Route::get('/','FrontCmsController@newsList')->name('admin.news.list');
+        Route::get('/status/{id}','FrontCmsController@newsStatus')->name('admin.news.status');
+        Route::post('/store','FrontCmsController@newsStore')->name('admin.front.news.store');
+        Route::post('/multi/delete','FrontCmsController@newsMultiDelete')->name('admin.front.news.multidelete');
+        Route::PATCH('/update','FrontCmsController@newsUpdate')->name('admin.front.news.update');
+    });
+
+    Route::group(['prefix'=>'page'],function(){
+        Route::get('/delete/{id}','FrontCmsController@pageDelete')->name('admin.page.delete');
+        Route::get('/edit/{id}','FrontCmsController@pageEdit');
+        Route::get('/','FrontCmsController@pageList')->name('admin.page.list');
+        Route::get('/status/{id}','FrontCmsController@pageStatus')->name('admin.page.status');
+        Route::post('/store','FrontCmsController@pageStore')->name('admin.front.page.store');
+        Route::post('/multi/delete','FrontCmsController@pageMultiDelete')->name('admin.front.page.multidelete');
+        Route::PATCH('/update','FrontCmsController@pageUpdate')->name('admin.front.page.update');
+    });
+});
+
 
 
 

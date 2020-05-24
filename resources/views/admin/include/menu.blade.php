@@ -1,4 +1,4 @@
-<!-- sidebar area  EA2027-->
+
 <style>
     .text_active {
         color: cornflowerblue!important;
@@ -407,6 +407,21 @@
                 </ul>
             </li>
 
+            <!-- front cms -->
+            <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-shuttle-van"></i></span>
+                    <span class="menu-text">Front CMS</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{ route('admin.event.list') }}">Events</a></li>
+                    <li><a href="{{ route('admin.gallery.list') }}">Gallery</a></li>
+                    <li><a href="{{ route('admin.news.list') }}">News</a></li>
+                    <li><a href="{{ route('admin.page.list') }}">Pages</a></li>
+                </ul>
+            </li>
+            <!-- end front cms -->
+
 
             <!-- online user -->
             <li class="single-nav-wrapper">
@@ -419,4 +434,4 @@
 
         </ul>
     </nav>
-</aside><!-- /sidebar Area-->
+</aside><!-- /sidebar Area

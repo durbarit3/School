@@ -18,7 +18,7 @@
                     </div>
                 </div>
         </div>
-        <form action="{{route('room.type.multidelete')}}" method="post">
+        <form action="{{route('admin.front.event.multidelete')}}" method="post">
             @csrf
         <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
@@ -44,36 +44,38 @@
                     </thead>
                     <tbody>
 
-                   
+                        @foreach($events as $row)
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
-                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="">
+                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="{{$row->id}}">
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>dsfgdsf</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
+                            <td>{{$row->title}}</td>
+                            <td>{{$row->start_date}}</td>
+                            <td>{{$row->venue}}</td>
+                            
                             <td>
-                                
-                                <a href="{{ route('room.type.status.update', 1) }}" class="btn btn-success btn-sm ">
+                                @if($row->status == 1)
+                                <a href="{{ route('admin.event.status', $row->id) }}" class="btn btn-success btn-sm ">
                                     <i class="fas fa-thumbs-up"></i></a>
-                                
-                                <a href="{{ route('room.type.status.update', 2 ) }}" class="btn btn-danger btn-sm">
+                                @else
+                                <a href="{{ route('admin.event.status', $row->id ) }}" class="btn btn-danger btn-sm">
                                     <i class="fas fa-thumbs-down"></i>
                                 </a>
+                                @endif
                                 
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
+                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a id="delete" href="{{route('admin.event.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
-
+                        @endforeach
                     
                        
 
@@ -100,7 +102,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('hostel.room.type.store') }}" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.front.event.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
@@ -170,12 +172,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('room.type.update') }}" method="POST" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('admin.front.event.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
                         <div class="col-sm-8">
+                            <input type="hidden" id="id" name="id">
                             <input required type="text" class="form-control" id="title" placeholder="Event Title" name="title" required>
                         </div>
                     </div>
@@ -189,14 +192,14 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event Start Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="start" placeholder="Event Start" name="start_date" required>
+                            <input required type="date" class="form-control" id="start_date" placeholder="Event Start" name="start_date" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event End Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="end" placeholder="Event End Date" name="end_date" required>
+                            <input required type="date" class="form-control" id="end_date" placeholder="Event End Date" name="end_date" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -240,16 +243,22 @@
     $(document).ready(function() {
         $('.edit_route').on('click', function() {
             var id = $(this).data('id');
+
             
             if (id) {
                 $.ajax({
-                    url: "{{ url('admin/hostel/room/type/edit/') }}/" + id,
+                    url: "{{ url('/admin/front/cms/event/edit/') }}/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
+                        console.log(data);
 
-                        $("#room_type").val(data.room_type);
+                        $("#title").val(data.title);
+                        $("#start_date").val(data.start_date);
+                        $("#end_date").val(data.end_date);
                         $("#description").val(data.description);
+                        $("#venue").val(data.venue);
+                        $("#media").val(data.media);
                         $("#id").val(data.id);
                     }
                 });
