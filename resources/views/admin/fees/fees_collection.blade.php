@@ -5,46 +5,55 @@
     <div class="panel">
         <div class="panel_header">
         <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Fees Collect List</span>
+                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Fees Details of <strong>hgd</strong></span>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Search Student</span></a>
-                        </div>
-                    </div>
+                   
                 </div>
         </div>
-
-       
+        
         <div class="panel_body">
        
             <div class="table-responsive">
-                <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                <table class="table table-bordered table-striped table-hover mb-2">
                     <thead>
                         <tr>
                             <th>
                                 SL
                             </th>
-                            <th>Class</th>
-                            <th>Section</th>
-                            <th>Admission No </th>
-                            <th>Student Name </th>
-                            <th>Father Name </th>
-                            <th>Date of Birth </th>
-                            <th>Phone </th>
-                            <th>Price </th>
+                            <th>Fees Type</th>
+                            <th>Fees Code</th>
+                            <th>Due Date </th>
+                            <th>Status </th>
+                            <th>Amount </th>
+                            <th>Payment ID </th>
+                            <th>Mode </th>
+                            <th>Date </th>
+                            <th>Discount </th>
+                            <th>Fine </th>
+                            <th>Paid </th>
+                            <th>Balance </th>
+                            <th>Action </th>
                         </tr>
                     </thead>
                     <tbody>
+                         @php
+                            print_r(json_decode($collections));
+                        @endphp
 
-                   @if(count($students) >0 )
+                        @foreach(json_decode($collections) as $row)
+                           
+                        @endforeach
 
-                   @foreach($students as $row)
 
+      
+
+                        
+
+
+                       
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
@@ -52,33 +61,55 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{$row->classes->name ?? ' '}}</td>
-                            <td>{{$row->section}}</td>
+                            
+                            
+                            <td>gfdfgfds</td>
+                            <td>hgdggfhd</td>
+                            <td>hfdhgf</td>
                             
                             <td>dsgfdsgfds</td>
                             <td>dsgfdsgfds</td>
                             <td>dsgfdsgfds</td>
                             <td>dsgfdsgfds</td>
+                            <td>dsgfdsgfds</td>
+                            <td>dsgfdsgfds</td>
+                            <td>dsgfdsgfds</td>
                             <td>
                                 
-                               dsafdsfdsf
+                                <a href="{{ route('room.type.status.update', 1) }}" class="btn btn-success btn-sm ">
+                                    <i class="fas fa-thumbs-up"></i></a>
+                                
+                                <a href="{{ route('room.type.status.update', 2 ) }}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-thumbs-down"></i>
+                                </a>
                                 
                             </td>
              
                             <td>
-                                | <a href="{{route('admin.fees.collection',$row ->id)}}" class="edit_route btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
+                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
-                        @endforeach
+                     
+               
+                         <tr  class="header">
+                           <td colspan="4">Header</td>
+                           <td>dsafdsaf</td>
+                        </tr>
 
-                    @endif
+                        
+
+      
+                    
                        
 
                     </tbody>
                 </table>
             </div>
         </div>
- 
+  
         <!--/ panel body -->
     </div>
     <!--/ panel -->
@@ -91,37 +122,26 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Search Students</h4>
+                <h4 class="modal-title">Add Route</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{route('admin.fees.students.collection.search')}}"  method="POST">
+                <form class="form-horizontal" action="{{ route('hostel.room.type.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
                         <div class="col-sm-8">
-                        <select class="form-control" id="std_class" name="std_class">
-                          <option selected="" disabled="">Select A Class Name</option>
-                          @foreach($classes as $row)
-                            <option value="{{$row->id}}">{{$row->name}}</option>
-                          @endforeach
-                         
-                        </select>
-                    </div>
+                            <input required type="text" class="form-control" placeholder="Room Type Name" name="room_type" required>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
-                         <div class="col-sm-8">
-                        <select class="form-control" id="section_id" name="std_section">
-                          <option selected="" disabled="">Select A Section Name</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div>
+                        <div class="col-sm-8">
+                            <textarea rows="3" class="form-control" name="description" require></textarea>
+                            
+                        </div>
                     </div>
 
                     <div class="form-group text-right">
@@ -178,23 +198,19 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#std_class').on('change', function() {
-            var id = $(this).val();
-            
+        $('.edit_route').on('click', function() {
+            var id = $(this).data('id');
             
             if (id) {
                 $.ajax({
-                    url: "{{ url('/admin/fees/collect/search/') }}/" + id,
+                    url: "{{ url('admin/hostel/room/type/edit/') }}/" + id,
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
-                    $('#section_id').empty();
-                                        $('#section_id').append(' <option value="0">--Please Select Your Section--</option>');
-                                        $.each(data,function(index,sectionobj){
-                                            $.each(sectionobj.sections,function(index,section){
-                                                 $('#section_id').append('<option value="' + section.id + '">'+section.name+'</option>');
-                                            });
-                                        });
+
+                        $("#room_type").val(data.room_type);
+                        $("#description").val(data.description);
+                        $("#id").val(data.id);
                     }
                 });
             } else {

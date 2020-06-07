@@ -50,7 +50,7 @@
                                     <td>{{$data->admission_no}}</td>
                                     <td>{{$data->roll_no}}</td>
                                     <td>{{$data->first_name}} {{$data->last_name}}</td>
-                                    <td>{{$data->Classes->name}}</td>
+                                    <td>{{$data->Classes->name ?? ''}}</td>
                                     <td>{{$data->father_name}}</td>
                                     <td>{{$data->date_of_birth}}</td>
                                     <td>{{$data->Gender->name}}</td>
