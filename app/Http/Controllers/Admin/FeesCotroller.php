@@ -13,6 +13,7 @@ use App\FeesMaster;
 use App\StudentAdmission;
 use App\Classes;
 use App\ClassSection;
+use App\FeesCollection;
 
 class FeesCotroller extends Controller
 {
@@ -85,6 +86,8 @@ class FeesCotroller extends Controller
     public function feesTypeStore(Request $request)
     {
     	FeesType::create($request->all());
+       
+
     	 $notification = array(
                 'messege' => 'FeesType Inserted Successfully!',
                 'alert-type' => 'success'
@@ -478,7 +481,7 @@ class FeesCotroller extends Controller
 
     public function feesCollect()
     {
-       return $students =StudentAdmission::with('classes','section')->active();
+       $students =StudentAdmission::with('classes','section')->active();
         $classes = Classes::active();
 
         return view('admin.fees.fees_collect',compact('students','classes'));
@@ -497,6 +500,19 @@ class FeesCotroller extends Controller
         $classes = Classes::active();
         $students =StudentAdmission::where('class',$request->std_class)->where('section',$request->std_section)->with('classes','section')->get();
         return view('admin.fees.fees_collect',compact('students','classes'));
+    }
+
+    // fees collection
+    public function feesCollection($id)
+    {
+     
+
+          $collections =FeesCollection::where('stdid',$id)->first();
+          
+         // $student = StudentAdmission::select('first_name','id')->findOrFail($id);  
+
+         return view('admin.fees.fees_collection',compact('collections'));
+
     }
 
 

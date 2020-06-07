@@ -16,6 +16,8 @@ use App\ClassSection;
 use App\BloodGroup;
 use App\Group;
 use App\Vehicle;
+use App\FeesType;
+use App\FeesCollection;
 
 use App\Section;
 use Session;
@@ -197,7 +199,35 @@ class StudentAdmissionController extends Controller
                 $data->docu_4 = $request->file('docu_4')->store('public/uploads/student/file/');
             }
 
+
+       
+
             if($data->save()){
+
+                // fees collection
+                 $feestype = FeesType::active();
+                    $products = array();
+                    foreach ($feestype as $row) {
+                        $item['fees_id']=$row->id;
+                        $item['fees_type']=$row->name;
+                        $item['fees_code']=$row->code;
+                        $item['due_date']=null; 
+                        $item['is_paid']=null; 
+                        $item['amount']=null; 
+                        $item['payment_id']=null; 
+                        $item['mode']=null; 
+                        $item['discount']=null; 
+                        $item['fine']=null; 
+                        $item['paid']=null; 
+                        array_push($products, $item);
+                    }
+                    
+
+                    FeesCollection::insert([
+                        'stdid'=>$data->id,
+                        'collection'=>json_encode($products),
+                    ]);
+
                $notification = array(
                     'messege' => 'Student Insert success',
                     'alert-type' => 'success'
