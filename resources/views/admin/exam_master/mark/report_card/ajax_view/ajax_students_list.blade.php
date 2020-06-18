@@ -1,9 +1,9 @@
 @if ($students->count() > 0)
     
-        <div class="text-left">
+        <div class="text-left mt-2">
             <h6 style="color:black; border-bottom:1px solid;"><b>Check exam report card student wise</b></h6>
         </div>
-        <div class="table_area">
+        <div class="table_area pb-2">
 
             <form id="multiple_print_from" method="post" action="{{ route('admin.exam.master.report.card.multiple.print') }}">
                 @csrf
@@ -14,7 +14,8 @@
                 </div>
                 <div class="row">
                     <div class="multiple_print_button_area py-2 ml-3 w-100">
-                        <button class="btn btn-sm btn-blue float-left" type="submit"><i class="fas fa-print"></i>&nbsp;Print selected all</button>
+                        <button class="btn btn-sm btn-blue print_generate_button float-left" type="submit"><i class="fas fa-print"></i>&nbsp;Print selected all</button>
+                        <button style="display: none;" class="btn btn-sm btn-blue print_loading_button float-left" type="submit"><i class="fas fa-print"></i>&nbsp;Print generating...</button>
                     </div>
                 </div>
                 <table id="dataTableExample1" class="table table-striped table-bordered mb-2">
@@ -36,10 +37,9 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                      
                         @foreach($students as $student)
-                            
                             <tr  class="text-center">
                                 <td width="50">
                                     <label class="chech_container mb-4 ml-1">
@@ -61,13 +61,10 @@
                                 </a>
                                 </td>                           
                             </tr>
-
                         @endforeach
-
                     </tbody>
                 </table>
-                {{-- <input type="submit" class="btn float-right create_button my-1 mr-1 btn-sm btn-blue" value="Save">
-                <input type="button" class="btn float-right loading_button my-1 mr-1 btn-sm btn-blue" value="Loading..."> --}}
+            
             </form>
         </div>
 @else

@@ -347,6 +347,7 @@ class EmployeeController extends Controller
         $genders = Gender::select(['id', 'name'])->get();
         $employee = Admin::with('group')->where('id', $employeeId)->firstOrFail();
         return view('admin.employee.show', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders', 'employee'));
+
     }
 
     public function updateBasicDetails(Request $request,$employeeId)
@@ -463,5 +464,43 @@ class EmployeeController extends Controller
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
+    }
+
+    public function socialLinksUpdate(Request $request, $employeeId)
+    {
+        $employee = Admin::where('id', $employeeId)->first();
+        $employee->facebook_link = $request->facebook_link;
+        $employee->linkedIn_link = $request->linkedIn_link;
+        $employee->twitter_link = $request->twitter_link;
+        $employee->save();
+        session()->flash('update_social_links', 'ok');
+        $notification = array(
+            'messege' => 'Employee social links is updated successfully',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function authenticationUpdate(Request $request, $employeeId)
+    {
+        
+        if (!$request->authentication_status) {
+            $this->validate($request, [
+                'password' => 'required',
+            ]);
+            $employee = Admin::where('id', $employeeId)->first();
+            $employee->password = Hash::make($request->password);
+            $employee->status = 1;
+            $employee->save();
+            return response()->json('Authentication password is updated.');
+        }else{
+            $employee = Admin::where('id', $employeeId)->first();
+            $employee->status = 0;
+            $employee->save();
+            return response()->json('Authentication permission is off.');
+        }
+
+        
+        
     }
 }

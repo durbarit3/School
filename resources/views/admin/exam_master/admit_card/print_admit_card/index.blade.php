@@ -27,6 +27,7 @@
     .modal-header {
         background-color: white;
     }
+    
     .details_content {
         width: 800px;
     }
@@ -54,7 +55,9 @@
     } 
     .mark_sheet_table{
         width: 93%!important; 
-    }      
+    }   
+    
+    {{--  .page{page-break-after:always;}  --}}
      
 </style>
     
@@ -83,24 +86,33 @@ date_default_timezone_set('Asia/Dhaka');
                             </div>
                         </div>
                     </div>
-                    <div class="panel_body">
+                    <div  class="panel_body py-2">
                         <form class="search_form mt-2" action="{{ route('admin.exam.master.admit.card.print.search.student') }}"
                             method="get">
                             @csrf
                             <div class="row">
 
                                 <div class="col-md-3">
-                                    <label class=" p-0 m-0"><b>Select Exam Name :</b> </label>
-                                    <select required name="exam_id" id="exam_id" class="form-control form-control-sm">
-                                        <option value="">Select Exam Name</option>
-                                        @foreach ($exams as $exam)
-                                            <option value="{{ $exam->id }}">{{ $exam->name }}</option>
+                                    <label class="p-0 m-0"><b>Session :</b></label>
+                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
+                                        <option value="">Select session</option>
+                                        @foreach ($sessions as $session)
+                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 
                                 <div class="col-md-3">
-                                    <label class=" p-0 m-0"><b>Select Class :</b> </label>
+                                    <label class=" p-0 m-0"><b>Exam Name :</b> </label>
+                                    <select required name="exam_id" id="exams" class="form-control form-control-sm">
+                                        <option value="">Select Exam Name</option>
+                                        
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-3">
+                                    <label class=" p-0 m-0"><b>Class :</b> </label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
@@ -110,15 +122,19 @@ date_default_timezone_set('Asia/Dhaka');
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label class=" p-0 m-0"><b>Select Section :</b> </label>
+                                    <label class=" p-0 m-0"><b>Section :</b> </label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         <option value="">Select section</option>
                                     </select>
                                 </div>
 
+
+                            </div>
+                            <div class="row">
+                                
                                 <div class="col-md-3">
-                                    <label class=" p-0 m-0"><b>Select Template :</b> </label>
+                                    <label class=" p-0 m-0"><b>Template :</b> </label>
                                     <select required name="template_id" id="template_id" class="form-control form-control-sm">
                                         <option value="">Select admit card template</option>
                                         @foreach ($templates as $template)
@@ -126,14 +142,13 @@ date_default_timezone_set('Asia/Dhaka');
                                         @endforeach
                                     </select>
                                 </div>
-
                             </div>
                             <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
                         </form>
                     </div>
 
                     <div class="loading"><h4>Loading...</h4> </div>
-                    <div class="panel_body student_list">
+                    <div class="panel_body mt-2 py-2 another_body student_list">
                                          
                     </div>
                 </div>
@@ -147,145 +162,144 @@ date_default_timezone_set('Asia/Dhaka');
 @endsection
 @push('js')
 
-<script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
+    <script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
 
-<script type="text/javascript">
-    $('.loading').hide();
-    $(document).ready(function () {
-        $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url: "{{ url('admin/exam/master/admit/card/print/get/sections/by') }}" + "/" + classId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data, function (key, val) {
-                        $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                    })
-                }
-            })
-        })
-    });
-
-</script>
-
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('.search_form').on('submit', function (e) {
-            e.preventDefault();
-            $('.student_list').empty();
-            $('.loading').show();
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var request = $(this).serialize(); 
-            //console.log(request);
-            $.ajax({
-                url: url,
-                type: method,
-                data:request,
-                success: function (data) {
-                    //console.log(data);
-                    if (!$.isEmptyObject(data)) {
-                        $('.student_list').html(data);
-                        $('.loading').hide();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select_session').on('change', function () {
+                var sessionId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/exam/master/admit/card/print/get/exams/by') }}" + "/" + sessionId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        $('#exams').empty();
+                        $('#exams').append(' <option value="">--Select exam name--</option>');
+                        $.each(data, function (key, val) {
+                            $('#exams').append(' <option value="' + val.id + '">' + val.name + '</option>');
+                        })
                     }
-                }
+                })
             })
-        })
-    });
+        });
 
-</script>
+    </script>
 
-
-<script type="text/javascript">
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $(document).ready(function () {
-        $(document).on('submit', '#admit_card_print_from', function (e) {
-            e.preventDefault();
-            $('.loading_button').show();
-            $('.create_button').hide();
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var request = $(this).serialize(); 
-            //console.log(request);
-            $.ajax({
-                url: url,
-                type: method,
-                data:request,
-                success: function (data) {
-                    console.log(data);
-                    $(data).printThis({
-                        debug: true,                   
-                        importCSS: true,                
-                        importStyle: false,             
-                        printContainer: true,           
-                        loadCSS: "{{asset('public/admins/css/print_admit_card.css')}}",      
-                        pageTitle: "Bank Deposit Invoice",                  
-                        removeInline: true,            
-                        removeInlineSelector: "body *",  
-                        printDelay: 333,                
-                        header: null,                   
-                        footer: null,
-                        base: true,                    
-                        formValues: true,              
-                        canvas: true,                  
-                        doctypeString: '...',           
-                        removeScripts: true,          
-                        copyTagClasses: true,       
-                        beforePrintEvent: null,         
-                        beforePrint: null,              
-                        afterPrint: null  
-                    });
-                }
+    <script type="text/javascript">
+        $('.loading').hide();
+        $('.another_body').hide();
+        $(document).ready(function () {
+            $('.select_class').on('change', function () {
+                var classId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/exam/master/admit/card/print/get/sections/by') }}" + "/" + classId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
+                        $.each(data, function (key, val) {
+                            $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
+                        })
+                    }
+                })
             })
-        })
-    });
+        });
 
-</script>
+    </script>
 
-<script type="text/javascript">
 
-    $(document).ready(function () {
-        $(document).on('click', '.print_button', function (e) {
-            var header = $('.print_main_header_area').html();
-            var footer = $('.print_footer_main_area').html();
+    <script type="text/javascript">
 
-            $('.print_area').printThis({
-                debug: true,                   
-                importCSS: true,                
-                importStyle: false,             
-                printContainer: true,           
-                loadCSS: "{{asset('public/admins/css/report_card_print_style.css')}}",      
-                pageTitle: "Exam schedule",                  
-                removeInline: true,            
-                removeInlineSelector: "body *",  
-                printDelay: 333,                
-                header: header,                   
-                footer: footer,
-                base: true,                    
-                formValues: true,              
-                canvas: true,                  
-                doctypeString: '...',           
-                removeScripts: true,          
-                copyTagClasses: true,       
-                beforePrintEvent: null,         
-                beforePrint: null,              
-                afterPrint: null  
-            });
-        })
-    });
+        $(document).ready(function () {
+            $('.search_form').on('submit', function (e) {
+                e.preventDefault();
+                $('.student_list').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var request = $(this).serialize(); 
+                //console.log(request);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data:request,
+                    success: function (data) {
+                        //console.log(data);
+                        if (!$.isEmptyObject(data)) {
+                            $('.student_list').html(data);
+                            $('.loading').hide(100);
+                            $('.another_body').show();
+                        }
+                    }
+                })
+            })
+        });
 
-</script>
+    </script>
+
+
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $(document).on('submit', '#admit_card_print_from', function (e) {
+                
+                e.preventDefault();
+                $('.loading_button').show();
+                $('.create_button').hide();
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var request = $(this).serialize(); 
+                
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data:request,
+                    success: function (data) {
+            
+                        if(!$.isEmptyObject(data.error)){
+                            toastr.error(data.error);
+                            $('.loading_button').hide();
+                            $('.create_button').show();
+                        }else{
+                            $(data).printThis({
+                                debug: true,                   
+                                importCSS: true,                
+                                importStyle: false,             
+                                printContainer: true,           
+                                loadCSS: "{{asset('public/admins/css/print_admit_card.css')}}",      
+                                pageTitle: "Bank Deposit Invoice",                  
+                                removeInline: true,            
+                                removeInlineSelector: "body *",  
+                                printDelay: 333,                
+                                header: null,                   
+                                footer: null,
+                                base: true,                    
+                                formValues: true,              
+                                canvas: true,                  
+                                doctypeString: '...',           
+                                removeScripts: true,          
+                                copyTagClasses: true,       
+                                beforePrintEvent: null,         
+                                beforePrint: null,              
+                                afterPrint: null  
+                            });
+                            $('.loading_button').hide();
+                            $('.create_button').show();
+                        }
+                    }
+                })
+            })
+        });
+
+    </script>
 
 @endpush

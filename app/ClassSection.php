@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClassSection extends Model
 {
     protected $guarded = [];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_status', 'deleted_by', 'deleted_at'];
     public function section()
     {
         return $this->belongsTo(Section::class, 'section_id' ,'id');

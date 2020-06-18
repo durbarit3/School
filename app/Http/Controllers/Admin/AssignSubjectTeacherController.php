@@ -46,6 +46,12 @@ class AssignSubjectTeacherController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'class_id' => 'required',
+            'section_id' => 'required',
+            'subject_id' => 'required',
+            'teacher_id' => 'required',
+        ]);
             $subjectTeacher = SubjectTeacher::where('class_id', $request->class_id)
             ->where('section_id', $request->section_id)
             ->where('subject_id', $request->subject_id)

@@ -10,7 +10,7 @@ class ClassSubject extends Model
 {
 
     protected $guarded = [];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_status', 'deleted_by', 'deleted_at', 'prepare_to_update'];
     public function section()
     {
         return $this->belongsTo(Section::class);

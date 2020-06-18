@@ -17,7 +17,8 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:sections,name'
+            'name' => 'required|unique:sections,name',
+            'capacity' => 'required',
         ]);
         $addSection = new Section();
         $addSection->name = $request->name;

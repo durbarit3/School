@@ -32,7 +32,7 @@ date_default_timezone_set('Asia/Dhaka');
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>class</label>
-                                    <select required name="class_id" class="select_class class_id form-control">
+                                    <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">--- Select Class ---</option>
                                         @foreach ($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -59,10 +59,8 @@ date_default_timezone_set('Asia/Dhaka');
                     </div>
 
 
-                    <div class="panel_body">
-                        <div class="text-left">
-                            <h6 style="color:black; border-bottom:1px solid;"><b>Today : {{ date('d-F-Y') }}</b></h6>
-                        </div>
+                    <div class="panel_body table_body mt-3">
+                        
                         <div class="loading"><h4>Loading...</h4> </div>
                         <div class="table_area">
                              
@@ -77,7 +75,8 @@ date_default_timezone_set('Asia/Dhaka');
 @endsection
 @push('js')
 <script type="text/javascript">
-    $('.loading').hide(200);
+    $('.loading').hide();
+    $('.table_body').hide();
     $('.update_loding').hide();
     $(document).ready(function () {
         $('.select_class').on('change', function () {
@@ -143,7 +142,8 @@ date_default_timezone_set('Asia/Dhaka');
 <script>
     function searchStudent(data) {
         $('.table_area').empty();
-        $('.loading').show();
+        $('.table_body').show(); 
+        $('.loading').show(100);
         var url = $(data).attr('action');
         var type = $(data).attr('method');
         var request = $(data).serialize();
@@ -155,7 +155,8 @@ date_default_timezone_set('Asia/Dhaka');
                 
                 if (!$.isEmptyObject(data)) {
                     $('.table_area').html(data); 
-                    $('.loading').hide(); 
+                    $('.loading').hide(100);
+                    
                 }
                
             }
@@ -174,6 +175,5 @@ date_default_timezone_set('Asia/Dhaka');
         );
     })
 </script>
-
 
 @endpush

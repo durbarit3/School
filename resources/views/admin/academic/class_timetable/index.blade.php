@@ -14,16 +14,6 @@
         flex-direction: column;
     }
 
-    /*
-        .day_grid:last-child {
-            border-right: 4px solid steelblue;
-        } 
-        .time_list{
-            width: 100%;
-        } */
-
-
-
     .time_list {
         font-size: 12px;
         font-weight: 600;
@@ -34,18 +24,10 @@
 
     }
 
-    .time_list:first-child {
-
-
-            {
-                {
-                -- border-left: 4px solid steelblue;
-                --
-            }
-        }
-
+    .time_list p {
+        line-height: 21px;
     }
-
+   
     .day_heading {
         height: 37px;
         padding-top: 10px;
@@ -94,7 +76,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>class</label>
-                                    <select required name="class_id" class="select_class form-control">
+                                    <select required name="class_id" class="select_class form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
                                         <option @if (isset($class_id)) {{ $class_id == $class->id ? 'SELECTED' : '' }}
@@ -104,7 +86,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label>class</label>
-                                    <select required name="section_id" id="sections" class="form-control">
+                                    <select required name="section_id" id="sections" class="form-control form-control-sm">
                                         <option value="">Select section</option>
                                         @if (isset($class_id))
                                         @php
@@ -124,8 +106,9 @@
                         </form>
                     </div>
 
-                    <div class="panel_body">
-                        @if (isset($class_id))
+                    @if (isset($class_id))
+                    <div class="panel_body mt-3">
+                        
                         <div class="timetable_list_area">
                             <div class="row">
                                 <div class="day_grid">
@@ -265,8 +248,9 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
+                       
                     </div>
+                @endif
                 </div>
             </div>
         </div>

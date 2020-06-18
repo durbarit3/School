@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exam;
 use App\Classes;
+use App\Session;
 use App\ExamHall;
 use App\ClassSection;
 use App\ClassSubject;
@@ -15,9 +16,9 @@ class ExamScheduleAddController extends Controller
 {
     public function createSection()
     {
+        $sessions = Session::active();
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        $exams = Exam::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        return view('admin.exam_master.schedule.create_schedule.create', compact('classes', 'exams'));
+        return view('admin.exam_master.schedule.create_schedule.create', compact('classes', 'sessions'));
     }
     // Ajax Methods
     public function getSectionsByClassIdByAjax($classId)
@@ -33,7 +34,7 @@ class ExamScheduleAddController extends Controller
     {
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $exam = Exam::where('id', $request->exam_id)->select('id', 'name', 'distributions')->first();
+        $exam = Exam::where('id', $request->exam_id)->select('id', 'name', 'session_id', 'distributions')->first();
         $classSection = ClassSection::select(['id'])->where('class_id', $class_id)->where('section_id', $section_id)->first();
         $subjects = ClassSubject::with(['subject'])->where('class_section_id', $classSection->id)->get();
         $halls = ExamHall::select(['id', 'hall_no'])->get();
@@ -69,6 +70,7 @@ class ExamScheduleAddController extends Controller
             $addExamSchedule->exam_hall_id = $exam_halls[$index];
             $addExamSchedule->subject_id = $subject_id;
             $addExamSchedule->exam_id = $request->exam_id;
+            $addExamSchedule->session_id = $request->session_id;
             
             $distributions = [];
             foreach (json_decode($exam->distributions) as $distribution) {
@@ -81,11 +83,8 @@ class ExamScheduleAddController extends Controller
                             'passMarks' => $reqDist[$subject_id]['pass_marks'] 
                         ]
                     ];
-
                     array_push($distributions, $singleDist);
-                }
-                
-                 
+                }   
             }
             $addExamSchedule->distributions = json_encode($distributions); 
             $addExamSchedule->save();
@@ -95,5 +94,14 @@ class ExamScheduleAddController extends Controller
         return response()->json('Exam schedule has been created or modified successfully.)');
         
     }
-    
+
+    public function getExamsBySessionId($sessionId)
+    {
+       $exams = Exam::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->where('session_id', $sessionId)->get();
+     
+       return response()->json($exams);
+       
+    }
+
+
 }

@@ -20,5 +20,10 @@ class ClassTimetable extends Model
     {
         return $this->belongsTo(Admin::class, 'teacher_id', 'id');
     }
+
+    public function class()
+    {
+        return $this->belongsTo(classes::class, 'class_id');
+    }
     
 }

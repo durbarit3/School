@@ -15,9 +15,25 @@
         padding:0px 5px!important;
         padding: 
     }
+
     .employee_photo img {
-        background: currentColor;
-        
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .employee_initial_details {
+        background-color: white;
+        height: 350px;
+        box-sizing: border-box;
+        padding: 6px 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        width: 692px;
+    }
+
+    span.text_style {
+        margin-left: 31px;
+        font-size: 14px;
+        font-weight: 700;
     }
    
 </style>
@@ -55,22 +71,36 @@
             </div>
           
             <div class="col-md-6">
-                <p class="m-1 p-0"><b><i class="fas fa-signature"></i> Name : </b><span style=" text-transform:uppercase;">{{ $employee->adminname }}</span></p>
-                <p class="m-1 p-0"><b><i class="fas fa-restroom"></i> Gender : </b>{{ $employee->gender }}</p>
-                <p class="m-1 p-0"><b><i class="fas fa-pray"></i></i> Religion : </b>{{ $employee->religion }}</p>
-                <p class="m-1 p-0"><b><i class="far fa-envelope"></i> Email : </b>{{ $employee->email }}</p>
-                <p class="m-1 p-0"><b><i class="fas fa-phone"></i> phone : </b>{{ $employee->phone }}</p>
-                <p class="m-1 p-0"><b><i class="fab fa-dyalog"></i> Designation : </b>{{ $employee->designation }}</p>
-                <p class="m-1 p-0"><b><i class="fas fa-building"></i> Department : </b>{{ $employee->group->name }}</p>
-                <p class="m-1 p-0"><b><i class="fas fa-equals"></i> Qualification : </b>{{ $employee->qualification }}</p>
-                <p class="m-1 p-0"><b><i class="fab fa-facebook-f"></i> Facebook : </b>{{ $employee->facebook_link ? $employee->facebook_link : 'N/A' }}</p>
-                <p class="m-1 p-0"><b><i class="fab fa-linkedin"></i> LinkedIn : </b>{{ $employee->linkedIn_link ? $employee->linkedIn_link : 'N/A' }}</p>
-                <p class="m-1 p-0"><b><i class="fab fa-twitter"></i> LinkedIn : </b>{{ $employee->twitter_link ? $employee->twitter_link : 'N/A' }}</p>
+                <div class="employee_initial_details">
+
+                    <p class="m-1 p-0"><b><i class="fas fa-signature"></i> Name : </b><span style=" text-transform:uppercase;">{{ $employee->adminname }}</span></p>
+                    <p class="m-1 p-0"><b><i class="fas fa-restroom"></i> Gender : </b>{{ $employee->gender }}</p>
+                    <p class="m-1 p-0"><b><i class="fas fa-pray"></i></i> Religion : </b>{{ $employee->religion }}</p>
+                    <p class="m-1 p-0"><b><i class="far fa-envelope"></i> Email : </b>{{ $employee->email }}</p>
+                    <p class="m-1 p-0"><b><i class="fas fa-phone"></i> phone : </b>{{ $employee->phone }}</p>
+                    <p class="m-1 p-0"><b><i class="fab fa-dyalog"></i> Designation : </b>{{ $employee->designation }}</p>
+                    <p class="m-1 p-0"><b><i class="fas fa-building"></i> Department : </b>{{ $employee->group->name }}</p>
+                    <p class="m-1 p-0"><b><i class="fas fa-equals"></i> Qualification : </b>{{ $employee->qualification }}</p>
+                    <p class="m-1 p-0"><b><i class="fab fa-facebook-f"></i> Facebook : </b>{{ $employee->facebook_link ? $employee->facebook_link : 'N/A' }}</p>
+                    <p class="m-1 p-0"><b><i class="fab fa-linkedin"></i> LinkedIn : </b>{{ $employee->linkedIn_link ? $employee->linkedIn_link : 'N/A' }}</p>
+                    <p class="m-1 p-0"><b><i class="fab fa-twitter"></i> LinkedIn : </b>{{ $employee->twitter_link ? $employee->twitter_link : 'N/A' }}</p>
+
+                </div>
             </div>
             <div class="col-md-2">
                 <a class="btn btn-sm btn-success float-right" href="{{ route('admin.employee.all.'.$role) }}">Back</a>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="" data-id="{{ $employee->id }}" title="Authentication" data-toggle="modal" data-target="#authenticationModal" class="btn btn-sm btn-primary float-right mb-1">
+                   {!! $employee->status == 1 ? '<i class="fas fa-lock-open"></i>' : '<i class="fas fa-lock"></i>' !!}   Authentication 
+                </a>
+            </div>
+            
+        </div>
+
         <div class="accordion" id="accordionExample">
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -335,15 +365,15 @@
                     </h2>
                 </div>
 
-                <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapseFour" class="collapse {{ Session::has('update_social_links') ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="{{ route('admin.employee.social.links.update', $employee->id) }}" method="POST">
                             @csrf
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label for="inputEmail3" class="text-center">Facebook Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
-                                        value="{{ old('facebook_link') }}" name="facebook_link" id="facebook_link"
+                                        value="{{ $employee->facebook_link }}" name="facebook_link" id="facebook_link"
                                         class="form-control" />
                                     <span class="text-danger">{{ $errors->first('facebook_link') }}</span>
                                 </div>
@@ -351,7 +381,7 @@
                                 <div class="col-sm-4">
                                     <label for="inputEmail3" class="text-center">linkedIn Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
-                                        value="{{ old('linkedIn_link') }}" name="linkedIn_link" id="linkedIn_link"
+                                        value="{{ $employee->linkedIn_link }}" name="linkedIn_link" id="linkedIn_link"
                                         class="form-control" />
                                     <span class="text-danger">{{ $errors->first('linkedIn_link') }}</span>
                                 </div>
@@ -359,7 +389,7 @@
                                 <div class="col-sm-4">
                                     <label for="inputEmail3" class="text-center">Twitter Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
-                                        value="{{ old('twitter_link') }}" name="twitter_link" id="twitter_link"
+                                        value="{{ $employee->twitter_link }}" name="twitter_link" id="twitter_link"
                                         class="form-control"  />
                                     <span class="text-danger">{{ $errors->first('twitter_link') }}</span>
                                 </div>
@@ -390,43 +420,85 @@
     </div>
 </div>
 
+<div class="modal fade" id="authenticationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content edit_content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee authentication</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body edit_modal_body">
+                <form class="employee_authentication_update_form" action="{{ route('admin.employee.authentication.update', $employee->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group ">
+                        <label for="password" class="p-0 m-0"><b>Password :</b></label>
+                            <input type="text" {{ $employee->status == 0 ? 'disabled' : ''}}  class="form-control password" name="password" placeholder="Employee authentication password">
+                            <span class="error password_error"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label class="chech_container ml-1 mb-1 p-0">
+                                    <input {{ $employee->status == 0 ? 'checked' : ''}} type="checkbox" name="authentication_status" id="authentication_check">
+                                    <span class="checkmark"></span>
+                                   <span class="text_style">Authentication permission deactive</span> 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-blue float-right">Update</button>
+
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--/middle content wrapper-->
 <!-- hostel select rooom find -->
 @endsection
 
 @push('js')
-<script>
-    @error('account_holder')
-    toastr.error("{{ $errors->first('ifsc_code') }}");
-    @enderror
-    @error('bank_branch')
-    toastr.error("{{ $errors->first('ifsc_code') }}");
-    @enderror
-    @error('bank_address')
-    toastr.error("{{ $errors->first('ifsc_code') }}");
-    @enderror
-    @error('ifsc_code')
-    toastr.error("{{ $errors->first('ifsc_code') }}");
-    @enderror
-    @error('account_no')
-    toastr.error("{{ $errors->first('account_no') }}");
-    @enderror
-</script>
+    <script>
+        @error('account_holder')
+        toastr.error("{{ $errors->first('ifsc_code') }}");
+        @enderror
+        @error('bank_branch')
+        toastr.error("{{ $errors->first('ifsc_code') }}");
+        @enderror
+        @error('bank_address')
+        toastr.error("{{ $errors->first('ifsc_code') }}");
+        @enderror
+        @error('ifsc_code')
+        toastr.error("{{ $errors->first('ifsc_code') }}");
+        @enderror
+        @error('account_no')
+        toastr.error("{{ $errors->first('account_no') }}");
+        @enderror
+    </script>
 
-<script>
-        $(document).ready(function () {
-           $(document).on('click', '.edit_bank', function(){
-               var employee_id = $(this).data('id');
-               $.ajax({
-                   url:"{{ url('admin/employees/bank/edit') }}" + "/" + employee_id,
-                   type:'get',
-                   success:function(data){
-                       $('.edit_modal_body').empty();
-                       $('.edit_modal_body').append(data);
-                   }
-               });
-           });
-       });
+    
+
+    <script>
+            $(document).ready(function () {
+            $(document).on('click', '.edit_bank', function(){
+                var employee_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/employees/bank/edit') }}" + "/" + employee_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                    }
+                });
+            });
+        });
     </script>
 
     <script>
@@ -441,5 +513,72 @@
                 readonly:false,
             });
         });
+
     </script>
+    
+    
+
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '.employee_authentication_update_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                        $('.error').html('');
+                        $('.employee_authentication_update_form')[0].reset();
+                        $('#authenticationModal').modal('hide');
+                        toastr.success(data);
+                        setInterval(function(){
+                            window.location = "{{ url()->current() }}";
+                        }, 700);
+                        
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.password){
+                            $('.password_error').html(err.responseJSON.errors.password[0]);
+                            $('.password').addClass('is-invalid');
+                        }else{
+                            $('.password_error').html('');
+                            $('.password').removeClass('is-invalid');
+                        }
+                        
+                    }
+                });
+            });
+        });
+
+    </script> 
+
+    <script>
+
+        $(document).ready(function(){
+           $('.chech_container').on('click', function(){
+                if($('#authentication_check').is(':checked', true)){
+                    $('#authentication_check').prop('checked', false);
+                    $('.password').prop('disabled', false);
+                }else{
+                    $('#authentication_check').prop('checked', true);
+                    $('.password').prop('disabled', true);
+                }
+           });
+        });
+
+    </script>
+
+    
 @endpush

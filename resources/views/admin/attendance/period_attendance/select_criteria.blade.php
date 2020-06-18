@@ -30,8 +30,20 @@ date_default_timezone_set('Asia/Dhaka');
                             method="get">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4">
-                                    <label>class</label>
+
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0"><b>Session :</b></label>
+                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
+                                        <option value="">--- Select session ---</option>
+                                        @foreach ($sessions as $session)
+                                            <option @if (isset($session_id)) {{ $session_id == $session->id ? 'SELECTED' : '' }}
+                                                @endif value="{{ $session->id }}">{{ $session->session_year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0"><b> class :</b></label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
@@ -40,8 +52,9 @@ date_default_timezone_set('Asia/Dhaka');
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <label>Section</label>
+
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0"><b> Section :</b></label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         <option value="">Select section</option>
@@ -60,8 +73,8 @@ date_default_timezone_set('Asia/Dhaka');
                                     <small class="text-danger is_subjects"> </small>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label>Subject</label>
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0"><b> Subject :</b></label>
                                     <select required name="subject_id" id="subjects" class="form-control form-control-sm">
                                         <option value="">Select subject</option>
                                         @if (isset($class_section_id))
@@ -84,12 +97,14 @@ date_default_timezone_set('Asia/Dhaka');
                         </form>
                     </div>
 
+                    @if (isset($class_id))
 
-                    <div class="panel_body">
+                    <div class="panel_body mt-2">
+
                         <div class="text-left">
                             <h6 style="color:black; border-bottom:1px solid;"><b>Today : {{ date('d-F-Y') }}</b></h6>
                         </div>
-                        @if (isset($class_id))
+                        
                         @php
                             $periodAttendance = App\PeriodAttendance::where('class_id', $class_id)
                             ->where('section_id', $section_id)
@@ -100,7 +115,7 @@ date_default_timezone_set('Asia/Dhaka');
                             ->first();
                         @endphp
                             @if ($students->count() > 0)
-        
+
                                 @if (!$periodAttendance)
                                 <div class="table-responsive table_area">
 
@@ -134,7 +149,7 @@ date_default_timezone_set('Asia/Dhaka');
                                                     <td>{{ $student->first_name.' '.$student->last_name }}</td>
                                                     <td>{{ $student->Class->name }}</td>
                                                     <td>
-                                                        <img height="40" width="40"
+                                                        <img loading="lazy" height="40" width="40"
                                                             src="{{ asset('public/uploads/student/'.$student->student_photo) }}">
                                                     </td>
                                                     <td>
@@ -174,13 +189,13 @@ date_default_timezone_set('Asia/Dhaka');
                                     </form>
                                 </div>
                                 @else
-                                    <span class="alert alert-danger d-block">Today period attendance has already been taken of this class section of this subject</span>
+                                    <span class="alert alert-primary d-block">Today period attendance has already been taken of this class section of this subject. You can edit this form period attendance by date section</span>
                                 @endif
                             @else
                                 <span class="alert alert-danger d-block">Student is not available in this class of this section.</span>
                             @endif    
-                        @endif
                     </div>
+                    @endif    
                 </div>
             </div>
         </div>

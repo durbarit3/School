@@ -31,7 +31,8 @@
         border: 1px solid lightgray;
         padding: 4px 9px;
         margin-bottom: 2px;
-        background: #353c48;
+       /* background: #353c48; */
+       background: #181b27;
     }
 
    
@@ -90,7 +91,7 @@
                             <div class="col-md-6 text-right">
                                 <div class="panel_title">
                                     <a href="{{ route('admin.class.timetable.search') }}"
-                                        class="btn btn-sm btn-success"><i class="fas fa-plus"></i></span>
+                                        class="btn btn-sm btn-success"></span>
                                         <span>Back</span></a>
                                 </div>
                             </div>
@@ -102,7 +103,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>class</label>
-                                    <select required name="class_id" class="select_class form-control">
+                                    <select required name="class_id" class="select_class form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
                                         <option @if (isset($class_id)) {{ $class_id == $class->id ? 'SELECTED' : '' }}
@@ -112,7 +113,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label>class</label>
-                                    <select required name="section_id" id="sections" class="form-control">
+                                    <select required name="section_id" id="sections" class="form-control form-control-sm">
                                         <option value="">Select section</option>
                                         @if (isset($class_id))
                                         @php
@@ -131,9 +132,9 @@
                             <button type="submit" class="btn btn-sm btn-blue search_button float-right mt-2">Search</button>
                         </form>
                     </div>
-
-                    <div class="panel_body day_tab_area">
-                        @if (isset($class_id) && isset($section_id))
+                    @if (isset($class_id) && isset($section_id))
+                    <div class="panel_body day_tab_area mt-3">
+                        
                         <div class="tab_lists">
                             <div class="row">
                                 <div class="col-md-10">
@@ -179,8 +180,9 @@
                                 <button class="btn btn-sm btn-blue float-right" type="submit">Save <span class="button_day">Monday</span> Timebable</button>
                             </form>
                         </div>
-                        @endif
+                        
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

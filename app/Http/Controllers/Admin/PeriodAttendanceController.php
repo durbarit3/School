@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\Session;
 use App\ClassSection;
 use App\ClassSubject;
 use App\PeriodAttendance;
@@ -18,22 +19,24 @@ class PeriodAttendanceController extends Controller
         $class_id = $request->class_id;
         $section_id = $request->section_id;
         $subject_id = $request->subject_id;
-        
+        $session_id = $request->session_id;
         $class_section_id = '';
-    
         if (isset($class_id) && $section_id) {
             $classSection = ClassSection::where('class_id', $class_id)->where('section_id', $section_id)->first();
             $class_section_id = $classSection->id;
         }
         
         $classes = Classes::select(['id', 'name'])->get();
+        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->get(['id', 'session_year']);
         $students = StudentAdmission::with(['Class'])
-        ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo'])
-        ->where('class', $class_id)
-        ->where('section', $section_id)
-        ->get();
+            ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo'])
+            ->where('class', $class_id)
+            ->where('section', $section_id)
+            ->where('session_id', $session_id)
+            ->get();
 
-        return view('admin.attendance.period_attendance.select_criteria', compact('class_id', 'section_id', 'students', 'classes', 'class_section_id', 'subject_id'));
+        return view('admin.attendance.period_attendance.select_criteria', compact('class_id', 'section_id', 'students', 'classes', 'class_section_id', 'subject_id', 'session_id', 'sessions'));
+
     }
 
     public function store(Request $request)

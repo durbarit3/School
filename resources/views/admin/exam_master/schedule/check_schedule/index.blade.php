@@ -24,9 +24,7 @@
         color: white;
     }
 
-    .modal-header {
-        background-color: #353C48;
-    }
+    
     .details_content {
         width: 800px;
     }
@@ -81,23 +79,34 @@ date_default_timezone_set('Asia/Dhaka');
                             </div>
                         </div>
                     </div>
-                    <div class="panel_body">
-                        <form class="search_form" action="{{ route('admin.exam.master.schedule.search.class.section.wise') }}"
+                    <div class="panel_body pb-2">
+                        <form class="search_form " action="{{ route('admin.exam.master.schedule.search.class.section.wise') }}"
                             method="get">
                             @csrf
                             <div class="row">
-                                <div class="col-md-6">
-                                    <label>Select Class</label>
+
+                                <div class="col-md-4">
+                                    <label class="m-0"> Session</label>
+                                    <select required name="session_id" class="form-control form-control-sm m-0">
+                                        <option value="">Select session</option>
+                                        @foreach ($sessions as $session)
+                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <label class="m-0"> Class</label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
-                                        <option value="">Select class</option>
+                                        <option value="">Select slass</option>
                                         @foreach ($classes as $class)
                                             <option value="{{ $class->id }}">{{ $class->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label>Select Section</label>
+                                <div class="col-md-4">
+                                    <label class="m-0">Select Section</label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         <option value="">Select section</option>
@@ -110,9 +119,8 @@ date_default_timezone_set('Asia/Dhaka');
                     </div>
 
                     <div class="loading"><h4>Loading...</h4> </div>
-                    <div class="panel_body exam_list">
+                    <div class="panel_body mt-2 pt-2 exam_list">
                         
-                       
                     </div>
                 </div>
             </div>
@@ -166,10 +174,12 @@ date_default_timezone_set('Asia/Dhaka');
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.exam_list').hide();
         $('.search_form').on('submit', function (e) {
             e.preventDefault();
+            $('.exam_list').hide();
             $('.exam_list').empty();
-            $('.loading').show();
+            $('.loading').show(100);
             var url = $(this).attr('action');
             var method = $(this).attr('method');
             var request = $(this).serialize(); 
@@ -182,7 +192,8 @@ date_default_timezone_set('Asia/Dhaka');
                     //console.log(data);
                     if (!$.isEmptyObject(data)) {
                         $('.exam_list').html(data);
-                        $('.loading').hide();
+                        $('.loading').hide(100);
+                        $('.exam_list').show();
                     }
                 }
             })

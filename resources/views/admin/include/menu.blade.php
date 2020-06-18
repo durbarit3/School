@@ -41,7 +41,6 @@
                     <span class="menu-text">Categories</span>
                 </a>
             </li>
-
             <li class="single-nav-wrapper {{ Request::is('admin/academic*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-school"></i></span>
@@ -50,19 +49,23 @@
                 <ul class="dashboard-menu">
                     <li>
 
+                        <a class="{{ Request::is('admin/academic/session') ? 'text_active' : '' }}" href="{{ route('admin.academic.session.index') }}"> Session</a>
                         <a class="{{ Request::is('admin/academic/class') ? 'text_active' : '' }}" href="{{ route('admin.class.index') }}"> Class</a>
                         <a class="{{ Request::is('admin/academic/section') ? 'text_active' : '' }}" href="{{ route('admin.academic.section.index') }}"> Section </a>
                         <a class="{{ Request::is('admin/academic/subject') ? 'text_active' : '' }}" href="{{ route('admin.academic.subject.index') }}"> Subject </a>
                     </li>
                     <li>
-                        <a href="{{ route('academic.assign.class.teacher.index') }}"> Asign class teacher</a>
+                        <a class="{{ Request::is('admin/academic/assign/class/teachers') ? 'text_active' : '' }}" href="{{ route('academic.assign.class.teacher.index') }}"> Asign class teacher</a>
                     </li>
                     <li>
                         <a class="{{ Request::is('admin/academic/assign/subjects') ? 'text_active' : '' }}" href="{{ route('admin.academic.assign.all.assigned.subject') }}"> Asign subject to class</a>
-                        <a href="{{ route('academic.assign.subject.teacher.index') }}"> Asign Teacher to Subject</a>
+                        <a class="{{ Request::is('admin/academic/assign/subject/teachers') ? 'text_active' : '' }}"  href="{{ route('academic.assign.subject.teacher.index') }}"> Asign Teacher to Subject</a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.class.timetable.search') }}"> Class Timetable </a>
+                        <a class="{{ Request::is('admin/academic/class/timetable*') ? 'text_active' : '' }}"  href="{{ route('admin.class.timetable.search') }}"> Class Timetable </a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/academic/teacher/timetable') ? 'text_active' : '' }}"  href="{{ route('admin.academic.teacher.timetable.index') }}"> Teacher Timetable </a>
                     </li>
 
                 </ul>
@@ -149,34 +152,52 @@
                 </ul>
             </li>
             
-            <li class="single-nav-wrapper {{ Request::is('admin/attendance*') ? 'mm-active' : '' }}">
-                <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"> <i class="fas fa-hand-paper"></i></span>
-                    <span class="menu-text">Attendance</span>
-                </a>
-                <ul class="dashboard-menu">
-                    <li>
-                        <a class="{{ Request::is('admin/attendance/current/day') ? 'text_active' : '' }}"
-                            href="{{ route('admin.attendance.current.day.attendance.select.criteria') }}">Attendance</a>
-                    </li>
-                    <li>
-                        <a style="font-size:12.5px"
-                            class="{{ Request::is('admin/attendance/current/day/by/date') ? 'text_active' : '' }}"
-                            href="{{ route('admin.attendance.current.day.by.date.attendance.select.criteria') }}">Attendance By Date</a>
-                    </li>
-                    <li>
-                        <a class="{{ Request::is('admin/attendance/period') ? 'text_active' : '' }}"
-                            href="{{ route('admin.attendance.period.attendance.search') }}">Period Attendance
-                        </a>
-                    </li>
-                    <li>
-                        <a class="{{ Request::is('admin/attendance/period/by/date/search*') ? 'text_active' : '' }}"
-                            href="{{ route('admin.attendance.period.by.date.attendance.search') }}">period attendance By Date</a>
-                    </li>
+            @if ($generalSettings->current_day_attendance == 1 OR $generalSettings->period_attendance == 1 OR $generalSettings->exam_attendance == 1)
+                <li class="single-nav-wrapper {{ Request::is('admin/attendance*') ? 'mm-active' : '' }}">
+                    <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                        <span class="left-icon"> <i class="fas fa-hand-paper"></i></span>
+                        <span class="menu-text">Attendance</span>
+                    </a>
 
-                </ul>
-            </li>
+                    <ul class="dashboard-menu">
 
+                        @if ($generalSettings->current_day_attendance == 1)
+                            <li>
+                                <a class="{{ Request::is('admin/attendance/current/day') ? 'text_active' : '' }}"
+                                    href="{{ route('admin.attendance.current.day.attendance.select.criteria') }}">Attendance</a>
+                            </li>
+                            <li>
+                                <a style="font-size:12.5px"
+                                    class="{{ Request::is('admin/attendance/current/day/by/date') ? 'text_active' : '' }}"
+                                    href="{{ route('admin.attendance.current.day.by.date.attendance.select.criteria') }}">Attendance By Date</a>
+                            </li>
+                        @endif
+
+                        @if ($generalSettings->period_attendance == 1)
+                            <li>
+                                <a class="{{ Request::is('admin/attendance/period') ? 'text_active' : '' }}"
+                                    href="{{ route('admin.attendance.period.attendance.search') }}">Period Attendance
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a class="{{ Request::is('admin/attendance/period/by/date/search*') ? 'text_active' : '' }}"
+                                    href="{{ route('admin.attendance.period.by.date.attendance.search') }}">period attendance By Date</a>
+                            </li>
+                        @endif
+                        @if ($generalSettings->exam_attendance == 1)
+                            <li>
+                                <a class="{{ Request::is('admin/attendance/exam/attendance') ? 'text_active' : '' }}" href="{{ route('admin.attendance.exam.attendance.index') }}">Exam attendance</a>
+                            </li>
+                        
+                            <li>
+                                <a class="{{ Request::is('admin/attendance/exam/attendance/modify') ? 'text_active' : '' }}" href="{{ route('admin.attendance.exam.attendance.modify.index') }}">Exam attendance Modify</a>
+                            </li>
+                        @endif
+
+                    </ul>
+                </li>
+            @endif
             <li class="single-nav-wrapper {{ Request::is('admin/transport*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-shuttle-van"></i></span>
@@ -193,7 +214,7 @@
 
              <li class="single-nav-wrapper">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="left-icon"><i class="far fa-calendar-alt"></i></span>
                     <span class="menu-text">Event</span>
                 </a>
                 <ul class="dashboard-menu">
@@ -202,16 +223,26 @@
                 
                 </ul>
             </li>
-             <li class="single-nav-wrapper">
+
+             <li class="single-nav-wrapper {{ Request::is('admin/human_resource*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-table"></i></span>
                     <span class="menu-text">Human Resorce</span>
                 </a>
                 <ul class="dashboard-menu">
                     <li><a href="{{ route('admin.department.index') }}">Department</a></li>
-                    <li><a href="{{ route('admin.secdesignation.index') }}">Designation</a></li>
-                
 
+                    <li><a href="{{ route('admin.secdesignation.index') }}">Designation</a></li>
+
+                    <li><a class="{{ Request::is('admin/human_resource/employee/attendance*') ? 'text_active' : '' }}" href="{{ route('admin.hr.employee.attendance.index') }}">Employee attendance</a></li>
+
+                    <li><a class="{{ Request::is('admin/human_resource/employee/salary*') ? 'text_active' : '' }}" href="{{ route('admin.hr.employee.salary.index') }}">Employee salary</a></li>
+
+                    <li><a class="{{ Request::is('admin/human_resource/leave/apply*') ? 'text_active' : '' }}" href="{{ route('admin.hr.leave.apply.index') }}">Leave apply</a></li>
+
+                    <li><a class="{{ Request::is('admin/human_resource/leave/type*') ? 'text_active' : '' }}" href="{{ route('admin.hr.leave.type.index') }}">Leave type</a></li>
+                </ul>
+            </li>
             
             <li class="single-nav-wrapper {{ Request::is('admin/incomes*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
@@ -323,7 +354,7 @@
 
             <li class="single-nav-wrapper {{ Request::is('admin/communication*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="left-icon"><i class="far fa-comments"></i></span>
                     <span class="menu-text">Communication</span>
                 </a>
                 <ul class="dashboard-menu">
@@ -331,15 +362,7 @@
                     <li><a class="" href="">Message Via Sms</a></li>
                 </ul>
             </li>
-            <li class="single-nav-wrapper">
-                <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
-                    <span class="menu-text">Setting</span>
-                </a>
-                <ul class="dashboard-menu">
-                    <li><a href="{{route('admin.menu.setting')}}">Menus</a></li>
-                </ul>
-            </li>
+            
             <!-- Menus area end from here -->
 
 
@@ -392,7 +415,7 @@
             </li>
 
 
-               <li class="single-nav-wrapper">
+            <li class="single-nav-wrapper">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-text">Fees Collection</span>
@@ -407,6 +430,34 @@
                 </ul>
             </li>
 
+            <li class="single-nav-wrapper {{ Request::is('admin/reports*') ? 'mm-active' : '' }}">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-file-invoice"></i></span>
+                    <span class="menu-text">Reports</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li>
+                        <a class="{{ Request::is('admin/reports/student_report*') ? 'text_active' : '' }}" href="{{ route('admin.reports.student.report.index') }}">Student Report</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/reports/finance_report*') ? 'text_active' : '' }}" href="{{ route('admin.reports.finance.report.index') }}">Finance Report</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/reports/attendance_report*') ? 'text_active' : '' }}" href="{{ route('admin.reports.attendance.report.index') }}">Attendance Report</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="single-nav-wrapper {{ Request::is('admin/settings*') ? 'mm-active' : '' }}">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-text">Setting</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.menu.setting')}}">Menus</a></li>
+                    <li><a class="{{ Request::is('admin/settings/general') ? 'text_active' : '' }}" href="{{route('admin.settings.general.index')}}">General settings</a></li>
+                </ul>
+            </li>
 
             <!-- online user -->
             <li class="single-nav-wrapper">

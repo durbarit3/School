@@ -51,6 +51,21 @@ Route::group(['prefix' => 'admin/categories', 'namespace' => 'Admin', 'middlewar
 });
 
 Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware' => 'auth:admin'], function () {
+    Route::group(['prefix' => 'session'], function () {
+        Route::get('/', 'SessionYearController@index')->name('admin.academic.session.index');
+        Route::post('store', 'SessionYearController@store')->name('admin.academic.session.store');
+
+        Route::post('update/{sessionId}', 'SessionYearController@update')->name('admin.academic.session.update');
+
+        Route::get('status/change/{sessionId}', 'SessionYearController@changeStatus')->name('admin.academic.session.status.update');
+
+        Route::get('delete/{sessionId}', 'SessionYearController@delete')->name('admin.academic.session.delete');
+
+        // Ajax Route
+        Route::get('edit/{sessionId}', 'SessionYearController@edit');
+
+    });
+    
     Route::group(['prefix' => 'class'], function () {
         Route::get('/', 'ClassController@index')->name('admin.class.index');
         Route::post('store', 'ClassController@store')->name('admin.class.store');
@@ -139,6 +154,14 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::get('get/more/timetable/list/{classId}/{sectionId}', 'ClassTimetableController@getTimetableMoreListByAjax');
     });
 
+    Route::group(['prefix' => 'teacher/timetable'], function () {
+        Route::get('/', 'TeacherTimeController@index')->name('admin.academic.teacher.timetable.index');
+        Route::get('search', 'TeacherTimeController@search')->name('admin.academic.teacher.timetable.search');
+ 
+        // Ajax route
+      
+    });
+
 });
 
 
@@ -182,6 +205,30 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         route::post('update', 'CurrentDayAttendanceByDateController@update')->name('admin.attendance.current.day.by.date.attendance.update');
         Route::get('get/sections/by/{classId}', 'CurrentDayAttendanceByDateController@getSectionsByClassId');
         Route::get('get/subjects/by/{classId}/{sectionId}','CurrentDayAttendanceByDateController@getSubjectsByClassIdAndSectionId');
+    });
+    
+    Route::group(['prefix' => 'exam/attendance'], function() {
+        route::get('/', 'ExamAttendanceController@index')->name('admin.attendance.exam.attendance.index');
+
+        // Ajax Routes
+        route::get('day/get/sections/by/{classId}', 'ExamAttendanceController@getSectionsByClassId');
+
+        route::get('get/subjects/by/class/section/id/{classId}/{sectionId}', 'ExamAttendanceController@getSubjectsByClassSectionId');
+        route::get('get/exams/by/{sessionId}', 'ExamAttendanceController@getExamsByAjax');
+        route::get('search', 'ExamAttendanceController@search')->name('admin.attendance.exam.attendance.search');
+        route::post('store', 'ExamAttendanceController@store')->name('admin.attendance.exam.attendance.store');
+    });
+    
+    Route::group(['prefix' => 'exam/attendance/modify'], function() {
+        route::get('/', 'ExamAttendanceModifyController@index')->name('admin.attendance.exam.attendance.modify.index');
+
+        // Ajax Routes
+        route::get('day/get/sections/by/{classId}', 'ExamAttendanceModifyController@getSectionsByClassId');
+        route::get('get/exams/by/{sessionId}', 'ExamAttendanceModifyController@getExamsByAjax');
+        route::get('get/subjects/by/class/section/id/{classId}/{sectionId}', 'ExamAttendanceModifyController@getSubjectsByClassSectionId');
+
+        route::get('search', 'ExamAttendanceModifyController@search')->name('admin.attendance.exam.attendance.modify.search');
+        route::post('modify', 'ExamAttendanceModifyController@modify')->name('admin.attendance.exam.attendance.modify');
     });
     
 });
@@ -243,6 +290,7 @@ Route::group(['prefix' => 'admin/exam/master', 'namespace' => 'Admin', 'middlewa
             Route::post('store', 'ExamScheduleAddController@store')->name('admin.exam.master.schedule.store');
 
             //Ajax Route
+            Route::get('get/exams/by/{session}', 'ExamScheduleAddController@getExamsBySessionId');
             Route::get('get/sections/by/{classId}', 'ExamScheduleAddController@getSectionsByClassIdByAjax');
             Route::get('search', 'ExamScheduleAddController@search')->name('admin.exam.master.schedule.search.class.section.wise.subjects');
         });
@@ -282,7 +330,9 @@ Route::group(['prefix' => 'admin/exam/master', 'namespace' => 'Admin', 'middlewa
             Route::get('/', 'MarkEntireController@index')->name('admin.exam.master.mark.entire.index');
             
             // Ajax Route
+            
             Route::get('get/sections/by/{classId}', 'MarkEntireController@getSectionsByAjax');
+            Route::get('/get/exams/by/{sessionId}', 'MarkEntireController@getExamsByAjax');
             Route::get('get/subjects/by/{classId}/{sectionId}', 'MarkEntireController@getSubjectsByAjax');
             Route::get('search', 'MarkEntireController@search')->name('admin.exam.master.mark.entire.search.class.section.wise.subjects');
             Route::post('store', 'MarkEntireController@store')->name('admin.exam.master.mark.entire.store');
@@ -293,6 +343,7 @@ Route::group(['prefix' => 'admin/exam/master', 'namespace' => 'Admin', 'middlewa
             
             // Ajax Route
             Route::get('get/sections/by/{classId}', 'ExamReportCardController@getSectionsByAjax');
+            Route::get('get/exams/by/{sessionId}', 'ExamReportCardController@getExamsByAjax');
 
             Route::get('search', 'ExamReportCardController@search')->name('admin.exam.master.report.card.search.student.class.section.wise');
 
@@ -327,6 +378,7 @@ Route::group(['prefix' => 'admin/exam/master', 'namespace' => 'Admin', 'middlewa
 
             // Ajax Routes
             Route::get('get/sections/by/{classId}','ExamAdmitCardGenerateController@getSectionByClass'); 
+            Route::get('get/exams/by/{sessionId}', 'ExamAdmitCardGenerateController@getExamsByAjax');
             Route::get('search/student','ExamAdmitCardGenerateController@searchStudent')->name('admin.exam.master.admit.card.print.search.student'); 
             Route::post('print/action','ExamAdmitCardGenerateController@printAction')->name('admin.exam.master.print.admit.card.action');
 
@@ -504,6 +556,8 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
         Route::get('/edit/{departmentId}', 'DepartmentController@getDepartmentNameByAjax');
     });
 
+    
+
     Route::get('admins', 'EmployeeController@index')->name('admin.employee.all.admins');
     Route::get('teachers', 'EmployeeController@teachers')->name('admin.employee.all.teacher');
     Route::get('librarians', 'EmployeeController@librarians')->name('admin.employee.all.librarian');
@@ -514,12 +568,20 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
     Route::get('create', 'EmployeeController@create')->name('admin.employee.create');
     Route::post('store', 'EmployeeController@store')->name('admin.employee.store');
     Route::get('edit/{employeeId}', 'EmployeeController@edit')->name('admin.employee.edit');
-    Route::post('update/basic/details/{employeeId}', 'EmployeeController@updateBasicDetails')->name('admin.employee.update.basic.details');
-    Route::post('update/academic/details/{employeeId}', 'EmployeeController@updateAcademicDetails')->name('admin.employee.update.academic.details');
-    Route::get('change/status/{employeeId}', 'EmployeeController@changeStatus')->name('admin.employee.status.update');
-    Route::get('delete/{employeeId}', 'EmployeeController@delete')->name('admin.employee.delete');
-    Route::patch('bank/update/{employeeId}', 'EmployeeController@bankUpdate')->name('admin.employee.bank.update');
 
+    Route::post('update/basic/details/{employeeId}', 'EmployeeController@updateBasicDetails')->name('admin.employee.update.basic.details');
+
+    Route::post('update/academic/details/{employeeId}', 'EmployeeController@updateAcademicDetails')->name('admin.employee.update.academic.details');
+
+    Route::get('change/status/{employeeId}', 'EmployeeController@changeStatus')->name('admin.employee.status.update');
+
+    Route::get('delete/{employeeId}', 'EmployeeController@delete')->name('admin.employee.delete');
+
+    Route::patch('bank/update/{employeeId}', 'EmployeeController@bankUpdate')->name('admin.employee.bank.update');
+    
+    Route::post('social/links/update/{employeeId}', 'EmployeeController@socialLinksUpdate')->name('admin.employee.social.links.update');
+
+    Route::post('authentication/{employeeId}', 'EmployeeController@authenticationUpdate')->name('admin.employee.authentication.update');
     // Ajax Route
     Route::get('bank/edit/{employeeId}', 'EmployeeController@editBank');
 });
@@ -538,10 +600,8 @@ Route::group(['prefix' => 'admin/secdepartment', 'namespace' => 'Admin'], functi
 Route::group(['prefix' => 'admin/secdesignation', 'namespace' => 'Admin'], function () {
     
     Route::get('/add', 'DepartmentController@designationindex')->name('admin.secdesignation.index');
-   
- 
+    
 });
-
 
 Route::group(['prefix' => 'admin/office/accounts', 'namespace' => 'Admin', 'middleware' => 'auth:admin'], function() {
     
@@ -568,7 +628,6 @@ Route::group(['prefix' => 'admin/office/accounts', 'namespace' => 'Admin', 'midd
         //Ajax Route
         
         Route::get('edit/{accountId}', 'BankAccountController@edit');
-        
         
     });
 
@@ -613,8 +672,6 @@ Route::group(['prefix' => 'admin/office/accounts', 'namespace' => 'Admin', 'midd
         
         Route::get('edit/{voucherHeaderId}', 'AccountVoucherHeaderController@edit');
         
-        
-        
     });
     
 });
@@ -651,7 +708,6 @@ Route::group(['prefix' => 'admin/communication', 'namespace' => 'Admin', 'middle
 // Communication routes End
 
 
-
 // Hostel  area start
 Route::group(['prefix'=>'admin/hostel','namespace'=>'Admin'],function(){
 
@@ -684,6 +740,7 @@ Route::group(['prefix'=>'admin/hostel','namespace'=>'Admin'],function(){
 });
 // Hostel area end
 
+// Student routes group
 Route::group(['prefix' => 'admin/student', 'namespace' => 'Admin'], function () {
 
     Route::get('/create', 'StudentAdmissionController@create')->name('student.create');
@@ -696,7 +753,9 @@ Route::group(['prefix' => 'admin/student', 'namespace' => 'Admin'], function () 
     Route::get('/get/hostel/{id}','StudentAdmissionController@getroom');
 
 });
+// Student routes group End
 
+// Event routes group
 Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
 
     Route::get('/create', 'EventController@create')->name('event.create');
@@ -705,6 +764,71 @@ Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
  
 
 });
+// Event routes group End
+
+
+// Human Resource routes group
+    
+    Route::group(['prefix' => 'admin/human_resource', 'namespace' => 'Admin', 'middleware' => 'auth:admin'], function() {
+        
+        
+        Route::group(['prefix' => 'employee/attendance'], function() {
+            
+            Route::get('/', 'EmployeeAttendanceController@index')->name('admin.hr.employee.attendance.index');
+            
+            Route::get('search', 'EmployeeAttendanceController@search')->name('admin.hr.employee.attendance.search');
+
+            Route::post('store', 'EmployeeAttendanceController@store')->name('admin.hr.employee.attendance.store');
+
+            Route::post('update', 'EmployeeAttendanceController@update')->name('admin.hr.employee.attendance.update');
+
+        });
+        
+        Route::group(['prefix' => 'employee/salary'], function() {
+            
+            Route::get('/', 'EmployeeSalaryController@index')->name('admin.hr.employee.salary.index');
+            
+            Route::get('search', 'EmployeeSalaryController@search')->name('admin.hr.employee.salary.search');
+            
+            Route::get('generate/view/{employeeId}/{month}/{year}', 'EmployeeSalaryController@generateView')->name('admin.hr.employee.salary.generate.view');
+            
+            Route::post('generate/{employeeId}', 'EmployeeSalaryController@salaryGenerate')->name('admin.hr.employee.salary.generate');
+            
+            Route::get('salary/pay/view/{employeeId}/{month}/{year}', 'EmployeeSalaryController@salaryPayView')->name('admin.hr.employee.salary.pay.view');
+
+            Route::post('salary/pay/{employeeId}', 'EmployeeSalaryController@salaryPay')->name('admin.hr.employee.salary.pay');
+            
+            Route::get('salary/pay/slip/{employeeId}/{month}/{year}', 'EmployeeSalaryController@salaryPaySlip')->name('admin.hr.employee.salary.pay.slip');
+
+        });
+        
+        Route::group(['prefix' => 'leave/type'], function () {
+            Route::get('/', 'LeaveTypeController@index')->name('admin.hr.leave.type.index');
+            Route::post('store', 'LeaveTypeController@store')->name('admin.hr.leave.type.store');
+    
+            Route::patch('update', 'LeaveTypeController@update')->name('admin.hr.leave.type.update');
+    
+            Route::get('status/change/{leaveTypeId}', 'LeaveTypeController@changeStatus')->name('admin.hr.leave.type.status.update');
+    
+            Route::get('delete/{leaveTypeId}', 'LeaveTypeController@delete')->name('admin.hr.leave.type.delete');
+          
+            // Ajax Route
+            Route::get('edit/{leaveTypeId}', 'LeaveTypeController@edit')->name('admin.hr.leave.type.edit');
+    
+        });
+        
+        Route::group(['prefix' => 'leave/apply'], function () {
+            Route::get('/', 'LeaveApplyController@index')->name('admin.hr.leave.apply.index');
+            Route::post('store', 'LeaveApplyController@store')->name('admin.hr.leave.apply.store');
+    
+          
+            // Ajax Route
+            Route::get('details/{leaveApplyId}', 'LeaveApplyController@details')->name('admin.hr.leave.apply.details');
+        });
+
+    });
+    
+// Human Resource routes group End
 
 // Inventory area start
 Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
@@ -746,7 +870,6 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
         Route::get('/delete/{id}','InventoryController@supplierDelete')->name('inventory.supplier.delete');
         Route::post('/multi/delete','InventoryController@supplierMultiDelete')->name('admin.inventory.supplier.multidelete');
 
-
     });
 
     Route::group(['prefix'=>'item/stock'],function(){
@@ -759,12 +882,6 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
     });
 
 });
-
-
-
-
-
-
 
 Route::group(['prefix'=>'admin/library','namespace'=>'Admin'],function(){
 
@@ -814,8 +931,6 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
     Route::get('/reminder/edit/{id}','FeesCotroller@feesReminderEdit');
     Route::PATCH('/reminder/update/','FeesCotroller@feesReminderUpdate')->name('admin.fees.remider.update');
 
-
-
     // type area start
     
     Route::get('/type','FeesCotroller@feesType')->name('admin.fees.type');
@@ -838,7 +953,7 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
 
     // fees group type
 
-      Route::get('/group','FeesCotroller@feesgroup')->name('admin.fees.group');
+    Route::get('/group','FeesCotroller@feesgroup')->name('admin.fees.group');
     Route::get('/group/edit/{id}','FeesCotroller@feesgroupEdit');
     Route::post('/group/multi/delete','FeesCotroller@feesgroupMultidelete')->name('admin.fees.group.multi.delete');
     Route::post('/group/store','FeesCotroller@feesgroupStore')->name('admin.fees.group.store');
@@ -848,7 +963,6 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
 
     // fees master 
 
-
     Route::get('/master','FeesCotroller@feesmaster')->name('admin.fees.master');
     Route::get('/master/edit/{id}','FeesCotroller@feesmasterEdit');
     Route::post('/master/multi/delete','FeesCotroller@feesmasterMultidelete')->name('admin.fees.master.multi.delete');
@@ -857,21 +971,85 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
     Route::get('/master/status/{id}','FeesCotroller@feesmasterStatus')->name('fees.master.status.update');
     Route::get('/master/delete/{id}','FeesCotroller@feesmasterDelete')->name('admin.fees.master.delete');
 
-
     // collect fees
 
     Route::get('/collect','FeesCotroller@feesCollect')->name('admin.fees.collect');
     Route::get('/collect/search/{id}','FeesCotroller@feesCollectSearch');
     Route::post('/collect/search/','FeesCotroller@feesCollectSectionSearch')->name('admin.fees.students.collection.search');
 
-
-
 });
 
+Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' => 'auth:admin'], function() {
+    
+    Route::group(['prefix' => 'student_report'], function() {
 
+        Route::get('/', 'StudentReportController@index')->name('admin.reports.student.report.index');
+        
+        Route::get('student/report', 'StudentReportController@studentReport')->name('admin.reports.student.report');
+        
+        Route::get('student/sibling/report', 'StudentReportController@studentSiblingReport')->name('admin.reports.student.report.sibling');
+       
+        Route::get('student/guardian/report', 'StudentReportController@studentGuardianReport')->name('admin.reports.student.report.guardian');
+        
+        Route::get('student/admission/report', 'StudentReportController@studentAdmissionReport')->name('admin.reports.student.report.admission');
+        
+        Route::get('student/class/subject/report', 'StudentReportController@studentClassSubjectReport')->name('admin.reports.student.report.class.subject');
+    });
+    
+    Route::group(['prefix' => 'finance_report'], function() {
 
+        Route::get('/', 'FinanceReportController@index')->name('admin.reports.finance.report.index');
+
+        Route::get('income/report', 'FinanceReportController@incomeReport')->name('admin.reports.finance.report.income');
+
+        Route::get('income/group/report', 'FinanceReportController@incomeGroupReport')->name('admin.reports.finance.report.income.group');
+        
+        Route::get('expense/report', 'FinanceReportController@expenseReport')->name('admin.reports.finance.report.expense');
+        
+        Route::get('expense/group/report', 'FinanceReportController@expenseGroupReport')->name('admin.reports.finance.report.expense.group');
+        
+        Route::get('account/balance/report', 'FinanceReportController@accountBalanceReport')->name('admin.reports.finance.report.account.report');
+
+    }); 
+    
+    Route::group(['prefix' => 'attendance_report'], function() {
+
+        Route::get('/', 'AttendanceReportController@index')->name('admin.reports.attendance.report.index');
+        // Ajax Route
+
+        Route::get('student/attendance/report', 'AttendanceReportController@studentAttendanceReport')->name('admin.reports.attendance.report.student.attendance');
+        
+        Route::get('exam/attendance/report', 'AttendanceReportController@examAttendanceReport')->name('admin.reports.attendance.report.exam.attendance.report');
+        
+        Route::get('get/sections/{classId}', 'AttendanceReportController@getSection');
+       
+        Route::get('get/subjects/{classId}/{sectionId}', 'AttendanceReportController@getSubjects');
+    });
+    
+});
 
 Route::get('/online/user', 'HomeController@onlineUser')->name('online.user');
+
+
+Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    
+    Route::group(['prefix' => 'general'], function() {
+        Route::get('/', 'GeneralSettingsController@index')->name('admin.settings.general.index');
+        
+        Route::post('logo/update/{generalSettingId}', 'GeneralSettingsController@logoUpdate')->name('admin.settings.general.logo.update');
+        
+        Route::post('school/information/{generalSettingId}', 'GeneralSettingsController@schoolInfoUpdate')->name('admin.settings.general.school.information.update');
+        
+        Route::get('change/current/day/attendance/status/{generalSettingId}', 'GeneralSettingsController@changeCurrentDayAttendanceStatus')->name('admin.settings.general.change.current.day.attendance.status');
+        
+        Route::get('change/period/attendance/status/{generalSettingId}', 'GeneralSettingsController@changePeriodAttendanceStatus')->name('admin.settings.general.change.period.attendance.status');
+
+        Route::get('change/exam/attendance/status/{generalSettingId}', 'GeneralSettingsController@changeExamAttendanceStatus')->name('admin.settings.general.change.exam.attendance.status');
+        
+        Route::get('set/color/theme/{colorThemeId}', 'GeneralSettingsController@setColorTheme')->name('admin.settings.general.set.color.theme');
+    });
+    
+});
 
 
 // Inventory area end
@@ -896,9 +1074,15 @@ Route::get('add_admin', function() {
 
 Route::get('test', function(){
     
-  $mark = MarkEntires::first();
-
- return  count(json_decode($mark->mark_distributions));
+    //$mark = MarkEntires::first();
+    //return  count(json_decode($mark->mark_distributions));
+    $employeeSalary = App\EmployeeSalary::where('employee_id', 16)->first();
+    $index = 0;
+    foreach (json_decode($employeeSalary->earn_types) as $earn_type) {
+        echo "<pre>";
+        echo $earn_type .' = '. json_decode($employeeSalary->earns, true)[$index][$earn_type];
+        $index++;
+    }
    
 });
 

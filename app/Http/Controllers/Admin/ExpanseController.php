@@ -44,11 +44,7 @@ class ExpanseController extends Controller
         $addExpanse->note = $request->note;
         $addExpanse->save();
 
-        $notification = array(
-            'messege' => 'Expanse inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        return \response()->json('Expanse inserted successfully:)');
     }
 
     public function getExpanseByAjax($expanseId)

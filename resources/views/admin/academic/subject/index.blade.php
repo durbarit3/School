@@ -1,4 +1,17 @@
 @extends('admin.master')
+@push('css')
+
+    <style>
+        .radio_input {
+            padding: 2px;
+            
+        }
+        .red_border{
+            border: 1px solid red;
+        }
+    </style>
+    
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -23,11 +36,11 @@
             </div>
         <form id="multiple_delete" action="{{ route('admin.academic.subject.multiple.delete') }}" method="post">
                 @csrf
-                <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i> Delete all</button>
+                {{--  <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i> Delete all</button>  --}}
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
                                     <th>
@@ -99,37 +112,42 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Add Subject</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.academic.subject.store') }}" method="POST">
+                <form id="subject_add_form" class="form-horizontal" action="{{ route('admin.academic.subject.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label"><b>Subject Name</b> :</label>
-                            <input type="text" class="form-control" value="{{ old('name') }}" placeholder="Subject Name" name="name" required>
+                            <input type="text" class="form-control name" value="{{ old('name') }}" placeholder="Subject Name" name="name">
+                            <span class="span error name_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-6">
+                        <div class="col-md-12 is-invalid">
                             <label class="col-form-label p-0 m-0"><b>Subject Type</b> :</label><br>
-                           <input type="radio" value="1" class="mr-1" name="type" required>  Theory &ensp;
-                           <input type="radio"  value="2" class="mr-1" name="type" required> Practical 
+                            <div class="radio_input">
+                                <input type="radio" value="1" class="mr-1" name="type">  Theory &ensp;
+                                <input type="radio"  value="2" class="mr-1" name="type"> Practical 
+                            </div>
+                            <span class="span error type_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label"><b>Subject Code </b> :</label>
-                            <input type="text" class="form-control" value="{{ old('code') }}" placeholder="Subject Code" name="code" required>
+                            <input type="text" class="form-control code" value="{{ old('code') }}" placeholder="Subject Code" name="code">
+                            <span class="span error code_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
                         <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
@@ -161,38 +179,112 @@
 
 @push('js')
 
+    <script type="text/javascript">
 
-<script type="text/javascript">
+        $(document).ready(function () {
 
-    $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+                $('.radio_input').removeClass('red_border');
+            })
 
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
         });
 
-    });
+    </script>
 
-</script>
+    <script type="text/javascript">
 
-<script>
-    $(document).ready(function () {
-       $(document).on('click', '.edit_class', function(){
-           var subject_id = $(this).data('id');
-           $.ajax({
-               url:"{{ url('admin/academic/subject/edit/') }}" + "/" + subject_id,
-               type:'get',
-               success:function(data){
-                   $('.edit_modal_body').empty();
-                   $('.edit_modal_body').append(data);
-               }
-           });
-       });
-   });
-</script>
+        $(document).ready(function () {
+
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
+                }
+            });
+
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.edit_class', function(){
+                var subject_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/academic/subject/edit/') }}" + "/" + subject_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#subject_add_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                    $('.error').html('');
+                    $('#subject_add_form')[0].reset();
+                    $('#myModal1').modal('hide');
+                    toastr.success(data);
+                    setInterval(function(){
+                        window.location = "{{ url()->current() }}";
+                    }, 700)
+                        
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.name){
+                            $('.name_error').html(err.responseJSON.errors.name[0]);
+                            $('.name').addClass('is-invalid');
+                        }else{
+                            $('.name_error').html('');
+                            $('.name').removeClass('is-invalid');
+                        }
+
+                        if(err.responseJSON.errors.type){
+                            $('.type_error').html(err.responseJSON.errors.type[0]);
+                            $('.radio_input').addClass('red_border');
+                        }else{
+                            $('.type_error').html('');
+                            $('.radio_input').removeClass('red_border');
+                        } 
+                        
+                        if(err.responseJSON.errors.code){
+                            $('.code_error').html(err.responseJSON.errors.type[0]);
+                            $('.code').addClass('is-invalid');
+                        }else{
+                            $('.code_error').html('');
+                            $('.code').removeClass('is-invalid');
+                        }
+                    }
+                });
+            });
+        });
+
+    </script> 
 
 
 @endpush

@@ -4,17 +4,70 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('public/admins/images/favicon.png')}}">
     <!--Page title-->
+    <style>
+        .header_area{
+
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+           
+        }
+
+        .panel_header{
+
+                @if ($generalSettings->color_theme == 1)
+                    background-color: #222533;
+                @else 
+                    background-color: #353C48;
+                @endif
+
+        }
+
+        .sidebar-wrapper ul li .menu-item{
+            
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+           
+        }
+
+        .modal-header {
+
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+
+        }
+        
+        .header_area .sidebar_logo {
+         
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+        
+        }
+    </style>
     <title>@yield('title', 'DurbarIT School Manage System')</title>
 
     <!--bootstrap-->
     <link rel="stylesheet" href="{{asset('public/admins/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/admins/plugins/timePicker/css/timepicki.css')}}">
     <link rel="stylesheet" href="{{asset('public/admins/plugins/bootstrap_time_picker/css/bootstrap-datepicker3.css')}}">
+   
     <!--font awesome-->
 
     <link rel="stylesheet" href="{{asset('public/admins/css/all.css')}}">
@@ -57,7 +110,7 @@
         <!-- content wrpper -->
         <div class="content_wrapper">
 
-            @yield('content')
+        @yield('content')
 
         </div>
         <!--/ content wrapper -->
@@ -99,8 +152,9 @@
     <!-- counter -->
     <script src="{{asset('public/admins/plugins/counter/js/counter.js')}}"></script>
     <!-- chart -->
+
     <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.min.js')}}"></script>
-    <script src="{{asset('public/admins/plugins/chartjs-bar-chart/chart.js')}}"></script>
+   
     <!-- pie chart -->
     <script src="{{asset('public/admins/plugins/pie_chart/chart.loader.js')}}"></script>
 
@@ -108,14 +162,17 @@
     <script src="{{asset('public/admins/plugins/pie_chart/pie.active.js')}}"></script>
     <!-- @basic_donut_chart -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
-    <script src="{{asset('public/admins/plugins/basic-donut-chart/dist/script.js')}}"></script>
 
+    <script src="{{asset('public/admins/plugins/basic-donut-chart/dist/script.js')}}"></script>
+   
     <!-- @DataTable_JS_Link-->
     <script src="{{asset('public/admins/plugins/datatables/dataTables.min.js')}}"></script>
     <script src="{{asset('public/admins/plugins/datatables/dataTables-active.js')}}"></script>
     <!-- donut-chart -->
+    @if (Request::is('admin'))
     <script src="{{asset('public/admins/plugins/donut-chart/dist/script.js')}}"></script>
-
+    @endif
+    
     <script src="{{asset('public/admins/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- drofify -->
       <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>

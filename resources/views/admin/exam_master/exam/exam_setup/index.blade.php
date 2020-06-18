@@ -1,4 +1,12 @@
 @extends('admin.master')
+@push('css')
+<style>
+    
+    td {
+        line-height: 16px;
+    }
+</style> 
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -14,20 +22,21 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Exam</span></a>
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i><span>Add Exam</span></a>
                         </div>
                     </div>
                 </div>
             </div>
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
                                     <th>Exam Name</th>
                                     <th>Type</th>
                                     <th>Term</th>
+                                    <th>Session</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Distributions</th>                       
@@ -42,6 +51,7 @@
                                     <td>{{ $exam->name }}</td>
                                     <td>{{ $exam->type }}</td>
                                     <td>{{ $exam->exam_term_id ? $exam->term->name : 'N/A' }}</td>
+                                    <td>{{ $exam->session->session_year }}</td>
                                     <td>{{ $exam->starting_date }}</td>
                                     <td>{{ $exam->ending_date }}</td>
                                     <td class="text-left">
@@ -93,31 +103,46 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.exam.master.exam.store') }}" method="POST">
+                <form id="exam_setup_form" class="form-horizontal" action="{{ route('admin.exam.master.exam.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label text-right"><b>Exam Name</b> :</label>
-                            <input type="text" placeholder="Exam Name" class="form-control" name="name" required>
+                            <input type="text" placeholder="Exam Name" class="form-control name" name="name">
+                            <div class="error name_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label  class="col-form-label text-right"><b>Session </b>:</label>
+                            <select name="session_id" class="form-control type">
+                                <option value="">Select session</option>
+                                @foreach ($sessions as $session)
+                                <option value="{{ $session->id }}"> {{ $session->session_year }} </option>
+                                @endforeach
+                            </select>
+                            <div class="error type_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label  class="col-form-label text-right"><b>Exam Type </b>:</label>
-                            <select required name="type" class="form-control">
+                            <select name="type" class="form-control type">
                                 <option value="">Select Exam Type</option>
                                 @foreach ($types as $type)
                                 <option value="{{ $type->name }}"> {{ $type->name }} </option>
                                 @endforeach
                             </select>
+                            <div class="error type_error"></div>
                         </div>
                     </div>
-
+                    
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label text-right"><b>Exam Term</b> (Optional) :</label>
-                            <select required name="term_id" class="form-control">
+                            <select  name="term_id" class="form-control">
                                 <option value="">Select Exam Term</option>
                                 @foreach ($terms as $term)
                                 <option value="{{ $term->id }}"> {{ $term->name }} </option>
@@ -128,27 +153,30 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                        <label class="col-form-label text-right"><b>Start Date</b> :</label>
-                        <input type="text" placeholder="Day-Month-Year" class="form-control add_exam_date_picker" value="" name="start_date" required>
+                            <label class="col-form-label text-right"><b>Start Date</b> :</label>
+                            <input autocomplete="off" type="text" placeholder="Day-Month-Year" class="form-control add_exam_date_picker start_date" value="" name="start_date" >
+                            <div class="error start_date_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                        <label class="col-form-label text-right"><b>End Date</b> :</label>
-                        <input placeholder="Day-Month-Year" type="text" class="form-control add_exam_date_picker" value="" name="end_date" required>
+                            <label class="col-form-label text-right"><b>End Date</b> :</label>
+                            <input autocomplete="off" placeholder="Day-Month-Year" type="text" class="form-control add_exam_date_picker end_date" value="" name="end_date">
+                            <div class="error end_date_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label  class="col-form-label text-right"><b>Destributions</b> :</label>
-                            <select name="distributions[]" class="select2" multiple="multiple" id="section" data-placeholder="Destributions" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                            <label class="col-form-label text-right"><b>Destributions</b> :</label>
+                            <select name="distributions[]" class="select2" multiple="multiple" id="section" data-placeholder="Destributions" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">Select Destributions</option>
                                 @foreach ($distributions as $distribution)
                                     <option value="{{ $distribution->name }}"> {{ $distribution->name }} </option>
                                 @endforeach
                             </select>
+                            <div class="error distributions_error"></div>
                         </div>
                     </div>
 
@@ -240,5 +268,83 @@
         toastr.error("{{ $errors->first('name') }}");
     @enderror
 </script>
+
+<script>
+    $(document).ready(function () {
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('submit', '#exam_setup_form', function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var type = $(this).attr('method');
+            var request = $(this).serialize();
+            $.ajax({
+                url:url,
+                type:type,
+                data: request,
+                success:function(data){
+
+                   //log(data);
+                   
+                   $('.error').html('');
+                   $('#exam_setup_form')[0].reset();
+                   $('#myModal1').modal('hide');
+                   toastr.success(data);
+                   setInterval(function(){
+                    window.location = "{{ url()->current() }}";
+                   }, 700)
+                   
+                   
+                },
+                error:function(err){
+                    //log(err.responseJSON.errors);
+                    if(err.responseJSON.errors.name){
+                        $('.name_error').html(err.responseJSON.errors.name[0]);
+                        $('.name').addClass('is-invalid');
+                    }else{
+                        $('.name_error').html('');
+                        $('.name').removeClass('is-invalid');
+                    }
+                    
+                    if(err.responseJSON.errors.type){
+                        $('.type_error').html(err.responseJSON.errors.type[0]);
+                        $('.type').addClass('is-invalid');
+                    }else{
+                        $('.type_error').html('');
+                        $('.type').removeClass('is-invalid');
+                    }
+                    if(err.responseJSON.errors.start_date){
+                        $('.start_date_error').html(err.responseJSON.errors.start_date[0]);
+                        $('.start_date').addClass('is-invalid');
+                    }else{
+                        $('.start_date_error').html('');
+                        $('.start_date').removeClass('is-invalid');
+                    }
+                    if(err.responseJSON.errors.end_date){
+                        $('.end_date_error').html(err.responseJSON.errors.end_date[0]);
+                        $('.end_date').addClass('is-invalid');
+                    }else{
+                        $('.end_date_error').html('');
+                        $('.end_date').removeClass('is-invalid');
+                    }
+                    if(err.responseJSON.errors.distributions){
+                        $('.distributions_error').html(err.responseJSON.errors.distributions[0]);
+                    
+                    }else{
+                        $('.distributions_error').html('');
+                      
+                    }
+                  
+                }
+            });
+        });
+    });
+
+</script> 
 
 @endpush

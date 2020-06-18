@@ -17,7 +17,7 @@ class StudentAdmission extends Model
     {
         return $this->belongsTo('App\Section','section','id');
     }
-
+    
      public function Gender()
     {
         return $this->belongsTo('App\Gender','gender','id');
@@ -32,10 +32,15 @@ class StudentAdmission extends Model
     {
         return $this->first_name.' '.$this->last_name;
     }
+
+    public function Class()
+    {
+        return $this->belongsTo('App\Classes','class','id');
+    }
+
     public function thiislsfds($value='')
     {
         return 'test';
     }
-
-
+    
 }

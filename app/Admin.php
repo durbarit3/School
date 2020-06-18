@@ -50,5 +50,10 @@ class Admin extends Authenticatable
     {
         return $this->hasOne(Vehicle::class,'id', 'vehicle_id');
     }
+    
+    public function role()
+    {
+        return $this->hasOne(Vehicle::class,'id', 'vehicle_id');
+    }
 
 }

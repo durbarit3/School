@@ -81,7 +81,7 @@
                                         </a>
                                         @endif
                                     | <a href="#" data-id="{{ $income->id }}" title="edit" class="edit_income btn   btn-sm btn-blue text-white"><i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i>
-                                        <img height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
+                                        <img style="display: none;" height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
                                         </a> |
                                         <a id="delete" href="{{ route('admin.income.delete', $income->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
@@ -111,7 +111,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.income.store') }}" method="POST">
+                <form id="add_income_form" class="form-horizontal" action="{{ route('admin.income.store') }}" method="POST">
                     @csrf
 
                     <div class="form-group row">
@@ -124,27 +124,31 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label><b>Date :</b></label>
-                            <input type="text" class="form-control add_in_date_picker" value="{{ date('d-m-Y') }}" name="date" required>
+                            <input type="text" class="form-control add_in_date_picker" value="{{ date('d-m-Y') }}" name="date">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label><b>Header :</b></label>
-                            <select required name="header_id" class="form-control">
+                            <select name="header_id" class="form-control header">
                                 <option value="">Select Header</option>
                                 @foreach ($headers as $header)
                                     <option value="{{ $header->id }}"> {{ $header->name }} </option>
                                 @endforeach
                             </select>
+                            <div class="text-danger errro header_error"></div>
                         </div>
+                        
                     </div>
 
                     <div class="form-group row">                        
                         <div class="col-sm-12">
-                            <label ><b>Amount :</b></label>
-                            <input type="number" class="form-control" placeholder="Amount" name="amount" required>
+                            <label><b>Amount :</b></label>
+                            <input type="number"  class="form-control amount" placeholder="Amount" name="amount">
+                            <span class="text-danger  errro amount_error"></span>
                         </div>
+                        
                     </div>
 
                     <div class="form-group row">
@@ -231,4 +235,65 @@
     });
 </script>
 
+<script>
+    $(document).ready(function () {
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('submit', '#add_income_form', function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var type = $(this).attr('method');
+            var request = $(this).serialize();
+            $.ajax({
+                url:url,
+                type:type,
+                data: request,
+                success:function(data){
+
+                   //log(data);
+                   
+                   $('.error').html('');
+                   $('#add_income_form')[0].reset();
+                   $('#myModal1').modal('hide');
+                   toastr.success(data);
+                   setInterval(function(){
+                    window.location = "{{ url()->current() }}";
+                   }, 700)
+                   
+                   
+                },
+                error:function(err){
+                    //log(err.responseJSON.errors);
+                    if(err.responseJSON.errors.header_id){
+                        $('.header_error').html('Income header is required');
+                        
+                        $('.header').addClass('is-invalid');
+                    }else{
+                        $('.header_error').html('');
+                        $('.header').removeClass('is-invalid');
+                    }
+                    if(err.responseJSON.errors.amount){
+                        $('.amount_error').html('');
+                        $('.amount').removeClass('is-invalid');
+                        $('.amount_error').html(err.responseJSON.errors.amount[0]);
+                        
+                        $('.amount').addClass('is-invalid');
+                    }else{
+                        $('.amount_error').html('');
+                        $('.amount').removeClass('is-invalid');
+                    }
+                  
+                }
+            });
+        });
+    });
+
+</script> 
+
 @endpush
+

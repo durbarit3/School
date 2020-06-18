@@ -1,4 +1,5 @@
 @extends('admin.master')
+
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -24,7 +25,7 @@
        
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-left">
                                     <th>Class</th>
@@ -70,48 +71,51 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Assign Teacher To Class</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-            <form class="form-horizontal" action="{{ route('admin.academic.assign.class.teacher.store') }}" method="POST">
+            <form id="assign_class_teacher_form" class="form-horizontal" action="{{ route('admin.academic.assign.class.teacher.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label text-right"><b>Class</b> :</label>
-                            <select required class="form-control select_class" name="class_id">
+                            <select class="form-control select_class class_id" name="class_id">
                                 <option value="">Select class</option>
                                 @foreach ($formClasses as $class)
                                     <option value="{{ $class->id }}">{{ $class->name }}</option>
                                 @endforeach
                             </select>
+                            <span class="error class_id_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class=" col-form-label text-right"><b>Select Section</b> :</label>
-                            <select required class="form-control" id="sections" name="section_id">
+                            <select class="form-control section_id" id="sections" name="section_id">
                                 <option value="">Select section</option>
                             </select>
+                            <span class="error section_id_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class=" col-form-label text-right"><b>Select teacher</b> :</label>
-                            <select class="select2" multiple="multiple" name="teacher_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                            <select class="select2" multiple="multiple" name="teacher_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">----Select Teacher----</option>
                                 @foreach ($teachers as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->adminname }}</option>  
                                 @endforeach
                             </select>
+                            <span class="error teacher_ids_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
+                        <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close </button>
                         <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
@@ -143,54 +147,133 @@
 
 @push('js')
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-       $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url:"{{ url('admin/academic/assign/class/teachers/get/sections/by/') }}"+"/"+classId,
-                type:'get',
-                dataType:'json',
-                success:function(data){
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data,function(key, val){
-                        $('#sections').append(' <option value="'+ val.section_id +'">'+ val.section.name +'</option>');
-                    })
-                }
-            })
-       })
-    });
+        $(document).ready(function () {
+        $('.select_class').on('change', function () {
+                var classId = $(this).val();
+                $.ajax({
+                    url:"{{ url('admin/academic/assign/class/teachers/get/sections/by/') }}"+"/"+classId,
+                    type:'get',
+                    dataType:'json',
+                    success:function(data){
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
+                        $.each(data,function(key, val){
+                            $('#sections').append(' <option value="'+ val.section_id +'">'+ val.section.name +'</option>');
+                        })
+                    }
+                })
+        })
+        });
 
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-       //Initialize Select2 Elements
-       $('.select2').select2()
+        $(document).ready(function () {
         //Initialize Select2 Elements
+        $('.select2').select2()
+            //Initialize Select2 Elements
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
+
+        });
+    </script>
+
+    
+    <script>
+        $(document).ready(function () {
+        $(document).on('click', '.edit_assigned_teacher', function(){
+            var class_section_id = $(this).data('id');
+            $.ajax({
+                url:"{{ url('admin/academic/assign/class/teachers/edit') }}" + "/" + class_section_id,
+                type:'get',
+                success:function(data){
+                    $('.edit_modal_body').empty();
+                    $('.edit_modal_body').append(data);
+                }
+            });
+        });
     });
+    </script>
 
-</script>
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-<script>
-    $(document).ready(function () {
-       $(document).on('click', '.edit_assigned_teacher', function(){
-           var class_section_id = $(this).data('id');
-           $.ajax({
-               url:"{{ url('admin/academic/assign/class/teachers/edit') }}" + "/" + class_section_id,
-               type:'get',
-               success:function(data){
-                   $('.edit_modal_body').empty();
-                   $('.edit_modal_body').append(data);
-               }
-           });
-       });
-   });
-</script>
+            $(document).on('submit', '#assign_class_teacher_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                        if(!$.isEmptyObject(data.error)){
+                            toastr.error(data.error);
+                        }else{
+                            $('.error').html('');
+                            $('#assign_class_teacher_form')[0].reset();
+                            $('#myModal1').modal('hide');
+                            toastr.success(data.success);
+                            setInterval(function(){
+                                window.location = "{{ url()->current() }}";
+                            }, 700)
+                        }
+                       
+                        
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.class_id){
+                            $('.class_id_error').html('Class field is required.');
+                            $('.class_id').addClass('is-invalid');
+                        }else{
+                            $('.class_id_error').html('');
+                            $('.class_id').removeClass('is-invalid');
+                        }
+
+                        if(err.responseJSON.errors.section_id){
+                            $('.section_id_error').html('Section field is required.');
+                            $('.section_id').addClass('is-invalid');
+                        }else{
+                            $('.section_id_error').html('');
+                            $('.section_id').removeClass('is-invalid');
+                        }
+                        
+                        if(err.responseJSON.errors.teacher_ids){
+                            $('.teacher_ids_error').html('Teacher field is required.');
+                            $('.teacher_ids').addClass('is-invalid');
+                        }else{
+                            $('.teacher_ids_error').html('');
+                            $('.teacher_ids').removeClass('is-invalid');
+                        }
+                    }
+                });
+            });
+        });
+
+    </script> 
 
 
 
