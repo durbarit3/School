@@ -864,6 +864,7 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
     Route::get('/collect/search/{id}','FeesCotroller@feesCollectSearch');
     Route::get('/collection/{id}','FeesCotroller@feesCollection')->name('admin.fees.collection');
     Route::post('/collect/search/','FeesCotroller@feesCollectSectionSearch')->name('admin.fees.students.collection.search');
+    Route::post('/get/fees','FeesCotroller@feesCollectSectionGet')->name('admin.fees.collection.get');
 
 
 

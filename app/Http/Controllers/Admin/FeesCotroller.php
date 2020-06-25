@@ -17,6 +17,7 @@ use App\FeesCollection;
 
 class FeesCotroller extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -507,13 +508,74 @@ class FeesCotroller extends Controller
     {
      
 
+
           $collections =FeesCollection::where('stdid',$id)->first();
-          
-         // $student = StudentAdmission::select('first_name','id')->findOrFail($id);  
+         
+
+        
 
          return view('admin.fees.fees_collection',compact('collections'));
 
     }
+
+
+
+
+
+    // get fees
+
+    public $collection_arr=[];
+
+    public function feesCollectSectionGet (Request $request)
+    {
+
+            
+
+           $collections =FeesCollection::findOrFail($request->collection_id);
+           $this->collection_arr =FeesCollection::findOrFail($request->collection_id)->collection;
+
+
+         foreach ($this->collection_arr as &$value) {
+            if ($value['fees_id'] ==  $request->id) {
+                $value['due_date'] = $request->date;
+                $value['payment_id'] = rand(5,15);
+                $value['amount'] = 800;
+                $value['is_paid'] = 1;
+                $value['discount'] = $request->discount;
+                $value['fine'] = $request->payment_mode;
+                // array_push($value, $this->collection_arr);
+                // unset($value);
+            }
+         }
+      
+
+   $collection_data =$this->collection_arr;     
+
+   
+
+
+        FeesCollection::findOrFail($request->collection_id)->update([
+                        'collection'=>$collection_data,
+
+                        
+                    ]);
+
+        return "ok";
+
+    }
+
+
+      function stripslashes_arr($value) 
+{ 
+    $value = is_array($value) ? 
+                array_map(array($this, 'stripslashes_arr'), $value) : 
+                stripslashes($value); 
+  
+    return $value; 
+} 
+
+
+
 
 
     

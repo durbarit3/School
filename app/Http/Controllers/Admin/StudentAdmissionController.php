@@ -205,6 +205,7 @@ class StudentAdmissionController extends Controller
             if($data->save()){
 
                 // fees collection
+                
                  $feestype = FeesType::active();
                     $products = array();
                     foreach ($feestype as $row) {
