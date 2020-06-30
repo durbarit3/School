@@ -214,7 +214,6 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         route::get('day/get/sections/by/{classId}', 'ExamAttendanceController@getSectionsByClassId');
 
         route::get('get/subjects/by/class/section/id/{classId}/{sectionId}', 'ExamAttendanceController@getSubjectsByClassSectionId');
-        route::get('get/exams/by/{sessionId}', 'ExamAttendanceController@getExamsByAjax');
         route::get('search', 'ExamAttendanceController@search')->name('admin.attendance.exam.attendance.search');
         route::post('store', 'ExamAttendanceController@store')->name('admin.attendance.exam.attendance.store');
     });
@@ -223,8 +222,8 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         route::get('/', 'ExamAttendanceModifyController@index')->name('admin.attendance.exam.attendance.modify.index');
 
         // Ajax Routes
-        route::get('day/get/sections/by/{classId}', 'ExamAttendanceModifyController@getSectionsByClassId');
-        route::get('get/exams/by/{sessionId}', 'ExamAttendanceModifyController@getExamsByAjax');
+        route::get('day/get/sections/by/{classId}','ExamAttendanceModifyController@getSectionsByClassId');
+        
         route::get('get/subjects/by/class/section/id/{classId}/{sectionId}', 'ExamAttendanceModifyController@getSubjectsByClassSectionId');
 
         route::get('search', 'ExamAttendanceModifyController@search')->name('admin.attendance.exam.attendance.modify.search');
@@ -558,13 +557,14 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
 
     
 
-    Route::get('admins', 'EmployeeController@index')->name('admin.employee.all.admins');
-    Route::get('teachers', 'EmployeeController@teachers')->name('admin.employee.all.teacher');
-    Route::get('librarians', 'EmployeeController@librarians')->name('admin.employee.all.librarian');
-    Route::get('accountants', 'EmployeeController@accountant')->name('admin.employee.all.accountant');
-    Route::get('clerk', 'EmployeeController@clerks')->name('admin.employee.all.clerk');
-    Route::get('drivers', 'EmployeeController@drivers')->name('admin.employee.all.driver');
-    Route::get('guards', 'EmployeeController@guards')->name('admin.employee.all.guard');
+    Route::get('all/admins', 'EmployeeController@index')->name('admin.employee.all.admins');
+    Route::get('all/super/admins', 'EmployeeController@superAdmins')->name('admin.employee.all.super.admins');
+    Route::get('all/teachers', 'EmployeeController@teachers')->name('admin.employee.all.teacher');
+    Route::get('all/librarians', 'EmployeeController@librarians')->name('admin.employee.all.librarian');
+    Route::get('all/accountants', 'EmployeeController@accountant')->name('admin.employee.all.accountant');
+    Route::get('all/clerk', 'EmployeeController@clerks')->name('admin.employee.all.clerk');
+    Route::get('all/drivers', 'EmployeeController@drivers')->name('admin.employee.all.driver');
+    Route::get('all/guards', 'EmployeeController@guards')->name('admin.employee.all.guard');
     Route::get('create', 'EmployeeController@create')->name('admin.employee.create');
     Route::post('store', 'EmployeeController@store')->name('admin.employee.store');
     Route::get('edit/{employeeId}', 'EmployeeController@edit')->name('admin.employee.edit');
@@ -586,22 +586,6 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
     Route::get('bank/edit/{employeeId}', 'EmployeeController@editBank');
 });
 
-
-Route::group(['prefix' => 'admin/secdepartment', 'namespace' => 'Admin'], function () {
-    Route::get('/add', 'DepartmentController@index')->name('admin.department.index');
-    Route::post('/submit', 'DepartmentController@store')->name('admin.department.store');
-    Route::get('/active/{id}', 'DepartmentController@active');
-    Route::get('/deactive/{id}', 'DepartmentController@deactive');
-    Route::get('/delete/{id}', 'DepartmentController@delete');
-    Route::get('/edit/{categoryId}', 'DepartmentController@edit');
-    Route::post('/update', 'DepartmentController@update')->name('admin.secdepartment.update');
- 
-}); 
-Route::group(['prefix' => 'admin/secdesignation', 'namespace' => 'Admin'], function () {
-    
-    Route::get('/add', 'DepartmentController@designationindex')->name('admin.secdesignation.index');
-    
-});
 
 Route::group(['prefix' => 'admin/office/accounts', 'namespace' => 'Admin', 'middleware' => 'auth:admin'], function() {
     
@@ -825,6 +809,14 @@ Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
             // Ajax Route
             Route::get('details/{leaveApplyId}', 'LeaveApplyController@details')->name('admin.hr.leave.apply.details');
         });
+        
+        Route::group(['prefix' => 'leave/approval'], function () {
+            Route::get('/', 'LeaveApprovalController@index')->name('admin.hr.leave.approval.index');
+            Route::post('action', 'LeaveApprovalController@action')->name('admin.hr.leave.approval.action');
+
+            // Ajax Route
+            
+        });
 
     });
     
@@ -1009,6 +1001,8 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
         Route::get('expense/group/report', 'FinanceReportController@expenseGroupReport')->name('admin.reports.finance.report.expense.group');
         
         Route::get('account/balance/report', 'FinanceReportController@accountBalanceReport')->name('admin.reports.finance.report.account.report');
+        
+        Route::get('salary/report', 'FinanceReportController@salaryReport')->name('admin.reports.finance.report.salary.report');
 
     }); 
     
@@ -1019,10 +1013,14 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
 
         Route::get('student/attendance/report', 'AttendanceReportController@studentAttendanceReport')->name('admin.reports.attendance.report.student.attendance');
         
+        Route::get('employee/attendance/report', 'AttendanceReportController@employeeAttendanceReport')->name('admin.reports.attendance.report.employee.attendance');
+        
         Route::get('exam/attendance/report', 'AttendanceReportController@examAttendanceReport')->name('admin.reports.attendance.report.exam.attendance.report');
         
+        Route::get('get/exams/by/{sessionId}', 'AttendanceReportController@getExamsBySessionId');
+
         Route::get('get/sections/{classId}', 'AttendanceReportController@getSection');
-       
+        
         Route::get('get/subjects/{classId}/{sectionId}', 'AttendanceReportController@getSubjects');
     });
     
@@ -1039,6 +1037,8 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::post('logo/update/{generalSettingId}', 'GeneralSettingsController@logoUpdate')->name('admin.settings.general.logo.update');
         
         Route::post('school/information/{generalSettingId}', 'GeneralSettingsController@schoolInfoUpdate')->name('admin.settings.general.school.information.update');
+
+        Route::post('set/current/session', 'GeneralSettingsController@setCurrentSession')->name('admin.settings.general.set.current.session');
         
         Route::get('change/current/day/attendance/status/{generalSettingId}', 'GeneralSettingsController@changeCurrentDayAttendanceStatus')->name('admin.settings.general.change.current.day.attendance.status');
         
@@ -1047,12 +1047,20 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::get('change/exam/attendance/status/{generalSettingId}', 'GeneralSettingsController@changeExamAttendanceStatus')->name('admin.settings.general.change.exam.attendance.status');
         
         Route::get('set/color/theme/{colorThemeId}', 'GeneralSettingsController@setColorTheme')->name('admin.settings.general.set.color.theme');
+        
     });
     
 });
 
-
 // Inventory area end
+
+
+Route::group(['prefix' => 'admin/user', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+
+    Route::get('profile', 'UserProfileController@index')->name('admin.user.profile.index');
+    Route::post('change/password', 'UserProfileController@changePassword')->name('admin.user.profile.change.password');
+
+});
 
 
 Auth::routes();

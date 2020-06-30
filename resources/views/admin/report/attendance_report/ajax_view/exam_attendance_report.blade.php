@@ -19,6 +19,8 @@
                     <th>Student</th>
                     <th>Admission No</th>
                     <th>Role No</th>
+                    <th>Date</th>
+                    <th>Year</th>
                     <th>Subject</th>
                     <th>Code</th>
                     <th>Status</th>
@@ -32,6 +34,8 @@
                         <td>{{ $examAttendance->student->first_name.' '.$examAttendance->student->last_name }}</td>            
                         <td>{{ $examAttendance->student->admission_no }}</td>            
                         <td>{{ $examAttendance->student->roll_no }}</td>            
+                        <td>{{ $examAttendance->date }}</td>            
+                        <td>{{ $examAttendance->year }}</td>            
                         <td>{{ $examAttendance->subject->name }}</td>            
                         <td>{{ $examAttendance->subject->code }}</td> 
                         @if ($examAttendance->attendance_status == 'present')

@@ -33,8 +33,11 @@
      <div class="col-md-6">
         <h6 class="m-0 p-0 text-dark"><b>Attachment :</b></h6> 
         <hr class="p-0 mt-1"> 
-        @if ($leaveApply->attachment_file)
-            <img height="300" width="350" src="{{ asset('public/uploads/leave_apply_attachment_file/'.$leaveApply->attachment_file) }}" alt="">  
-        @endif
+        <div class="attachment_file text-center">
+            @if ($leaveApply->attachment_file)
+                <img height="200" width="200" class="rounded" src="{{ asset('public/uploads/leave_apply_attachment_file/'.$leaveApply->attachment_file) }}" alt="">  
+            @endif
+        </div>
+        
      </div>
 </div>

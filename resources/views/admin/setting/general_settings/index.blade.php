@@ -116,26 +116,49 @@
                 
                 <div class="panel_body mt-2">
                     
+                    <div><h6>Set current session</h6></div>
+                    <hr class="m-0 mb-2 p-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="{{ route('admin.settings.general.set.current.session') }}" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <select required name="session_id" id="" class="form-control form-control-sm">
+                                            <option value="">Select the current section</option>
+                                            @foreach ($sessions as $session)
+                                                <option {{ $session->is_current_session == 1 ? 'SELECTED' : '' }} value="{{ $session->id }}">{{ $session->session_year }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-sm btn-blue float-left">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
-                    <div><h6>Attendance settings</h6></div>
-                    <hr class="m-0 p-0">
+                <div class="panel_body mt-2">
+                    
+                        <div><h6>Attendance settings</h6></div>
+                        <hr class="m-0 p-0">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="attendance_setting mt-2 text-center">
                                     <h5><b>Current day attendance -></b> 
-                                        
-                                            @if ($generalSettings->current_day_attendance == 1)
-                                                <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                </a>
-                                                
-                                            @else  
-                                                <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-down"></i>  
-                                                </a>
-                                            @endif
-                                            
-                                        
+
+                                        @if ($generalSettings->current_day_attendance == 1)
+                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-up"></i>
+                                            </a>
+                                        @else  
+                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-down"></i>  
+                                            </a>
+                                        @endif  
+
                                     </h5> 
                                 </div>
                             </div>
@@ -144,15 +167,15 @@
                                 <div class="attendance_setting mt-2 text-center">
                                     <h5><b>Period attendance -></b> 
                                         
-                                            @if ($generalSettings->period_attendance == 1)
-                                                <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                </a>
-                                            @else  
-                                                <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-down"></i> 
-                                                </a>
-                                            @endif
+                                        @if ($generalSettings->period_attendance == 1)
+                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-up"></i>
+                                            </a>
+                                        @else  
+                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-down"></i> 
+                                            </a>
+                                        @endif
                                         
                                     </h5> 
                                 </div>
@@ -161,15 +184,15 @@
                             <div class="col-md-4">
                                 <div class="attendance_setting mt-2 text-center">
                                     <h5><b>Exam  attendance -></b> 
-                                            @if ($generalSettings->exam_attendance == 1)
-                                                <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                </a>
-                                            @else  
-                                                <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
-                                                    <i class="fas fa-thumbs-down"></i> 
-                                                </a>
-                                            @endif
+                                        @if ($generalSettings->exam_attendance == 1)
+                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-up"></i>
+                                            </a>
+                                        @else  
+                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
+                                                <i class="fas fa-thumbs-down"></i> 
+                                            </a>
+                                        @endif
                                     </h5> 
                                 </div>
                             </div>

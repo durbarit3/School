@@ -222,11 +222,11 @@
         <li><a data-toggle="dropdown" href="#"><i class="far fa-user"></i></a>
             <div class="user_item dropdown-menu dropdown-menu-right">
                 <div class="admin">
-                    <a href="#" class="user_link"><img src="{{asset('public/admins/images/admin.jpg')}}" alt=""></a>
+                    <a href="#" class="user_link"><img src="{{ asset('public/uploads/employee/'.Auth::user()->avater) }}" alt=""></a>
                 </div>
                 <ul>
 
-                    <li><a href="#"><span><i class="fas fa-user"></i></span> User Profile</a></li>
+                    <li><a href="{{ route('admin.user.profile.index') }}"><span><i class="fas fa-user"></i></span> User Profile</a></li>
                     <li><a href="#"><span><i class="fas fa-cogs"></i></span> Settings</a></li>
                     <li><a href="#"><span><i class="fas fa-unlock-alt"></i></span> Login</a></li>
                 </ul>

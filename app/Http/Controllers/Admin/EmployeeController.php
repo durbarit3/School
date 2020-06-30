@@ -24,7 +24,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $admins = Admin::with('group')
+        $admins = Admin::with(['group'])
             ->where('role', 2)
             ->select(['id', 'employee_status', 'adminname', 'employee_id', 'avater', 'gender', 'designation', 'group_id', 'email', 'phone'])
             ->get()->map(function ($admin) {
@@ -46,11 +46,37 @@ class EmployeeController extends Controller
             });
 
         return view('admin.employee.employee_list.all_admins', compact('admins'));
+    } 
+    
+    public function superAdmins()
+    {
+        $superAdmins = Admin::with(['group'])
+            ->where('role', 1)
+            ->select(['id', 'employee_status', 'adminname', 'employee_id', 'avater', 'gender', 'designation', 'group_id', 'email', 'phone'])
+            ->get()->map(function ($admin) {
+                return [
+                    'id' => $admin->id,
+                    'name' => $admin->adminname,
+                    'employee_status' => $admin->employee_status,
+                    'employee_id' => $admin->employee_id,
+                    'avater' => $admin->avater,
+                    'gender' => $admin->gender,
+                    'designation' => $admin->designation,
+                    'group_id' => $admin->group_id,
+                    'email' => $admin->email,
+                    'phone' => $admin->phone,
+                    'department' => [
+                       'name' => $admin->group->name
+                    ],
+                ];
+            });
+
+        return view('admin.employee.employee_list.all_super_admins', compact('superAdmins'));
     }
 
     public function teachers()
     {
-        $teachers = Admin::with('group')
+        $teachers = Admin::with(['group', 'salaries'])
         ->where('role', 3)
         ->select(['id', 'employee_status', 'adminname', 'employee_id', 'avater', 'gender', 'designation', 'group_id', 'email', 'phone'])
         ->get()->map(function ($admin) {
@@ -70,7 +96,7 @@ class EmployeeController extends Controller
                 ],
             ];
         });
-
+       
     return view('admin.employee.employee_list.all_teachers', compact('teachers'));
     }
     public function librarians()
@@ -211,11 +237,11 @@ class EmployeeController extends Controller
         } else {
             $employeeId = 'E' . date('m') . date('y') . ($employee->id <= 8 ? '0' : '') . ++$employee->id;
         }
-        $bloodGroups = BloodGroup::select(['group_name', 'id'])->get();
-        $groups = Group::select(['id', 'name'])->get();
-        $designations = Designation::select(['id', 'name'])->get();
-        $roles = Role::select(['id', 'name', 'role_known_id'])->get();
-        $genders = Gender::select(['id', 'name'])->get();
+        $bloodGroups = DB::table('blood_groups')->select(['group_name', 'id'])->get();
+        $groups = DB::table('groups')->select(['id', 'name'])->get();
+        $designations = DB::table('designations')->select(['id', 'name'])->get();
+        $roles = DB::table('roles')->select(['id', 'name', 'role_known_id'])->get();
+        $genders = DB::table('genders')->select(['id', 'name'])->get();
         return view('admin.employee.create', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders', 'employeeId'));
     }
 
@@ -231,7 +257,7 @@ class EmployeeController extends Controller
             'mobile_no' => 'required|unique:admins,phone',
             'present_address' => 'required',
             'permanent_address' => 'required',
-            'photo' => 'required',
+            'photo' => 'required|image|max:20480',
             'email' => 'required|unique:admins,email',
             'password' => 'required|confirmed',
             'designation' => 'required',
@@ -239,6 +265,7 @@ class EmployeeController extends Controller
             'joining_date' => 'required',
             'qualification' => 'required',
             'role' => 'required',
+            'blood_group' => 'required',
         ]);
 
         if ($request->bank_name) {
@@ -298,11 +325,9 @@ class EmployeeController extends Controller
                 'created_at' =>  Carbon::now(),
             ]);
         }
-        $notification = array(
-            'messege' => 'Employee added successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        
+        return response()->json(['successMsg' => 'Employee added successfully:)']);
+        
     }
 
     public function changeStatus($employeeId)
@@ -345,7 +370,8 @@ class EmployeeController extends Controller
         $designations = Designation::select(['id', 'name'])->get();
         $roles = Role::select(['id', 'name', 'role_known_id'])->get();
         $genders = Gender::select(['id', 'name'])->get();
-        $employee = Admin::with('group')->where('id', $employeeId)->firstOrFail();
+        $employee = Admin::with(['group', 'salaries'])->where('id', $employeeId)->firstOrFail();
+ 
         return view('admin.employee.show', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders', 'employee'));
 
     }
@@ -377,12 +403,14 @@ class EmployeeController extends Controller
         $employee->save();
        
         if ($request->file('photo')) {
-            if ($employee->avater != "admin.jpg") {
-                if (file_exists(public_path('uploads/employee/'.$employee->avater))) {
-                    unlink(public_path('uploads/employee/'.$employee->avater));
+            if ($employee->avater) {
+                if ($employee->avater != "admin.jpg") {
+                    if (file_exists(public_path('uploads/employee/'.$employee->avater))) {
+                        unlink(public_path('uploads/employee/'.$employee->avater));
+                    }
                 }
             }
-            
+          
             $employeePhoto = $request->file('photo');
             $employeePhotoName = uniqid() . '.' . $employeePhoto->getClientOriginalExtension();
             Image::make($employeePhoto)->resize(500, 500)->save('public/uploads/employee/' . $employeePhotoName);

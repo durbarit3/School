@@ -1,42 +1,74 @@
 @extends('admin.master')
 @push('css')
-<style>
-    .dropify-wrapper {
-        height: 79px !important;
-    }
+    <style>
+        .dropify-wrapper {
+            height: 79px !important;
+        }
 
-    button.btn.btn-link {
-        color: black;
-        font-size: 16px;
-        font-weight: 700;
-    }
+        button.btn.btn-link {
+            color: black;
+            font-size: 16px;
+            font-weight: 700;
+        }
 
-    .no-padding{
-        padding:0px 5px!important;
-        padding: 
-    }
+        .no-padding{
+            padding:0px 5px!important;
+            padding: 
+        }
 
-    .employee_photo img {
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
+        .employee_photo img {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .employee_initial_details {
+            position: relative;
+            background-color: white;
+            height: 350px;
+            box-sizing: border-box;
+            padding: 6px 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            width: 692px;
+        }
+
+        .background_photo {
+            position: absolute;
+            top: 39%;
+            bottom: 0px;
+            right: 18%;
+        }
+        
+        .background_photo img {
+            height: 61px;
+            opacity: 0.3;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        span.text_style {
+            margin-left: 31px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .panel {
+            margin-top: 33px;
+        }
+
+        @media (min-width: 576px){
+
+            
+            .pay_slip_modal_dialog {
+                max-width: 900px!important;
+                margin: 1.75rem auto;
+            }
+
+        }
+        
+        .earn_and_deduction_area table tbody tr td {
+            line-height: 11px;
+        }
     
-    .employee_initial_details {
-        background-color: white;
-        height: 350px;
-        box-sizing: border-box;
-        padding: 6px 20px;
-        border-radius: 6px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        width: 692px;
-    }
-
-    span.text_style {
-        margin-left: 31px;
-        font-size: 14px;
-        font-weight: 700;
-    }
-   
-</style>
+    </style>
 @endpush
 @section('content')
 @php
@@ -55,6 +87,8 @@
         $role = 'clerk';
     }elseif($employee->role == 8){
         $role = 'guard';
+    }elseif($employee->role == 1){
+        $role = 'super.admins';
     }
 @endphp
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -73,7 +107,7 @@
             <div class="col-md-6">
                 <div class="employee_initial_details">
 
-                    <p class="m-1 p-0"><b><i class="fas fa-signature"></i> Name : </b><span style=" text-transform:uppercase;">{{ $employee->adminname }}</span></p>
+                    <p class="m-1 p-0"><b><i class="fas fa-signature"></i> Name : </b><span>{{ $employee->adminname }}</span></p>
                     <p class="m-1 p-0"><b><i class="fas fa-restroom"></i> Gender : </b>{{ $employee->gender }}</p>
                     <p class="m-1 p-0"><b><i class="fas fa-pray"></i></i> Religion : </b>{{ $employee->religion }}</p>
                     <p class="m-1 p-0"><b><i class="far fa-envelope"></i> Email : </b>{{ $employee->email }}</p>
@@ -84,11 +118,13 @@
                     <p class="m-1 p-0"><b><i class="fab fa-facebook-f"></i> Facebook : </b>{{ $employee->facebook_link ? $employee->facebook_link : 'N/A' }}</p>
                     <p class="m-1 p-0"><b><i class="fab fa-linkedin"></i> LinkedIn : </b>{{ $employee->linkedIn_link ? $employee->linkedIn_link : 'N/A' }}</p>
                     <p class="m-1 p-0"><b><i class="fab fa-twitter"></i> LinkedIn : </b>{{ $employee->twitter_link ? $employee->twitter_link : 'N/A' }}</p>
-
+                    <div class="background_photo">
+                        <img src="{{ asset('public/uploads/logos/'.$generalSettings->print_logo) }}" alt="">
+                    </div>
                 </div>
             </div>
             <div class="col-md-2">
-                <a class="btn btn-sm btn-success float-right" href="{{ route('admin.employee.all.'.$role) }}">Back</a>
+                <a class="btn btn-sm btn-info float-right" href="{{ route('admin.employee.all.'.$role) }}">Back</a>
             </div>
         </div>
 
@@ -119,26 +155,26 @@
                             <div class="panel">
                                 <div class="panel_body">
                                     <div class="form-group row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Employee ID <span
                                                     style="color:red">*</span></label>
                                             <input readonly type="text" id="employee_id"
-                                                value="{{ $employee->employee_id }}" class="form-control"
+                                                value="{{ $employee->employee_id }}" class="form-control form-control-sm"
                                                  required>
                                         </div>
 
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Name<span
                                                     style="color: red">*</span></label>
                                             <input type="text" id="name" value="{{ $employee->adminname }}"
-                                                class="form-control" name="name" required>
+                                                class="form-control form-control-sm" name="name" required>
                                             <span class="text-danger">{{ $errors->first('name') }}</span>
                                         </div>
 
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Gender<span
                                                     style="color: red">*</span></label>
-                                            <select class="form-control" name="gender" id="gender" required>
+                                            <select class="form-control form-control-sm" name="gender" id="gender" required>
                                                 <option value="">--Selecet gender--</option>
                                                 @foreach($genders as $gender)
                                                 <option {{ $gender->name == old('gender') ? 'SELECTED' : '' }}
@@ -148,21 +184,23 @@
                                             </select>
                                             <span class="text-danger">{{ $errors->first('gender') }}</span>
                                         </div>
-                                    </div>
 
-                                    <div class="form-group row">
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Religion<span
                                                     style="color: red">*</span></label>
                                             <input type="text" id="religion" value="{{ $employee->religion }}"
-                                                class="form-control" name="religion" required>
+                                                class="form-control form-control-sm" name="religion" required>
                                             <span class="text-danger">{{ $errors->first('religion') }}</span>
                                         </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        
 
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Blood Group<span
                                                     style="color: red">*</span></label>
-                                            <select id="blood_group" class="form-control" name="blood_group" required>
+                                            <select id="blood_group" class="form-control form-control-sm" name="blood_group" required>
                                                 <option value="">--Select Blood Group--</option>
                                                 @foreach($bloodGroups as $bloodGroup)
                                                 <option {{ $bloodGroup->id == old('blood_group') ? "SELECTED" : "" }}
@@ -176,7 +214,7 @@
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Date Of Birth<span
                                                     style="color: red">*</span></label>
-                                            <input type="date" class="form-control pick_date_of_birth" id="date_of_birth"
+                                            <input type="date" class="form-control form-control-sm pick_date_of_birth" id="date_of_birth"
                                                 name="date_of_birth"
                                                 value="{{ $employee->date_of_birth }}"
                                                 required>
@@ -186,7 +224,7 @@
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Mobile No<span
                                                     style="color:red">*</span></label>
-                                            <input type="number" value="{{ $employee->phone }}" class="form-control"
+                                            <input type="number" value="{{ $employee->phone }}" class="form-control form-control-sm"
                                                 name="mobile_no" required>
                                             <span class="text-danger">{{ $errors->first('mobile_no') }}</span>
                                         </div>
@@ -196,7 +234,7 @@
                                         <div class="col-sm-4">
                                             <label for="inputEmail3" class="text-center">Present Address <span
                                                     style="color: red">*</span></label>
-                                            <textarea name="present_address" class="form-control" id="present_address"
+                                            <textarea name="present_address" class="form-control form-control-sm" id="present_address"
                                                 placeholder="Present address" cols="8" rows="3"
                                                 required>{{ $employee->present_address }}</textarea>
                                             <span class="text-danger">{{ $errors->first('present_address') }}</span>
@@ -206,7 +244,7 @@
                                             <label for="inputEmail3" class="text-center">Permanent Address <span
                                                     style="color: red">*</span></label>
                                             <textarea name="permanent_address" id="permanent_address"
-                                                class="form-control" placeholder="Present address" cols="8" rows="3"
+                                                class="form-control form-control-sm" placeholder="Present address" cols="8" rows="3"
                                                 required>{{ $employee->permanent_address }}</textarea>
                                             <span class="text-danger">{{ $errors->first('permanent_address') }}</span>
                                         </div>
@@ -216,7 +254,7 @@
                                             <input
                                                 data-default-file="{{ asset('public/uploads/employee/'.$employee->avater) }}"
                                                 accept=".jpg, .jpeg, .png, .gif" type="file" id="photo" name="photo"
-                                                id="input-file-now" class="form-control dropify" size="20" />
+                                                id="input-file-now" class="form-control form-control-sm dropify" size="20" />
                                             <span class="text-danger">{{ $errors->first('photo') }}</span>
                                         </div>
                                     </div>
@@ -248,7 +286,7 @@
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Designation<span
                                                     style="color: red">*</span></label>
-                                            <select id="designation" class="form-control" name="designation" required>
+                                            <select id="designation" class="form-control form-control-sm" name="designation" required>
                                                 <option value="">--Select Designation--</option>
                                                 @foreach($designations as $designation)
                                                 <option {{ $designation->name == old('designation') ? "SELECTED" : "" }}
@@ -262,7 +300,7 @@
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Group/Department<span
                                                     style="color: red">*</span></label>
-                                            <select id="group" id="group" class="form-control" name="group" required>
+                                            <select id="group" id="group" class="form-control form-control-sm" name="group" required>
                                                 <option value="">--Selecet Group/Department--</option>
                                                 @foreach($groups as $group)
                                                 <option {{ $group->id == old('group') ? "SELECTED" : "" }}
@@ -278,7 +316,7 @@
                                             <label for="inputEmail3" class="text-center">Joining Date <span
                                                     style="color: red">*</span></label>
                                             <input type="text" name="joining_date" id="joining_date"
-                                                class="form-control date_picker"
+                                                class="form-control form-control-sm date_picker"
                                                 value="{{ $employee->joining_date }}"
                                                 required />
                                             <span class="text-danger">{{ $errors->first('joining_date') }}</span>
@@ -288,14 +326,14 @@
                                             <label for="inputEmail3" class="text-center">Qualification <span
                                                     style="color: red">*</span></label>
                                             <input type="text" name="qualification" value="{{ $employee->qualification }}"
-                                                id="qualification" class="form-control" required />
+                                                id="qualification" class="form-control form-control-sm" required />
                                             <span class="text-danger">{{ $errors->first('qualification') }}</span>
                                         </div>
 
                                         <div class="col-sm-3">
                                             <label for="inputEmail3" class="text-center">Role<span
                                                     style="color: red">*</span></label>
-                                            <select required id="role" class="form-control" name="role">
+                                            <select required id="role" class="form-control form-control-sm" name="role">
                                                 <option value="">--Selecet Role--</option>
                                                 @foreach($roles as $role)
                                                 <option {{ $role->role_known_id == old('role') ? "SELECTED" : "" }}
@@ -355,6 +393,68 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseSalary"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            Salary sheet
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseSalary" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="panel">
+                        <div class="panel_body">
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>#</th>
+                                            <th>Invoice No</th>
+                                            <th>Month - Year</th>
+                                            <th>Date</th>
+                                            <th>Pay mode</th>
+                                            <th>Net salary</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if ($employee->salaries->count() > 0)
+                                            @foreach ($employee->salaries as $salary)
+                                                <tr class="text-center">
+                                                    <td>{{ $loop->index + 1 }}</td>
+                                                    <td>{{ $salary->invoice_no }}</td>
+                                                    <td>{{ $salary->month ." - ". $salary->year }}</td>
+                                                    <td>{{ $salary->date }}</td>
+                                                    <td>{{ $salary->pay_mode ? $salary->pay_mode : 'N/A' }}</td>
+                                                    <td>{{ $salary->payable }}</td>
+                                                    <td>{{ $salary->is_paid == 0 ? "GENERATED" : "PAID" }}</td>
+                                                    <td>
+                                                        @if ($salary->is_paid == 0)
+                                                            N/A
+                                                        @else
+                                                            <a data-id="{{ $salary->id }}" href="{{ route('admin.hr.employee.salary.pay.slip',[$salary->employee_id, $salary->month, $salary->year]) }}" class="paySlipButton btn btn-sm btn-info">Pay slip</a>
+                                                        @endif
+                                                        <button style="display: none;" class="btn btn-sm btn-blue loading_button{{ $salary->id }}" type="button">Please wait</button>
+                                                    </td>
+                                                </tr>   
+                                            @endforeach
+                                        @else 
+                                        <tr>
+                                            <td colspan="8" class="text-center text-dark"><b>NO DATA FOUND...</b></td>
+                                        </tr>   
+                                        @endif 
+                                    </tbody>
+                                </table>
+                            </div>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
@@ -369,12 +469,14 @@
                     <div class="card-body">
                         <form action="{{ route('admin.employee.social.links.update', $employee->id) }}" method="POST">
                             @csrf
+                            <div class="panel">
+                                <div class="panel_body">
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label for="inputEmail3" class="text-center">Facebook Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
                                         value="{{ $employee->facebook_link }}" name="facebook_link" id="facebook_link"
-                                        class="form-control" />
+                                        class="form-control form-control-sm"/>
                                     <span class="text-danger">{{ $errors->first('facebook_link') }}</span>
                                 </div>
 
@@ -382,7 +484,7 @@
                                     <label for="inputEmail3" class="text-center">linkedIn Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
                                         value="{{ $employee->linkedIn_link }}" name="linkedIn_link" id="linkedIn_link"
-                                        class="form-control" />
+                                        class="form-control form-control-sm"/>
                                     <span class="text-danger">{{ $errors->first('linkedIn_link') }}</span>
                                 </div>
 
@@ -390,11 +492,13 @@
                                     <label for="inputEmail3" class="text-center">Twitter Link</label>
                                     <input type="text" placeholder="eg:https://www.facebook.com/username"
                                         value="{{ $employee->twitter_link }}" name="twitter_link" id="twitter_link"
-                                        class="form-control"  />
+                                        class="form-control form-control-sm"/>
                                     <span class="text-danger">{{ $errors->first('twitter_link') }}</span>
                                 </div>
                             </div>
                             <button class="btn btn-sm btn-blue float-right mb-2" type="submit">Update</button>
+                        </div>
+                    </div>   
                         </form>
                     </div>
                 </div>
@@ -455,6 +559,24 @@
 
                 </form>
                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg salaryPaySlipModal" id="salaryPaySlipModal">
+    <div class="modal-dialog pay_slip_modal_dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header pay_slip_modal_header">
+                <h5 class="modal-title">Pay slip</h5>
+                <button type="button" class="modal_close_button close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body pay_slip_salary_modal_body">
+
             </div>
         </div>
     </div>
@@ -563,6 +685,32 @@
         });
 
     </script> 
+
+    <script>
+        $(document).ready(function () {
+            
+            $(document).on('click', '.paySlipButton', function(e){
+                e.preventDefault();
+               console.log('GET');
+               e.preventDefault();
+               var url = $(this).attr('href');
+               var data_id = $(this).data('id');
+               var generateButton = $(this);
+                   generateButton.hide();
+               $('.loading_button'+data_id).show();
+               $.ajax({
+                   url:url,
+                   type:'get',
+                   success:function(data){
+                       $('.pay_slip_salary_modal_body').html(data);
+                       generateButton.show();
+                       $('.loading_button'+data_id).hide();
+                       $('.salaryPaySlipModal').modal('show');
+                   }
+               })
+            })
+        })  
+    </script>
 
     <script>
 

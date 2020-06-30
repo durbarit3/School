@@ -22,43 +22,35 @@
         }
 
         .panel_header{
-
-                @if ($generalSettings->color_theme == 1)
-                    background-color: #222533;
-                @else 
-                    background-color: #353C48;
-                @endif
-
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
         }
 
         .sidebar-wrapper ul li .menu-item{
-            
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
             @else 
                 background-color: #353C48;
-            @endif
-           
+            @endif 
         }
 
         .modal-header {
-
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
             @else 
                 background-color: #353C48;
             @endif
-
         }
         
         .header_area .sidebar_logo {
-         
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
             @else 
                 background-color: #353C48;
             @endif
-        
         }
     </style>
     <title>@yield('title', 'DurbarIT School Manage System')</title>
@@ -67,9 +59,7 @@
     <link rel="stylesheet" href="{{asset('public/admins/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/admins/plugins/timePicker/css/timepicki.css')}}">
     <link rel="stylesheet" href="{{asset('public/admins/plugins/bootstrap_time_picker/css/bootstrap-datepicker3.css')}}">
-   
     <!--font awesome-->
-
     <link rel="stylesheet" href="{{asset('public/admins/css/all.css')}}">
     <!--@DataTable_CSS_Link-->
     <link href="{{asset('public/admins/plugins/datatables/dataTables.min.css')}}" rel="stylesheet" type="text/css">
@@ -81,6 +71,7 @@
     <!-- donut-chart -->
     <link rel="stylesheet" href="{{asset('public/admins/plugins/donut-chart/dist/style.css')}}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('public/admins/plugins/toastr-js/css/toastr.min.css')}}"> --}}
     <!-- dropify -->
     <link rel="stylesheet" href="{{asset('public/admins/plugins')}}/dist/css/dropify.min.css">
     <!--Custom CSS-->
@@ -127,7 +118,6 @@
         </footer>
     </div>
     <!--/ wrapper -->
-
 
     <!-- jquery -->
     <script src="{{asset('public/admins/js/jquery.min.js')}}"></script>
@@ -218,13 +208,13 @@
                 } else {
                     drDestroy.init();
                 }
-            })
+            });
         });
     </script>
 
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+        <script src="{{asset('public/admins/plugins/toastr-js/js/toastr.min.js')}}"></script>
     <script>
         @if (Session:: has('messege'))
         var type = "{{Session::get('alert-type','info')}}"
@@ -245,7 +235,7 @@
         @endif
     </script>
 
-    <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+    {{-- <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script> --}}
 
     <script>
         $(document).on("click", "#delete", function (e) {
@@ -292,10 +282,8 @@
     <script src="{{asset('public/admins/js/main.js')}}"></script>
     <script src="{{asset('public/admins/plugins/timePicker/js/timepicki.js')}}"></script>
     <script src="{{asset('public/admins/plugins/bootstrap_time_picker/js/bootstrap-datepicker.js')}}"></script>
-    
-    
+
     @stack('js')
 
 </body>
-
 </html>

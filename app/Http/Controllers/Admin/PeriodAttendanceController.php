@@ -19,7 +19,7 @@ class PeriodAttendanceController extends Controller
         $class_id = $request->class_id;
         $section_id = $request->section_id;
         $subject_id = $request->subject_id;
-        $session_id = $request->session_id;
+        $currentSession = Session::where('is_current_session', 1)->first();
         $class_section_id = '';
         if (isset($class_id) && $section_id) {
             $classSection = ClassSection::where('class_id', $class_id)->where('section_id', $section_id)->first();
@@ -27,15 +27,15 @@ class PeriodAttendanceController extends Controller
         }
         
         $classes = Classes::select(['id', 'name'])->get();
-        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->get(['id', 'session_year']);
+        
         $students = StudentAdmission::with(['Class'])
             ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo'])
             ->where('class', $class_id)
             ->where('section', $section_id)
-            ->where('session_id', $session_id)
+            ->where('session_id', $currentSession->id)
             ->get();
 
-        return view('admin.attendance.period_attendance.select_criteria', compact('class_id', 'section_id', 'students', 'classes', 'class_section_id', 'subject_id', 'session_id', 'sessions'));
+        return view('admin.attendance.period_attendance.select_criteria', compact('class_id', 'section_id', 'students', 'classes', 'class_section_id', 'subject_id'));
 
     }
 
@@ -45,6 +45,7 @@ class PeriodAttendanceController extends Controller
         $notes = $request->notes;
         $index = 0;
         date_default_timezone_set('Asia/Dhaka');
+        $currentSession = Session::where('is_current_session', 1)->first();
         foreach ($request->student_ids as $student_id => $attendance_status) {
             $addPeriodAttendance = new PeriodAttendance();
             $addPeriodAttendance->class_id = $request->class_id;
@@ -55,6 +56,7 @@ class PeriodAttendanceController extends Controller
             $addPeriodAttendance->year = date('Y');
             $addPeriodAttendance->date = date('d-m-Y');
             $addPeriodAttendance->attendance_status = $attendance_status;
+            $addPeriodAttendance->session_id = $currentSession->id;
             $addPeriodAttendance->note = $notes[$index] ? $notes[$index] : NULL;
             $addPeriodAttendance->save();
             $index++;

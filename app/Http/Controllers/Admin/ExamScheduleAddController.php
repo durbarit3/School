@@ -16,10 +16,19 @@ class ExamScheduleAddController extends Controller
 {
     public function createSection()
     {
-        $sessions = Session::active();
-        $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        return view('admin.exam_master.schedule.create_schedule.create', compact('classes', 'sessions'));
+        $currentSession = Session::where('is_current_session', 1)->first();
+        $exams = Exam::select(['id', 'name'])->where('session_id', $currentSession->id)
+        ->where('deleted_status', NULL)
+        ->where('status', 1)
+        ->get();
+
+        $classes = Classes::select(['id', 'name'])
+        ->where('deleted_status', NULL)
+        ->where('status', 1)
+        ->get();
+        return view('admin.exam_master.schedule.create_schedule.create', compact('classes', 'exams'));
     }
+
     // Ajax Methods
     public function getSectionsByClassIdByAjax($classId)
     {
@@ -34,10 +43,19 @@ class ExamScheduleAddController extends Controller
     {
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $exam = Exam::where('id', $request->exam_id)->select('id', 'name', 'session_id', 'distributions')->first();
-        $classSection = ClassSection::select(['id'])->where('class_id', $class_id)->where('section_id', $section_id)->first();
+        $exam = Exam::where('id', $request->exam_id)
+        ->select('id', 'name', 'session_id', 'distributions')
+        ->first();
+
+        $classSection = ClassSection::select(['id'])
+        ->where('class_id', $class_id)
+        ->where('section_id', $section_id)
+        ->first();
+
         $subjects = ClassSubject::with(['subject'])->where('class_section_id', $classSection->id)->get();
+
         $halls = ExamHall::select(['id', 'hall_no'])->get();
+        
         return view('admin.exam_master.schedule.create_schedule.ajax_view.ajax_subjects_list_view', 
         compact('exam', 'class_id', 'section_id', 'subjects', 'halls'));
     }
@@ -94,14 +112,5 @@ class ExamScheduleAddController extends Controller
         return response()->json('Exam schedule has been created or modified successfully.)');
         
     }
-
-    public function getExamsBySessionId($sessionId)
-    {
-       $exams = Exam::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->where('session_id', $sessionId)->get();
-     
-       return response()->json($exams);
-       
-    }
-
 
 }

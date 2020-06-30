@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Group;
+use App\Gender;
 use App\BloodGroup;
+use App\EmployeeSalary;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +56,16 @@ class Admin extends Authenticatable
     public function role()
     {
         return $this->hasOne(Vehicle::class,'id', 'vehicle_id');
+    }
+
+    public function salaries()
+    {
+        return $this->hasMany(EmployeeSalary::class, 'employee_id');
+    }
+    
+    public function leaveApplies()
+    {
+        return $this->hasMany(LeaveApply::class, 'employee_id');
     }
 
 }

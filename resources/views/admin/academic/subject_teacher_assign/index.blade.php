@@ -97,7 +97,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Assign Teacher To Class</h4>
+                <h6 class="modal-title">Assign Teacher To Class</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -259,7 +259,7 @@
                             toastr.success(data.success);
                             setInterval(function(){
                                 window.location = "{{ url()->current() }}";
-                            }, 700)
+                            }, 900)
                         }
                           
                     },

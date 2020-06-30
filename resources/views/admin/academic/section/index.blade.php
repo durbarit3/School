@@ -85,7 +85,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Section</h4>
+                <h6 class="modal-title">Add Section</h6>
                 <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
@@ -125,7 +125,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Section</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Section</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -244,7 +244,7 @@
                     toastr.success(data);
                     setInterval(function(){
                         window.location = "{{ url()->current() }}";
-                    }, 700)
+                    }, 900)
                         
                     },
                     error:function(err){

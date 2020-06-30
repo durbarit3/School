@@ -61,7 +61,7 @@
             padding: 1px 10px;
             margin-bottom: 7px;
             border-radius: 5px;
-            width: 350px;
+            width: 450px;
         }
         
         .attendance_status_marking_area h6 {
@@ -134,7 +134,17 @@
                                 @csrf
                                 <div class="row">
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <label class="m-0"> Session :</label>
+                                        <select name="session_id" class="form-control form-control-sm" required>
+                                            <option value="">Select session</option>
+                                            @foreach ($sessions as $session)
+                                                <option value="{{ $session->id }}">{{ $session->session_year }}</option> 
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
                                         <label class="m-0">Class :</label>
                                         <select name="class_id" class="form-control form-control-sm select_class" required>
                                             <option value="">Select class</option>
@@ -144,18 +154,51 @@
                                         </select>
                                     </div>
                                     
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label class="m-0">Section :</label>
                                         <select name="section_id" id="student_attn_section" class="form-control form-control-sm" required>
                                             <option value="">Select section</option>
                                         </select>
                                     </div>
                                     
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label class="m-0">Month :</label>
-                                        <input required type="text" class="form-control form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-M') }}" name="year_month">
+                                        <input required type="text" class="form-control form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
                                     </div>
 
+                                </div>
+                                <button  type="submit" class="btn btn-sm btn-blue mt-2 float-right">Search</button>
+                            </form>
+                            
+                            <form class="report_form employee_attendance_report_form pb-2" action="{{ route('admin.reports.attendance.report.employee.attendance') }}"
+                                method="get">
+                                <div class="heading_area">
+                                    <div class="heading">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6><b>Employee Attendance Report Form</b><hr class="m-0 p-0"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @csrf
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <label class="m-0">Role :</label>
+                                        <select name="role_known_id" class="form-control form-control-sm" required>
+                                            <option value="">---Select role---</option>
+                                            @foreach ($roles as $role)
+                                                <option value="{{ $role->role_known_id }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="m-0">Month :</label>
+                                        <input required type="text" class="form-control form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
+                                    </div>
+                                
                                 </div>
                                 <button  type="submit" class="btn btn-sm btn-blue mt-2 float-right">Search</button>
                             </form>
@@ -175,18 +218,12 @@
                                 <div class="row">
 
                                     <div class="col-md-2">
-                                        <label class="m-0"> Academic year :</label>
-                                        <select name="year" class="form-control form-control-sm" required>
-                                            <option value="">Select year</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2026">2026</option>
-                                            <option value="2027">2027</option>
-                                            <option value="2028">2028</option>
+                                        <label class="m-0"> Session :</label>
+                                        <select name="session_id" class="form-control select_session form-control-sm" required>
+                                            <option value="">Select session</option>
+                                            @foreach ($sessions as $session)
+                                                <option value="{{ $session->id }}">{{ $session->session_year }}</option> 
+                                            @endforeach
                                         </select>
                                     </div>
                                     
@@ -194,9 +231,6 @@
                                         <label class="m-0">Exam :</label>
                                         <select name="exam_id" id="exams" class="form-control form-control-sm" required>
                                             <option value="">---Select exam---</option>
-                                            @foreach ($exams as $exam)
-                                                <option value="{{ $exam->id }}">{{ $exam->name }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                     
@@ -250,6 +284,7 @@
     <script>
 
         var menu = '';
+
         $('.report_form').hide();
         $('.table_body').hide();
         $('.form_field_body').hide();
@@ -276,6 +311,16 @@
                 $('.table_area').empty();
                 $('.table_body').hide(100);
             });
+            
+            $('.employee_attendance_report').on('click', function(e){
+                e.preventDefault();
+                $('.report_form').hide(100);
+                $('.employee_attendance_report_form')[0].reset();
+                $('.employee_attendance_report_form').show();
+                $('.form_field_body').show(100);
+                $('.table_area').empty();
+                $('.table_body').hide(100);
+            });
 
             $(document).on('click', '.report_menu_link', function (e){
                 menu = $(this).data('value');
@@ -290,6 +335,42 @@
         $(document).ready(function () {
 
             $('.student_attendance_report_form').on('submit', function(e){
+                e.preventDefault();
+                $('.table_body').show();
+                $('.table_area').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+    
+                        if (!$.isEmptyObject(data.error)) {
+                            $('.table_body').show();
+                            $('.loading').hide(100); 
+                            toastr.error(data.error);
+                            $('.table_body').hide();
+                            
+                        }else{
+                            $('.table_area').html(data); 
+                            $('.loading').hide(100); 
+                            $('.table_body').show();
+                        }
+                    },
+                });
+            });
+        });
+
+    </script>   
+    
+    <script>
+      
+        $(document).ready(function () {
+
+            $('.employee_attendance_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
                 $('.table_area').empty();
@@ -349,6 +430,7 @@
                             $('.loading').hide(100); 
                             $('.table_body').show();
                         }
+
                     },
                 });
             });
@@ -409,6 +491,30 @@
                         $('#subjects').append(' <option value="">--Select subject--</option>');
                         $.each(data, function (key, val) {
                             $('#subjects').append(' <option value="' + val.subject_id + '">' + val.subject.name + '</option>');
+                        })
+                    }
+                })
+            })
+        });
+
+    </script>
+    
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            $(document).on('change', '.select_session', function () {
+                var sessionId = $(this).val();
+             
+                $.ajax({
+                    url: "{{ url('admin/reports/attendance_report/get/exams/by') }}" + "/" + sessionId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#exams').empty();
+                        $('#exams').append(' <option value="">--Select exam--</option>');
+                        $.each(data, function (key, val) {
+                            $('#exams').append(' <option value="' + val.id + '">' + val.name + '</option>');
                         })
                     }
                 })

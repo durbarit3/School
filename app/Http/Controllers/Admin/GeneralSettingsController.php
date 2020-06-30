@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Session;
 use App\GeneralSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,7 +12,8 @@ class GeneralSettingsController extends Controller
 {
     public function index()
     {
-        return view('admin.setting.general_settings.index');
+        $sessions = Session::all();
+        return view('admin.setting.general_settings.index', compact('sessions'));
     }
 
     public function logoUpdate(Request $request, $generalSettingId)
@@ -79,6 +81,27 @@ class GeneralSettingsController extends Controller
     
         $notification = array(
             'messege' => 'School information is updated successfully',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    public function setCurrentSession(Request $request)
+    {
+        $this->validate($request, [
+            'session_id' => 'required',
+        ]);
+
+        $sessions = Session::where('is_current_session', 1)->first();
+        $sessions->is_current_session = 0;
+        $sessions->save();
+
+        $setCurrentSession = Session::where('id', $request->session_id)->first();
+        $setCurrentSession->is_current_session = 1;
+        $setCurrentSession->save();
+
+        $notification = array(
+            'messege' => 'School current session has been set successfully',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -155,16 +178,16 @@ class GeneralSettingsController extends Controller
     
     public function setColorTheme($colorThemeId)
     {
-            $generalSetting = GeneralSetting::first();
+        $generalSetting = GeneralSetting::first();
 
-        
-            $generalSetting->color_theme = $colorThemeId;
-            $generalSetting->save();
-            $notification = array(
-                'messege' => 'Color theme is activated',
-                'alert-type' => 'success'
-            );
-            return Redirect()->back()->with($notification);
+    
+        $generalSetting->color_theme = $colorThemeId;
+        $generalSetting->save();
+        $notification = array(
+            'messege' => 'Color theme is activated',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
         
     }
 

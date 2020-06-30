@@ -34,7 +34,6 @@ class EventController extends Controller
             $data->date = $request->date;
             $data->time = $request->time;
             
-
             if($request->hasFile('pic')) {
                 $image = $request->file('pic');
                 $ImageName = 'event' . '_' . time() . '.'.$image->getClientOriginalExtension();

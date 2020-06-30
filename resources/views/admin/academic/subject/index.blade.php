@@ -111,7 +111,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Subject</h4>
+                <h6 class="modal-title">Add Subject</h6>
                 <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
@@ -161,42 +161,34 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Subject</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Subject</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body edit_modal_body">
-
+                
             </div>
         </div>
     </div>
 </div>
 
-
-
 @endsection
 
 @push('js')
-
     <script type="text/javascript">
 
         $(document).ready(function () {
-
             $('.modal_close_button').on('click', function(){
                 $('.error').html('');
                 $('.form-control').removeClass('is-invalid');
                 $('.radio_input').removeClass('red_border');
             })
-
         });
-
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
-
             $('#check_all').on('click', function (e) {
                 if ($(this).is(':checked', true)) {
                     $(".checkbox").prop('checked', true);
@@ -204,7 +196,6 @@
                     $(".checkbox").prop('checked', false);
                 }
             });
-
         });
 
     </script>
@@ -227,7 +218,7 @@
 
     <script>
         $(document).ready(function () {
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -251,7 +242,7 @@
                     toastr.success(data);
                     setInterval(function(){
                         window.location = "{{ url()->current() }}";
-                    }, 700)
+                    }, 900)
                         
                     },
                     error:function(err){
@@ -283,8 +274,5 @@
                 });
             });
         });
-
     </script> 
-
-
 @endpush

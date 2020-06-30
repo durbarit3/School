@@ -17,9 +17,9 @@ class ExamAttendanceController extends Controller
     public function index()
     {
         $classes = Classes::select(['id', 'name'])->get();
-        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
-
-        return view('admin.attendance.exam_attendance.index', compact('classes', 'sessions'));
+        $currentSession = Session::where('is_current_session', 1)->first();
+        $exams = Exam::select(['id', 'name'])->where('session_id', $currentSession->id)->where('deleted_status', NULL)->where('status', 1)->get();
+        return view('admin.attendance.exam_attendance.index', compact('classes', 'exams'));
     }
 
     public function getSubjectsByClassSectionId($classId, $sectionId)
@@ -35,17 +35,13 @@ class ExamAttendanceController extends Controller
         
     }
 
-    public function getExamsByAjax($sessionId)
-    {
-        $exams = Exam::select(['id', 'name'])->where('session_id', $sessionId)->where('deleted_status', NULL)->where('status', 1)->get();
-        return response()->json($exams); 
-    }
+   
 
     public function search(Request $request)
     {
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $session_id = $request->session_id;
+        $currentSession = Session::where('is_current_session', 1)->first();
         $subject_id = $request->subject_id;
         $exam_id = $request->exam_id;
         date_default_timezone_set('Asia/Dhaka');
@@ -61,7 +57,7 @@ class ExamAttendanceController extends Controller
         ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo', 'last_attend'])
         ->where('class', $class_id)
         ->where('section', $section_id)
-        ->where('session_id', $session_id)
+        ->where('session_id', $currentSession->id)
         ->get();
 
         return view('admin.attendance.exam_attendance.ajax_view.search_student_view', compact('checkExistsAttendance', 'students', 'class_id', 'section_id', 'subject_id', 'exam_id'));

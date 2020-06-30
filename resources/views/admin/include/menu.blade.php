@@ -135,7 +135,7 @@
                         <li class="{{ Request::is('admin/exam/master/admit/card*') ? 'mm-active' : '' }} my-1 ml-2 p-0">
                             <a class="{{ Request::is('admin/exam/master/admin/card*') ? 'menu-item' : '' }} has-arrow" href="#" aria-expanded="false">
                                 <span class="left-icon"><i class="fas fa-marker"></i></span>
-                                <span class="menu-text">&nbsp;&nbsp;Admin Card</span>
+                                <span class="menu-text">&nbsp;&nbsp;Admit Card</span>
                             </a>
                             <ul class=" ml-2">
                                 <a class="{{ Request::is('admin/exam/master/admit/card/designees') ? 'text_active' : '' }}" href="{{ route('admin.exam.master.admit.card.design.index') }}">
@@ -230,15 +230,17 @@
                     <span class="menu-text">Human Resorce</span>
                 </a>
                 <ul class="dashboard-menu">
-                    <li><a href="{{ route('admin.department.index') }}">Department</a></li>
-
-                    <li><a href="{{ route('admin.secdesignation.index') }}">Designation</a></li>
-
+                   
                     <li><a class="{{ Request::is('admin/human_resource/employee/attendance*') ? 'text_active' : '' }}" href="{{ route('admin.hr.employee.attendance.index') }}">Employee attendance</a></li>
 
                     <li><a class="{{ Request::is('admin/human_resource/employee/salary*') ? 'text_active' : '' }}" href="{{ route('admin.hr.employee.salary.index') }}">Employee salary</a></li>
 
                     <li><a class="{{ Request::is('admin/human_resource/leave/apply*') ? 'text_active' : '' }}" href="{{ route('admin.hr.leave.apply.index') }}">Leave apply</a></li>
+                    
+                    @if (Auth::user()->role == 1 or Auth::user()->role == 2)
+                    <li><a class="{{ Request::is('admin/human_resource/leave/approval*') ? 'text_active' : '' }}" href="{{ route('admin.hr.leave.approval.index') }}">Leave approval</a></li>
+                    @endif
+                    
 
                     <li><a class="{{ Request::is('admin/human_resource/leave/type*') ? 'text_active' : '' }}" href="{{ route('admin.hr.leave.type.index') }}">Leave type</a></li>
                 </ul>
@@ -304,10 +306,9 @@
                     <span class="menu-text">Emplyees</span>
                 </a>
                 <ul class="dashboard-menu">
-                    <li><a href="{{ route('admin.employee.all.admins') }}">Employee List</a></li>
-                    <li><a href="{{ route('admin.employee.create') }}">Add Employee</a></li>
-                    <li><a href="{{ route('admin.employee.department.index') }}">Department</a></li>
-                    <li><a href="#">Search Employee</a></li>
+                    <li><a class="{{ Request::is('admin/employees/all*') ? 'text_active' : '' }}" href="{{ route('admin.employee.all.admins') }}">Employee List</a></li>
+                    <li><a class="{{ Request::is('admin/employees/create') ? 'text_active' : '' }}" href="{{ route('admin.employee.create') }}">Add Employee</a></li>
+                    <li><a class="{{ Request::is('admin/employees/department*') ? 'text_active' : '' }}" href="{{ route('admin.employee.department.index') }}">Department</a></li>
                 </ul>
             </li>
 

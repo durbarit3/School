@@ -219,7 +219,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
+                                <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
                             
                             <form class="report_form expense_report_form pb-2" action="{{ route('admin.reports.finance.report.expense') }}"
@@ -262,7 +262,7 @@
                                     </div>
 
                                 </div>
-                                <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
+                                <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
                             
                             <form class="report_form expense_group_report_form pb-2" action="{{ route('admin.reports.finance.report.expense.group') }}"
@@ -282,7 +282,7 @@
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
-                                            class="form-control form-control-sm select_section section_id">
+                                            class="form-control form-control-sm">
                                             <option value="">--- Select Type ---</option>
                                             <option value="today">Today</option>
                                             <option value="this_week">This Week</option>
@@ -318,7 +318,85 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
+                                <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
+                            </form>
+                            
+                            <form class="report_form salary_report_form pb-2" action="{{ route('admin.reports.finance.report.salary.report') }}"
+                                method="get">
+                                <div class="heading_area">
+                                    <div class="heading">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6><b>Salary report form</b><hr class="m-0 p-0"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @csrf
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <label class="m-0">Search Type :</label>
+                                        <select required name="select_type" id="select_type"
+                                            class="form-control form-control-sm">
+                                            <option value="">--- Select Type ---</option>
+                                            <option value="month_wise">Month-wise</option>
+                                            <option value="period">Period-wise</option> 
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date From :</label>
+                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                    </div>
+
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date To :</label>
+                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                    </div>
+
+                                    <div class="col-md-3 month_wise_year_or_month">
+                                        <label class="m-0">Year :</label>
+                                        <select  name="year" id="year"
+                                            class="form-control form-control-sm ">
+                                            <option disabled value="">--- Select year ---</option>
+                                            @foreach ($years as $year)
+                                            <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-3 month_wise_year_or_month">
+                                        <label class="m-0">Month :</label>
+                                        <select name="month" id="month" class="form-control form-control-sm">
+                                            <option disabled value="">--- Select month ---</option>
+                                            <option value="January">January</option>
+                                            <option value="Fabruary">Fabruary</option>
+                                            <option value="March">March</option>
+                                            <option value="April">April</option>
+                                            <option value="May">May</option>
+                                            <option value="June">June</option>
+                                            <option value="July">July</option>
+                                            <option value="August">August</option>
+                                            <option value="September">September</option>
+                                            <option value="October">October</option>
+                                            <option value="November">November</option>
+                                            <option value="December">December</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label class="m-0">Paid status :</label>
+                                        <select required name="paid_status" id="paid_status" class="form-control form-control-sm">
+                                            <option value="">--- Select paid status ---</option>
+                                            <option value="all">All</option>
+                                            <option value="paid">Paid</option>
+                                            <option value="no_paid">No-Paid/Due</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
                           
                         </div>
@@ -394,6 +472,18 @@
                 $('.table_body').hide(100);
             });
             
+            $('.salary_report').on('click', function(e){
+                e.preventDefault();
+                $('.report_form').hide(100);
+                $('.salary_report_form')[0].reset();
+                $('.salary_report_form').show(100);
+                $('.form_field_body').show(100);
+                $('.period_field_area').hide(100);
+                $('.month_wise_year_or_month').hide(100);
+                $('.table_area').empty();
+                $('.table_body').hide(100);
+            });
+            
             $('.account_balance_report').on('click', function(e){
                 e.preventDefault();
                 $('.report_form').hide(100);
@@ -433,6 +523,10 @@
                 var value = $(this).val();
                 if(value === 'period'){
                     $('.period_field_area').show();
+                    $('.month_wise_year_or_month').hide();
+                }else if(value === 'month_wise'){
+                    $('.month_wise_year_or_month').show();
+                    $('.period_field_area').hide();
                 }else{
                     $('.period_field_area').hide(); 
                 }
@@ -478,6 +572,7 @@
         });
 
     </script>  
+
     <script>
       
         $(document).ready(function () {
@@ -555,6 +650,42 @@
         $(document).ready(function () {
 
             $('.expense_group_report_form').on('submit', function(e){
+                e.preventDefault();
+                $('.table_body').show();
+                $('.table_area').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+    
+                        if (!$.isEmptyObject(data.error)) {
+                            $('.table_body').show();
+                            $('.loading').hide(100); 
+                            toastr.error(data.error);
+                            $('.table_body').hide();
+                            
+                        }else{
+                            $('.table_area').html(data); 
+                            $('.loading').hide(100); 
+                            $('.table_body').show();
+                        }
+                    },
+                });
+            });
+        });
+
+    </script> 
+    
+    <script>
+      
+        $(document).ready(function () {
+
+            $('.salary_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
                 $('.table_area').empty();

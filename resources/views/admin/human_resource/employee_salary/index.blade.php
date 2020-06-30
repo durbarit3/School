@@ -506,12 +506,11 @@ date_default_timezone_set('Asia/Dhaka');
         $(document).ready(function () {
             $(document).on('input', '#vat_amount', function(e){
                 
-                    var vat_amount = $(this).val();
-              
-                    var total_gross_pay = $('#gross_pay').val();
-                    var net_total = parseFloat(total_gross_pay) - parseFloat(vat_amount);
-                    $('#net_total').val(net_total);
-                
+                var vat_amount = $(this).val();
+            
+                var total_gross_pay = $('#gross_pay').val();
+                var net_total = parseFloat(total_gross_pay) - parseFloat(vat_amount);
+                $('#net_total').val(net_total);
                 
             })
         })  

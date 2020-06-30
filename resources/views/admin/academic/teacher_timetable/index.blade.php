@@ -118,9 +118,6 @@ date_default_timezone_set('Asia/Dhaka');
         </div>
     </section>
 </div>
-
-
-
 @endsection
 
 @push('js')
@@ -156,9 +153,4 @@ date_default_timezone_set('Asia/Dhaka');
     });
 
 </script>
-
-
-
-
-
 @endpush

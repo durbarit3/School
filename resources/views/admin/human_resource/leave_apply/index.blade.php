@@ -13,7 +13,7 @@
 
         @media (min-width: 576px){
             .leave_applye_details_modal_dialog {
-                max-width: 800px;
+                max-width: 650px;
                 margin: 1.75rem auto;
             }
         }
@@ -264,7 +264,7 @@ date_default_timezone_set('Asia/Dhaka');
                         toastr.success(data.successMsg);
                         setInterval(function(){
                             window.location = "{{ url()->current() }}";
-                        }, 700)
+                        }, 700);
                         
                     },
                     error:function(err){

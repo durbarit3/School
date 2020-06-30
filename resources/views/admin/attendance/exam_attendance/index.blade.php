@@ -31,21 +31,14 @@ date_default_timezone_set('Asia/Dhaka');
                             @csrf
 
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label class="p-0 m-0"><b>Session :</b> </label>
-                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
-                                        <option value="">Select session</option>
-                                        @foreach ($sessions as $session)
-                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                
+                             
                                 <div class="col-md-3">
                                     <label class="p-0 m-0"><b>Exam Name :</b></label>
                                     <select required name="exam_id" id="exams" class="form-control form-control-sm">
                                         <option value="">Select Exam Name</option>
-                                        
+                                        @foreach ($exams as $exam)
+                                           <option value="{{ $exam->id }}">{{ $exam->name }}</option> 
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -122,28 +115,6 @@ date_default_timezone_set('Asia/Dhaka');
 
     </script> 
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.select_session').on('change', function () {
-                var sessionId = $(this).val();
-                $.ajax({
-                    url: "{{ url('admin/attendance/exam/attendance/get/exams/by') }}" + "/" + sessionId,
-                    type: 'get',
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                        $('#exams').empty();
-                        $('#exams').append(' <option value="">--Select exam name--</option>');
-                        $.each(data, function (key, val) {
-                            $('#exams').append(' <option value="' + val.id + '">' + val.name + '</option>');
-                        })
-                    }
-                })
-            })
-        });
-
-    </script>
-    
     <script type="text/javascript">
         
         $(document).ready(function () {

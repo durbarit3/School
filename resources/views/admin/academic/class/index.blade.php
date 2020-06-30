@@ -107,7 +107,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Class</h4>
+                <h6 class="modal-title">Add Class</h6>
                 <button type="button" class="modal_close_button close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -152,7 +152,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Class</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Edit Class</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

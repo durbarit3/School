@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Year;
 use App\Income;
 use App\Classes;
 use App\Expanse;
@@ -9,6 +10,7 @@ use Carbon\Carbon;
 use App\BankAccount;
 use App\IncomeHeader;
 use App\ExpanseHeader;
+use App\EmployeeSalary;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +22,8 @@ class FinanceReportController extends Controller
         $incomeHeaders = IncomeHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $expanseHeaders = ExpanseHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        return view('admin.report.finance_report.index', compact('classes', 'incomeHeaders', 'expanseHeaders'));
+        $years = Year::all();
+        return view('admin.report.finance_report.index', compact('classes', 'incomeHeaders', 'expanseHeaders', 'years'));
     }
 
     public function incomeReport(Request $request)
@@ -225,5 +228,34 @@ class FinanceReportController extends Controller
        $accounts = BankAccount::with(['bank','bank_deposits', 'bank_withdraws'])->get();
 
        return view('admin.report.finance_report.ajax_view.account_balance_report', compact('accounts'));
+    }
+
+    public function salaryReport(Request $request)
+    {
+        //return $request->paid_status;
+        $salarySheets = "";
+        $dateFromFormat = date('Y-m-d', strtotime($request->date_from));
+        $dateToFormat = date('Y-m-d', strtotime($request->date_to));
+        if ($request->select_type === "period") {
+            if ($request->paid_status == 'all') {
+                $salarySheets = EmployeeSalary::whereBetween('paid_date', [$dateFromFormat, $dateToFormat])->get();
+            }elseif ($request->paid_status === 'paid') {
+                $salarySheets = EmployeeSalary::whereBetween('paid_date', [$dateFromFormat, $dateToFormat])->where('is_paid', 1)->get();
+            }elseif($request->paid_status === 'no_paid'){
+                $salarySheets = EmployeeSalary::whereBetween('created_at', [$dateFromFormat, $dateToFormat])->where('is_paid', 0)->get();
+            }
+        
+        }else{
+            if ($request->paid_status == 'all') {
+                $salarySheets = EmployeeSalary::where('month', $request->month)->where('year', $request->year)->get();
+            }elseif($request->paid_status === 'paid'){
+                $salarySheets = EmployeeSalary::where('month', $request->month)->where('year', $request->year)->where('is_paid', 1)->get();
+            }elseif ($request->paid_status === 'no_paid') {
+               $salarySheets = EmployeeSalary::where('month', $request->month)->where('year', $request->year)->where('is_paid', 0)->get();
+            }
+            
+        }
+
+        return view('admin.report.finance_report.ajax_view.salary_report', compact('salarySheets'));
     }
 }

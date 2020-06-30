@@ -63,6 +63,7 @@
                     $totalAbsent = 0;
                     $totalLate = 0;
                     $totalHalfDay = 0;
+                    
                     @endphp
                     @foreach ($monthDates as $monthDate)
                         @php

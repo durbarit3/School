@@ -23,13 +23,13 @@ class CurrentDayAttendanceController extends Controller
     {
        $class_id = $request->class_id;
        $section_id = $request->section_id;
-       $session_id = $request->session_id;
+        $currentSession = Session::where('is_current_session', 1)->first();
        date_default_timezone_set('Asia/Dhaka');
         $students = StudentAdmission::with(['Class', 'Section'])
         ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo', 'last_attend'])
         ->where('class', $class_id)
         ->where('section', $section_id)
-        ->where('session_id', $session_id)
+        ->where('session_id', $currentSession->id)
         ->get();
 
         if ($students->count() == 0) {
@@ -40,8 +40,7 @@ class CurrentDayAttendanceController extends Controller
             });
             return view('admin.attendance.current_day_attendance.ajax_view.search_student_view', compact('filteredStudents', 'class_id', 'section_id'));
         }
-        
-        
+           
     }
 
     public function store(Request $request)

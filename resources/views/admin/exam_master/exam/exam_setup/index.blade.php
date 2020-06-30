@@ -115,19 +115,6 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label  class="col-form-label text-right"><b>Session </b>:</label>
-                            <select name="session_id" class="form-control type">
-                                <option value="">Select session</option>
-                                @foreach ($sessions as $session)
-                                <option value="{{ $session->id }}"> {{ $session->session_year }} </option>
-                                @endforeach
-                            </select>
-                            <div class="error type_error"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-sm-12">
                             <label  class="col-form-label text-right"><b>Exam Type </b>:</label>
                             <select name="type" class="form-control type">
                                 <option value="">Select Exam Type</option>

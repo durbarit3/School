@@ -51,25 +51,17 @@ date_default_timezone_set('Asia/Dhaka');
                             @csrf
                             <div class="row">
 
-                                <div class="col-md-3">
-                                    <label>Session</label>
-                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
-                                        <option value="">Select session</option>
-                                        @foreach ($sessions as $session)
-                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label>Exam Name</label>
                                     <select required name="exam_id" id="exams" class="form-control form-control-sm">
                                         <option value="">Select Exam Name</option>
-                                        
+                                        @foreach ($exams as $exam)
+                                            <option value="{{ $exam->id }}">{{ $exam->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label>Class</label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">Select class</option>
@@ -79,7 +71,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     </select>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label>Section</label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">

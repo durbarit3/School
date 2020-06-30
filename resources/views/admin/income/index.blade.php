@@ -185,115 +185,114 @@
     </div>
 </div>
 
-
 @endsection
 
 @push('js')
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
-        });
-    });
-
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('.loading').hide();
-       $(document).on('click', '.edit_income', function(){
-           var income_id = $(this).data('id');
-           var id = $(this).closest('td').data('id');
-            $('.previous-'+id).hide();
-            $('.button_loader-'+id).show();
-           $.ajax({
-               url:"{{ url('admin/incomes/edit') }}" + "/" + income_id,
-               type:'get',
-               success:function(data){
-                   $('.edit_modal_body').empty();
-                   $('.edit_modal_body').append(data);
-                   $('#editModal').modal('show');
-                   $('.previous-'+id).show();
-                   $('.button_loader-'+id).hide();
-               }
-           });
-       });
-   });
-
-   $(document).ready(function(){
-        $(".add_in_date_picker").flatpickr({
-            dateFormat: "d-m-Y",
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
+                }
+            });
         });
 
-        $(document).on('submit', '#add_income_form', function(e){
-            e.preventDefault();
-            var url = $(this).attr('action');
-            var type = $(this).attr('method');
-            var request = $(this).serialize();
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.loading').hide();
+        $(document).on('click', '.edit_income', function(){
+            var income_id = $(this).data('id');
+            var id = $(this).closest('td').data('id');
+                $('.previous-'+id).hide();
+                $('.button_loader-'+id).show();
             $.ajax({
-                url:url,
-                type:type,
-                data: request,
+                url:"{{ url('admin/incomes/edit') }}" + "/" + income_id,
+                type:'get',
                 success:function(data){
-
-                   //log(data);
-                   
-                   $('.error').html('');
-                   $('#add_income_form')[0].reset();
-                   $('#myModal1').modal('hide');
-                   toastr.success(data);
-                   setInterval(function(){
-                    window.location = "{{ url()->current() }}";
-                   }, 700)
-                   
-                   
-                },
-                error:function(err){
-                    //log(err.responseJSON.errors);
-                    if(err.responseJSON.errors.header_id){
-                        $('.header_error').html('Income header is required');
-                        
-                        $('.header').addClass('is-invalid');
-                    }else{
-                        $('.header_error').html('');
-                        $('.header').removeClass('is-invalid');
-                    }
-                    if(err.responseJSON.errors.amount){
-                        $('.amount_error').html('');
-                        $('.amount').removeClass('is-invalid');
-                        $('.amount_error').html(err.responseJSON.errors.amount[0]);
-                        
-                        $('.amount').addClass('is-invalid');
-                    }else{
-                        $('.amount_error').html('');
-                        $('.amount').removeClass('is-invalid');
-                    }
-                  
+                    $('.edit_modal_body').empty();
+                    $('.edit_modal_body').append(data);
+                    $('#editModal').modal('show');
+                    $('.previous-'+id).show();
+                    $('.button_loader-'+id).hide();
                 }
             });
         });
     });
 
-</script> 
+    $(document).ready(function(){
+            $(".add_in_date_picker").flatpickr({
+                dateFormat: "d-m-Y",
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#add_income_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                    //log(data);
+                    
+                    $('.error').html('');
+                    $('#add_income_form')[0].reset();
+                    $('#myModal1').modal('hide');
+                    toastr.success(data);
+                    setInterval(function(){
+                        window.location = "{{ url()->current() }}";
+                    }, 700)
+                    
+                    
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.header_id){
+                            $('.header_error').html('Income header is required');
+                            
+                            $('.header').addClass('is-invalid');
+                        }else{
+                            $('.header_error').html('');
+                            $('.header').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.amount){
+                            $('.amount_error').html('');
+                            $('.amount').removeClass('is-invalid');
+                            $('.amount_error').html(err.responseJSON.errors.amount[0]);
+                            
+                            $('.amount').addClass('is-invalid');
+                        }else{
+                            $('.amount_error').html('');
+                            $('.amount').removeClass('is-invalid');
+                        }
+                    
+                    }
+                });
+            });
+        });
+
+    </script> 
 
 @endpush
 

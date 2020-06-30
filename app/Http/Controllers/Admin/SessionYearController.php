@@ -24,8 +24,7 @@ class SessionYearController extends Controller
         $addSession = new Session();
         $addSession->session_year = $request->session_year;
         $addSession->save();
-        
-
+    
         return response()->json('Session year inserted successfully:)');
     }
 

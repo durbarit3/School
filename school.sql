@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2020 at 07:22 PM
+-- Generation Time: Jun 30, 2020 at 03:23 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -79,18 +79,25 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`employee_id`, `id`, `adminname`, `phone`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `verification_code`, `status`, `employee_status`, `avater`, `created_at`, `updated_at`, `gender`, `religion`, `blood_group_id`, `group_id`, `department_id`, `date_of_birth`, `joining_date`, `present_address`, `permanent_address`, `designation`, `qualification`, `facebook_link`, `linkedIn_link`, `twitter_link`, `bank_name`, `account_holder`, `bank_branch`, `bank_address`, `ifsc_code`, `account_no`, `deleted_status`, `deleted_by`, `deleted_at`, `basic_salary`, `contract_type`, `work_sift`, `location`, `date_of_leaving`) VALUES
-(NULL, 8, 'Admin', '01854284712', 'admin@gmail.com', NULL, '$2y$10$T0TyQAMWZ0k8BwcMyH3jxuuqr5rx5vUpLh91ZmBHrb.x39RT21GoG', '1', 'a7RM3SWsRRFjW0d73pKOa22lTTQIqnIeSE6gK6B7BLqPl39FKFr8IEIo47wT', NULL, '1', 1, 'admin.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
-('E032009', 9, 'Farea Sultana', '1234123121', 'sefyxy@mailinator.net', NULL, '$2y$10$HsaAumfIygHyO4hF52t2heYMkxlRa9TH3GS.Oob6JwzLPC67u..5e', '3', NULL, NULL, '0', 1, '5e7d92a80c101.jpg', '2020-03-27 05:44:08', '2020-06-02 12:30:49', 'Female', 'Muslim', 5, 2, NULL, '2020-03-14', '19-03-2020', 'Mirpur 1, Dhaka, Bangladesh', 'M.pase, Khulna, Bangladesh', 'Teacher', 'B.S.C', 'Eu quia laboriosam', 'Nobis anim ea mollit', 'Ex officia ex molest', 'Kay Mcknight', 'Andrew Cote', 'Delectus repudianda', 'Rerum delectus reru', 'Ut tempora laborum', '1234567', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
-('E032010', 10, 'Jerome Cortez', '0198524547', 'waxoqovi@mailinator.com', NULL, '$2y$10$icpsPNFsrghtvlrFxJIdp.OnXX8kAQaLFNLe2UXWos/d.taO9dYvW', '2', NULL, NULL, '0', 1, '5e7e123268059.jpg', '2020-03-27 05:47:50', '2020-06-09 12:14:50', 'Female', 'Christian', 2, 3, NULL, '1990-01-01', '10-03-2020', 'Nulla exercitationem', 'Consequatur aut quis', 'Asst. Teacher', 'M.S.C', 'https://facebook.com', 'https://linkedin.com', 'https://twitter.com', 'Sonali Bank', 'JEROME CORTEZ', 'Mirput 1 Branch', 'Mirpur 1, Dhaka, Bangladesh', '2024', '1235788', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
+('E032001', 8, 'Mr.X', '01854284712', 'admin@gmail.com', NULL, '$2y$10$p10zGRYPfdyij8xx2cvB4.3ZxI783.lE4NV73DA/LLwaqYdNKYYz.', '1', 'bISPlMb6GhVVRlRx2dVUJ7uq8I4ctVF78rf7xEMoZPen8MLkQvhJH8UwnZR9', NULL, '1', 1, '5ef5f70e32d84.jpg', NULL, '2020-06-26 13:36:31', 'Male', 'Muslim', 3, 1, NULL, '2005-09-11', '2005-09-11', 'Id recusandae Velit', 'Accusamus culpa veri', 'Principal', 'B.B.A', 'www.facebook.com', 'www.linkedId.com', 'www.twitter.com', 'Sonali Bank Limited', 'Mr.X', 'Mirpur 1', 'Mirpur 1, Dhaka, Bangladesh', '74555', '8854488558', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
+('E032009', 9, 'Farea Sultana', '1234123121', 'sefyxy@mailinator.net', NULL, '$2y$10$ej2X4QXtrJ3MWutlWKrBwufYtPWJ9wmeQQhsbl5GsI/7xrYuuoXcG', '3', NULL, NULL, '1', 1, '5e7d92a80c101.jpg', '2020-03-27 05:44:08', '2020-06-23 09:10:03', 'Female', 'Muslim', 5, 2, NULL, '2020-03-14', '19-03-2020', 'Mirpur 1, Dhaka, Bangladesh', 'M.pase, Khulna, Bangladesh', 'Teacher', 'B.S.C', 'www.facebook.com', 'www.linkedIn.com', 'www.twitter.com', 'Kay Mcknight', 'Andrew Cote', 'Delectus repudianda', 'Rerum delectus reru', 'Ut tempora laborum', '1234567', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
+('E032010', 10, 'Jerome Cortez', '0198524547', 'waxoqovi@mailinator.com', NULL, '$2y$10$kaAbGdxk0.LRcmRiUwYSjuALTYjTXtISAar2wp3czaBrJtELkPJe6', '2', NULL, NULL, '1', 1, '5ef604bbd9074.jpg', '2020-03-27 05:47:50', '2020-06-26 14:22:51', 'Female', 'Christian', 2, 3, NULL, '1990-01-01', '10-03-2020', 'Nulla exercitationem', 'Consequatur aut quis', 'Asst. Teacher', 'M.S.C', 'https://facebook.com', 'https://linkedin.com', 'https://twitter.com', 'Sonali Bank', 'JEROME CORTEZ', 'Mirput 1 Branch', 'Mirpur 1, Dhaka, Bangladesh', '2024', '1235788', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032011', 11, 'Ivory Russo', '12341234123', 'viwew@mailinator.net', NULL, '$2y$10$Zv2lfg.i1oW7rX7KZrYuNun9DG4x67Xgz6hP1p8N8jX9J3kKSJnlu', '4', NULL, NULL, '1', 1, '5e7df4db6b878.jpg', '2020-03-27 06:14:38', '2020-03-27 15:22:23', 'Male', 'Dolore dolores ut vo', 2, 1, NULL, '1977-05-10', '05/06/2014', 'Laboriosam ut volup', 'Vero laborum est lab', 'Accountant', 'Non et Nam excepteur', 'Sapiente qui sed com', 'Quos magna quam sed', 'Qui vitae occaecat d', 'Harding Wilson', 'Ex autem enim quas o', 'Ratione veritatis no', 'Repellendus Beatae', 'Aliqua Dolor minus', 'Eum dolorem iusto lo', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
-('E032012', 12, 'Wyatt Bender', '78', 'cylawyto@mailinator.com', NULL, '$2y$10$uCGPHUjSX3sAW/O.EJrC7uRFZ3FI1RZ.1.lE5UiHMeSWkNvSqe8vm', '5', NULL, NULL, '1', 0, '5e7d9d3090362.png', '2020-03-27 06:29:04', '2020-05-27 03:27:43', 'Male', 'Vitae nulla cillum e', 6, 4, NULL, '1979-04-29', '20/05/1984', 'Ducimus magna possi', 'Qui minus laboris in', 'Libraian', 'Deserunt reiciendis', 'Ratione ea in exerci', 'Debitis excepteur si', 'Nisi alias dolores d', 'Yasir Bullock', 'Nihil lorem reprehen', 'Veritatis veritatis', 'Et beatae rerum irur', 'Magnam mollitia volu', 'Reprehenderit illo q', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
+('E032012', 12, 'Wyatt Bender', '78', 'cylawyto@mailinator.com', NULL, '$2y$10$uCGPHUjSX3sAW/O.EJrC7uRFZ3FI1RZ.1.lE5UiHMeSWkNvSqe8vm', '5', NULL, NULL, '1', 1, '5e7d9d3090362.png', '2020-03-27 06:29:04', '2020-06-20 13:54:33', 'Male', 'Vitae nulla cillum e', 6, 4, NULL, '1979-04-29', '20/05/1984', 'Ducimus magna possi', 'Qui minus laboris in', 'Libraian', 'Deserunt reiciendis', 'Ratione ea in exerci', 'Debitis excepteur si', 'Nisi alias dolores d', 'Yasir Bullock', 'Nihil lorem reprehen', 'Veritatis veritatis', 'Et beatae rerum irur', 'Magnam mollitia volu', 'Reprehenderit illo q', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032013', 13, 'Philip Griffin', '40', 'wetehep@mailinator.net', NULL, '$2y$10$ymZWv7uvoHdKkzZfm2RqTeCFxo5bVl26AAbjdI6VwYBJ3uOcpxsYq', '7', NULL, NULL, '1', 1, '5e7da1130b712.png', '2020-03-27 06:45:39', NULL, 'Female', 'Amet enim voluptate', 1, 4, NULL, '2000-05-20', '27/05/1994', 'Aut doloremque exerc', 'Aliquip qui maxime d', 'Another Staf', 'Accusantium magna es', 'Culpa placeat labor', 'Labore autem digniss', 'Itaque at sunt tota', 'Natalie Ellis', 'Dolor est sint omnis', 'Asperiores harum qua', 'Inventore qui mollit', 'Amet recusandae Pa', 'Eum odit qui illum', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032014', 14, 'Cain Small', '12341234127', 'xizifav@mailinator.net', NULL, '$2y$10$EE0dZyoBAzmIzKyFRBX/cuU2dMAeyAew432b/IFZ3U2awgXDpfFm.', '6', NULL, NULL, '1', 1, '5e7da8e815a69.jpg', '2020-03-27 07:19:04', '2020-03-29 10:35:36', 'Male', 'Sint id dolore pari', 1, 4, NULL, '2019-03-01', '01-03-2020', 'Sed omnis minim omni', 'Nulla sint nostrum', 'Driver', 'S.S.C', 'Quis dolorem autem o', 'Dolorum et dolores e', 'Ea ipsum quisquam d', 'Nadine Sweet', 'Voluptatem ea anim i', 'Eveniet optio hic', 'Dolores temporibus n', 'In quibusdam non in', '122358558', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032015', 15, 'Maxwell Moran', '43', 'xepenatyf@mailinator.com', NULL, '$2y$10$3Bvo.mpQ8ae05YiPhpn5IOBjvjVo2h/8cosxaewWbDodVIvIYuZdu', '8', NULL, NULL, '1', 1, '5e7fa6ed97967.png', '2020-03-27 07:38:41', '2020-03-28 19:35:09', 'Female', 'Quo sit aliqua Hic', 4, 4, NULL, '2012-05-31', '09-06-2005', 'Ut qui consectetur d', 'Nihil non pariatur', 'Security Guard', 'Ut rerum ad corporis', 'Odio minim exercitat', 'Consequatur voluptas', 'Dolorum dolore volup', 'Dexter Burt', 'Et architecto facili', 'Neque id nihil sequi', 'Provident consequat', 'Provident aut velit', '1235544', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032016', 16, 'Alexis Harrell', '35', 'jixyti@mailinator.com', NULL, '$2y$10$ZRaDNNhHHzsJfQ1yOGf2pus6FiKP7fzvQi/yl4wKlFcGEH3JtMOyi', '3', NULL, NULL, '1', 1, '5e7db60b0d64a.jpg', '2020-03-27 08:15:07', NULL, 'Male', 'Aliquid irure ab eli', 3, 2, NULL, '2005-09-11', '05/05/1992', 'Id recusandae Velit', 'Accusamus culpa veri', 'Teacher', 'Commodo inventore do', 'Distinctio Aut veli', 'Sunt harum iure dolo', 'Cillum cum quo quis', 'Melyssa Rasmussen', 'In est corporis exer', 'Dolor adipisci eu te', 'Exercitationem venia', 'Minim nemo ex tempor', 'Exercitation dolor e', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032017', 17, 'Jescie Aguilar', '66', 'wepoqusa@mailinator.net', NULL, '$2y$10$v6mSRZmzL10swrrNtU7o.OpSNy4gasDp2LzTBaSUC4WQhuye9K5Fe', '3', NULL, NULL, '1', 1, '5e7db626445a0.jpg', '2020-03-27 08:15:34', NULL, 'Other', 'Consectetur dicta q', 3, 3, NULL, '2000-08-29', '07/12/1982', 'Aut atque sequi irur', 'Ex id sit consequunt', 'Teacher', 'Doloremque eum error', 'Voluptate lorem aspe', 'Provident in est u', 'Tempora ipsum autem', 'Kennedy Madden', 'Quia aspernatur et q', 'Qui hic nisi in ut a', 'Omnis ea sed corpori', 'Ratione quas et nihi', 'Molestiae maiores vo', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
 ('E032018', 18, 'Rosalyn Holloway', '12341234125', 'zaje@mailinator.com', NULL, '$2y$10$0J6NdXQqmzPhMHjeHruOP.iwgjHkQd.1oznHujKufucys.Ndb1eYS', '6', NULL, NULL, '1', 1, '5e7db63e9eafb.jpg', '2020-03-27 08:15:58', '2020-03-27 16:22:31', 'Male', 'Aliquam sequi fuga', 3, 4, NULL, '2007-08-18', '03/06/1993', 'Et iste laborum Nis', 'Veniam accusantium', 'Driver', 'At qui mollitia aliq', 'Facilis blanditiis m', 'Consequatur quas si', 'Voluptates anim id', 'Nevada Beck', 'Ut et voluptates ear', 'Ea sit et distinctio', 'Iste quod minus ex e', 'Ut laudantium nulla', 'Quo quasi deserunt a', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
-('E032019', 19, 'Karly Castro', '12345678965', 'topicyp@mailinator.com', NULL, '$2y$10$FpR7LHCw1guvbeqIoOzTMex.TaRy.iI67irlqyo.Z0o6FiMxTyyZ.', '6', NULL, NULL, '1', 1, '5e8053dbd79e5.png', '2020-03-29 07:53:00', '2020-03-29 08:24:36', 'Male', 'Quis do eveniet max', 6, 4, NULL, '1986-09-26', '28-11-2017', 'Optio ut vero qui s', 'Reprehenderit ut of', 'Driver', 'S.S.C', 'At laborum Omnis in', 'Quia neque perspicia', 'Nemo nostrum amet r', 'Dustin Chen', 'Aut cumque molestias', 'Omnis velit blanditi', 'Magna eius eum delen', 'Exercitationem quide', 'Laborum quibusdam od', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL);
+('E032019', 19, 'Karly Castro', '12345678965', 'topicyp@mailinator.com', NULL, '$2y$10$FpR7LHCw1guvbeqIoOzTMex.TaRy.iI67irlqyo.Z0o6FiMxTyyZ.', '6', NULL, NULL, '1', 1, '5e8053dbd79e5.png', '2020-03-29 07:53:00', '2020-03-29 08:24:36', 'Male', 'Quis do eveniet max', 6, 4, NULL, '1986-09-26', '28-11-2017', 'Optio ut vero qui s', 'Reprehenderit ut of', 'Driver', 'S.S.C', 'At laborum Omnis in', 'Quia neque perspicia', 'Nemo nostrum amet r', 'Dustin Chen', 'Aut cumque molestias', 'Omnis velit blanditi', 'Magna eius eum delen', 'Exercitationem quide', 'Laborum quibusdam od', NULL, NULL, NULL, '10000.00', 1, NULL, NULL, NULL),
+('E062020', 22, 'Buckminster Mcguire', '5944544455', 'voxyraceto@mailinatossdsddsdr.com', NULL, '$2y$10$YaEfRqc7BKQ04eFSwHyRMe6BkS5T2SpkRbm0fSYwy6oniHQWItUBW', '3', NULL, NULL, '1', 1, '5ef8e2c183d19.jpg', '2020-06-28 18:34:41', '2020-06-29 16:13:53', 'Other', 'Quo quisquam est off', 3, 3, NULL, '26-Feb-2012', '03-Jan-2014', 'Ipsa optio sit exc', 'Est quasi officiis', 'Asst. Teacher', 'Nulla corrupti labo', 'Sint eum exercitatio', 'Deserunt mollitia il', 'Ipsa voluptas quibu', 'Tarik Walsh', 'Sed a voluptatem ea', 'Iste aperiam sint no', 'M.pasa (utter) Bonickpara, Kuet, Daulatpur, Khulna, Bangladesh', 'Nulla sed dolores re', '12245258', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062023', 23, 'Stone Maldonado', '74', 'roky@mailinator.com', NULL, '$2y$10$XsxrLPndZzKP/MbJTTqr9ecOszsuOAelfiCNHUnqWqDpxBf0inwgu', '4', NULL, NULL, '1', 1, '5ef8e3172755f.jpg', '2020-06-28 18:36:07', NULL, 'Other', 'Reprehenderit qui e', 6, 4, NULL, '18-Nov-1999', '09-Jan-2003', 'Irure aperiam ad lib', 'Sit excepteur culpa', 'Security Guard', 'Vitae quis nihil cum', 'Quia et dolor deleni', 'Dolore quae impedit', 'Praesentium ad ea qu', 'Leila Merrill', 'Nobis doloribus null', 'Asperiores dolor nih', 'Aperiam ipsa error', 'In sed dolorem amet', 'Veniam sint dolor i', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062023', 24, 'Wyoming Bennett', '26', 'veqisogiw@mailinator.com', NULL, '$2y$10$.BJ685Kor7VBXuu8AqQqhef7sMnTeXdVbpVQJng6wbJrjTMIml0Ji', '4', NULL, NULL, '1', 1, '5ef8e335af51a.png', '2020-06-28 18:36:37', NULL, 'Female', 'Inventore consequatu', 3, 2, NULL, '29-Sep-1978', '02-Jun-2013', 'Qui quis iure eius m', 'Consequat Ea dolore', 'Teacher', 'Eu quas eos voluptat', 'Asperiores cupiditat', 'Cum iste aliqua Dol', 'Laborum Odit repreh', 'Portia Dickson', 'Dolor est sit invent', 'Qui nisi vitae ipsum', 'Officiis voluptatem', 'Mollitia rem quibusd', 'Libero ipsum et dolo', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062025', 25, 'MacKensie Bowers', '16', 'ginetako@mailinator.com', NULL, '$2y$10$ItG10jRk6zQFuxRVt9TTIesQtGUs/JL7mRRz2lnXelTEhmVvvPiTu', '4', NULL, NULL, '1', 1, '5ef8e33edffb4.png', '2020-06-28 18:36:47', NULL, 'Other', 'Reiciendis eu in mag', 1, 1, NULL, '13-Sep-2006', '12-Nov-1975', 'Sint et omnis culpa', 'Porro ut officia ut', 'clerk', 'Voluptatem deserunt', 'Proident dolorum en', 'Ex dolor et corporis', 'Ut consequatur reici', 'Portia Rojas', 'Est est tempore qu', 'Ex nisi laborum Mol', 'Asperiores expedita', 'Odit deserunt simili', 'Quia quisquam ut et', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062026', 26, 'Daphne Jarvis', '27', 'pogafa@mailinator.com', NULL, '$2y$10$BgLzaVsRu5vVMLriEM0A9uM8EfrOHmmKL1ce1SyaKCMF5hcIJy1jK', '7', NULL, NULL, '1', 1, '5efa1386c4505.jpg', '2020-06-29 16:15:03', NULL, 'Female', 'Velit adipisicing co', 5, 1, NULL, '2020-06-01', '29-06-2020', 'A perspiciatis qui', 'Consequuntur cum mol', 'Libraian', 'Blanditiis sed et al', 'Est debitis aliquid', 'Quo nostrum minim ut', 'Perferendis quae tem', 'Lionel Cannon', 'Quaerat veniam exce', 'Officia vitae optio', 'Enim aperiam dolore', 'Enim anim labore aut', 'Qui debitis nihil qu', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062027', 27, 'Minerva Mcmillan', '12', 'qakidip@mailinator.com', NULL, '$2y$10$yBkFHk8CWCt2wz6fPDVGWObWBoLTYIQgm3.emKYeyP9BMcA0cxpKK', '2', NULL, NULL, '1', 1, '5efa227fac895.jpg', '2020-06-29 17:18:55', NULL, 'Female', 'Deserunt sed velit l', 4, 3, NULL, '2020-06-01', '29-06-2020', 'Autem ullamco recusa', 'Ipsa nihil ex duis', 'clerk', 'Fuga Dolor assumend', 'Ut similique repudia', 'Dolore laboris rem d', 'Voluptatum quam prov', 'Adam Coleman', 'Sit ipsa rerum volu', 'Nisi tempore dolore', 'Qui dolore architect', 'Quia mollitia aute e', 'Qui ea cillum quo qu', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL),
+('E062028', 28, 'Iola Ingram', '12312312345', 'zifynowypa@mailinator.com', NULL, '$2y$10$dF/Mr/dmFSwvyqMnEWOgt.9jWNoROTzCYFVJ/WYsH6zrnoQurjWae', '8', NULL, NULL, '1', 1, '5efa5e142f30d.jpg', '2020-06-29 21:33:08', NULL, 'Other', 'Id voluptatibus cupi', 3, 2, NULL, '2020-06-01', '30-06-2020', 'Incididunt officiis', 'Commodo pariatur Ob', 'Teacher', 'Proident dolor dolo', 'Qui ea dolores labor', 'Animi dolorem excep', 'Molestiae eiusmod mo', 'Kiayada May', 'Laboris labore volup', 'Eos iste culpa eum', 'Vitae quis minus duc', 'Mollitia anim et inv', 'Et quasi veniam sap', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -412,9 +419,9 @@ INSERT INTO `class_sections` (`id`, `class_id`, `section_id`, `is_assigned_subje
 (74, 18, 8, 0, 0, '2020-03-13 22:57:37', '2020-04-24 17:16:36', NULL, 0, NULL, NULL),
 (75, 22, 5, 0, 0, '2020-03-30 14:07:37', '2020-05-01 21:05:21', NULL, 0, NULL, NULL),
 (76, 22, 6, 0, 0, '2020-03-30 14:07:37', '2020-05-01 21:05:21', NULL, 0, NULL, NULL),
-(84, 15, 5, 1, 1, '2020-04-05 10:38:25', '2020-05-21 11:48:20', NULL, 0, NULL, NULL),
-(85, 15, 6, 1, 1, '2020-04-05 10:38:25', '2020-05-21 11:48:20', NULL, 0, NULL, NULL),
-(86, 15, 7, 0, 0, '2020-04-05 10:38:25', '2020-05-21 11:48:20', NULL, 0, NULL, NULL),
+(84, 15, 5, 1, 1, '2020-04-05 10:38:25', '2020-06-29 14:20:54', NULL, 0, NULL, NULL),
+(85, 15, 6, 1, 1, '2020-04-05 10:38:25', '2020-06-29 14:20:54', NULL, 0, NULL, NULL),
+(86, 15, 7, 0, 0, '2020-04-05 10:38:25', '2020-06-29 14:20:54', NULL, 0, NULL, NULL),
 (87, 22, 7, 0, 0, '2020-05-01 21:05:21', '2020-05-01 21:05:21', NULL, 0, NULL, NULL),
 (88, 22, 8, 0, 0, '2020-05-01 21:05:21', '2020-05-01 21:05:21', NULL, 0, NULL, NULL),
 (89, 23, 5, 1, 1, '2020-05-16 00:46:02', '2020-05-16 02:50:34', NULL, 0, NULL, NULL),
@@ -426,7 +433,7 @@ INSERT INTO `class_sections` (`id`, `class_id`, `section_id`, `is_assigned_subje
 (95, 25, 5, 1, 0, '2020-05-16 12:50:03', '2020-05-16 12:53:14', NULL, 0, NULL, NULL),
 (96, 25, 6, 0, 0, '2020-05-16 12:50:03', '2020-05-16 12:50:03', NULL, 0, NULL, NULL),
 (97, 25, 7, 0, 0, '2020-05-16 12:50:03', '2020-05-16 12:50:03', NULL, 0, NULL, NULL),
-(98, 15, 8, 0, 0, '2020-05-16 12:50:12', '2020-05-21 11:48:20', NULL, 0, NULL, NULL),
+(98, 15, 8, 0, 0, '2020-05-16 12:50:12', '2020-06-29 14:20:54', NULL, 0, NULL, NULL),
 (99, 26, 5, 1, 1, '2020-05-17 00:30:52', '2020-05-17 00:33:35', NULL, 0, NULL, NULL),
 (100, 26, 6, 0, 0, '2020-05-17 00:30:52', '2020-05-17 00:30:52', NULL, 0, NULL, NULL),
 (101, 26, 7, 0, 0, '2020-05-17 00:30:53', '2020-05-17 00:30:53', NULL, 0, NULL, NULL);
@@ -489,23 +496,12 @@ INSERT INTO `class_subjects` (`id`, `class_section_id`, `subject_id`, `deleted_s
 (464, 67, 4, NULL, 0, 16, NULL, NULL, '2020-04-25 14:28:00', '2020-04-25 14:28:00'),
 (465, 67, 3, NULL, 0, 16, NULL, NULL, '2020-04-25 14:28:00', '2020-04-25 14:28:00'),
 (466, 67, 1, NULL, 0, 16, NULL, NULL, '2020-04-25 14:28:00', '2020-04-25 14:28:00'),
-(467, 15, 7, NULL, 0, 19, NULL, NULL, '2020-04-25 14:28:05', '2020-04-25 14:28:05'),
-(468, 15, 6, NULL, 0, 19, NULL, NULL, '2020-04-25 14:28:05', '2020-04-25 14:28:05'),
-(469, 15, 5, NULL, 0, 19, NULL, NULL, '2020-04-25 14:28:05', '2020-04-25 14:28:05'),
-(470, 15, 3, NULL, 0, 19, NULL, NULL, '2020-04-25 14:28:05', '2020-04-25 14:28:05'),
-(471, 15, 1, NULL, 0, 19, NULL, NULL, '2020-04-25 14:28:05', '2020-04-25 14:28:05'),
 (472, 17, 7, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
 (473, 17, 6, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
 (474, 17, 5, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
 (475, 17, 4, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
 (476, 17, 3, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
 (477, 17, 1, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:08', '2020-04-25 14:28:08'),
-(478, 18, 7, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
-(479, 18, 6, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
-(480, 18, 5, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
-(481, 18, 4, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
-(482, 18, 3, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
-(483, 18, 1, NULL, 0, 20, NULL, NULL, '2020-04-25 14:28:11', '2020-04-25 14:28:11'),
 (490, 53, 7, NULL, 0, 21, NULL, NULL, '2020-04-25 14:28:19', '2020-04-25 14:28:19'),
 (491, 53, 6, NULL, 0, 21, NULL, NULL, '2020-04-25 14:28:19', '2020-04-25 14:28:19'),
 (492, 53, 5, NULL, 0, 21, NULL, NULL, '2020-04-25 14:28:19', '2020-04-25 14:28:19'),
@@ -551,7 +547,18 @@ INSERT INTO `class_subjects` (`id`, `class_section_id`, `subject_id`, `deleted_s
 (553, 84, 5, NULL, 0, 15, NULL, NULL, '2020-06-05 15:01:50', '2020-06-05 15:01:50'),
 (554, 84, 4, NULL, 0, 15, NULL, NULL, '2020-06-05 15:01:50', '2020-06-05 15:01:50'),
 (555, 84, 3, NULL, 0, 15, NULL, NULL, '2020-06-05 15:01:50', '2020-06-05 15:01:50'),
-(556, 84, 1, NULL, 0, 15, NULL, NULL, '2020-06-05 15:01:50', '2020-06-05 15:01:50');
+(556, 84, 1, NULL, 0, 15, NULL, NULL, '2020-06-05 15:01:50', '2020-06-05 15:01:50'),
+(557, 15, 7, NULL, 0, 19, NULL, NULL, '2020-06-26 13:43:56', '2020-06-26 13:43:56'),
+(558, 15, 6, NULL, 0, 19, NULL, NULL, '2020-06-26 13:43:56', '2020-06-26 13:43:56'),
+(559, 15, 5, NULL, 0, 19, NULL, NULL, '2020-06-26 13:43:56', '2020-06-26 13:43:56'),
+(560, 15, 3, NULL, 0, 19, NULL, NULL, '2020-06-26 13:43:56', '2020-06-26 13:43:56'),
+(561, 15, 1, NULL, 0, 19, NULL, NULL, '2020-06-26 13:43:56', '2020-06-26 13:43:56'),
+(562, 18, 7, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27'),
+(563, 18, 6, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27'),
+(564, 18, 5, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27'),
+(565, 18, 4, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27'),
+(566, 18, 3, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27'),
+(567, 18, 1, NULL, 0, 20, NULL, NULL, '2020-06-29 14:40:27', '2020-06-29 14:40:27');
 
 -- --------------------------------------------------------
 
@@ -593,14 +600,15 @@ INSERT INTO `class_teachers` (`id`, `class_section_id`, `employee_id`, `status`,
 (18, 89, 9, 1, NULL, NULL, NULL, '2020-05-16 02:28:41', '2020-05-16 02:28:41'),
 (19, 89, 16, 1, NULL, NULL, NULL, '2020-05-16 02:28:41', '2020-05-16 02:28:41'),
 (20, 89, 17, 1, NULL, NULL, NULL, '2020-05-16 02:28:41', '2020-05-16 02:28:41'),
-(21, 54, 9, 1, NULL, NULL, NULL, '2020-05-16 12:52:28', '2020-05-16 12:52:28'),
-(22, 54, 16, 1, NULL, NULL, NULL, '2020-05-16 12:52:29', '2020-05-16 12:52:29'),
-(23, 54, 17, 1, NULL, NULL, NULL, '2020-05-16 12:52:29', '2020-05-16 12:52:29'),
 (27, 99, 9, 1, NULL, NULL, NULL, '2020-05-17 00:32:36', '2020-05-17 00:32:36'),
 (28, 99, 16, 1, NULL, NULL, NULL, '2020-05-17 00:32:36', '2020-05-17 00:32:36'),
 (29, 85, 9, 1, NULL, NULL, NULL, '2020-05-29 13:10:46', '2020-05-29 13:10:46'),
 (30, 85, 16, 1, NULL, NULL, NULL, '2020-05-29 13:10:46', '2020-05-29 13:10:46'),
-(31, 85, 17, 1, NULL, NULL, NULL, '2020-05-29 13:10:46', '2020-05-29 13:10:46');
+(31, 85, 17, 1, NULL, NULL, NULL, '2020-05-29 13:10:46', '2020-05-29 13:10:46'),
+(32, 54, 9, 1, NULL, NULL, NULL, '2020-06-29 14:34:24', '2020-06-29 14:34:24'),
+(33, 54, 16, 1, NULL, NULL, NULL, '2020-06-29 14:34:24', '2020-06-29 14:34:24'),
+(34, 54, 17, 1, NULL, NULL, NULL, '2020-06-29 14:34:24', '2020-06-29 14:34:24'),
+(35, 54, 22, 1, NULL, NULL, NULL, '2020-06-29 14:34:24', '2020-06-29 14:34:24');
 
 -- --------------------------------------------------------
 
@@ -850,11 +858,6 @@ INSERT INTO `class_timetables` (`id`, `class_id`, `section_id`, `subject_id`, `d
 (1347, 15, 5, 4, 'Thursday', 17, '12:26 AM', '12:26 AM', 4, '2020-04-28 14:40:53', '2020-04-28 14:40:53'),
 (1348, 15, 5, 5, 'Thursday', 17, '12:26 AM', '12:26 AM', 5, '2020-04-28 14:40:53', '2020-04-28 14:40:53'),
 (1349, 15, 5, 6, 'Thursday', 16, '12:26 AM', '12:26 AM', 6, '2020-04-28 14:40:53', '2020-04-28 14:40:53'),
-(1362, 15, 5, 1, 'Sunday', 9, '12:27 AM', '12:27 AM', 1, '2020-04-28 14:41:25', '2020-04-28 14:41:25'),
-(1363, 15, 5, 3, 'Sunday', 16, '12:27 AM', '12:27 AM', 2, '2020-04-28 14:41:25', '2020-04-28 14:41:25'),
-(1364, 15, 5, 4, 'Sunday', 17, '12:27 AM', '12:27 AM', 4, '2020-04-28 14:41:25', '2020-04-28 14:41:25'),
-(1365, 15, 5, 5, 'Sunday', 16, '12:27 AM', '12:27 AM', 1, '2020-04-28 14:41:25', '2020-04-28 14:41:25'),
-(1366, 15, 5, 6, 'Sunday', 16, '12:27 AM', '12:27 AM', 2, '2020-04-28 14:41:25', '2020-04-28 14:41:25'),
 (1367, 19, 5, 7, 'Monday', 9, '03:52 AM', '03:52 AM', 3, '2020-04-28 15:53:09', '2020-04-28 15:53:09'),
 (1368, 19, 5, 7, 'Monday', 9, '03:52 AM', '03:52 AM', 3, '2020-04-28 15:53:09', '2020-04-28 15:53:09'),
 (1369, 19, 5, 7, 'Monday', 9, '03:53 AM', '03:53 AM', 4, '2020-04-28 15:53:09', '2020-04-28 15:53:09'),
@@ -912,16 +915,23 @@ INSERT INTO `class_timetables` (`id`, `class_id`, `section_id`, `subject_id`, `d
 (1466, 26, 5, 3, 'Wednesday', 9, '12:37 PM', '12:37 PM', 2, '2020-05-17 00:37:05', '2020-05-17 00:37:05'),
 (1472, 26, 5, 9, 'Thursday', 9, '12:37 PM', '12:37 PM', 2, '2020-05-17 00:38:05', '2020-05-17 00:38:05'),
 (1473, 26, 5, 7, 'Thursday', 9, '12:38 PM', '12:38 PM', 4, '2020-05-17 00:38:05', '2020-05-17 00:38:05'),
-(1494, 15, 5, 1, 'Saturday', 9, '12:26 AM', '12:26 AM', 1, '2020-05-25 11:57:35', '2020-05-25 11:57:35'),
-(1495, 15, 5, 3, 'Saturday', 16, '12:26 AM', '12:26 AM', 1, '2020-05-25 11:57:35', '2020-05-25 11:57:35'),
-(1496, 15, 5, 4, 'Saturday', 16, '12:26 AM', '12:26 AM', 1, '2020-05-25 11:57:35', '2020-05-25 11:57:35'),
-(1497, 15, 5, 5, 'Saturday', 17, '12:26 AM', '12:26 AM', 1, '2020-05-25 11:57:35', '2020-05-25 11:57:35'),
-(1498, 15, 5, 6, 'Saturday', 9, '12:26 AM', '12:26 AM', 1, '2020-05-25 11:57:35', '2020-05-25 11:57:35'),
-(1514, 15, 5, 1, 'Monday', 17, '12:25 AM', '12:26 AM', 4, '2020-06-14 14:24:41', '2020-06-14 14:24:41'),
-(1515, 15, 5, 3, 'Monday', 9, '12:26 AM', '12:26 AM', 5, '2020-06-14 14:24:41', '2020-06-14 14:24:41'),
-(1516, 15, 5, 5, 'Monday', 16, '12:26 AM', '12:26 AM', 10, '2020-06-14 14:24:41', '2020-06-14 14:24:41'),
-(1517, 15, 5, 4, 'Monday', 16, '12:26 AM', '12:26 AM', 6, '2020-06-14 14:24:41', '2020-06-14 14:24:41'),
-(1518, 15, 5, 9, 'Monday', 16, '12:37 PM', '10:37 PM', 5, '2020-06-14 14:24:41', '2020-06-14 14:24:41');
+(1530, 15, 5, 1, 'Saturday', 9, '12:26 AM', '12:26 AM', 1, '2020-06-19 12:42:48', '2020-06-19 12:42:48'),
+(1531, 15, 5, 3, 'Saturday', 16, '12:26 AM', '12:26 AM', 1, '2020-06-19 12:42:48', '2020-06-19 12:42:48'),
+(1532, 15, 5, 4, 'Saturday', 16, '12:26 AM', '12:26 AM', 1, '2020-06-19 12:42:48', '2020-06-19 12:42:48'),
+(1533, 15, 5, 5, 'Saturday', 17, '12:26 AM', '12:26 AM', 1, '2020-06-19 12:42:48', '2020-06-19 12:42:48'),
+(1534, 15, 5, 6, 'Saturday', 9, '12:26 AM', '12:26 AM', 1, '2020-06-19 12:42:48', '2020-06-19 12:42:48'),
+(1535, 15, 5, 1, 'Sunday', 9, '12:27 AM', '12:27 AM', 1, '2020-06-19 12:42:51', '2020-06-19 12:42:51'),
+(1536, 15, 5, 3, 'Sunday', 16, '12:27 AM', '12:27 AM', 2, '2020-06-19 12:42:51', '2020-06-19 12:42:51'),
+(1537, 15, 5, 4, 'Sunday', 17, '12:27 AM', '12:27 AM', 4, '2020-06-19 12:42:51', '2020-06-19 12:42:51'),
+(1538, 15, 5, 5, 'Sunday', 16, '12:27 AM', '12:27 AM', 1, '2020-06-19 12:42:51', '2020-06-19 12:42:51'),
+(1539, 15, 5, 6, 'Sunday', 16, '12:27 AM', '12:27 AM', 2, '2020-06-19 12:42:51', '2020-06-19 12:42:51'),
+(1546, 15, 5, 1, 'Monday', 17, '12:25 AM', '12:26 AM', 4, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1547, 15, 5, 3, 'Monday', 9, '12:26 AM', '12:26 AM', 5, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1548, 15, 5, 5, 'Monday', 16, '12:26 AM', '12:26 AM', 10, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1549, 15, 5, 4, 'Monday', 16, '12:26 AM', '12:26 AM', 6, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1550, 15, 5, 9, 'Monday', 16, '12:37 PM', '10:37 PM', 5, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1551, 15, 5, 9, 'Monday', 9, '12:42 AM', '12:42 AM', 4, '2020-06-26 12:10:01', '2020-06-26 12:10:01'),
+(1552, 15, 5, 7, 'Monday', 9, '12:09 AM', '12:09 AM', 3, '2020-06-26 12:10:01', '2020-06-26 12:10:01');
 
 -- --------------------------------------------------------
 
@@ -971,6 +981,7 @@ CREATE TABLE `current_day_attendances` (
   `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attendance_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -979,22 +990,25 @@ CREATE TABLE `current_day_attendances` (
 -- Dumping data for table `current_day_attendances`
 --
 
-INSERT INTO `current_day_attendances` (`id`, `class_id`, `section_id`, `student_id`, `month`, `year`, `date`, `attendance_status`, `note`, `created_at`, `updated_at`) VALUES
-(90, 15, 5, 13, 'May', '2020', '17-05-2020', 'present', NULL, '2020-05-17 06:52:10', '2020-05-17 06:52:10'),
-(91, 15, 5, 14, 'May', '2020', '17-05-2020', 'absent', NULL, '2020-05-17 06:52:10', '2020-05-19 00:25:11'),
-(92, 15, 5, 15, 'May', '2020', '17-05-2020', 'present', NULL, '2020-05-17 06:52:10', '2020-05-17 06:52:10'),
-(93, 15, 5, 13, 'May', '2020', '24-05-2020', 'present', 'Good student', '2020-05-24 10:32:35', '2020-05-24 05:08:48'),
-(94, 15, 5, 14, 'May', '2020', '24-05-2020', 'present', 'Good student', '2020-05-24 10:32:41', '2020-05-24 05:08:55'),
-(95, 15, 5, 15, 'May', '2020', '24-05-2020', 'present', 'Good student edited', '2020-05-24 10:32:41', '2020-05-24 05:12:13'),
-(96, 15, 5, 13, 'May', '2020', '25-05-2020', 'present', NULL, '2020-05-24 20:05:44', '2020-05-29 13:37:56'),
-(97, 15, 5, 14, 'May', '2020', '25-05-2020', 'present', NULL, '2020-05-24 20:05:44', '2020-05-24 20:05:44'),
-(98, 15, 5, 15, 'May', '2020', '25-05-2020', 'present', NULL, '2020-05-24 20:05:45', '2020-05-24 20:05:45'),
-(99, 15, 5, 13, 'May', '2020', '31-05-2020', 'absent', NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
-(100, 15, 5, 14, 'May', '2020', '31-05-2020', 'absent', NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
-(101, 15, 5, 15, 'May', '2020', '31-05-2020', 'present', NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
-(102, 15, 5, 13, 'June', '2020', '05-06-2020', 'present', NULL, '2020-06-05 15:53:04', '2020-06-05 15:53:04'),
-(103, 15, 5, 14, 'June', '2020', '05-06-2020', 'absent', NULL, '2020-06-05 15:53:05', '2020-06-05 09:53:28'),
-(104, 15, 5, 15, 'June', '2020', '05-06-2020', 'present', NULL, '2020-06-05 15:53:05', '2020-06-05 15:53:05');
+INSERT INTO `current_day_attendances` (`id`, `class_id`, `section_id`, `student_id`, `month`, `year`, `date`, `attendance_status`, `note`, `session_id`, `created_at`, `updated_at`) VALUES
+(90, 15, 5, 13, 'May', '2020', '17-05-2020', 'present', NULL, NULL, '2020-05-17 06:52:10', '2020-05-17 06:52:10'),
+(91, 15, 5, 14, 'May', '2020', '17-05-2020', 'absent', NULL, NULL, '2020-05-17 06:52:10', '2020-05-19 00:25:11'),
+(92, 15, 5, 15, 'May', '2020', '17-05-2020', 'present', NULL, NULL, '2020-05-17 06:52:10', '2020-05-17 06:52:10'),
+(93, 15, 5, 13, 'May', '2020', '24-05-2020', 'present', 'Good student', NULL, '2020-05-24 10:32:35', '2020-05-24 05:08:48'),
+(94, 15, 5, 14, 'May', '2020', '24-05-2020', 'present', 'Good student', NULL, '2020-05-24 10:32:41', '2020-05-24 05:08:55'),
+(95, 15, 5, 15, 'May', '2020', '24-05-2020', 'present', 'Good student edited', NULL, '2020-05-24 10:32:41', '2020-05-24 05:12:13'),
+(96, 15, 5, 13, 'May', '2020', '25-05-2020', 'present', NULL, NULL, '2020-05-24 20:05:44', '2020-05-29 13:37:56'),
+(97, 15, 5, 14, 'May', '2020', '25-05-2020', 'present', NULL, NULL, '2020-05-24 20:05:44', '2020-05-24 20:05:44'),
+(98, 15, 5, 15, 'May', '2020', '25-05-2020', 'present', NULL, NULL, '2020-05-24 20:05:45', '2020-05-24 20:05:45'),
+(99, 15, 5, 13, 'May', '2020', '31-05-2020', 'absent', NULL, NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
+(100, 15, 5, 14, 'May', '2020', '31-05-2020', 'absent', NULL, NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
+(101, 15, 5, 15, 'May', '2020', '31-05-2020', 'present', NULL, NULL, '2020-05-30 20:11:24', '2020-05-30 20:11:24'),
+(102, 15, 5, 13, 'June', '2020', '05-06-2020', 'present', NULL, NULL, '2020-06-05 15:53:04', '2020-06-05 15:53:04'),
+(103, 15, 5, 14, 'June', '2020', '05-06-2020', 'absent', NULL, NULL, '2020-06-05 15:53:05', '2020-06-05 09:53:28'),
+(104, 15, 5, 15, 'June', '2020', '05-06-2020', 'present', NULL, NULL, '2020-06-05 15:53:05', '2020-06-05 15:53:05'),
+(105, 15, 5, 13, 'June', '2020', '22-06-2020', 'present', NULL, NULL, '2020-06-21 19:57:25', '2020-06-21 19:57:25'),
+(106, 15, 5, 14, 'June', '2020', '22-06-2020', 'present', NULL, NULL, '2020-06-21 19:57:25', '2020-06-21 19:57:25'),
+(107, 15, 5, 15, 'June', '2020', '22-06-2020', 'present', NULL, NULL, '2020-06-21 19:57:25', '2020-06-21 19:57:25');
 
 -- --------------------------------------------------------
 
@@ -1102,7 +1116,16 @@ INSERT INTO `employee_attendances` (`id`, `employee_id`, `role_known_id`, `date`
 (38, 17, 3, '15-06-2020', '2020', 'June', NULL, 'present', '2020-06-14 20:19:27', '2020-06-14 20:19:27'),
 (39, 9, 3, '16-06-2020', '2020', 'June', NULL, 'late', '2020-06-15 09:35:31', '2020-06-15 09:35:31'),
 (40, 16, 3, '16-06-2020', '2020', 'June', NULL, 'absent', '2020-06-15 09:35:31', '2020-06-15 09:35:31'),
-(41, 17, 3, '16-06-2020', '2020', 'June', NULL, 'late', '2020-06-15 09:35:31', '2020-06-15 09:35:31');
+(41, 17, 3, '16-06-2020', '2020', 'June', NULL, 'late', '2020-06-15 09:35:31', '2020-06-15 09:35:31'),
+(42, 9, 3, '20-06-2020', '2020', 'June', NULL, 'present', '2020-06-19 18:37:56', '2020-06-19 18:37:56'),
+(43, 16, 3, '20-06-2020', '2020', 'June', NULL, 'present', '2020-06-19 18:37:56', '2020-06-19 18:37:56'),
+(44, 17, 3, '20-06-2020', '2020', 'June', NULL, 'present', '2020-06-19 18:37:56', '2020-06-19 18:37:56'),
+(45, 10, 2, '20-06-2020', '2020', 'June', NULL, 'present', '2020-06-19 18:47:10', '2020-06-19 18:47:10'),
+(46, 10, 2, '27-06-2020', '2020', 'June', NULL, 'present', '2020-06-26 19:56:04', '2020-06-26 19:56:04'),
+(47, 8, 1, '27-06-2020', '2020', 'June', NULL, 'present', '2020-06-26 19:56:09', '2020-06-26 19:56:09'),
+(48, 9, 3, '27-06-2020', '2020', 'June', NULL, 'present', '2020-06-26 19:56:19', '2020-06-26 19:56:47'),
+(49, 16, 3, '27-06-2020', '2020', 'June', NULL, 'present', '2020-06-26 19:56:19', '2020-06-26 19:56:47'),
+(50, 17, 3, '27-06-2020', '2020', 'June', NULL, 'present', '2020-06-26 19:56:19', '2020-06-26 19:56:47');
 
 -- --------------------------------------------------------
 
@@ -1116,6 +1139,7 @@ CREATE TABLE `employee_salaries` (
   `invoice_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `basic_salary` decimal(10,2) DEFAULT NULL,
   `payable` decimal(8,2) DEFAULT NULL,
+  `gross_pay` decimal(10,2) NOT NULL DEFAULT '0.00',
   `due` decimal(8,2) DEFAULT NULL,
   `total_paid` decimal(8,2) DEFAULT NULL,
   `pay_mode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1129,6 +1153,7 @@ CREATE TABLE `employee_salaries` (
   `is_paid` tinyint(1) NOT NULL DEFAULT '0',
   `is_advance_salary` tinyint(1) NOT NULL DEFAULT '0',
   `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paid_date` timestamp NULL DEFAULT NULL,
   `month` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `year` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `note` mediumtext COLLATE utf8mb4_unicode_ci,
@@ -1140,15 +1165,26 @@ CREATE TABLE `employee_salaries` (
 -- Dumping data for table `employee_salaries`
 --
 
-INSERT INTO `employee_salaries` (`id`, `employee_id`, `invoice_no`, `basic_salary`, `payable`, `due`, `total_paid`, `pay_mode`, `earns`, `total_earn`, `earn_types`, `deduction_types`, `deductions`, `total_deduction`, `vat`, `is_paid`, `is_advance_salary`, `date`, `month`, `year`, `note`, `created_at`, `updated_at`) VALUES
-(26, 9, 'ES12062027', '10000.00', '11300.00', '0.00', '11300.00', NULL, '[{\"Home rant\":\"1000\"},{\"Medical\":\"1500\"},{\"Mobile bill\":\"750\"}]', '3250.00', '[\"Home rant\",\"Medical\",\"Mobile bill\"]', '[\"Future fund\"]', '[{\"Future fund\":\"1500\"}]', '1500.00', 450, 1, 0, '12-06-2020', 'June', '2020', 'Salary is paid of last month.', '2020-06-12 17:28:36', '2020-06-12 17:29:13'),
-(27, 16, 'ES12062028', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '13-06-2020', 'June', '2020', NULL, '2020-06-12 18:57:50', '2020-06-12 18:57:57'),
-(28, 17, 'ES12062029', '10000.00', '9800.00', '0.00', '9800.00', NULL, '[{\"Home rant\":0}]', '0.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"0\"}]', '0.00', 200, 1, 0, '13-06-2020', 'June', '2020', NULL, '2020-06-12 19:07:12', '2020-06-12 19:07:43'),
-(29, 12, 'ES13062030', '10000.00', '9343.00', '0.00', '9343.00', NULL, '[{\"Home rant\":\"200.2\"},{\"Mobile bill\":\"700\"}]', '900.20', '[\"Home rant\",\"Mobile bill\"]', '[\"Future fund\",\"Insurance\"]', '[{\"Future fund\":\"1500.2\"},{\"Insurance\":\"50\"}]', '1550.20', 7, 1, 0, '13-06-2020', 'June', '2020', NULL, '2020-06-13 06:55:41', '2020-06-13 06:56:33'),
-(30, 14, 'ES13062031', '10000.00', '10900.00', '0.00', '10900.00', NULL, '[{\"Home rant\":\"1000\"}]', '1000.00', '[\"Home rant\"]', NULL, NULL, '0.00', 100, 1, 0, '13-06-2020', 'June', '2020', NULL, '2020-06-13 11:57:05', '2020-06-13 11:57:21'),
-(31, 17, NULL, '10000.00', '15000.00', NULL, NULL, NULL, '[{\"Home rant\":\"7000\"}]', '7000.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"2000\"}]', '2000.00', 0, 0, 0, NULL, 'May', '2020', NULL, '2020-06-14 20:14:56', '2020-06-14 20:14:56'),
-(32, 11, 'ES15062033', '10000.00', '12700.00', '0.00', '12700.00', NULL, '[{\"Home rant\":\"2500\"},{\"Mobile bill\":\"750\"}]', '3250.00', '[\"Home rant\",\"Mobile bill\"]', '[\"Future fund\"]', '[{\"Future fund\":\"550\"}]', '550.00', 0, 1, 0, '15-06-2020', 'June', '2020', NULL, '2020-06-15 11:29:01', '2020-06-15 11:29:24'),
-(33, 18, NULL, '10000.00', '10000.00', NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 0, 0, NULL, 'June', '2020', NULL, '2020-06-16 08:03:51', '2020-06-16 08:03:51');
+INSERT INTO `employee_salaries` (`id`, `employee_id`, `invoice_no`, `basic_salary`, `payable`, `gross_pay`, `due`, `total_paid`, `pay_mode`, `earns`, `total_earn`, `earn_types`, `deduction_types`, `deductions`, `total_deduction`, `vat`, `is_paid`, `is_advance_salary`, `date`, `paid_date`, `month`, `year`, `note`, `created_at`, `updated_at`) VALUES
+(42, 10, 'ES23062043', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:16:32', 'January', '2020', NULL, '2020-06-23 19:16:26', '2020-06-23 19:16:32'),
+(43, 9, 'ES23062046', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:23:20', 'January', '2020', NULL, '2020-06-23 19:23:09', '2020-06-23 19:23:20'),
+(44, 16, 'ES23062046', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:23:24', 'January', '2020', NULL, '2020-06-23 19:23:12', '2020-06-23 19:23:24'),
+(45, 17, 'ES23062046', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:23:30', 'January', '2020', NULL, '2020-06-23 19:23:15', '2020-06-23 19:23:30'),
+(46, 11, 'ES23062047', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:23:44', 'January', '2020', NULL, '2020-06-23 19:23:38', '2020-06-23 19:23:44'),
+(47, 12, 'ES23062048', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:23:57', 'January', '2020', NULL, '2020-06-23 19:23:51', '2020-06-23 19:23:57'),
+(48, 14, 'ES23062050', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:24:26', 'January', '2020', NULL, '2020-06-23 19:24:18', '2020-06-23 19:24:26'),
+(49, 18, 'ES23062050', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:24:30', 'January', '2020', NULL, '2020-06-23 19:24:22', '2020-06-23 19:24:30'),
+(50, 13, 'ES23062051', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:24:42', 'January', '2020', NULL, '2020-06-23 19:24:37', '2020-06-23 19:24:42'),
+(51, 15, 'ES23062052', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:24:52', 'January', '2020', NULL, '2020-06-23 19:24:48', '2020-06-23 19:24:52'),
+(52, 19, 'ES23062053', '10000.00', '10000.00', '10000.00', '0.00', '10000.00', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 1, 0, '24-06-2020', '2020-06-23 19:46:27', 'January', '2020', NULL, '2020-06-23 19:46:20', '2020-06-23 19:46:27'),
+(53, 9, 'ES24062054', '10000.00', '12000.00', '12000.00', '0.00', '12000.00', NULL, '[{\"Home rant\":\"2500\"}]', '2500.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"500\"}]', '500.00', 0, 1, 0, '24-06-2020', '2020-06-24 12:43:18', 'Fabruary', '2020', NULL, '2020-06-24 12:43:13', '2020-06-24 12:43:18'),
+(54, 16, 'ES24062056', '10000.00', '12750.00', '12750.00', '0.00', '12750.00', NULL, '[{\"Home rant\":\"3500\"}]', '3500.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"750\"}]', '750.00', 0, 1, 0, '24-06-2020', '2020-06-24 12:44:16', 'Fabruary', '2020', NULL, '2020-06-24 12:43:32', '2020-06-24 12:44:16'),
+(55, 17, 'ES24062056', '10000.00', '12650.00', '13000.00', '0.00', '12650.00', NULL, '[{\"Home rant\":\"3000\"},{\"Mobile bill\":\"300\"}]', '3300.00', '[\"Home rant\",\"Mobile bill\"]', '[\"Future fund\",\"Insurance\"]', '[{\"Future fund\":\"200\"},{\"Insurance\":\"100\"}]', '300.00', 350, 1, 0, '24-06-2020', '2020-06-24 12:44:22', 'Fabruary', '2020', NULL, '2020-06-24 12:44:08', '2020-06-24 12:44:22'),
+(56, 11, NULL, '10000.00', '11950.00', '12050.00', NULL, NULL, NULL, '[{\"Home rant\":\"2200\"}]', '2200.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"150\"}]', '150.00', 100, 0, 0, NULL, NULL, 'Fabruary', '2020', NULL, '2020-06-24 12:44:48', '2020-06-24 12:44:48'),
+(57, 12, NULL, '10000.00', '12450.00', '12450.00', NULL, NULL, NULL, '[{\"Home rant\":\"2700\"}]', '2700.00', '[\"Home rant\"]', '[\"Future fand\"]', '[{\"Future fand\":\"250\"}]', '250.00', 0, 0, 0, NULL, NULL, 'Fabruary', '2020', NULL, '2020-06-24 15:38:53', '2020-06-24 15:38:53'),
+(58, 8, 'ES25062059', '10000.00', '13850.00', '13850.00', '0.00', '13850.00', NULL, '[{\"Home rant\":\"4500\"},{\"\":\"0\"}]', '4500.00', '[\"Home rant\",null]', '[\"Future fund\"]', '[{\"Future fund\":\"650\"}]', '650.00', 0, 1, 0, '26-06-2020', '2020-06-25 21:08:44', 'January', '2020', NULL, '2020-06-25 21:01:44', '2020-06-25 21:08:44'),
+(59, 8, 'ES25062060', '10000.00', '13850.00', '13850.00', '0.00', '13850.00', NULL, '[{\"Home rant\":\"4500\"}]', '4500.00', '[\"Home rant\"]', '[\"Future fund\"]', '[{\"Future fund\":\"650\"}]', '650.00', 0, 1, 0, '26-06-2020', '2020-06-25 21:13:18', 'Fabruary', '2020', NULL, '2020-06-25 21:13:06', '2020-06-25 21:13:18'),
+(60, 9, NULL, '10000.00', '10000.00', '10000.00', NULL, NULL, NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 0, 0, 0, NULL, NULL, 'March', '2020', NULL, '2020-06-26 18:14:45', '2020-06-26 18:14:45');
 
 -- --------------------------------------------------------
 
@@ -1249,7 +1285,10 @@ INSERT INTO `exam_attendances` (`id`, `class_id`, `section_id`, `student_id`, `e
 (99, 15, 5, 15, 1, 6, '31-05-2020', 'May', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-05-31 17:40:27', '2020-05-31 17:40:27'),
 (100, 15, 5, 13, 1, 5, '31-05-2020', 'May', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-05-31 17:40:36', '2020-05-31 17:40:36'),
 (101, 15, 5, 14, 1, 5, '31-05-2020', 'May', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-05-31 17:40:36', '2020-05-31 17:40:36'),
-(102, 15, 5, 15, 1, 5, '31-05-2020', 'May', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-05-31 17:40:36', '2020-05-31 17:40:36');
+(102, 15, 5, 15, 1, 5, '31-05-2020', 'May', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-05-31 17:40:36', '2020-05-31 17:40:36'),
+(103, 15, 5, 13, 1, 9, '22-06-2020', 'June', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-06-22 14:21:13', '2020-06-22 14:21:13'),
+(104, 15, 5, 14, 1, 9, '22-06-2020', 'June', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-06-22 14:21:13', '2020-06-22 14:21:13'),
+(105, 15, 5, 15, 1, 9, '22-06-2020', 'June', '2020', 'present', NULL, 1, NULL, NULL, NULL, '2020-06-22 14:21:13', '2020-06-22 14:21:13');
 
 -- --------------------------------------------------------
 
@@ -1375,14 +1414,6 @@ INSERT INTO `exam_schedules` (`id`, `date`, `year`, `starting_time`, `ending_tim
 (1705, '01.05.2020', '2020', '01:00 AM', '01:00 AM', 15, 5, 1, 4, 5, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Practical\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Attendance\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-05-30 13:01:01', '2020-05-30 13:01:01'),
 (1706, '01.05.2020', '2020', '01:00 AM', '01:00 AM', 15, 5, 1, 3, 5, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"30\"}},{\"Practical\":{\"fullMarks\":\"20\",\"passMarks\":\"8\"}},{\"Attendance\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-05-30 13:01:01', '2020-05-30 13:01:01'),
 (1707, '02.05.2020', '2020', '01:00 AM', '01:00 AM', 15, 5, 2, 1, 5, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"30\"}},{\"Practical\":{\"fullMarks\":\"20\",\"passMarks\":\"8\"}},{\"Attendance\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-05-30 13:01:01', '2020-05-30 13:01:01'),
-(1732, '04.05.2020', '2020', '12:22 AM', '12:22 AM', 15, 5, 1, 9, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"30\",\"passMarks\":\"40\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:42', '2020-06-11 14:00:42'),
-(1733, '01.06.2020', '2020', '03:02 AM', '03:02 AM', 15, 5, 1, 8, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:42', '2020-06-11 14:00:42'),
-(1734, '01/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 7, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:42', '2020-06-11 14:00:42'),
-(1735, '02/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 6, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:43', '2020-06-11 14:00:43'),
-(1736, '03/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 5, 2, 1, '[{\"Written\":{\"fullMarks\":\"100\",\"passMarks\":\"40\"}},{\"MCQ\":{\"fullMarks\":\"Not Available\",\"passMarks\":\"Not Available\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:43', '2020-06-11 14:00:43'),
-(1737, '04/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 4, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:43', '2020-06-11 14:00:43'),
-(1738, '06/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 3, 2, 1, '[{\"Written\":{\"fullMarks\":\"100\",\"passMarks\":\"40\"}},{\"MCQ\":{\"fullMarks\":\"N\\/A\",\"passMarks\":\"N\\/A\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:43', '2020-06-11 14:00:43'),
-(1739, '07/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 1, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-11 14:00:43', '2020-06-11 14:00:43'),
 (1756, '05.05.2020', '2020', '12:49 AM', '12:49 AM', 15, 5, 1, 9, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"Practical\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"5\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:25', '2020-06-16 01:39:25'),
 (1757, '01.06.2020', '2020', '02:36 PM', '01:36 PM', 15, 5, 1, 8, 3, 1, '[{\"Written\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}},{\"Practical\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:25', '2020-06-16 01:39:25'),
 (1758, '01.05.2020', '2020', '10:08 PM', '09:07 PM', 15, 5, 1, 7, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Practical\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26'),
@@ -1390,7 +1421,15 @@ INSERT INTO `exam_schedules` (`id`, `date`, `year`, `starting_time`, `ending_tim
 (1760, '06.05.2020', '2020', '10:08 PM', '10:08 PM', 15, 5, 1, 5, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Practical\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Viva\":{\"fullMarks\":\"0\",\"passMarks\":\"0\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26'),
 (1761, '01.05.2020', '2020', '10:09 PM', '10:09 PM', 15, 5, 1, 4, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Practical\":{\"fullMarks\":\"50\",\"passMarks\":\"50\"}},{\"Viva\":{\"fullMarks\":\"0\",\"passMarks\":\"0\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26'),
 (1762, '21.05.2020', '2020', '10:09 PM', '10:09 PM', 15, 5, 2, 3, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"30\"}},{\"Practical\":{\"fullMarks\":\"20\",\"passMarks\":\"8\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26'),
-(1763, '13.05.2020', '2020', '10:09 PM', '10:09 PM', 15, 5, 1, 1, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"30\"}},{\"Practical\":{\"fullMarks\":\"20\",\"passMarks\":\"8\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26');
+(1763, '13.05.2020', '2020', '10:09 PM', '10:09 PM', 15, 5, 1, 1, 3, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"30\"}},{\"Practical\":{\"fullMarks\":\"20\",\"passMarks\":\"8\"}},{\"Viva\":{\"fullMarks\":\"10\",\"passMarks\":\"10\"}}]', 1, NULL, NULL, NULL, '2020-06-16 01:39:26', '2020-06-16 01:39:26'),
+(1780, '04.05.2020', '2020', '12:22 AM', '12:22 AM', 15, 5, 1, 9, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"30\",\"passMarks\":\"40\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1781, '01.06.2020', '2020', '03:02 AM', '03:02 AM', 15, 5, 1, 8, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1782, '01/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 7, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1783, '02/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 6, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1784, '03/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 5, 2, 1, '[{\"Written\":{\"fullMarks\":\"100\",\"passMarks\":\"40\"}},{\"MCQ\":{\"fullMarks\":\"Not Available\",\"passMarks\":\"Not Available\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1785, '04/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 4, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1786, '06/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 1, 3, 2, 1, '[{\"Written\":{\"fullMarks\":\"100\",\"passMarks\":\"40\"}},{\"MCQ\":{\"fullMarks\":\"N\\/A\",\"passMarks\":\"N\\/A\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01'),
+(1787, '07/04/20', '2020', '09:25 PM', '09:25 PM', 15, 5, 2, 1, 2, 1, '[{\"Written\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}},{\"MCQ\":{\"fullMarks\":\"50\",\"passMarks\":\"20\"}}]', 1, NULL, NULL, NULL, '2020-06-26 12:11:01', '2020-06-26 12:11:01');
 
 -- --------------------------------------------------------
 
@@ -1728,7 +1767,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `app_logo`, `print_logo`, `school_name`, `school_address`, `phone`, `email`, `website`, `current_day_attendance`, `color_theme`, `created_at`, `updated_at`, `period_attendance`, `exam_attendance`) VALUES
-(1, '5ed92b1ca08b2.png', '5eda7836dd479.png', 'MIRPUR UPOSHOHOR HIGH SCHOOL, DHAKA', 'Block F, Mirpur 1, Dhaka, Bangladesh', '01854284712', 'admin@gmail.com', 'https://durbarit.com/', 1, 1, NULL, '2020-06-15 03:09:33', 1, 1);
+(1, '5ed92b1ca08b2.png', '5eda7836dd479.png', 'MIRPUR UPOSHOHOR HIGH SCHOOL, DHAKA', 'Block F, Mirpur 1, Dhaka, Bangladesh', '01854284712', 'admin@gmail.com', 'https://durbarit.com/', 1, 1, NULL, '2020-06-29 16:16:12', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1861,6 +1900,76 @@ CREATE TABLE `inventory_categories` (
   `category` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
+  `deleted_status` tinyint(1) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_items`
+--
+
+CREATE TABLE `inventory_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `items`
+--
+
+CREATE TABLE `items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `item` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint(20) UNSIGNED NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `item`, `category_id`, `description`, `deleted_by`, `deleted_at`, `deleted_status`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'dsafdsafdfsgfdsgfdsgfdsg', 1, 'fdsaf', NULL, NULL, NULL, '1', '2020-06-21 22:09:59', '2020-06-21 22:10:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_suppliers`
+--
+
+CREATE TABLE `item_suppliers` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `item_supplier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_person_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_person_phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contact_person_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1894,8 +2003,10 @@ CREATE TABLE `leave_applies` (
 --
 
 INSERT INTO `leave_applies` (`id`, `apply_date`, `employee_id`, `leave_type_id`, `reason`, `start_date`, `end_date`, `approval`, `attachment_file`, `status`, `deleted_status`, `deleted_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(7, '15-06-2020', 8, 2, 'I want to go to home. Urgently..', '01-06-2020', '01-06-2020', 0, '5ee683c724775.jpg', 1, NULL, NULL, NULL, '2020-06-14 14:08:39', '2020-06-14 14:08:39'),
-(8, '15-06-2020', 8, 2, 'Urgently I want to go to home. Please approve my application.', '18-06-2020', '23-06-2020', 0, '5ee76850444d4.jpg', 1, NULL, NULL, NULL, '2020-06-15 06:23:44', '2020-06-15 06:23:44');
+(7, '15-06-2020', 8, 2, 'I want to go to home. Urgently..', '01-06-2020', '01-06-2020', 1, '5ee683c724775.jpg', 1, NULL, NULL, NULL, '2020-06-14 14:08:39', '2020-06-26 10:25:25'),
+(8, '15-06-2020', 8, 2, 'Urgently I want to go to home. Please approve my application.', '18-06-2020', '23-06-2020', 2, '5ee76850444d4.jpg', 1, NULL, NULL, NULL, '2020-06-15 06:23:44', '2020-06-26 10:25:31'),
+(9, '19-06-2020', 8, 2, 'jdhjksadfh dfsadfioaur sdfas dfio uewr', '22-06-2020', '30-06-2020', 1, NULL, 1, NULL, NULL, NULL, '2020-06-19 11:57:30', '2020-06-23 09:03:50'),
+(10, '20-06-2020', 8, 2, 'sdafsadfsadf', '21-06-2020', '22-06-2020', 0, NULL, 1, NULL, NULL, NULL, '2020-06-19 12:55:09', '2020-06-26 14:04:14');
 
 -- --------------------------------------------------------
 
@@ -1921,6 +2032,100 @@ CREATE TABLE `leave_types` (
 INSERT INTO `leave_types` (`id`, `name`, `status`, `deleted_status`, `deleted_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Medical', 1, NULL, NULL, NULL, '2020-06-13 11:17:44', '2020-06-14 07:45:54'),
 (2, 'Another reason', 1, NULL, NULL, NULL, '2020-06-14 07:46:12', '2020-06-14 07:46:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `library_books`
+--
+
+CREATE TABLE `library_books` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `book_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isbn_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `publisher` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `author` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Rack_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qty` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `book_price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `library_books`
+--
+
+INSERT INTO `library_books` (`id`, `title`, `book_no`, `isbn_no`, `publisher`, `author`, `subject`, `Rack_no`, `qty`, `book_price`, `description`, `deleted_by`, `deleted_at`, `deleted_status`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'gdfgfd', '53354', '23533', '5432', '543543', '4536543654', '35435', '43454', '6546', '453654', '{\"id\":2,\"guard\":\"admin\"}', '2020-05-13 07:08:21', '1', '1', '2020-05-13 13:58:07', '2020-05-13 14:08:21'),
+(2, 'QAYUM HASAN', '55', '4546', '5455', '5455', '545', '545', '5465', '54656', '5545', '{\"id\":2,\"guard\":\"admin\"}', '2020-05-13 07:08:21', '1', '1', '2020-05-13 14:04:35', '2020-05-13 14:08:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `library_members`
+--
+
+CREATE TABLE `library_members` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `card_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `library_members`
+--
+
+INSERT INTO `library_members` (`id`, `card_no`, `class_id`, `student_id`, `deleted_by`, `deleted_at`, `deleted_status`, `status`, `created_at`, `updated_at`) VALUES
+(1, '345354353', 15, 1, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:15:11', '1', '0', '2020-05-14 14:26:09', '2020-05-14 15:15:11'),
+(2, '56556', 15, 1, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:15:11', '1', '1', '2020-05-14 15:15:07', '2020-05-14 15:15:11'),
+(3, '45474554', 15, 2, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:16:12', '1', '1', '2020-05-14 15:15:54', '2020-05-14 15:16:12'),
+(4, '4256665', 15, 2, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:16:12', '1', '1', '2020-05-14 15:16:04', '2020-05-14 15:16:12'),
+(5, '54354', 15, 2, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:16:39', '1', '1', '2020-05-14 15:16:24', '2020-05-14 15:16:39'),
+(6, '6', 15, 2, '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:16:35', '1', '1', '2020-05-14 15:16:31', '2020-05-14 15:16:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `library_staff`
+--
+
+CREATE TABLE `library_staff` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `card_no` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_birth` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `library_staff`
+--
+
+INSERT INTO `library_staff` (`id`, `card_no`, `name`, `email`, `phone`, `date_birth`, `deleted_by`, `deleted_at`, `deleted_status`, `status`, `created_at`, `updated_at`) VALUES
+(1, '24092729', 'QAYUM HASAN', 'admin@gmail.com', '14589444', '2020-05-16', '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:45:29', '1', '0', NULL, '2020-05-14 15:45:29'),
+(2, '71028611', 'sfddsf', 'fdsfdsf@emil.com', 'dsfdsfds', '2020-05-07', '{\"id\":2,\"guard\":\"admin\"}', '2020-05-14 08:45:23', '1', '1', NULL, '2020-05-14 15:45:23');
 
 -- --------------------------------------------------------
 
@@ -2267,7 +2472,10 @@ INSERT INTO `period_attendances` (`id`, `class_id`, `section_id`, `subject_id`, 
 (84, 15, 5, 6, 15, 'May', '2020', '17-05-2020', 'present', NULL, '2020-05-17 06:53:04', '2020-05-17 06:53:04'),
 (85, 15, 5, 9, 13, 'May', '2020', '31-05-2020', 'present', NULL, '2020-05-31 12:18:58', '2020-05-31 12:18:58'),
 (86, 15, 5, 9, 14, 'May', '2020', '31-05-2020', 'present', NULL, '2020-05-31 12:18:58', '2020-05-31 12:18:58'),
-(87, 15, 5, 9, 15, 'May', '2020', '31-05-2020', 'present', NULL, '2020-05-31 12:18:58', '2020-05-31 12:18:58');
+(87, 15, 5, 9, 15, 'May', '2020', '31-05-2020', 'present', NULL, '2020-05-31 12:18:58', '2020-05-31 12:18:58'),
+(88, 15, 5, 9, 13, 'June', '2020', '20-06-2020', 'present', NULL, '2020-06-19 18:46:08', '2020-06-19 18:46:08'),
+(89, 15, 5, 9, 14, 'June', '2020', '20-06-2020', 'present', NULL, '2020-06-19 18:46:08', '2020-06-19 18:46:08'),
+(90, 15, 5, 9, 15, 'June', '2020', '20-06-2020', 'present', NULL, '2020-06-19 18:46:08', '2020-06-19 18:46:08');
 
 -- --------------------------------------------------------
 
@@ -2294,7 +2502,8 @@ INSERT INTO `roles` (`id`, `name`, `role_known_id`, `created_at`, `updated_at`) 
 (9, 'Librarian', 5, NULL, NULL),
 (10, 'Driver', 6, NULL, NULL),
 (11, 'clerk', 7, NULL, NULL),
-(12, 'Security Guard', 8, NULL, NULL);
+(12, 'Security Guard', 8, NULL, NULL),
+(13, 'Super Admin', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2398,6 +2607,7 @@ CREATE TABLE `sessions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `session_year` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `is_current_session` tinyint(4) NOT NULL DEFAULT '0',
   `deleted_status` tinyint(1) DEFAULT NULL,
   `deleted_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2409,8 +2619,12 @@ CREATE TABLE `sessions` (
 -- Dumping data for table `sessions`
 --
 
-INSERT INTO `sessions` (`id`, `session_year`, `status`, `deleted_status`, `deleted_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '2019-2020', 1, NULL, NULL, NULL, '2020-05-30 10:28:21', '2020-05-30 10:33:19');
+INSERT INTO `sessions` (`id`, `session_year`, `status`, `is_current_session`, `deleted_status`, `deleted_by`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, '2019-2020', 1, 1, NULL, NULL, NULL, '2020-05-30 10:28:21', '2020-06-26 12:18:42'),
+(2, '2020-2021', 1, 0, NULL, NULL, NULL, '2020-06-21 13:49:49', '2020-06-21 13:51:42'),
+(3, '2021-2022', 1, 0, NULL, NULL, NULL, '2020-06-29 14:20:33', '2020-06-29 14:20:33'),
+(4, '2022-2023', 1, 0, NULL, NULL, NULL, '2020-06-29 14:21:52', '2020-06-29 14:21:52'),
+(5, '2023-2024', 1, 0, 1, '{\"id\":8,\"guard\":\"admin\"}', '2020-06-29 20:23:38', '2020-06-29 14:23:29', '2020-06-29 14:23:38');
 
 -- --------------------------------------------------------
 
@@ -2487,9 +2701,9 @@ CREATE TABLE `student_admissions` (
 --
 
 INSERT INTO `student_admissions` (`id`, `admission_no`, `roll_no`, `class`, `section`, `session_id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `category`, `religion`, `student_mobile`, `student_email`, `blood_group`, `height`, `weight`, `group_id`, `sibling`, `admission_date`, `nid_or_birthid`, `student_photo`, `father_name`, `father_phone`, `father_occupation`, `father_photo`, `mother_name`, `mother_phone`, `mother_occupation`, `mother_photo`, `if_guardian_is`, `guardian_name`, `guardian_relation`, `guardian_email`, `guardian_photo`, `guardian_phone`, `guardian_occupation`, `guardian_address`, `current_address`, `permanent_address`, `route_id`, `vehicle_id`, `hostel_id`, `room_num`, `previous_school_detail`, `previous_school_note`, `docu_title1`, `docu_1`, `docu_title2`, `docu_2`, `docu_title3`, `docu_3`, `docu_title4`, `docu_4`, `last_attend`, `deleted_by`, `deleted_at`, `deleted_status`, `status`, `created_at`, `updated_at`) VALUES
-(13, '458884', 'SR20702', 15, 5, 1, 'Emery', 'Nieves', 2, '2013-01-02', 51, 'Molestias similique', '012244775', 'qopud@mailinator.net', 6, 'Quia debitis possimu', 'Dolores nulla accusa', 1, 'NULL', '1992-05-09', 'Laboris laboriosam', 'th_1586201537.png', 'Neve Hall', '+1577241-7421', 'Quo enim quam beatae', 'th_1586201537.png', 'Robin Humphrey', '+1997469-2331', 'Nostrum enim dolores', 'th_1586201537.png', 'mother', 'Melanie Stuart', 'Mother', 'fyqy@mailinator.net', 'th_1586201537.png', '+1311262-6591', 'Facilis cum dolor re', 'Et officia quis aut', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '05-06-2020', NULL, NULL, NULL, '1', '2020-04-06 13:32:17', '2020-06-05 15:53:04'),
-(14, '1477771', 'SR20701', 15, 5, 1, 'Rinah', 'Pollard', 2, '1989-04-04', 52, 'Sunt eos ipsum harum', '01447878777', 'ciqibasugy@mailinator.net', 3, 'Quasi iure vitae des', 'Qui est obcaecati cu', 3, 'NULL', '1975-04-30', 'Magnam cupiditate lo', 'th_1586259128.png', 'Jeanette Leach', '+1326215-2315', 'Assumenda deserunt o', 'th_1586259128.png', 'Kyle Valentine', '+1356469-6098', 'Nulla et voluptas ea', 'th_1586259128.png', 'father', 'Yuri Neal', 'Father', 'ragy@mailinator.com', 'th_1586259128.png', '+1575468-3549', 'Cupiditate voluptate', 'Voluptas necessitati', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '05-06-2020', NULL, NULL, NULL, '1', '2020-04-07 05:32:08', '2020-06-05 15:53:04'),
-(15, '1114477', 'SR20703', 15, 5, 1, 'Leslie', 'Russell', 2, '1977-06-27', 51, 'Ipsam perferendis ut', '0144588885', 'finenumyw@mailinator.net', 6, 'Velit earum optio s', 'Ullam molestias quam', 4, 'NULL', '2001-03-26', 'Illum consectetur p', 'th_1586259175.png', 'Jakeem Tillman', '+1303662-6353', 'Porro quis ut maxime', 'th_1586259175.png', 'Arden Norman', '+1527218-5782', 'In esse ipsum est a', 'th_1586259175.png', 'mother', 'Heidi Todd', 'Father', 'pehaqy@mailinator.net', 'th_1586259176.png', '+1464904-3068', 'Magnam rem praesenti', 'Nam iure animi aspe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '05-06-2020', NULL, NULL, NULL, '1', '2020-04-07 05:32:56', '2020-06-05 15:53:05');
+(13, '458884', 'SR20702', 15, 5, 1, 'Emery', 'Nieves', 2, '2013-01-02', 51, 'Molestias similique', '012244775', 'qopud@mailinator.net', 6, 'Quia debitis possimu', 'Dolores nulla accusa', 1, 'NULL', '1992-05-09', 'Laboris laboriosam', 'th_1586201537.png', 'Neve Hall', '+1577241-7421', 'Quo enim quam beatae', 'th_1586201537.png', 'Robin Humphrey', '+1997469-2331', 'Nostrum enim dolores', 'th_1586201537.png', 'mother', 'Melanie Stuart', 'Mother', 'fyqy@mailinator.net', 'th_1586201537.png', '+1311262-6591', 'Facilis cum dolor re', 'Et officia quis aut', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22-06-2020', NULL, NULL, NULL, '1', '2020-04-06 13:32:17', '2020-06-21 19:57:25'),
+(14, '1477771', 'SR20701', 15, 5, 1, 'Rinah', 'Pollard', 2, '1989-04-04', 52, 'Sunt eos ipsum harum', '01447878777', 'ciqibasugy@mailinator.net', 3, 'Quasi iure vitae des', 'Qui est obcaecati cu', 3, 'NULL', '1975-04-30', 'Magnam cupiditate lo', 'th_1586259128.png', 'Jeanette Leach', '+1326215-2315', 'Assumenda deserunt o', 'th_1586259128.png', 'Kyle Valentine', '+1356469-6098', 'Nulla et voluptas ea', 'th_1586259128.png', 'father', 'Yuri Neal', 'Father', 'ragy@mailinator.com', 'th_1586259128.png', '+1575468-3549', 'Cupiditate voluptate', 'Voluptas necessitati', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22-06-2020', NULL, NULL, NULL, '1', '2020-04-07 05:32:08', '2020-06-21 19:57:25'),
+(15, '1114477', 'SR20703', 15, 5, 1, 'Leslie', 'Russell', 2, '1977-06-27', 51, 'Ipsam perferendis ut', '0144588885', 'finenumyw@mailinator.net', 6, 'Velit earum optio s', 'Ullam molestias quam', 4, 'NULL', '2001-03-26', 'Illum consectetur p', 'th_1586259175.png', 'Jakeem Tillman', '+1303662-6353', 'Porro quis ut maxime', 'th_1586259175.png', 'Arden Norman', '+1527218-5782', 'In esse ipsum est a', 'th_1586259175.png', 'mother', 'Heidi Todd', 'Father', 'pehaqy@mailinator.net', 'th_1586259176.png', '+1464904-3068', 'Magnam rem praesenti', 'Nam iure animi aspe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '22-06-2020', NULL, NULL, NULL, '1', '2020-04-07 05:32:56', '2020-06-21 19:57:25');
 
 -- --------------------------------------------------------
 
@@ -2682,6 +2896,18 @@ CREATE TABLE `years` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `years`
+--
+
+INSERT INTO `years` (`id`, `year`, `created_at`, `updated_at`) VALUES
+(1, 2020, NULL, NULL),
+(2, 2021, NULL, NULL),
+(3, 2022, NULL, NULL),
+(4, 2023, NULL, NULL),
+(5, 2024, NULL, NULL),
+(6, 2025, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -2978,6 +3204,25 @@ ALTER TABLE `inventory_categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `inventory_items`
+--
+ALTER TABLE `inventory_items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `items_category_id_foreign` (`category_id`);
+
+--
+-- Indexes for table `item_suppliers`
+--
+ALTER TABLE `item_suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `leave_applies`
 --
 ALTER TABLE `leave_applies`
@@ -2989,6 +3234,24 @@ ALTER TABLE `leave_applies`
 -- Indexes for table `leave_types`
 --
 ALTER TABLE `leave_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `library_books`
+--
+ALTER TABLE `library_books`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `library_members`
+--
+ALTER TABLE `library_members`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `library_staff`
+--
+ALTER TABLE `library_staff`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3142,7 +3405,7 @@ ALTER TABLE `years`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `admit_card_templates`
@@ -3208,19 +3471,19 @@ ALTER TABLE `class_sections`
 -- AUTO_INCREMENT for table `class_subjects`
 --
 ALTER TABLE `class_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=557;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=568;
 
 --
 -- AUTO_INCREMENT for table `class_teachers`
 --
 ALTER TABLE `class_teachers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `class_timetables`
 --
 ALTER TABLE `class_timetables`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1519;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1553;
 
 --
 -- AUTO_INCREMENT for table `contracts`
@@ -3232,7 +3495,7 @@ ALTER TABLE `contracts`
 -- AUTO_INCREMENT for table `current_day_attendances`
 --
 ALTER TABLE `current_day_attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -3250,13 +3513,13 @@ ALTER TABLE `designations`
 -- AUTO_INCREMENT for table `employee_attendances`
 --
 ALTER TABLE `employee_attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `employee_salaries`
 --
 ALTER TABLE `employee_salaries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `exams`
@@ -3268,7 +3531,7 @@ ALTER TABLE `exams`
 -- AUTO_INCREMENT for table `exam_attendances`
 --
 ALTER TABLE `exam_attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `exam_distributions`
@@ -3286,7 +3549,7 @@ ALTER TABLE `exam_halls`
 -- AUTO_INCREMENT for table `exam_schedules`
 --
 ALTER TABLE `exam_schedules`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1764;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1788;
 
 --
 -- AUTO_INCREMENT for table `exam_terms`
@@ -3391,15 +3654,51 @@ ALTER TABLE `inventory_categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `inventory_items`
+--
+ALTER TABLE `inventory_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `item_suppliers`
+--
+ALTER TABLE `item_suppliers`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `leave_applies`
 --
 ALTER TABLE `leave_applies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `leave_types`
 --
 ALTER TABLE `leave_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `library_books`
+--
+ALTER TABLE `library_books`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `library_members`
+--
+ALTER TABLE `library_members`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `library_staff`
+--
+ALTER TABLE `library_staff`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -3436,13 +3735,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `period_attendances`
 --
 ALTER TABLE `period_attendances`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `routes`
@@ -3466,7 +3765,7 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `student_admissions`
@@ -3514,7 +3813,7 @@ ALTER TABLE `voucher_headers`
 -- AUTO_INCREMENT for table `years`
 --
 ALTER TABLE `years`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

@@ -30,17 +30,8 @@ date_default_timezone_set('Asia/Dhaka');
                             method="get">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4">
-                                    <label class="p-0 m-0"><b>Session :</b></label>
-                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
-                                        <option value="">--- Select session ---</option>
-                                        @foreach ($sessions as $session)
-                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-4">
+                                
+                                <div class="col-md-6">
                                     <label class="p-0 m-0"><b>class :</b></label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">--- Select class ---</option>
@@ -49,7 +40,7 @@ date_default_timezone_set('Asia/Dhaka');
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label class="p-0 m-0"><b>Section : </b></label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">

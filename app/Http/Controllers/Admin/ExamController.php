@@ -14,8 +14,6 @@ class ExamController extends Controller
 {
     public function index()
     {
-        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
-    
         $types = ExamType::select(['name'])->get();
         $distributions = ExamDistribution::select(['name'])
             ->where('status', 1)
@@ -31,23 +29,22 @@ class ExamController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         
-        return view('admin.exam_master.exam.exam_setup.index', compact('types', 'distributions', 'exams', 'terms', 'sessions'));
+        return view('admin.exam_master.exam.exam_setup.index', compact('types', 'distributions', 'exams', 'terms'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|unique:exams,name',
-            'session_id' => 'required',
             'type' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'distributions' => 'required|array',
         ]);
-
+        $currentSession = Session::where('is_current_session', 1)->first();
         $addExam = new Exam();
         $addExam->name = $request->name;
-        $addExam->session_id = $request->session_id;
+        $addExam->session_id = $currentSession->id;
         $addExam->type = $request->type;
         $addExam->year = date('Y');
         $addExam->starting_date = $request->start_date;
