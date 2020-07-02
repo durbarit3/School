@@ -54,6 +54,7 @@
                             </td>
                             <td>{{$row->classes->name ?? ' '}}</td>
                             <td>{{$row->section}}</td>
+                            <!-- <td>{{$row->section->name ?? ' '}}</td> -->
                             
                             <td>dsgfdsgfds</td>
                             <td>dsgfdsgfds</td>

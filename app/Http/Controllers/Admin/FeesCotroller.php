@@ -17,6 +17,7 @@ use App\FeesCollection;
 
 class FeesCotroller extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -372,10 +373,9 @@ class FeesCotroller extends Controller
     public function feesmasterStore(Request $request)
     {
 
-
         $type = FeesType::findOrFail($request->types);
         
-        FeesMaster::insert([
+        $feesmaster =FeesMaster::create([
             'group'=>$request->group,
             'types'=>$request->types,
             'code'=>Str::slug($type->name.' '. $request->amount, '-'),
@@ -385,10 +385,49 @@ class FeesCotroller extends Controller
             'percentage'=>$request->percentage,
             'fine_amount'=>$request->fine_amount,
         ]);
+
+
+        $collections = array();
+
+        $feescollections = FeesCollection::all();
+
+        foreach ($feescollections as  $row) {
+
+            $this->collections =$row->collection;
+
+            $item =array(
+                '10' =>array(
+                    'fees_id' => $feesmaster->id, 
+                    'fees_groups' => $feesmaster->groups->name, 
+                    'fees_type' => $feesmaster->feestypes->name, 
+                    'fees_code' => $feesmaster->code, 
+                    'due_date' => $feesmaster->date, 
+                    'is_paid' => null, 
+                    'amount' => $feesmaster->amount, 
+                    'payment_id' => null, 
+                    'mode' => null, 
+                    'discount' => null, 
+                    'fine' => null, 
+                    'paid' => null, 
+                    ),
+                );
+
+
+            $collections =array_merge($row->collection, $item);
+            FeesCollection::findOrFail($row->id)->update([
+                'collection'=> $collections,
+            ]);
+        }
+
+
+
+
          $notification = array(
                 'messege' => 'Feesmaster Inserted Successfully!',
                 'alert-master' => 'success'
             );
+
+         return $feescollections = FeesCollection::all();
             return Redirect()->back()->with($notification);
     }
 
@@ -481,7 +520,7 @@ class FeesCotroller extends Controller
 
     public function feesCollect()
     {
-       $students =StudentAdmission::with('classes','section')->active();
+        $students =StudentAdmission::with('classes','section')->active();
         $classes = Classes::active();
 
         return view('admin.fees.fees_collect',compact('students','classes'));
@@ -506,14 +545,123 @@ class FeesCotroller extends Controller
     public function feesCollection($id)
     {
      
+  
+            $total_amount = 0;
+            $total_discount =0;
+            $total_fine =0;
+            $total_paid =0;
+            $total_blance =0;
+         $collections =FeesCollection::where('stdid',$id)->first();
+          $discounts = FeesDiscount::active();
 
-          $collections =FeesCollection::where('stdid',$id)->first();
+          //sum of total amount
+
+          foreach ($collections->collection as $key => $value) {
+              $total_amount +=$value['amount'];
+          }
+
+          //sum of total discount
+
+          foreach ($collections->collection as $key => $value) {
+              $total_discount +=$value['discount'];
+          }
+          // sum of total fine
+        foreach ($collections->collection as $key => $value) {
+            $total_fine +=$value['fine'];
+        }
+
+        // sum of total paid
+
+         
+        foreach ($collections->collection as $key => $value) {
+            $total_paid +=$value['paid'];
+        }
+
+        $total_amount = $total_amount +  $total_discount +$total_fine;
+
+        // sum of blance
+
+          foreach ($collections->collection as $key => $value) {
+            if ($value['is_paid'] !=1) {
+                $total_blance += $value['amount'];
+            }
+        }
+
           
-         // $student = StudentAdmission::select('first_name','id')->findOrFail($id);  
+         
 
-         return view('admin.fees.fees_collection',compact('collections'));
+        
+
+         return view('admin.fees.fees_collection',compact('collections','discounts','total_amount','total_discount','total_fine','total_paid','total_blance'));
 
     }
+
+
+
+
+
+    // get fees
+
+    public $collection_arr=[];
+
+    public function feesCollectSectionGet (Request $request)
+    {
+
+           
+
+           $collections =FeesCollection::findOrFail($request->collection_id);
+           $this->collection_arr =FeesCollection::findOrFail($request->collection_id)->collection;
+
+
+         foreach ($this->collection_arr as &$value) {
+            if ($value['fees_id'] ==  $request->id) {
+
+                $value['due_date'] = $request->date;
+                $value['payment_id'] = rand(5,15);
+                $value['amount'] = $request->amount;
+                $value['is_paid'] = 1;
+                $value['discount_group'] = $request->discount_group;
+                $value['discount'] = $request->discount;
+                $value['fine'] = $request->fine;
+                $value['mode'] = $request->mode;
+                $value['paid'] = $request->amount;
+                $value['description'] = $request->description;
+                // array_push($value, $this->collection_arr);
+                // unset($value);
+            }
+         }
+      
+
+   $collection_data =$this->collection_arr;     
+
+   
+
+
+        FeesCollection::findOrFail($request->collection_id)->update([
+                        'collection'=>$collection_data,
+
+                        
+                    ]);
+
+        $notification = array(
+            'messege' => 'Fees collection successfully:)',
+            'alert-master' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+
+      function stripslashes_arr($value) 
+{ 
+    $value = is_array($value) ? 
+                array_map(array($this, 'stripslashes_arr'), $value) : 
+                stripslashes($value); 
+  
+    return $value; 
+} 
+
+
+
 
 
     

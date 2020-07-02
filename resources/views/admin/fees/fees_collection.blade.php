@@ -39,13 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                         @php
-                            print_r(json_decode($collections));
-                        @endphp
-
-                        @foreach(json_decode($collections) as $row)
-                           
-                        @endforeach
+                       
 
 
       
@@ -53,6 +47,8 @@
                         
 
 
+                    @foreach($collections->collection as $row)
+                    
                        
                         <tr>
                             <td>
@@ -63,40 +59,64 @@
                             </td>
                             
                             
-                            <td>gfdfgfds</td>
-                            <td>hgdggfhd</td>
-                            <td>hfdhgf</td>
-                            
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>
-                                
-                                <a href="{{ route('room.type.status.update', 1) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
-                                
-                                <a href="{{ route('room.type.status.update', 2 ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
-                                
-                            </td>
+                            <td>{{$row['fees_type']}}</td>
+
+                            <td>{{$row['fees_code']}}</td>
+
+                            <td>{{$row['due_date']}}</td>
+
+                            <td>{{$row['is_paid'] ?'Paid':'UnPaid' }}</td>
+
+                            <td>{{$row['amount']}}</td>
+
+                            <td>{{$row['payment_id']}}</td>
+
+                            @if($row['mode'] == 1)
+                                <td>Cash</td>
+                            @elseif($row['mode'] == 2)
+                                <td>Check</td>
+                            @elseif($row['mode'] == 3)
+                                <td>DD</td>
+                            @else
+                            <td></td>
+
+                            @endif
+
+                            <td>sdfdsa</td>
+
+                            <td>{{$row['discount']}}</td>
+
+                            <td>{{$row['fine']}}</td>
+
+                            @if($row['is_paid'])
+                                <td>{{$row['amount']}}</td>
+                            @else
+                                <td>Null</td>
+                            @endif
+                       
+                            @if(!$row['is_paid'])
+                                <td>{{$row['amount']}}</td>
+                            @else
+                                <td>Null</td>
+                            @endif
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row['fees_id']}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr>
+
+                        @endforeach
                      
                
                          <tr  class="header">
-                           <td colspan="4">Header</td>
-                           <td>dsafdsaf</td>
+                           <td colspan="4"></td>
+                           <td>Grand Total</td>
+                           <td colspan="4">{{$total_amount}}</td>
+                         
+                           <td>{{$total_discount?$total_discount:''}}</td>
+                           <td>{{$total_fine?$total_fine:''}}</td>
+                           <td>{{$total_paid?$total_paid:''}}</td>
+                           <td>{{$total_blance?$total_blance:'NULL'}}</td>
                         </tr>
 
                         
@@ -116,67 +136,86 @@
 </section>
 <!--/ page content -->
 
-<div class="modal fade bd-example-modal-lg" id="myModal1">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Add Route</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('hostel.room.type.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Room Type Name" name="room_type" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
-                        <div class="col-sm-8">
-                            <textarea rows="3" class="form-control" name="description" require></textarea>
-                            
-                        </div>
-                    </div>
-
-                    <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Route</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Class 1 General: jun-month-fees</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('room.type.update') }}" method="POST" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('admin.fees.collection.get') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PATCH')
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Date:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="room_type" id="room_type" required>
                             <input type="hidden" name="id" id="id">
-                            <span class="text-danger">{{ $errors->first('room_type') }}</span>
+                            <input type="hidden" name="collection_id" value="{{$collections->id}}" id="collection_id">
+                            <input type="date" class="form-control" name="date" id="date" required>
+                            
                         </div>
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Description:</label>
+
+
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Amount:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="amount" required>
+                            
+                        </div>
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount Group:</label>
+                        <div class="col-sm-8">
+                              <div class="form-group">    
+                                <select class="form-control" name="discount_group">
+                                @foreach($discounts as $row)
+                                  <option value="{{$row->id}}">{{$row->name}}</option>
+
+                                @endforeach
+                                  
+                                </select>
+                              </div>
+                            
+                        </div>
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="discount" id="discount">
+                            
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Fine:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="fine">
+                            
+                        </div>
+
+
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Payment Mode:</label>
+                        <div class="col-sm-8 py-2">
+                            
+
+
+                            <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio1" value="1">
+                                      <label class="form-check-label" for="inlineRadio1">Cash</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio2" value="2">
+                                      <label class="form-check-label" for="inlineRadio2">Check</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio3" value="3">
+                                      <label class="form-check-label" for="inlineRadio3">DD</label>
+                                    </div>
+                            
+                        </div>
+
+
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Node:</label>
                         <div class="col-sm-8 mt-2">
-                            <textarea rows="3" class="form-control" id="description" name="description" require></textarea>
+                            <textarea rows="3" class="form-control" id="description" name="description"></textarea>
                             <span class="text-danger">{{ $errors->first('description') }}</span>
                         </div>
                     </div>
@@ -190,8 +229,6 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @push('js')
@@ -200,23 +237,7 @@
     $(document).ready(function() {
         $('.edit_route').on('click', function() {
             var id = $(this).data('id');
-            
-            if (id) {
-                $.ajax({
-                    url: "{{ url('admin/hostel/room/type/edit/') }}/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-
-                        $("#room_type").val(data.room_type);
-                        $("#description").val(data.description);
-                        $("#id").val(data.id);
-                    }
-                });
-            } else {
-                // alert('danger');
-            }
-
+            $("#id").val(id);
         });
     });
 </script>
