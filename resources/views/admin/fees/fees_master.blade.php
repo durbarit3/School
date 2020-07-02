@@ -52,7 +52,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{$row->comments->name}}</td>
+                            <td>{{$row->groups->name}}</td>
                             <td>{{$row->code}}</td>
                             <td>{{$row->date}}</td>
                             

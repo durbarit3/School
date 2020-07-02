@@ -60,33 +60,48 @@
                             
                             
                             <td>{{$row['fees_type']}}</td>
+
                             <td>{{$row['fees_code']}}</td>
+
                             <td>{{$row['due_date']}}</td>
+
                             <td>{{$row['is_paid'] ?'Paid':'UnPaid' }}</td>
+
                             <td>{{$row['amount']}}</td>
+
                             <td>{{$row['payment_id']}}</td>
-                            <td>{{$row['mode']}}</td>
+
+                            @if($row['mode'] == 1)
+                                <td>Cash</td>
+                            @elseif($row['mode'] == 2)
+                                <td>Check</td>
+                            @elseif($row['mode'] == 3)
+                                <td>DD</td>
+                            @else
+                            <td></td>
+
+                            @endif
+
+                            <td>sdfdsa</td>
+
                             <td>{{$row['discount']}}</td>
+
                             <td>{{$row['fine']}}</td>
-                            <td>{{$row['paid']}}</td>
-                            <td>dsgfdsgfds</td>
+
+                            @if($row['is_paid'])
+                                <td>{{$row['amount']}}</td>
+                            @else
+                                <td>Null</td>
+                            @endif
                        
-                            <td>
-                                
-                                <a href="{{ route('room.type.status.update', 1) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
-                                
-                                <a href="{{ route('room.type.status.update', 2 ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
-                                
-                            </td>
+                            @if(!$row['is_paid'])
+                                <td>{{$row['amount']}}</td>
+                            @else
+                                <td>Null</td>
+                            @endif
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row['fees_id']}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row['fees_id']}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                         </tr>
 
@@ -94,8 +109,14 @@
                      
                
                          <tr  class="header">
-                           <td colspan="4">Header</td>
-                           <td>dsafdsaf</td>
+                           <td colspan="4"></td>
+                           <td>Grand Total</td>
+                           <td colspan="4">{{$total_amount}}</td>
+                         
+                           <td>{{$total_discount?$total_discount:''}}</td>
+                           <td>{{$total_fine?$total_fine:''}}</td>
+                           <td>{{$total_paid?$total_paid:''}}</td>
+                           <td>{{$total_blance?$total_blance:'NULL'}}</td>
                         </tr>
 
                         
@@ -132,8 +153,8 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Date:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="id" id="id">
-                            <input type="text" name="collection_id" value="{{$collections->id}}" id="collection_id">
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="collection_id" value="{{$collections->id}}" id="collection_id">
                             <input type="date" class="form-control" name="date" id="date" required>
                             
                         </div>
@@ -141,31 +162,60 @@
 
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Amount:</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" name="number" id="number" required>
+                            <input type="number" class="form-control" name="amount" required>
                             
                         </div>
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount Group:</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" name="discount_group" id="number" required>
+                              <div class="form-group">    
+                                <select class="form-control" name="discount_group">
+                                @foreach($discounts as $row)
+                                  <option value="{{$row->id}}">{{$row->name}}</option>
+
+                                @endforeach
+                                  
+                                </select>
+                              </div>
                             
                         </div>
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount:</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" name="discount" id="discount" required>
+                            <input type="number" class="form-control" name="discount" id="discount">
+                            
+                        </div>
+
+                        <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Fine:</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="fine">
                             
                         </div>
 
 
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Payment Mode:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="payment_mode" id="payment" required>
+                        <div class="col-sm-8 py-2">
+                            
+
+
+                            <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio1" value="1">
+                                      <label class="form-check-label" for="inlineRadio1">Cash</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio2" value="2">
+                                      <label class="form-check-label" for="inlineRadio2">Check</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio3" value="3">
+                                      <label class="form-check-label" for="inlineRadio3">DD</label>
+                                    </div>
                             
                         </div>
 
 
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Code:</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Node:</label>
                         <div class="col-sm-8 mt-2">
-                            <textarea rows="3" class="form-control" id="description" name="description" require></textarea>
+                            <textarea rows="3" class="form-control" id="description" name="description"></textarea>
                             <span class="text-danger">{{ $errors->first('description') }}</span>
                         </div>
                     </div>
