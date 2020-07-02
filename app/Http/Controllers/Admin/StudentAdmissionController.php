@@ -16,6 +16,10 @@ use App\ClassSection;
 use App\BloodGroup;
 use App\Group;
 use App\Vehicle;
+use App\FeesType;
+use App\FeesMaster;
+use App\FeesCollection;
+use App\Service\FeesContiner;
 
 use App\Section;
 use Session;
@@ -23,10 +27,14 @@ use Carbon\Carbon;
 use Image;
 
 class StudentAdmissionController extends Controller
+
 {
-    public function __construct()
-    {
+
+    public $fees;
+    public function __construct(FeesContiner $fees){
+        $this->fees = $fees;
         $this->middleware('auth:admin');
+
     }
     //
     public function index(){
@@ -199,6 +207,11 @@ class StudentAdmissionController extends Controller
             }
 
             if($data->save()){
+
+                // fees collection
+
+                $this->fees->insertFeesAmount($data);
+
                $notification = array(
                     'messege' => 'Student Insert success',
                     'alert-type' => 'success'

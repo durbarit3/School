@@ -25,8 +25,10 @@ return array(
     'App\\CurrentDayAttendance' => $baseDir . '/app/CurrentDayAttendance.php',
     'App\\Department' => $baseDir . '/app/Department.php',
     'App\\Designation' => $baseDir . '/app/Designation.php',
+
     'App\\EmployeeAttendance' => $baseDir . '/app/EmployeeAttendance.php',
     'App\\EmployeeSalary' => $baseDir . '/app/EmployeeSalary.php',
+
     'App\\Event' => $baseDir . '/app/Event.php',
     'App\\Exam' => $baseDir . '/app/Exam.php',
     'App\\ExamAttendance' => $baseDir . '/app/ExamAttendance.php',
@@ -43,6 +45,10 @@ return array(
     'App\\FeesMaster' => $baseDir . '/app/FeesMaster.php',
     'App\\FeesReminder' => $baseDir . '/app/FeesReminder.php',
     'App\\FeesType' => $baseDir . '/app/FeesType.php',
+    'App\\FrontEvent' => $baseDir . '/app/FrontEvent.php',
+    'App\\FrontGallery' => $baseDir . '/app/FrontGallery.php',
+    'App\\FrontNews' => $baseDir . '/app/FrontNews.php',
+    'App\\FrontPage' => $baseDir . '/app/FrontPage.php',
     'App\\Gender' => $baseDir . '/app/Gender.php',
     'App\\GeneralSetting' => $baseDir . '/app/GeneralSetting.php',
     'App\\Group' => $baseDir . '/app/Group.php',
@@ -70,12 +76,18 @@ return array(
     'App\\Http\\Controllers\\Admin\\DepartmentController' => $baseDir . '/app/Http/Controllers/Admin/DepartmentController.php',
     'App\\Http\\Controllers\\Admin\\EmployeeAttendanceController' => $baseDir . '/app/Http/Controllers/Admin/EmployeeAttendanceController.php',
     'App\\Http\\Controllers\\Admin\\EmployeeController' => $baseDir . '/app/Http/Controllers/Admin/EmployeeController.php',
+
+  
     'App\\Http\\Controllers\\Admin\\EmployeeSalaryController' => $baseDir . '/app/Http/Controllers/Admin/EmployeeSalaryController.php',
     'App\\Http\\Controllers\\Admin\\EventController' => $baseDir . '/app/Http/Controllers/Admin/EventController.php',
     'App\\Http\\Controllers\\Admin\\ExamAdmitCardDesignController' => $baseDir . '/app/Http/Controllers/Admin/ExamAdmitCardDesignController.php',
     'App\\Http\\Controllers\\Admin\\ExamAdmitCardGenerateController' => $baseDir . '/app/Http/Controllers/Admin/ExamAdmitCardGenerateController.php',
     'App\\Http\\Controllers\\Admin\\ExamAttendanceController' => $baseDir . '/app/Http/Controllers/Admin/ExamAttendanceController.php',
     'App\\Http\\Controllers\\Admin\\ExamAttendanceModifyController' => $baseDir . '/app/Http/Controllers/Admin/ExamAttendanceModifyController.php',
+
+  
+
+  
     'App\\Http\\Controllers\\Admin\\ExamController' => $baseDir . '/app/Http/Controllers/Admin/ExamController.php',
     'App\\Http\\Controllers\\Admin\\ExamDistributionController' => $baseDir . '/app/Http/Controllers/Admin/ExamDistributionController.php',
     'App\\Http\\Controllers\\Admin\\ExamHallController' => $baseDir . '/app/Http/Controllers/Admin/ExamHallController.php',
@@ -86,13 +98,24 @@ return array(
     'App\\Http\\Controllers\\Admin\\ExpanseController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseController.php',
     'App\\Http\\Controllers\\Admin\\ExpanseHeaderController' => $baseDir . '/app/Http/Controllers/Admin/ExpanseHeaderController.php',
     'App\\Http\\Controllers\\Admin\\FeesCotroller' => $baseDir . '/app/Http/Controllers/Admin/FeesCotroller.php',
+
+  
     'App\\Http\\Controllers\\Admin\\FinanceReportController' => $baseDir . '/app/Http/Controllers/Admin/FinanceReportController.php',
     'App\\Http\\Controllers\\Admin\\GeneralSettingsController' => $baseDir . '/app/Http/Controllers/Admin/GeneralSettingsController.php',
+
+  
+    'App\\Http\\Controllers\\Admin\\FrontCmsController' => $baseDir . '/app/Http/Controllers/Admin/FrontCmsController.php',
+
+  
     'App\\Http\\Controllers\\Admin\\HostelController' => $baseDir . '/app/Http/Controllers/Admin/HostelController.php',
     'App\\Http\\Controllers\\Admin\\IncomeController' => $baseDir . '/app/Http/Controllers/Admin/IncomeController.php',
     'App\\Http\\Controllers\\Admin\\IncomeHeaderController' => $baseDir . '/app/Http/Controllers/Admin/IncomeHeaderController.php',
     'App\\Http\\Controllers\\Admin\\InventoryController' => $baseDir . '/app/Http/Controllers/Admin/InventoryController.php',
+
+  
     'App\\Http\\Controllers\\Admin\\LeaveTypeController' => $baseDir . '/app/Http/Controllers/Admin/LeaveTypeController.php',
+
+  
     'App\\Http\\Controllers\\Admin\\LibraryController' => $baseDir . '/app/Http/Controllers/Admin/LibraryController.php',
     'App\\Http\\Controllers\\Admin\\MarkEntireController' => $baseDir . '/app/Http/Controllers/Admin/MarkEntireController.php',
     'App\\Http\\Controllers\\Admin\\MarkRangeController' => $baseDir . '/app/Http/Controllers/Admin/MarkRangeController.php',
@@ -132,8 +155,12 @@ return array(
     'App\\InventoryItem' => $baseDir . '/app/InventoryItem.php',
     'App\\Item' => $baseDir . '/app/Item.php',
     'App\\ItemSupplier' => $baseDir . '/app/ItemSupplier.php',
+
+  
     'App\\LeaveApply' => $baseDir . '/app/LeaveApply.php',
     'App\\LeaveType' => $baseDir . '/app/LeaveType.php',
+
+  
     'App\\LibraryBook' => $baseDir . '/app/LibraryBook.php',
     'App\\LibraryMember' => $baseDir . '/app/LibraryMember.php',
     'App\\LibraryStaff' => $baseDir . '/app/LibraryStaff.php',

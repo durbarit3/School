@@ -15,7 +15,7 @@ class StudentAdmission extends Model
 
     public function Section()
     {
-        return $this->belongsTo('App\Section','section','id');
+        return $this->belongsTo('App\Section','section','id')->withDefault();
     }
     
      public function Gender()

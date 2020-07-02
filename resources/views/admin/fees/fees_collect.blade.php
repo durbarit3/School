@@ -54,6 +54,7 @@
                             </td>
                             <td>{{$row->classes->name ?? ' '}}</td>
                             <td>{{$row->section}}</td>
+                            <!-- <td>{{$row->section->name ?? ' '}}</td> -->
                             
                             <td>dsgfdsgfds</td>
                             <td>dsgfdsgfds</td>
@@ -66,8 +67,7 @@
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                               
+                                | <a href="{{route('admin.fees.collection',$row ->id)}}" class="edit_route btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
                             </td>
                         </tr>
                         @endforeach
