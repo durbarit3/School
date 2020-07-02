@@ -132,7 +132,7 @@
     <script src="{{asset('public/admins/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/admins/js/toster.js')}}"></script>
     <!-- metis menu -->
-    <script src="https://unpkg.com/metismenu"></script>
+    {{-- <script src="https://unpkg.com/metismenu"></script> --}}
 
     <script src="{{asset('public/admins/plugins/metismenu-3.0.4/assets/js/metismenu.js')}}"></script>
     <script src="{{asset('public/admins/plugins/metismenu-3.0.4/assets/js/mm-vertical-hover.js')}}"></script>
@@ -223,7 +223,7 @@
                 toastr.info("{{ Session::get('messege') }}");
                 break;
             case 'success':
-                toastr.success("{{ Session::get('messege') }}");
+                toastr.success("{{ Session::get('messege') }}", 'Successfull');
                 break;
             case 'warning':
                 toastr.warning("{{ Session::get('messege') }}");

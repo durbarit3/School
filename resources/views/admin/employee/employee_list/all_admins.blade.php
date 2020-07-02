@@ -67,7 +67,7 @@
 
             <div class="panel_body">
                 <div class="table-responsive">
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                         <thead>
                             <tr class="text-center">
                                 <th>Employee ID</th>
@@ -86,7 +86,7 @@
                             <tr class="text-center">
                                 <td>{{ $admin['employee_id'] }}</td>
                                 <td>{{ $admin['name'] }}</td>
-                                <td><img height="60" width="50"
+                                <td><img loading="lazy" height="50" width="50"
                                         src="{{ asset('public/uploads/employee/'.$admin['avater']) }}" alt=""></td>
                                 <td>{{ $admin['designation'] }}</td>
                                 <td>{{ $admin['department']['name'] }}</td>

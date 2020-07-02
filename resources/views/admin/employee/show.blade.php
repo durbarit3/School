@@ -2,7 +2,7 @@
 @push('css')
     <style>
         .dropify-wrapper {
-            height: 79px !important;
+            height: 67px !important;
         }
 
         button.btn.btn-link {
@@ -29,6 +29,8 @@
             border-radius: 6px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             width: 692px;
+            font-size: 14px;
+            color: #222533;
         }
 
         .background_photo {
@@ -50,22 +52,35 @@
             font-size: 14px;
             font-weight: 700;
         }
+
+        .card-header {
+          
+            background-color: rgba(0,0,0,.0)!important;
+            padding: 6px;
+        }
+
         .panel {
             margin-top: 33px;
+            padding: 3px 19px;
         }
 
         @media (min-width: 576px){
-
-            
             .pay_slip_modal_dialog {
                 max-width: 900px!important;
                 margin: 1.75rem auto;
             }
-
         }
         
         .earn_and_deduction_area table tbody tr td {
             line-height: 11px;
+        }
+
+        .card-body {
+            padding: 0rem 0rem!important;
+        }
+
+        label {
+            font-size: 14px;
         }
     
     </style>
@@ -149,14 +164,14 @@
                 </div>
 
                 <div id="collapseOne" class="collapse {{ Session::has('update_basic_info') ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div class="card-body no-padding">
+                    <div class="card-body">
                         <form action="{{ route('admin.employee.update.basic.details', $employee->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="panel">
                                 <div class="panel_body">
                                     <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Employee ID <span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Employee ID</b>  <span
                                                     style="color:red">*</span></label>
                                             <input readonly type="text" id="employee_id"
                                                 value="{{ $employee->employee_id }}" class="form-control form-control-sm"
@@ -164,7 +179,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Name<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Name</b> <span
                                                     style="color: red">*</span></label>
                                             <input type="text" id="name" value="{{ $employee->adminname }}"
                                                 class="form-control form-control-sm" name="name" required>
@@ -172,7 +187,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Gender<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Gender</b>  <span
                                                     style="color: red">*</span></label>
                                             <select class="form-control form-control-sm" name="gender" id="gender" required>
                                                 <option value="">--Selecet gender--</option>
@@ -186,7 +201,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Religion<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Religion</b> <span
                                                     style="color: red">*</span></label>
                                             <input type="text" id="religion" value="{{ $employee->religion }}"
                                                 class="form-control form-control-sm" name="religion" required>
@@ -198,7 +213,7 @@
                                         
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Blood Group<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Blood Group</b> <span
                                                     style="color: red">*</span></label>
                                             <select id="blood_group" class="form-control form-control-sm" name="blood_group" required>
                                                 <option value="">--Select Blood Group--</option>
@@ -212,7 +227,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Date Of Birth<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Date Of Birth</b> <span
                                                     style="color: red">*</span></label>
                                             <input type="date" class="form-control form-control-sm pick_date_of_birth" id="date_of_birth"
                                                 name="date_of_birth"
@@ -222,7 +237,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Mobile No<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Mobile No</b> <span
                                                     style="color:red">*</span></label>
                                             <input type="number" value="{{ $employee->phone }}" class="form-control form-control-sm"
                                                 name="mobile_no" required>
@@ -232,7 +247,7 @@
 
                                     <div class="form-group row">
                                         <div class="col-sm-4">
-                                            <label for="inputEmail3" class="text-center">Present Address <span
+                                            <label class="m-0 text-center"><b>Present Address</b>  <span
                                                     style="color: red">*</span></label>
                                             <textarea name="present_address" class="form-control form-control-sm" id="present_address"
                                                 placeholder="Present address" cols="8" rows="3"
@@ -241,7 +256,7 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <label for="inputEmail3" class="text-center">Permanent Address <span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Permanent Address</b>  <span
                                                     style="color: red">*</span></label>
                                             <textarea name="permanent_address" id="permanent_address"
                                                 class="form-control form-control-sm" placeholder="Present address" cols="8" rows="3"
@@ -249,7 +264,7 @@
                                             <span class="text-danger">{{ $errors->first('permanent_address') }}</span>
                                         </div>
                                         <div class="col-sm-4">
-                                            <label for="inputEmail3" class="text-center">Photo<span
+                                            <label for="inputEmail3" class="m-0 text-center"><b>Photo</b> <span
                                                     style="color: red">*</span></label>
                                             <input
                                                 data-default-file="{{ asset('public/uploads/employee/'.$employee->avater) }}"
@@ -266,6 +281,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
@@ -277,15 +293,15 @@
                 </div>
 
                 <div id="collapseTwo" class="collapse {{ Session::has('update_academic_info') ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div class="card-body no-padding">
+                    <div class="card-body">
                         <form action="{{ route('admin.employee.update.academic.details', $employee->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="panel">
                                 <div class="panel_body">
                                     <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Designation<span
-                                                    style="color: red">*</span></label>
+                                            <label class="m-0 text-center"><b>Designation</b>  <span
+                                                        style="color: red">*</span></label>
                                             <select id="designation" class="form-control form-control-sm" name="designation" required>
                                                 <option value="">--Select Designation--</option>
                                                 @foreach($designations as $designation)
@@ -298,8 +314,8 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Group/Department<span
-                                                    style="color: red">*</span></label>
+                                            <label class="m-0 text-center"><b>Group/Department</b> <span
+                                                        style="color: red">*</span></label>        
                                             <select id="group" id="group" class="form-control form-control-sm" name="group" required>
                                                 <option value="">--Selecet Group/Department--</option>
                                                 @foreach($groups as $group)
@@ -313,8 +329,8 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Joining Date <span
-                                                    style="color: red">*</span></label>
+                                            <label class="m-0 text-center"><b>Joining Date</b> <span
+                                                        style="color: red">*</span></label>       
                                             <input type="text" name="joining_date" id="joining_date"
                                                 class="form-control form-control-sm date_picker"
                                                 value="{{ $employee->joining_date }}"
@@ -323,16 +339,17 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Qualification <span
-                                                    style="color: red">*</span></label>
+                                            <label class="m-0 text-center"><b>Qualification</b> <span
+                                                        style="color: red">*</span></label>        
                                             <input type="text" name="qualification" value="{{ $employee->qualification }}"
                                                 id="qualification" class="form-control form-control-sm" required />
                                             <span class="text-danger">{{ $errors->first('qualification') }}</span>
                                         </div>
+                                    </div>
 
+                                    <div class="form-group row">
                                         <div class="col-sm-3">
-                                            <label for="inputEmail3" class="text-center">Role<span
-                                                    style="color: red">*</span></label>
+                                            <label class="m-0 text-center"><b>Role</b> <span style="color: red">*</span></label>        
                                             <select required id="role" class="form-control form-control-sm" name="role">
                                                 <option value="">--Selecet Role--</option>
                                                 @foreach($roles as $role)
@@ -352,6 +369,65 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseContractDetails"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            Contract Details
+                        </button>
+                    </h2>
+                </div>
+                
+                <div id="collapseContractDetails" class="collapse {{ Session::has('update_contract_details') ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form action="{{ route('admin.employee.update.contract.details', $employee->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="panel">
+                                <div class="panel_body">
+                                    <div class="form-group row">
+                                        
+                                        <div class="col-sm-4">
+                                            <label class="m-0 text-center"><b>Basic salary</b> <span style="color: red">*</span></label>        
+                                            <input type="text" name="basic_salary" id="basic_salary"
+                                                class="form-control form-control-sm"
+                                                value="{{ $employee->basic_salary }}"
+                                                required />
+                                            <span class="text-danger">{{ $errors->first('basic_salary') }}</span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label class="m-0 text-center"><b>Contract type</b> <span style="color: red">*</span></label>        
+                                            <select id="contract_type" class="form-control form-control-sm" name="contract_type" required>
+                                                <option value="">--Select contract type--</option>
+                                                <option {{ $employee->contract_type === "Permanent" ? 'SELECTED' : '' }} value="Permanent">
+                                                    Permanent
+                                                </option>
+                                                <option {{ $employee->contract_type === "Temporary" ? 'SELECTED' : '' }} value="Temporary">
+                                                    Temporary
+                                                </option>
+                                            </select>
+                                            <span class="text-danger">{{ $errors->first('contract_type') }}</span>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label class="m-0 text-center"><b>Work sift</b></label> 
+                                            <input type="text" name="work_sift" value="{{ $employee->work_sift }}"
+                                                id="work_sift" class="form-control form-control-sm" required />
+                                            <span class="text-danger">{{ $errors->first('work_sift') }}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
@@ -363,33 +439,37 @@
                 </div>
 
                 <div id="collapseThree" class="collapse {{ Session::has('update_bank_info') ? 'show' : '' }}" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div class="card-body no-padding">
-                        <table class="table table-bordered mt-1">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Bank Name</th>
-                                    <th>Account Holder</th>
-                                    <th>Branch</th>
-                                    <th>Bank Address</th>
-                                    <th>IFSC Code</th>
-                                    <th>Account No</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="text-center">
-                                    <td>{{ $employee->bank_name ? $employee->bank_name : "N/A"}}</td>
-                                    <td>{{$employee->account_holder ? $employee->account_holder : "N/A"}}</td>
-                                    <td>{{$employee->bank_branch ? $employee->bank_branch : "N/A"}}</td>
+                    <div class="panel">
+                        <div class="panel_body">
+                            <div class="card-body">
+                                <table class="table table-bordered mt-1">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>Bank Name</th>
+                                            <th>Account Holder</th>
+                                            <th>Branch</th>
+                                            <th>Bank Address</th>
+                                            <th>IFSC Code</th>
+                                            <th>Account No</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td>{{ $employee->bank_name ? $employee->bank_name : "N/A"}}</td>
+                                            <td>{{$employee->account_holder ? $employee->account_holder : "N/A"}}</td>
+                                            <td>{{$employee->bank_branch ? $employee->bank_branch : "N/A"}}</td>
 
-                                    <td>{{$employee->bank_address ? $employee->bank_address : "N/A"}}</td>
-                                    <td>{{$employee->ifsc_code ? $employee->ifsc_code : "N/A"}}</td>
-                                    <td>{{$employee->account_no ? $employee->account_no : "N/A"}}</td>
-                                    <td><a href="#" data-id="{{ $employee->id }}" title="edit" data-toggle="modal" data-target="#editModal" class="edit_bank btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a></td>
-                                </tr>
+                                            <td>{{$employee->bank_address ? $employee->bank_address : "N/A"}}</td>
+                                            <td>{{$employee->ifsc_code ? $employee->ifsc_code : "N/A"}}</td>
+                                            <td>{{$employee->account_no ? $employee->account_no : "N/A"}}</td>
+                                            <td><a href="#" data-id="{{ $employee->id }}" title="edit" data-toggle="modal" data-target="#editModal" class="edit_bank btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a></td>
+                                        </tr>
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -408,7 +488,7 @@
                     <div class="panel">
                         <div class="panel_body">
                             <div class="card-body">
-                                <table class="table table-sm">
+                                <table class="table table-bordered table-sm">
                                     <thead>
                                         <tr class="text-center">
                                             <th>#</th>
@@ -431,7 +511,7 @@
                                                     <td>{{ $salary->date }}</td>
                                                     <td>{{ $salary->pay_mode ? $salary->pay_mode : 'N/A' }}</td>
                                                     <td>{{ $salary->payable }}</td>
-                                                    <td>{{ $salary->is_paid == 0 ? "GENERATED" : "PAID" }}</td>
+                                                    <td>{!! $salary->is_paid == 0 ? "<span class='badge badge-warning'>GENERATED</span>" : "<span class='badge badge-success'>PAID</span>" !!}</td>
                                                     <td>
                                                         @if ($salary->is_paid == 0)
                                                             N/A

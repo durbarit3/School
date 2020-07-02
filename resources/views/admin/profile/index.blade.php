@@ -159,9 +159,10 @@
                                 <div class="col-md-8">
                                     <ul class="">
                                         <li><a data-class="profile_all_information" class="active tab_link" href="#"><b>Profile</b></a></li>
+                                        
                                         <li><a data-class="salary_information" class="tab_link" href="#"><b>Salary sheets</b></a></li>
+
                                         <li><a data-class="leave_information" class="tab_link" href="#"><b>Leaves</b></a></li>
-                                        <li><a class="tab_link" href="#"><b>Attendance</b></a></li>
                                     </ul>
                                 </div>
 

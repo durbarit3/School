@@ -65,9 +65,9 @@
                                     @endphp
                                     <tr class="text-center"
                                         data-user="
-                                        {{$leaveApply->employee->adminname}},
+                                        {{ $leaveApply->employee->adminname }},
                                         {{ $leaveApply->employee->employee_id }},
-                                        {{$leaveApply->leaveType->name}},
+                                        {{ $leaveApply->leaveType->name }},
                                         {{ $leaveApply->apply_date }},
                                         {{ $leaveApply->start_date }} <b> - To -</b> {{ $leaveApply->end_date }},
                                         {{ $day_count + 1 }},

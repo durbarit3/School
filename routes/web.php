@@ -55,7 +55,7 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::get('/', 'SessionYearController@index')->name('admin.academic.session.index');
         Route::post('store', 'SessionYearController@store')->name('admin.academic.session.store');
 
-        Route::post('update/{sessionId}', 'SessionYearController@update')->name('admin.academic.session.update');
+        Route::post('update', 'SessionYearController@update')->name('admin.academic.session.update');
 
         Route::get('status/change/{sessionId}', 'SessionYearController@changeStatus')->name('admin.academic.session.status.update');
 
@@ -572,6 +572,8 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
     Route::post('update/basic/details/{employeeId}', 'EmployeeController@updateBasicDetails')->name('admin.employee.update.basic.details');
 
     Route::post('update/academic/details/{employeeId}', 'EmployeeController@updateAcademicDetails')->name('admin.employee.update.academic.details');
+    
+    Route::post('update/contract/details/{employeeId}', 'EmployeeController@updateContractDetails')->name('admin.employee.update.contract.details');
 
     Route::get('change/status/{employeeId}', 'EmployeeController@changeStatus')->name('admin.employee.status.update');
 
@@ -1022,6 +1024,14 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
         Route::get('get/sections/{classId}', 'AttendanceReportController@getSection');
         
         Route::get('get/subjects/{classId}/{sectionId}', 'AttendanceReportController@getSubjects');
+    });
+
+    Route::group(['prefix' => 'human_resource_report'], function(){
+        Route::get('/', 'HumanResourceReportController@index')->name('admin.report.human.resource.report.index');
+        
+        Route::get('employee/report', 'HumanResourceReportController@employeeReport')->name('admin.report.human.resource.report.employee.report');
+        
+        Route::get('leave/apply/report', 'HumanResourceReportController@leaveApplyReport')->name('admin.report.human.resource.report.leave.apply.report');
     });
     
 });

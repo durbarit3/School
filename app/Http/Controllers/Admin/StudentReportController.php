@@ -33,10 +33,9 @@ class StudentReportController extends Controller
         $this->validate($request,[
             'session_id' => 'required'
         ]);
+        
         if (!$request->session_id AND !$request->class_id AND !$request->section_id AND !$request->category_id AND !$request->gender_id) {
-         
             return response()->json(['error' => 'You did not select any field']);
-            
         }
 
         $student_reports = '';

@@ -266,6 +266,8 @@ class EmployeeController extends Controller
             'qualification' => 'required',
             'role' => 'required',
             'blood_group' => 'required',
+            'basic_salary' => 'required',
+            'contract_type' => 'required',
         ]);
 
         if ($request->bank_name) {
@@ -322,6 +324,11 @@ class EmployeeController extends Controller
                 'ifsc_code' =>  $request->ifsc_code ?  $request->ifsc_code : '',
                 'account_no' =>  $request->account_no ?  $request->account_no : '',
                 'avater' =>  $employeePhotoName,
+                'basic_salary' =>  $request->basic_salary,
+                'contract_type' =>  $request->contract_type,
+                'contract_type' =>  $request->contract_type,
+                'work_sift' =>  $request->work_sift,
+                'joining_date_for_report' => date('Y-m-d', strtotime($request->joining_date)),
                 'created_at' =>  Carbon::now(),
             ]);
         }
@@ -526,9 +533,26 @@ class EmployeeController extends Controller
             $employee->status = 0;
             $employee->save();
             return response()->json('Authentication permission is off.');
-        }
+        }  
+    }
 
-        
-        
+    public function updateContractDetails(Request $request, $employeeId)
+    {
+        $this->validate($request, [
+            'basic_salary' => 'required',
+            'contract_type' => 'required',
+        ]);
+
+        $employee = Admin::where('id', $employeeId)->first();
+        $employee->basic_salary = $request->basic_salary;
+        $employee->contract_type = $request->contract_type;
+        $employee->work_sift = $request->work_sift;
+        $employee->save();
+        session()->flash('update_contract_details', 'ok');
+        $notification = array(
+            'messege' => 'Employee contract details is updated successfully',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
     }
 }

@@ -23,7 +23,7 @@
             </li>
             <li class="single-nav-wrapper {{ Request::is('admin/student*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="left-icon"><i class="fas fa-user-edit"></i></span>
                     <span class="menu-text">Student</span>
                 </a>
                 <ul class="dashboard-menu">
@@ -224,9 +224,21 @@
                 </ul>
             </li>
 
+            <li class="single-nav-wrapper {{ Request::is('admin/employee*') ? 'mm-active' : '' }}">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-users"></i></span>
+                    <span class="menu-text">Emplyees</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a class="{{ Request::is('admin/employees/all*') ? 'text_active' : '' }}" href="{{ route('admin.employee.all.admins') }}">Employee List</a></li>
+                    <li><a class="{{ Request::is('admin/employees/create') ? 'text_active' : '' }}" href="{{ route('admin.employee.create') }}">Add Employee</a></li>
+                    <li><a class="{{ Request::is('admin/employees/department*') ? 'text_active' : '' }}" href="{{ route('admin.employee.department.index') }}">Department</a></li>
+                </ul>
+            </li>
+            
              <li class="single-nav-wrapper {{ Request::is('admin/human_resource*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-table"></i></span>
+                    <span class="left-icon"><i class="fas fa-chalkboard-teacher"></i></span>
                     <span class="menu-text">Human Resorce</span>
                 </a>
                 <ul class="dashboard-menu">
@@ -297,18 +309,6 @@
                         </a>
                     </li>
                   
-                </ul>
-            </li>
-
-            <li class="single-nav-wrapper {{ Request::is('admin/employee*') ? 'mm-active' : '' }}">
-                <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-users"></i></span>
-                    <span class="menu-text">Emplyees</span>
-                </a>
-                <ul class="dashboard-menu">
-                    <li><a class="{{ Request::is('admin/employees/all*') ? 'text_active' : '' }}" href="{{ route('admin.employee.all.admins') }}">Employee List</a></li>
-                    <li><a class="{{ Request::is('admin/employees/create') ? 'text_active' : '' }}" href="{{ route('admin.employee.create') }}">Add Employee</a></li>
-                    <li><a class="{{ Request::is('admin/employees/department*') ? 'text_active' : '' }}" href="{{ route('admin.employee.department.index') }}">Department</a></li>
                 </ul>
             </li>
 
@@ -445,6 +445,9 @@
                     </li>
                     <li>
                         <a class="{{ Request::is('admin/reports/attendance_report*') ? 'text_active' : '' }}" href="{{ route('admin.reports.attendance.report.index') }}">Attendance Report</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/reports/human_resource_report*') ? 'text_active' : '' }}" href="{{ route('admin.report.human.resource.report.index') }}">Human resource</a>
                     </li>
                 </ul>
             </li>

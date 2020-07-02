@@ -128,7 +128,21 @@
                 </button>
             </div>
             <div class="modal-body edit_modal_body">
-
+                <form class="form-horizontal" action="{{ route('admin.academic.session.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="session_id" id="session_id">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class="m-0 p-0" for="name"><b>Section year</b> : </label>
+                            <input type="text" class="form-control" placeholder="Session year" name="session_year" id="session_year" value="{{$session->session_year}}" required>
+                        </div>
+                    </div>
+                
+                    <div class="form-group text-right">
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -162,8 +176,9 @@
                     url:"{{ url('admin/academic/session/edit/') }}" + "/" + session_id,
                     type:'get',
                     success:function(data){
-                        $('.edit_modal_body').empty();
-                        $('.edit_modal_body').append(data);
+                        console.log(data);
+                        $('#session_id').val(data.id);
+                        $('#session_year').val(data.session_year);
                     }
                 });
             });

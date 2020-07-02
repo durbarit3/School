@@ -67,7 +67,7 @@
 
             <div class="panel_body">
                 <div class="table-responsive">
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                         <thead>
                             <tr class="text-center">
                                 <th>Employee ID</th>
@@ -86,7 +86,7 @@
                             <tr class="text-center">
                                 <td>{{ $librarian['employee_id'] }}</td>
                                 <td>{{ $librarian['name'] }}</td>
-                                <td><img height="60" width="50"
+                                <td><img loading="lazy" height="50" width="50"
                                         src="{{ asset('public/uploads/employee/'.$librarian['avater']) }}" alt=""></td>
                                 <td>{{ $librarian['designation'] }}</td>
                                 <td>{{ $librarian['department']['name'] }}</td>

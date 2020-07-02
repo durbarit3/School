@@ -31,17 +31,16 @@ class SessionYearController extends Controller
     public function edit($sessionId)
     {
         $session = Session::select(['id', 'session_year'])->where('id', $sessionId)->firstOrFail();
-      
-        return view('admin.academic.session.ajax_view.edit_modal_view', compact('session'));
+        return response()->json($session);
     }
 
-    public function update(Request $request, $sessionId)
+    public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:sessions,session_year,' . $sessionId
+            'session_year' => 'required|unique:sessions,session_year,' . $request->session_id
         ]);
 
-        $updateSession= Session::where('id', $sessionId)->first();
+        $updateSession= Session::where('id', $request->session_id)->first();
         $updateSession->session_year = $request->session_year;
         $updateSession->save();
 

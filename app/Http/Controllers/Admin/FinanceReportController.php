@@ -18,7 +18,6 @@ class FinanceReportController extends Controller
 {
     public function index()
     {
-        
         $incomeHeaders = IncomeHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $expanseHeaders = ExpanseHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();

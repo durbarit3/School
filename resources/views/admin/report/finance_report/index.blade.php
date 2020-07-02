@@ -772,14 +772,12 @@
 
 
     <script>
-        
         $(document).ready(function () {
             $('.report_menu_list').on('click', function(){
                 $('.report_menu_list').removeClass('list_background');
                 $(this).addClass('list_background');
             });
         });
-
     </script>
 
     <script>

@@ -40,7 +40,7 @@
 <!--middle content wrapper-->
 <div class="middle_content_wrapper">
     <section class="page_area">
-    <form id="employee_add_form"action="{{ route('admin.employee.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="employee_add_form"action="{{ route('admin.employee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="panel">
                 <div class="panel_header">
@@ -51,16 +51,15 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="panel_body">
                     <div class="form_section_heading"><h6 class="m-0 text-black"><b>Employee Details</b></h6></div>
                     <hr class="p-0 m-0 mb-1">
                     <div class="form-group">
 
                         <div class="row">
-
                             <div class="col-sm-4">
-                                <label class="text-center m-0"><b>Employee ID</b><span
-                                        style="color:red">*</span></label>
+                                <label class="text-center m-0"><b>Employee ID</b></label>
                                 <input autocomplete="off" readonly type="text" id="employee_id" value="{{ $employeeId }}" class="form-control form-control-sm" name="employee_id" required>
                             </div>
 
@@ -111,7 +110,7 @@
                                 <input readonly autocomplete="off" type="text" autocomplete="off" class="form-control form-control-sm pick_date_of_birth" id="date_of_birth" name="date_of_birth" placeholder="yyyy-mm-dd">
                                 <span class="error date_of_birth_error"></span>
                             </div>
-                           
+                        
                             <div class="col-sm-4">
                                 <label class="text-center m-0"><b>Mobile No</b> <span
                                         style="color:red">*</span></label>
@@ -169,7 +168,7 @@
                                     style="color: red">*</span></label>
                             <input autocomplete="off" type="password" id="pasword_confirmation"
                                 name="password_confirmation"  class="form-control form-control-sm"
-                                 placeholder="Confirmation password"/>
+                                placeholder="Confirmation password"/>
                         </div>
                     </div>
                     
@@ -229,6 +228,37 @@
                                 @endforeach
                             </select>
                             <span class="error role_error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form_section_heading"><h6 class="m-0 text-black">Contract Details</h6></div>
+                    <hr class="p-0 m-0 mb-1">
+                    <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Basic salary</b> <span
+                                    style="color: red">*</span></label>
+                            <input autocomplete="off" type="number" name="basic_salary" id="basic_salary" class="form-control form-control-sm" placeholder="Basic salary amount"/>
+                            <span class="error basic_salary_error"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Contract type</b> <span
+                                style="color: red">*</span></label>
+                            <select id="contract_type" class="form-control form-control-sm" name="contract_type">
+                                <option value="">Select contract type</option>
+                                <option value="Permanent">Permanent</option>
+                                <option value="Temporary">Temporary</option>
+                            </select>
+                            <span class="error contract_type_error"></span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Work shift</b> <span
+                                    style="color: red"></span></label>
+                            <input autocomplete="off" type="text" name="work_sift"
+                                id="work_sift" class="form-control form-control-sm" placeholder="Employee work sift"/>
+                                <span class="error work_sift_error"></span>
                         </div>
                     </div>
 
