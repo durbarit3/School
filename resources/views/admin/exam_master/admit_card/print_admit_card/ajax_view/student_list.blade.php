@@ -15,7 +15,8 @@
                 </div>
                 <div class="row">
                     <div class="multiple_print_button_area py-2 ml-3 w-100">
-                        <button class="btn btn-sm btn-blue float-left" type="submit"><i class="fas fa-print"></i>&nbsp;Print selected all</button>
+                        <button class="btn btn-sm btn-blue create_button float-left" type="submit"><i class="fas fa-print"></i>&nbsp;Print selected all</button>
+                        <button style="display: none;" class="btn btn-sm loading_button btn-blue float-left" type="button"><i class="fas fa-print"></i>&nbsp;Print generating...</button>
                     </div>
                 </div>
                 <table id="dataTableExample1" class="table table-striped table-bordered mb-2">
@@ -73,7 +74,7 @@
             </form>
         </div>
 @else
-    <span class="alert alert-danger d-block">There is no student in this class section</span>
+    <span class="alert alert-danger d-block mt-3">There is no student in this class section</span>
 @endif
 <script>
     {{-- $(document).ready(function () {

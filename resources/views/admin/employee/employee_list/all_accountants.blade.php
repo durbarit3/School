@@ -45,11 +45,19 @@
                         <div class="employee_list_top_menu">
                             <ul>
                                 <li><a class="" href="{{ route('admin.employee.all.admins') }}"><i class="fas fa-user-friends"></i> Admin</a> </li>
+
+                                <li><a href="{{ route('admin.employee.all.super.admins') }}"><i class="fas fa-user-friends"></i> Super Admin</a> </li>
+
                                 <li><a href="{{ route('admin.employee.all.teacher') }}"><i class="fas fa-user-friends"></i> Teacher</a> </li>
-                                <li><a  href="{{ route('admin.employee.all.librarian') }}"><i class="fas fa-user-friends"></i> Librarian</a> </li>
+
+                                <li><a href="{{ route('admin.employee.all.librarian') }}"><i class="fas fa-user-friends"></i> Librarian</a> </li>
+
                                 <li><a class="menu_active" href="{{ route('admin.employee.all.accountant') }}"><i class="fas fa-user-friends"></i> Accountant</a> </li>
+
                                 <li><a href="{{ route('admin.employee.all.clerk') }}"><i class="fas fa-user-friends"></i> clerk</a> </li>
+
                                 <li><a href="{{ route('admin.employee.all.driver') }}"><i class="fas fa-user-friends"></i> Driver</a> </li>
+
                                 <li><a href="{{ route('admin.employee.all.guard') }}"><i class="fas fa-user-friends"></i> Security Guard</a> </li>
                             </ul>
                         </div>
@@ -59,7 +67,7 @@
 
             <div class="panel_body">
                 <div class="table-responsive">
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                         <thead>
                             <tr class="text-center">
                                 <th>Employee ID</th>
@@ -78,7 +86,7 @@
                             <tr class="text-center">
                                 <td>{{ $accountant['employee_id'] }}</td>
                                 <td>{{ $accountant['name'] }}</td>
-                                <td><img height="60" width="50"
+                                <td><img loading="lazy" height="50" width="50"
                                         src="{{ asset('public/uploads/employee/'.$accountant['avater']) }}" alt=""></td>
                                 <td>{{ $accountant['designation'] }}</td>
                                 <td>{{ $accountant['department']['name'] }}</td>

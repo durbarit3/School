@@ -83,23 +83,31 @@ date_default_timezone_set('Asia/Dhaka');
                             </div>
                         </div>
                     </div>
-                    <div class="panel_body">
+                    <div class="panel_body pb-2">
                         <form class="search_form" action="{{ route('admin.exam.master.report.card.search.student.class.section.wise') }}"
                             method="get">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4">
-                                    <label>Select Exam Name</label>
-                                    <select required name="exam_id" id="exam_id" class="form-control form-control-sm">
-                                        <option value="">Select Exam Name</option>
-                                        @foreach ($exams as $exam)
-                                            <option value="{{ $exam->id }}">{{ $exam->name }}</option>
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0">Session</label>
+                                    <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
+                                        <option value="">Session</option>
+                                        @foreach ($sessions as $session)
+                                            <option value="{{ $session->id }}">{{ $session->session_year }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                                
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0">Exam Name</label>
+                                    <select required name="exam_id" id="exams" class="form-control form-control-sm">
+                                        <option value="">Select Exam Name</option>
+                                        
+                                    </select>
+                                </div>
 
-                                <div class="col-md-4">
-                                    <label>Select Class</label>
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0">Class</label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
@@ -108,8 +116,8 @@ date_default_timezone_set('Asia/Dhaka');
                                     </select>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <label>Select Section</label>
+                                <div class="col-md-3">
+                                    <label class="p-0 m-0">Section</label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         <option value="">Select section</option>
@@ -122,7 +130,7 @@ date_default_timezone_set('Asia/Dhaka');
                     </div>
 
                     <div class="loading"><h4>Loading...</h4> </div>
-                    <div class="panel_body student_list">
+                    <div class="panel_body mt-3 student_list">
                                          
                     </div>
                 </div>
@@ -149,146 +157,197 @@ date_default_timezone_set('Asia/Dhaka');
 
 @endsection
 @push('js')
-<script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
-<script type="text/javascript">
-    $('.loading').hide();
-    $(document).ready(function () {
-        $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url: "{{ url('admin/exam/master/mark/report/card/get/sections/by') }}" + "/" + classId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data, function (key, val) {
-                        $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                    })
-                }
-            })
-        })
-    });
+    <script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
 
-</script>
-
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('.search_form').on('submit', function (e) {
-            e.preventDefault();
-            $('.student_list').empty();
-            $('.loading').show();
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var request = $(this).serialize(); 
-            //console.log(request);
-            $.ajax({
-                url: url,
-                type: method,
-                data:request,
-                success: function (data) {
-                    //console.log(data);
-                    if (!$.isEmptyObject(data)) {
-                        $('.student_list').html(data);
-                        $('.loading').hide();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select_session').on('change', function () {
+                var sessionId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/exam/master/mark/report/card/get/exams/by') }}" + "/" + sessionId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        $('#exams').empty();
+                        $('#exams').append(' <option value="">--Select exam name--</option>');
+                        $.each(data, function (key, val) {
+                            $('#exams').append(' <option value="' + val.id + '">' + val.name + '</option>');
+                        })
                     }
-                }
+                })
             })
-        })
-    });
+        });
 
-</script>
+    </script>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $(document).on('click', '.show_report_card', function (e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-            $.ajax({
-                url: url,
-                type: 'get',
-                success: function (data) {
-                    //console.log(data);
-                    if (!$.isEmptyObject(data)) {
-                        $('.report_card_details_modal_body').empty();
-                        $('.report_card_details_modal_body').html(data);
-                        $('#report_card_details').modal('show');
+    <script type="text/javascript">
+        $('.loading').hide();
+        $(document).ready(function () {
+            $('.select_class').on('change', function () {
+                var classId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/exam/master/mark/report/card/get/sections/by') }}" + "/" + classId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
+                        $.each(data, function (key, val) {
+                            $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
+                        })
                     }
-                }
+                })
             })
-        })
-    });
+        });
 
-</script>
+    </script>
 
-<script type="text/javascript">
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $(document).ready(function () {
-        $(document).on('submit', '#mark_entires_from', function (e) {
-            e.preventDefault();
-            $('.loading_button').show();
-            $('.create_button').hide();
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var request = $(this).serialize(); 
-            //console.log(request);
-            $.ajax({
-                url: url,
-                type: method,
-                dataType:'json',
-                data:request,
-                success: function (data) {
-                    toastr.success(data);
-                    $('.loading_button').hide();
-                    $('.create_button').show();
-                }
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.search_form').on('submit', function (e) {
+                e.preventDefault();
+                $('.student_list').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var request = $(this).serialize(); 
+                //console.log(request);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data:request,
+                    success: function (data) {
+                        //console.log(data);
+                        if (!$.isEmptyObject(data)) {
+                            $('.student_list').html(data);
+                            $('.loading').hide(100);
+                        }
+                    }
+                })
             })
-        })
-    });
+        });
 
-</script>
+    </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-        $(document).on('click', '.print_button', function (e) {
-            var header = $('.print_main_header_area').html();
-            var footer = $('.print_footer_main_area').html();
+        $(document).ready(function () {
+            $(document).on('click', '.show_report_card', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    success: function (data) {
+                        //console.log(data);
+                        if (!$.isEmptyObject(data)) {
+                            $('.report_card_details_modal_body').empty();
+                            $('.report_card_details_modal_body').html(data);
+                            $('#report_card_details').modal('show');
+                        }
+                    }
+                })
+            })
+        });
 
-            $('.print_area').printThis({
-                debug: true,                   
-                importCSS: true,                
-                importStyle: false,             
-                printContainer: true,           
-                loadCSS: "{{asset('public/admins/css/report_card_print_style.css')}}",      
-                pageTitle: "Exam schedule",                  
-                removeInline: true,            
-                removeInlineSelector: "body *",  
-                printDelay: 333,                
-                header: header,                   
-                footer: footer,
-                base: true,                    
-                formValues: true,              
-                canvas: true,                  
-                doctypeString: '...',           
-                removeScripts: true,          
-                copyTagClasses: true,       
-                beforePrintEvent: null,         
-                beforePrint: null,              
-                afterPrint: null  
-            });
-        })
-    });
+    </script>
+  
+    <script type="text/javascript">
 
-</script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).ready(function () {
+            $(document).on('submit', '#multiple_print_from', function (e) {
+                e.preventDefault();
+                $('.print_loading_button').show();
+                $('.print_generate_button').hide();
+                
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var request = $(this).serialize(); 
+                //console.log(request);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data:request,
+                    success: function (data) {
+                        
+                        if(!$.isEmptyObject(data.errorMsg)){
+                            $('.print_loading_button').hide();
+                            $('.print_generate_button').show();
+                            toastr.error(data.errorMsg);
+                        }
+                        $(data).printThis({
+                            debug: true,                   
+                            importCSS: true,                
+                            importStyle: false,             
+                            printContainer: true,           
+                            loadCSS: "{{asset('public/admins/css/report_card_print_style.css')}}",      
+                            pageTitle: "Exam schedule",                  
+                            removeInline: true,            
+                            removeInlineSelector: "body *",  
+                            printDelay: 333,                
+                            header: null,                   
+                            footer: null,
+                            base: true,                    
+                            formValues: true,              
+                            canvas: true,                  
+                            doctypeString: '...',           
+                            removeScripts: true,          
+                            copyTagClasses: true,       
+                            beforePrintEvent: null,         
+                            beforePrint: null,              
+                            afterPrint: null  
+                        });
+                        $('.print_loading_button').hide();
+                        $('.print_generate_button').show();
+                    }
+                })
+            })
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(document).on('click', '.print_button', function (e) {
+                var header = $('.print_main_header_area').html();
+                var footer = $('.print_footer_main_area').html();
+
+                $('.print_area').printThis({
+                    debug: true,                   
+                    importCSS: true,                
+                    importStyle: false,             
+                    printContainer: true,           
+                    loadCSS: "{{asset('public/admins/css/report_card_print_style.css')}}",      
+                    pageTitle: "Exam schedule",                  
+                    removeInline: true,            
+                    removeInlineSelector: "body *",  
+                    printDelay: 333,                
+                    header: header,                   
+                    footer: footer,
+                    base: true,                    
+                    formValues: true,              
+                    canvas: true,                  
+                    doctypeString: '...',           
+                    removeScripts: true,          
+                    copyTagClasses: true,       
+                    beforePrintEvent: null,         
+                    beforePrint: null,              
+                    afterPrint: null  
+                });
+            })
+        });
+
+    </script>
 
 @endpush

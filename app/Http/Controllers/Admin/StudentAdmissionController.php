@@ -29,9 +29,12 @@ use Image;
 class StudentAdmissionController extends Controller
 
 {
+
     public $fees;
     public function __construct(FeesContiner $fees){
         $this->fees = $fees;
+        $this->middleware('auth:admin');
+
     }
     //
     public function index(){

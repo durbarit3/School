@@ -1,10 +1,35 @@
 @extends('admin.master')
 @push('css')
-
+    {{-- <link rel="stylesheet" href="{{asset('public/admins/admin.employee.employee_list.create.css')}}"> --}}
     <style>
-    .dropify-wrapper {
-        height: 79px!important;
-    }
+        .dropify-wrapper {
+            height: 67px!important;
+        }
+
+        .border_red{
+            border: 1px solid red;
+            border-radius: 3px;
+        }
+
+        label {
+            font-size: 13px;
+        }
+
+        .dropify-wrapper .dropify-message p {
+            margin: -7px 0 0;
+        }
+
+        .dropify-wrapper {
+            border-radius: 3px;
+        }
+
+        .form_section_heading h6 {
+            letter-spacing: 2px;
+        }
+
+        .text-black{
+            color:#222533;
+        }
     </style>
 @endpush
 @section('content')
@@ -15,7 +40,7 @@
 <!--middle content wrapper-->
 <div class="middle_content_wrapper">
     <section class="page_area">
-    <form action="{{ route('admin.employee.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="employee_add_form"action="{{ route('admin.employee.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="panel">
                 <div class="panel_header">
@@ -26,256 +51,286 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="panel_body">
-                    <div><h6>Employee Details</h6></div>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Employee ID <span
-                                    style="color:red">*</span></label>
-                            <input readonly type="text" id="employee_id" value="{{ $employeeId }}" class="form-control" name="employee_id" required>
+                    <div class="form_section_heading"><h6 class="m-0 text-black"><b>Employee Details</b></h6></div>
+                    <hr class="p-0 m-0 mb-1">
+                    <div class="form-group">
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Employee ID</b></label>
+                                <input autocomplete="off" readonly type="text" id="employee_id" value="{{ $employeeId }}" class="form-control form-control-sm" name="employee_id" required>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Name</b> <span
+                                    style="color: red">*</span></label>
+                                <input autocomplete="off" type="text" id="name" class="form-control form-control-sm" name="name" placeholder="Employee name">
+                                <span class="error name_error"></span>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Gender</b> <span
+                                    style="color: red">*</span></label>
+                                <select class="form-control form-control-sm" name="gender" id="gender">
+                                    <option value="">Selecet gender</option>
+                                    @foreach($genders as $gender)
+                                    <option {{ $gender->name == old('gender') ? 'SELECTED' : '' }}
+                                        value="{{ $gender->name }}">{{ $gender->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="error gender_error"></span>
+                            </div>
+
+                            
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Religion</b> <span
+                                    style="color: red">*</span></label>
+                                <input autocomplete="off" type="text" id="religion" class="form-control form-control-sm"
+                                    name="religion" placeholder="Employee religion">
+                                <span class="error religion_error"></span>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Blood group</b> <span
+                                    style="color: red">*</span></label>
+                                <select id="blood_group" class="form-control form-control-sm" name="blood_group">
+                                    <option value="">Select Blood Group</option>
+                                    @foreach($bloodGroups as $bloodGroup)
+                                    <option value="{{ $bloodGroup->id }}">{{ $bloodGroup->group_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="error blood_group_error"></span>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Date of birth</b>  <span
+                                    style="color: red">*</span></label>
+                                <input readonly autocomplete="off" type="text" autocomplete="off" class="form-control form-control-sm pick_date_of_birth" id="date_of_birth" name="date_of_birth" placeholder="yyyy-mm-dd">
+                                <span class="error date_of_birth_error"></span>
+                            </div>
+                        
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Mobile No</b> <span
+                                        style="color:red">*</span></label>
+                                <input autocomplete="off" type="number" id="mobile_no" class="form-control form-control-sm" name="mobile_no" placeholder="Emp mobile_no">
+                                <span class="error mobile_no_error"></span>
+                            </div>
                         </div>
 
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Name<span
-                                style="color: red">*</span></label>
-                            <input type="text" id="name" value="{{ old('name') }}" class="form-control" name="name"
-                                required>
-                            <span class="text-danger">{{ $errors->first('name') }}</span>
-                        </div>
+                        <div class="row">
+                    
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Permanent address</b> <span
+                                        style="color: red">*</span></label>
+                                <textarea autocomplete="off" name="permanent_address" id="permanent_address" class="form-control form-control-sm"
+                                    placeholder="Present address" cols="8" rows="3"></textarea>
+                                    <span class="error permanent_address_error"></span>
+                            </div>
 
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Gender<span
-                                style="color: red">*</span></label>
-                            <select class="form-control" name="gender" id="gender" required>
-                                <option value="">--Selecet gender--</option>
-                                @foreach($genders as $gender)
-                                <option {{ $gender->name == old('gender') ? 'SELECTED' : '' }}
-                                    value="{{ $gender->name }}">{{ $gender->name }}</option>
-                                @endforeach
-                            </select>
-                            <span class="text-danger">{{ $errors->first('gender') }}</span>
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Present address</b> <span
+                                        style="color: red">*</span></label>
+                                <textarea autocomplete="off" name="present_address" class="form-control form-control-sm" id="present_address"
+                                    placeholder="Present address" cols="8" rows="3"></textarea>
+                                    <span class="error present_address_error"></span>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label class="text-center m-0"><b>Photo</b> <span
+                                    style="color: red">*</span></label>
+                                <input  accept=".jpg, .jpeg, .png, .gif" type="file" id="photo" name="photo" id="input-file-now"
+                                    class="form-control form-control-sm dropify" size="20"/>
+                                <span class="error photo_error"></span>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="form_section_heading"><h6 class="m-0 text-black">Login Details</h6></div>
+                    <hr class="p-0 m-0 mb-1">
                     <div class="form-group row">
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Religion<span
-                                style="color: red">*</span></label>
-                            <input type="text" id="religion" value="{{ old('religion') }}" class="form-control"
-                                name="religion" required>
-                            <span class="text-danger">{{ $errors->first('religion') }}</span>
+                            <label class="text-center m-0"><b>Email address</b> <span
+                                    style="color: red">*</span></label>
+                            <input autocomplete="off" type="email" id="email"
+                                name="email" placeholder="Employee email address" class="form-control form-control-sm"/>
+                            <span class="error email_error"></span>
                         </div>
-
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Blood Group<span
-                                style="color: red">*</span></label>
-                            <select id="blood_group" class="form-control" name="blood_group" required>
-                                <option value="">--Select Blood Group--</option>
-                                @foreach($bloodGroups as $bloodGroup)
-                                <option {{ $bloodGroup->id == old('blood_group') ? "SELECTED" : "" }}
-                                    value="{{ $bloodGroup->id }}">{{ $bloodGroup->group_name }}</option>
-                                @endforeach
-                            </select>
-
+                            <label class="text-center m-0"><b>Password</b> <span
+                                    style="color: red">*</span></label>
+                            <input autocomplete="off" type="password" id="password"
+                                name="password" class="form-control form-control-sm" placeholder="Login password"/>
+                            <span class="error password_error"></span>    
                         </div>
-
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Date Of Birth<span
-                                style="color: red">*</span></label>
-                            <input type="text" class="form-control pick_date_of_birth" id="date_of_birth" name="date_of_birth" required>
-                            <span class="text-danger">{{ $errors->first('date_of_birth') }}</span>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Mobile No<span
-                                    style="color:red">*</span></label>
-                            <input type="number" value="{{ old('mobile_no') }}" class="form-control" name="mobile_no"
-                                required>
-                            <span class="text-danger">{{ $errors->first('mobile_no') }}</span>
+                            <label class="text-center m-0"><b>Confirm password</b>  <span
+                                    style="color: red">*</span></label>
+                            <input autocomplete="off" type="password" id="pasword_confirmation"
+                                name="password_confirmation"  class="form-control form-control-sm"
+                                placeholder="Confirmation password"/>
                         </div>
                     </div>
-
+                    
+                    <div class="form_section_heading"><h6 class="m-0 text-black"> Academic Details</h6></div>
+                    <hr class="p-0 m-0 mb-1">
                     <div class="form-group row">
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Present Address <span
-                                    style="color: red">*</span></label>
-                            <textarea name="present_address" class="form-control" id="present_address"
-                                placeholder="Present address" cols="8" rows="3"
-                                required>{{ old('present_address') }}</textarea>
-                            <span class="text-danger">{{ $errors->first('present_address') }}</span>
-                        </div>
 
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Permanent Address <span
-                                    style="color: red">*</span></label>
-                            <textarea name="permanent_address" id="permanent_address" class="form-control"
-                                placeholder="Present address" cols="8" rows="3"
-                                required>{{ old('present_address') }}</textarea>
-                            <span class="text-danger">{{ $errors->first('permanent_address') }}</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Photo<span
+                            <label class="text-center m-0"><b>Designation</b> <span
                                 style="color: red">*</span></label>
-                            <input required accept=".jpg, .jpeg, .png, .gif" type="file" id="photo" name="photo" id="input-file-now"
-                                class="form-control dropify" size="20" required/>
-                            <span class="text-danger">{{ $errors->first('photo') }}</span>
-                        </div>
-                    </div>
-
-                    <div><h6>Login Details</h6></div>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Email address <span
-                                    style="color: red">*</span></label>
-                            <input type="email" id="email" value="{{ old('email') }}"
-                                name="email" class="form-control" required />
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Password<span
-                                    style="color: red">*</span></label>
-                            <input type="password" id="password"
-                                name="password" value="{{ old('password') }}" class="form-control" required />
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Confirm Password<span
-                                    style="color: red">*</span></label>
-                            <input type="password" id="pasword_confirmation"
-                                name="password_confirmation" value="{{ old('password_confirmation') }}" class="form-control" required/>
-                        </div>
-                    </div>
-
-                    <div><h6> Academic Details</h6></div>
-                    <hr>
-                    <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Designation<span
-                                style="color: red">*</span></label>
-                            <select id="designation" class="form-control" name="designation" required>
-                                <option value="">--Select Designation--</option>
+                            <select id="designation" class="form-control form-control-sm" name="designation">
+                                <option value="">Select Designation</option>
                                 @foreach($designations as $designation)
-                                <option {{ $designation->name == old('designation') ? "SELECTED" : "" }}
-                                    value="{{ $designation->name }}">{{ $designation->name }}</option>
+                                <option value="{{ $designation->name }}">
+                                    {{ $designation->name }}
+                                </option>
                                 @endforeach
                             </select>
-                            <span class="text-danger">{{ $errors->first('designation') }}</span>
+                            <span class="error designation_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Group/Department<span
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Group/Department</b> <span
                                 style="color: red">*</span></label>
-                            <select id="group" id="group" class="form-control" name="group" required>
-                                <option value="">--Selecet Group/Department--</option>
+                            <select id="group" id="group" class="form-control form-control-sm" name="group">
+                                <option value="">Selecet Group/Department</option>
                                 @foreach($groups as $group)
-                                <option {{ $group->id == old('group') ? "SELECTED" : "" }} value="{{ $group->id }}">
+                                <option value="{{ $group->id }}">
                                     {{ $group->name }}</option>
                                 @endforeach
                             </select>
-                            <span class="text-danger">{{ $errors->first('group') }}</span>
+                            <span class="error group_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Joining Date <span
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Joining date</b> <span
                                     style="color: red">*</span></label>
-                            <input type="text" value="{{ date('d-m-Y') }}" name="joining_date" id="joining_date" class="form-control date_picker" required />
-                            <span class="text-danger">{{ $errors->first('joining_date') }}</span>
+                            <input readonly autocomplete="off" type="text" value="{{ date('d-m-Y') }}" name="joining_date" id="joining_date" class="form-control form-control-sm date_picker"/>
+                            <span class="error joining_date_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Qualification <span
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Qualification</b> <span
                                     style="color: red">*</span></label>
-                            <input type="text" name="qualification" value="{{ old('qualification') }}"
-                                id="qualification" class="form-control" required />
-                            <span class="text-danger">{{ $errors->first('qualification') }}</span>
+                            <input autocomplete="off" type="text" name="qualification"
+                                id="qualification" class="form-control form-control-sm" placeholder="Employee qualification"/>
+                                <span class="error qualification_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Role<span
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Role</b> <span
                                 style="color: red">*</span></label>
-                            <select required id="role" class="form-control" name="role">
-                                <option value="">--Selecet Role--</option>
+                            <select id="role" class="form-control form-control-sm" name="role">
+                                <option value="">Selecet Role</option>
                                 @foreach($roles as $role)
-                                <option {{ $role->role_known_id == old('role') ? "SELECTED" : "" }}
-                                    value="{{ $role->role_known_id }}">{{ $role->name }}</option>
+                                <option value="{{ $role->role_known_id }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
-                            <span class="text-danger">{{ $errors->first('role') }}</span>
+                            <span class="error role_error"></span>
                         </div>
                     </div>
 
-                    <div><h6>Social Links</h6></div>
-                    <hr>
+                    <div class="form_section_heading"><h6 class="m-0 text-black">Contract Details</h6></div>
+                    <hr class="p-0 m-0 mb-1">
                     <div class="form-group row">
+
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Facebook Link</label>
-                            <input type="text" placeholder="eg:https://www.facebook.com/username" value="{{ old('facebook_link') }}" name="facebook_link"
-                                id="facebook_link" class="form-control" />
-                            <span class="text-danger">{{ $errors->first('facebook_link') }}</span>
+                            <label class="text-center m-0"><b>Basic salary</b> <span
+                                    style="color: red">*</span></label>
+                            <input autocomplete="off" type="number" name="basic_salary" id="basic_salary" class="form-control form-control-sm" placeholder="Basic salary amount"/>
+                            <span class="error basic_salary_error"></span>
                         </div>
 
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">linkedIn Link</label>
-                            <input type="text" placeholder="eg:https://www.facebook.com/username" value="{{ old('linkedIn_link') }}" name="linkedIn_link"
-                                id="linkedIn_link" class="form-control" />
-                            <span class="text-danger">{{ $errors->first('linkedIn_link') }}</span>
+                            <label class="text-center m-0"><b>Contract type</b> <span
+                                style="color: red">*</span></label>
+                            <select id="contract_type" class="form-control form-control-sm" name="contract_type">
+                                <option value="">Select contract type</option>
+                                <option value="Permanent">Permanent</option>
+                                <option value="Temporary">Temporary</option>
+                            </select>
+                            <span class="error contract_type_error"></span>
                         </div>
 
                         <div class="col-sm-4">
-                            <label for="inputEmail3" class="text-center">Twitter Link</label>
-                            <input type="text" placeholder="eg:https://www.facebook.com/username" value="{{ old('twitter_link') }}" name="twitter_link" id="twitter_link"
-                                class="form-control" required />
-                            <span class="text-danger">{{ $errors->first('twitter_link') }}</span>
+                            <label class="text-center m-0"><b>Work shift</b> <span
+                                    style="color: red"></span></label>
+                            <input autocomplete="off" type="text" name="work_sift"
+                                id="work_sift" class="form-control form-control-sm" placeholder="Employee work sift"/>
+                                <span class="error work_sift_error"></span>
                         </div>
                     </div>
 
-                    <div><h6> Bank Details </h6></div>
-                    <hr>
+                    <div class="form_section_heading"><h6 class="m-0 text-black">Social Links</h6></div>
+                    <hr class="p-0 m-0 mb-1">
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Facebook link</b></label>
+                            <input autocomplete="off" type="text" placeholder="eg:https://www.facebook.com/username" name="facebook_link" class="form-control form-control-sm"/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>linkedIn link</b> </label>
+                            <input autocomplete="off" type="text" placeholder="eg:https://www.facebook.com/username" name="linkedIn_link" class="form-control form-control-sm"/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Twitter link</b> </label>
+                            <input autocomplete="off" type="text" placeholder="eg:https://www.facebook.com/username" name="twitter_link" class="form-control form-control-sm"/>
+                        </div>
+                    </div>
+
+                    <div class="form_section_heading"><h6 class="m-0 text-black"> Bank Details </h6></div>
+                    <hr class="p-0 m-0 mb-1">
 
                     <div class="form-group row">
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Bank Name</label>
-                            <input type="text" value="{{ old('bank_name') }}" class="form-control" name="bank_name"
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Bank name</b></label>
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" name="bank_name"
                                 id="bank_name">
-                            <span class="text-danger">{{ $errors->first('bank_name') }}</span>
+                            <span class="error bank_name_error"></span>
                         </div>
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Account Holder</label>
-                            <input type="text" value="{{ old('account_holder') }}" class="form-control"
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Account holder</b></label>
+                            <input autocomplete="off" type="text"  class="form-control form-control-sm"
                                 name="account_holder" id="account_holder">
-                            <span class="text-danger">{{ $errors->first('account_holder') }}</span>
+                            <span class="error account_holder_error"></span>
                         </div>
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Bank Branch</label>
-                            <input type="text" value="{{ old('bank_branch') }}" class="form-control" name="bank_branch"
+
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Bank branch</b> </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" name="bank_branch"
                                 id="bank_branch" >
-                            <span class="text-danger">{{ $errors->first('bank_branch') }}</span>
+                            <span class="error bank_branch_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Bank Address</label>
-                            <input type="text" value="{{ old('bank_address') }}" class="form-control"
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Bank address</b></label>
+                            <input autocomplete="off" type="text" class="form-control form-control-sm"
                                 name="bank_address" id="bank_address">
-                            <span class="text-danger">{{ $errors->first('bank_address') }}</span>
+                                <span class="error bank_address_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">IFSC Code</label>
-                            <input type="text" value="{{ old('ifsc_code') }}" class="form-control" id="ifsc_code"
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>IFSC code</b></label>
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" id="ifsc_code"
                                 name="ifsc_code">
-                            <span class="text-danger">{{ $errors->first('ifsc_code') }}</span>
+                                <span class="error ifsc_code_error"></span>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="text-center">Account Number</label>
-                            <input type="text" value="{{ old('account_no') }}" class="form-control" name="account_no">
-                            <span class="text-danger">{{ $errors->first('account_no') }}</span>
+                        <div class="col-sm-4">
+                            <label class="text-center m-0"><b>Account number</b> </label>
+                            <input autocomplete="off" type="text" class="form-control form-control-sm" name="account_no">
+                            <span class="error account_no_error"></span>
                         </div>
+
                     </div>
-                    <button class="btn btn-sm btn-success float-right" type="submit">Submit</button>
-                </div>
+                    <button class="btn btn-sm btn-blue submit_button float-right" type="submit">Submit</button>
+                    <button class="btn btn-sm btn-blue display_none loading_button float-right" type="button">Loading...</button>
+                </>
             </div>
         </form>
     </section>
@@ -286,33 +341,82 @@
 @endsection
 
 @push('js')
-    <script>
-        @error('account_holder')
-        toastr.error("{{ $errors->first('account_holder') }}");
-        @enderror
-        @error('bank_branch')
-        toastr.error("{{ $errors->first('bank_branch') }}");
-        @enderror
-        @error('bank_address')
-        toastr.error("{{ $errors->first('bank_address') }}");
-        @enderror
-        @error('ifsc_code')
-        toastr.error("{{ $errors->first('ifsc_code') }}");
-        @enderror
-        @error('account_no')
-        toastr.error("{{ $errors->first('account_no') }}");
-        @enderror
 
-        $(document).ready(function(){
-            $(".date_picker").flatpickr({
-                dateFormat: "d-m-Y",
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
-            $(".pick_date_of_birth").flatpickr({
-                dateFormat: "Y-m-d",
-                readonly:false,
+            $(document).on('submit', '#employee_add_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                $('.submit_button').hide();
+                $('.loading_button').show();
+                //var form = document.querySelector('#employee_add_form');
+                //var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success:function(data){
+                        $('.form-control').removeClass('is-invalid');
+                        $('.dropify-wrapper').removeClass('border_red'); 
+                        $('.error').html('');
+                        $('#employee_add_form')[0].reset();
+                        $('.dropify-render img').attr('src', null);
+                        $('.dropify-preview').hide();
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
+                        toastr.success(data.successMsg, 'Successfull');
+                    },
+                    error:function(err){
+
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
+                        toastr.error('Please check again all form field.','Some thing want wrong.');
+                        $('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+                        $.each(err.responseJSON.errors,function(key, error){
+                            //console.log(key);
+                            $('.'+key+'_error').html(error[0]);
+                            $('#'+key).addClass('is-invalid');
+                        });
+                        if(err.responseJSON.errors.photo){
+                            $('.dropify-wrapper').addClass('border_red');
+                        }else{
+                            $('.dropify-wrapper').removeClass('border_red');   
+                        }
+                    }
+                });
+            });
+        });
+
+    </script> 
+
+    <script>
+        $(document).ready(function(){
+            $('.date_picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        });
+        
+        $(document).ready(function(){
+            $('.pick_date_of_birth').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose:true
             });
         });
     </script>
+
+
     
 @endpush

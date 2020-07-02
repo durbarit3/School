@@ -95,6 +95,7 @@
             <input type="hidden" name="class_id" value="{{ $class_id }}">
             <input type="hidden" name="section_id" value="{{ $section_id }}">
             <input type="hidden" name="exam_id" value="{{ $exam->id }}">
+            <input type="hidden" name="session_id" value="{{ $exam->session_id }}">
         </div>
         <table id="dataTableExample1" class="schedule_table table table-striped table-bordered mb-2">
             <thead>

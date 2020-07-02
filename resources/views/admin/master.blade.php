@@ -4,11 +4,55 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('public/admins/images/favicon.png')}}">
     <!--Page title-->
+    <style>
+        .header_area{
+
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+           
+        }
+
+        .panel_header{
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+        }
+
+        .sidebar-wrapper ul li .menu-item{
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif 
+        }
+
+        .modal-header {
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+        }
+        
+        .header_area .sidebar_logo {
+            @if ($generalSettings->color_theme == 1)
+                background-color: #222533;
+            @else 
+                background-color: #353C48;
+            @endif
+        }
+    </style>
     <title>@yield('title', 'DurbarIT School Manage System')</title>
 
     <!--bootstrap-->
@@ -16,7 +60,6 @@
     <link rel="stylesheet" href="{{asset('public/admins/plugins/timePicker/css/timepicki.css')}}">
     <link rel="stylesheet" href="{{asset('public/admins/plugins/bootstrap_time_picker/css/bootstrap-datepicker3.css')}}">
     <!--font awesome-->
-
     <link rel="stylesheet" href="{{asset('public/admins/css/all.css')}}">
     <!--@DataTable_CSS_Link-->
     <link href="{{asset('public/admins/plugins/datatables/dataTables.min.css')}}" rel="stylesheet" type="text/css">
@@ -28,6 +71,7 @@
     <!-- donut-chart -->
     <link rel="stylesheet" href="{{asset('public/admins/plugins/donut-chart/dist/style.css')}}">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('public/admins/plugins/toastr-js/css/toastr.min.css')}}"> --}}
     <!-- dropify -->
     <link rel="stylesheet" href="{{asset('public/admins/plugins')}}/dist/css/dropify.min.css">
     <!--Custom CSS-->
@@ -57,7 +101,7 @@
         <!-- content wrpper -->
         <div class="content_wrapper">
 
-            @yield('content')
+        @yield('content')
 
         </div>
         <!--/ content wrapper -->
@@ -75,7 +119,6 @@
     </div>
     <!--/ wrapper -->
 
-
     <!-- jquery -->
     <script src="{{asset('public/admins/js/jquery.min.js')}}"></script>
     <!-- popper Min Js -->
@@ -89,7 +132,7 @@
     <script src="{{asset('public/admins/js/sweetalert.js')}}"></script>
     <script src="{{asset('public/admins/js/toster.js')}}"></script>
     <!-- metis menu -->
-    <script src="https://unpkg.com/metismenu"></script>
+    {{-- <script src="https://unpkg.com/metismenu"></script> --}}
 
     <script src="{{asset('public/admins/plugins/metismenu-3.0.4/assets/js/metismenu.js')}}"></script>
     <script src="{{asset('public/admins/plugins/metismenu-3.0.4/assets/js/mm-vertical-hover.js')}}"></script>
@@ -99,8 +142,9 @@
     <!-- counter -->
     <script src="{{asset('public/admins/plugins/counter/js/counter.js')}}"></script>
     <!-- chart -->
+
     <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.min.js')}}"></script>
-    <script src="{{asset('public/admins/plugins/chartjs-bar-chart/chart.js')}}"></script>
+   
     <!-- pie chart -->
     <script src="{{asset('public/admins/plugins/pie_chart/chart.loader.js')}}"></script>
 
@@ -108,14 +152,17 @@
     <script src="{{asset('public/admins/plugins/pie_chart/pie.active.js')}}"></script>
     <!-- @basic_donut_chart -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
-    <script src="{{asset('public/admins/plugins/basic-donut-chart/dist/script.js')}}"></script>
 
+    <script src="{{asset('public/admins/plugins/basic-donut-chart/dist/script.js')}}"></script>
+   
     <!-- @DataTable_JS_Link-->
     <script src="{{asset('public/admins/plugins/datatables/dataTables.min.js')}}"></script>
     <script src="{{asset('public/admins/plugins/datatables/dataTables-active.js')}}"></script>
     <!-- donut-chart -->
+    @if (Request::is('admin'))
     <script src="{{asset('public/admins/plugins/donut-chart/dist/script.js')}}"></script>
-
+    @endif
+    
     <script src="{{asset('public/admins/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- drofify -->
       <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>
@@ -161,13 +208,13 @@
                 } else {
                     drDestroy.init();
                 }
-            })
+            });
         });
     </script>
 
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+        <script src="{{asset('public/admins/plugins/toastr-js/js/toastr.min.js')}}"></script>
     <script>
         @if (Session:: has('messege'))
         var type = "{{Session::get('alert-type','info')}}"
@@ -176,7 +223,7 @@
                 toastr.info("{{ Session::get('messege') }}");
                 break;
             case 'success':
-                toastr.success("{{ Session::get('messege') }}");
+                toastr.success("{{ Session::get('messege') }}", 'Successfull');
                 break;
             case 'warning':
                 toastr.warning("{{ Session::get('messege') }}");
@@ -188,7 +235,7 @@
         @endif
     </script>
 
-    <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+    {{-- <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script> --}}
 
     <script>
         $(document).on("click", "#delete", function (e) {
@@ -235,10 +282,8 @@
     <script src="{{asset('public/admins/js/main.js')}}"></script>
     <script src="{{asset('public/admins/plugins/timePicker/js/timepicki.js')}}"></script>
     <script src="{{asset('public/admins/plugins/bootstrap_time_picker/js/bootstrap-datepicker.js')}}"></script>
-    
-    
+
     @stack('js')
 
 </body>
-
 </html>

@@ -7,11 +7,13 @@
         <div class="panel mb-0">
             <div class="panel_header">
                 <div class="row">
+
                     <div class="col-md-6">
                         <div class="panel_title">
                             <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Expanse</span>
                         </div>
                     </div>
+
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
                             <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
@@ -31,8 +33,8 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>
-                                        <label class="chech_container mb-1 p-0">
-                                            Select all
+                                        <label class="chech_container mb-4 p-0">
+                                           
                                             <input type="checkbox" id="check_all">
                                             <span class="checkmark"></span>
                                         </label>
@@ -54,7 +56,7 @@
                                     <td>
                                         <label class="chech_container mb-4">
                                             <input type="checkbox" name="deleteId[]" class="checkbox"
-                                                value="{{$expanse->id}}">
+                                                value="{{ $expanse->id }}">
                                             <span class="checkmark"></span>
                                         </label>
                                     </td>
@@ -83,7 +85,7 @@
                                         @endif
                                     | <a href="#" data-id="{{ $expanse->id }}" title="edit" class="edit_expanse btn btn-sm btn-blue text-white">
                                         <i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i>
-                                        <img height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
+                                        <img style="display: none;" height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
                                     </a> |
                                         <a id="delete" href="{{ route('admin.expanse.delete', $expanse->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
@@ -113,7 +115,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.expanse.store') }}" method="POST">
+                <form id="add_expanse_form" class="form-horizontal" action="{{ route('admin.expanse.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
@@ -125,33 +127,35 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label"><b> Date </b>:</label>
-                            <input type="text" class="form-control add_ex_date_picker" value="{{ date('d-m-Y') }}" name="date" required>
+                            <input type="text" class="form-control add_ex_date_picker" value="{{ date('d-m-Y') }}" name="date">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label  class="col-form-label"><b>Header </b>:</label>
-                            <select required name="header_id" class="form-control">
+                            <select  name="header_id" class="form-control header">
                                 <option value="">Select Header</option>
                                 @foreach ($headers as $header)
-                            <option value="{{ $header->id }}"> {{ $header->name }} </option>
+                                <option value="{{ $header->id }}"> {{ $header->name }} </option>
                                 @endforeach
                             </select>
+                            <div class="error header_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label"><b>Amount </b> :</label>
-                            <input type="number" class="form-control" placeholder="Amount" name="amount" required>
+                            <input type="number" class="form-control amount" placeholder="Amount" name="amount">
+                            <div class="error amount_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label"><b>Note</b> (Optional) :</label>
-                            <textarea name="note" id="" cols="10" placeholder="Note" rows="3" class="form-control"></textarea>
+                            <textarea name="note" cols="10" placeholder="Note" rows="3" class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -231,5 +235,64 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('submit', '#add_expanse_form', function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var type = $(this).attr('method');
+            var request = $(this).serialize();
+            $.ajax({
+                url:url,
+                type:type,
+                data: request,
+                success:function(data){
+
+                   //log(data);
+                   
+                   $('.error').html('');
+                   $('#add_expanse_form')[0].reset();
+                   $('#myModal1').modal('hide');
+                   toastr.success(data);
+                   setInterval(function(){
+                    window.location = "{{ url()->current() }}";
+                   }, 700)
+                   
+                   
+                },
+                error:function(err){
+                    //log(err.responseJSON.errors);
+                    if(err.responseJSON.errors.header_id){
+                        $('.header_error').html('Expanse header is required');
+                        $('.header').addClass('is-invalid');
+                    }else{
+                        $('.header_error').html('');
+                        $('.header').removeClass('is-invalid');
+                    }
+                    if(err.responseJSON.errors.amount){
+                        $('.amount_error').html('');
+                        $('.amount').removeClass('is-invalid');
+                        $('.amount_error').html(err.responseJSON.errors.amount[0]);
+                        
+                        $('.amount').addClass('is-invalid');
+                    }else{
+                        $('.amount_error').html('');
+                        $('.amount').removeClass('is-invalid');
+                    }
+                  
+                }
+            });
+        });
+    });
+
+</script> 
 
 @endpush

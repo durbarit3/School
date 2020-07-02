@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exam;
 use App\Classes;
+use App\Session;
 use App\MarkEntires;
 use App\ClassSection;
 use App\ClassSubject;
@@ -18,8 +19,9 @@ class MarkEntireController extends Controller
     public function index()
     {
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        $exams = Exam::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        return view('admin.exam_master.mark.mark_entires.index', compact('classes', 'exams'));
+        
+        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
+        return view('admin.exam_master.mark.mark_entires.index', compact('classes', 'sessions'));
     }
 
     //Ajax Methods 
@@ -41,6 +43,12 @@ class MarkEntireController extends Controller
         ->where('class_section_id', $classSection->id)
         ->get();
         return response()->json($classSubjects);
+    } 
+    
+    public function getExamsByAjax($sessionId)
+    {
+        $exams = Exam::select(['id', 'name'])->where('session_id', $sessionId)->where('deleted_status', NULL)->where('status', 1)->get();
+        return response()->json($exams);
     }
 
     public function search(Request $request)
@@ -48,10 +56,11 @@ class MarkEntireController extends Controller
        // return $request->all();
         $class_id = $request->class_id;
         $section_id = $request->section_id;
+        $session_id = $request->session_id;
         $subject_id = $request->subject_id;
         $exam_id = $request->exam_id;
         $students = StudentAdmission::with(['Class', 'Section'])->where('class', $class_id)
-        ->where('section', $section_id)
+        ->where('section', $section_id)->where('session_id', $session_id)
         ->get();
         $examDistributions = Exam::where('id', $exam_id)
         ->first();
@@ -102,7 +111,6 @@ class MarkEntireController extends Controller
                             array_push($markDistributions, $setMarkDist);
                         }else {
                         
-                            
                             $setMarkDist = [
                                 $examDistribution => $reqDist[$student_id],
                             ];

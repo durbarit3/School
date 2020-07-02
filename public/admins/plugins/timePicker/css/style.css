@@ -105,6 +105,7 @@ body {
 }
 
 
+
 /*
  * Cover
  */
@@ -138,6 +139,7 @@ body {
     position: fixed;
     top: 0;
   }
+
   .mastfoot {
     position: fixed;
     bottom: 0;
@@ -182,3 +184,20 @@ input[type='text'] {
 	display:inline-block;
 }
 .indexpicker .time_pick > input { width:100%; margin-bottom:20px;}
+
+/* .timepicker_wrap */
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .masthead-brand {
+    float: left;
+  }
+  .masthead-nav {
+    float: right;
+  }
+
+  .masthead,
+  .mastfoot,
+  .cover-container {
+    width: 700px;
+  }
+}

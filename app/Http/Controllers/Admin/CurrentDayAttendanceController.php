@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
+use App\Session;
 use App\ClassSection;
 use App\StudentAdmission;
 use Illuminate\Http\Request;
@@ -13,19 +14,22 @@ class CurrentDayAttendanceController extends Controller
 {
     public function selectCriteria(Request $request)
     {
+        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
         $classes = Classes::select(['id', 'name'])->get();
-        return view('admin.attendance.current_day_attendance.select_criteria', compact('classes'));
+        return view('admin.attendance.current_day_attendance.select_criteria', compact('classes', 'sessions'));
     }
 
     public function search(Request $request)
     {
        $class_id = $request->class_id;
        $section_id = $request->section_id;
+        $currentSession = Session::where('is_current_session', 1)->first();
        date_default_timezone_set('Asia/Dhaka');
-        $students = StudentAdmission::with(['Class'])
+        $students = StudentAdmission::with(['Class', 'Section'])
         ->select(['id','roll_no', 'first_name', 'last_name', 'class', 'section', 'student_photo', 'last_attend'])
         ->where('class', $class_id)
         ->where('section', $section_id)
+        ->where('session_id', $currentSession->id)
         ->get();
 
         if ($students->count() == 0) {
@@ -36,8 +40,7 @@ class CurrentDayAttendanceController extends Controller
             });
             return view('admin.attendance.current_day_attendance.ajax_view.search_student_view', compact('filteredStudents', 'class_id', 'section_id'));
         }
-        
-        
+           
     }
 
     public function store(Request $request)

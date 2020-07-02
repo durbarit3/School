@@ -45,17 +45,11 @@
                                 <b>Absent |</b>
                             </div>
                             <div class="form-inline ml-1">
-                                <input type="radio" class="form-control" name="student_ids[{{$student->id}}]"
+                                <input style="color:green;" type="radio" class="form-control" name="student_ids[{{$student->id}}]"
                                     value="late">&nbsp;
-                                <b>Late |</b>
+                                <b>Late </b>
                             </div>
 
-
-                            <div class="form-inline ml-1">
-                                <input type="radio" class="form-control" name="student_ids[{{$student->id}}]"
-                                    value="half_day">
-                                &nbsp;<b>Half Day</b>
-                            </div>
                         </div>
                     </td>
                     <td><input type="text" placeholder="Note" name="notes[]" class=" form-control form-control-sm">

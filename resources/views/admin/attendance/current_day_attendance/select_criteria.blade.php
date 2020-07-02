@@ -30,20 +30,21 @@ date_default_timezone_set('Asia/Dhaka');
                             method="get">
                             @csrf
                             <div class="row">
+                                
                                 <div class="col-md-6">
-                                    <label>class</label>
+                                    <label class="p-0 m-0"><b>class :</b></label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
-                                        <option value="">--- Select Class ---</option>
+                                        <option value="">--- Select class ---</option>
                                         @foreach ($classes as $class)
                                         <option value="{{ $class->id }}">{{ $class->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Section</label>
+                                    <label class="p-0 m-0"><b>Section : </b></label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
-                                        
+                                        <option value="">--- Select section ---</option>
                                     </select>
                                     <small class="text-danger is_subjects"> </small>
                                 </div>
@@ -53,7 +54,7 @@ date_default_timezone_set('Asia/Dhaka');
                     </div>
 
 
-                    <div class="panel_body">
+                    <div class="panel_body mt-3">
                         <div class="text-left">
                             <h6 style="color:black; border-bottom:1px solid;"><b>Today : {{ date('d-F-Y') }}</b></h6>
                         </div>

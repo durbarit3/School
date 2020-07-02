@@ -7,7 +7,7 @@
 @endphp
    
 
-<div class="admin_card_demo_area" style="{{ $index > 0 ? 'margin-top:180px;' : ''}}">
+<div class="admin_card_demo_area" style="{{ $index > 0 ? 'margin-top:55px;' : ''}} page-break-after:always;">
     <div class="school_name_area_logo_area">
 
         <div class="row">
@@ -162,6 +162,7 @@
         </div>
     </div>
 </div>
+
 @php
     $index++;
 @endphp

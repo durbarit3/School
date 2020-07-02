@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exam;
 use App\Classes;
 use App\Section;
+use App\Session;
 use Carbon\Carbon;
 use App\ClassSection;
 use App\ExamSchedule;
@@ -17,7 +18,8 @@ class ExamScheduleCheckController extends Controller
     public function index()
     {
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
-        return view('admin.exam_master.schedule.check_schedule.index', compact('classes'));
+        $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
+        return view('admin.exam_master.schedule.check_schedule.index', compact('classes', 'sessions'));
     }
 
     public function getSectionsByClassIdByAjax($classId)
@@ -33,7 +35,7 @@ class ExamScheduleCheckController extends Controller
     {
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $exams = ExamSchedule::select(['exam_id'])->where('class_id', $request->class_id)->where('section_id', $request->section_id)
+        $exams = ExamSchedule::select(['exam_id'])->where('class_id', $request->class_id)->where('section_id', $request->section_id)->where('session_id', $request->session_id)
         ->where('deleted_status', NULL)
         ->distinct()
         ->get();
