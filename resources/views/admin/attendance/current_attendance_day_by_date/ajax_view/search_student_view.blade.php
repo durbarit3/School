@@ -1,6 +1,9 @@
 @if ($attendances->count() > 0)
-<div class="table-responsive ">
 
+<div class="table-responsive ">
+    <div class="text-left">
+        <h6 style="color:black; border-bottom:1px solid;"><b>Attendance modify by date</b></h6>
+    </div>
     <form class="current_day_by_date_attendance_from" method="post"
         action="{{ route('admin.attendance.current.day.by.date.attendance.update') }}">
         @csrf
@@ -24,7 +27,7 @@
                     <td>{{ $attendance->key + 1 }}</td>
                     <td>{{ $attendance->student->roll_no }}</td>
                     <td>{{ $attendance->student->first_name.' '.$attendance->student->last_name }}</td>
-                    <td>{{ $attendance->Class->name }}</td>
+                    <td>{{ $attendance->class->name }} ({{ $attendance->section->name }})</td>
                     <td>
                         <img height="40" width="40"
                             src="{{ asset('public/uploads/student/'.$attendance->student->student_photo) }}">
@@ -45,22 +48,15 @@
                                 <b>Absent |</b>
                             </div>
                             <div class="form-inline ml-1">
-                                <input type="radio" class="form-control" name="attendance_ids[{{$attendance->id}}]"
+                                <input  type="radio" class="form-control" name="attendance_ids[{{$attendance->id}}]"
                                 {{ $attendance->attendance_status == 'late' ? 'CHECKED' : '' }}
                                     value="late">&nbsp;
-                                <b>Late |</b>
+                                <b>Late </b>
                             </div>
 
-
-                            <div class="form-inline ml-1">
-                                <input type="radio" class="form-control" name="attendance_ids[{{$attendance->id}}]"
-                                {{ $attendance->attendance_status == 'half_day' ? 'CHECKED' : '' }}
-                                    value="half_day">
-                                &nbsp;<b>Half Day</b>
-                            </div>
                         </div>
                     </td>
-                    <td><input type="text" placeholder="Note" name="notes[{{ $attendance->id }}]" class=" form-control form-control-sm">
+                    <td><input type="text" placeholder="Note" value="{{ $attendance->note }}" name="notes[{{ $attendance->id }}]" class=" form-control form-control-sm">
                     </td>
                 </tr>
                 @endforeach
@@ -71,6 +67,6 @@
     </form>
 </div>
 @else
-<span class="alert alert-warning d-block">No attendance available in this class section</span>
+<span class="alert alert-danger d-block mt-3">No attendance available in this class section</span>
 @endif
 

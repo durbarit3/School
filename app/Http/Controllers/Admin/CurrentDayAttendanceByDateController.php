@@ -20,7 +20,7 @@ class CurrentDayAttendanceByDateController extends Controller
     {
        
        date_default_timezone_set('Asia/Dhaka');
-       $attendances = CurrentDayAttendance::with('class', 'section', 'student')->select(['id', 'class_id', 'section_id', 'student_id', 'attendance_status'])
+        $attendances = CurrentDayAttendance::with('class', 'section', 'student')->select(['id', 'class_id', 'section_id', 'student_id', 'attendance_status', 'note'])
         ->where('class_id', $request->class_id)
         ->where('section_id', $request->section_id)
         ->where('date', $request->date)

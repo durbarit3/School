@@ -38,5 +38,10 @@ class ExamSchedule extends Model
     {
         return $this->belongsTo(ExamHall::class, 'exam_hall_id');
     }
+
+    public function session()
+    {
+        return $this->hasMany(Session::class, 'session_id');
+    }
     
 }

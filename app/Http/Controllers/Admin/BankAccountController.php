@@ -37,11 +37,8 @@ class BankAccountController extends Controller
         $addBankAccount->balance = $request->opening_balance;
         $addBankAccount->save();
 
-        $notification = array(
-            'messege' => 'Bank account added successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        return response()->json('Bank account added successfully:)');
+        
     }
 
     public function changeStatus($accountId)

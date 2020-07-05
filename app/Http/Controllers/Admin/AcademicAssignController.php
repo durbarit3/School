@@ -28,6 +28,7 @@ class AcademicAssignController extends Controller
         $this->validate($request, [
             'class_id' => 'required',
             'section_id' => 'required',
+            'subject_ids' => 'required|array',
         ]);
 
         $ClassSection = ClassSection::where('class_id', $request->class_id)

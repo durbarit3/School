@@ -113,6 +113,7 @@ class AssignClassTeacherController extends Controller
         $this->validate($request, [
             'class_id' => 'required',
             'section_id' => 'required',
+            'teacher_ids' => 'required|array',
         ]);
 
         $ClassSection = ClassSection::where('class_id', $request->class_id)
@@ -121,11 +122,7 @@ class AssignClassTeacherController extends Controller
             ->first();
 
         if ($ClassSection->is_assigned_teacher == 1) {
-            $notification = array(
-                'messege' => 'Class teacher has already been assigned in this class and section :)',
-                'alert-type' => 'error'
-            );
-            return Redirect()->back()->with($notification);
+            return response()->json(['error' => 'Class teacher has already been assigned in this class and section :)']);
         }
 
         foreach ($request->teacher_ids as $teacherId) {
@@ -137,11 +134,7 @@ class AssignClassTeacherController extends Controller
         $ClassSection->is_assigned_teacher = 1;
         $ClassSection->save();
 
-        $notification = array(
-            'messege' => 'Teacher assigned successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        return response()->json(['success' => 'Teacher assigned successfully:)']);
     }
 
     

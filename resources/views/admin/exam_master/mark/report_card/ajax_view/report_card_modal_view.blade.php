@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="school_logo_area">
-                                <img src="{{ asset('public/admins/images/logo.png') }}" alt="">
+                                <img src="{{ asset('public/uploads/logos/'.$generalSettings->print_logo) }}" alt="">
                             </div>
                         </div>
                         <div class="col-md-6">

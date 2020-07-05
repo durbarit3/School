@@ -11,6 +11,9 @@
         color: #444;
         line-height: 32px;
     }
+    td {
+        line-height: 16px;
+    }
 </style> 
 @endpush
 @section('content')
@@ -37,22 +40,16 @@
             </div>
         <form id="multiple_delete" action="{{ route('admin.class.multiple.hard.delete') }}" method="post">
                 @csrf
-                <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
+                {{--  <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
                 <button type="button" style="margin: 5px;" class="btn btn-sm btn-success"><i class="fas fa-recycle"></i> <a
-                        href="" style="color: #fff;">Restore</a></button>
+                        href="" style="color: #fff;">Restore</a></button>  --}}
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-sm table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-sm table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
-                                    <th>
-                                        <label class="chech_container mb-1 p-0">
-                                            Select all
-                                            <input type="checkbox" id="check_all">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </th>
+                                    <th>Serial</th>
                                     <th>Name</th>
                                     <th>Sections</th>
                                     <th>Status</th>
@@ -62,13 +59,7 @@
                             <tbody>
                                 @foreach($classes as $class)
                                 <tr class="text-center">
-                                    <td>
-                                        <label class="chech_container mb-4">
-                                            <input type="checkbox" name="deleteId[]" class="checkbox"
-                                                value="{{$class->id}}">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </td>
+                                    <td>{{ $loop->index + 1 }}</td>
                                     <td>{{$class->name}}</td>
                                     <td>
                                         @foreach ($class->classSections as $classSection)
@@ -116,35 +107,37 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Class</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">Add Class</h6>
+                <button type="button" class="modal_close_button close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.class.store') }}" method="POST">
+                <form id="class_add_form" class="form-horizontal" action="{{ route('admin.class.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Name</b> :</label>
-                            <input type="text" class="form-control" placeholder="name" name="name" required>
+                            <input type="text" class="form-control name" placeholder="name" name="name">
+                            <span class="error error_name"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Select section</b> (Multiple) :</label>
-                            <select name="sectionIds[]" class="select2" multiple="multiple" id="section" data-placeholder="Sections" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                            <select name="sectionIds[]" class="select2 sectionIds" multiple="multiple" id="section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">Select Sections</option>
                                 @foreach ($sections as $section)
                                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 @endforeach
                             </select>
+                            <span class="error error_sectionIds"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn modal_close_button btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
                         <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
@@ -159,7 +152,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Class</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Edit Class</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -179,6 +172,7 @@
 @push('js')
 
 
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -190,6 +184,19 @@
                 $(".checkbox").prop('checked', false);
             }
         });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.modal_close_button').on('click', function(){
+            $('.error').html('');
+            $('.form-control').removeClass('is-invalid');
+        })
 
     });
 
@@ -228,5 +235,58 @@ toastr.error("{{ $errors->first('name') }}");
         });
     });
  </script>
+
+ 
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#class_add_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                        $('.error').html('');
+                        $('#class_add_form')[0].reset();
+                        $('#myModal1').modal('hide');
+                        toastr.success(data);
+                        setInterval(function(){
+                            window.location = "{{ url()->current() }}";
+                        }, 700);
+                        
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.name){
+                            $('.error_name').html(err.responseJSON.errors.name[0]);
+                            $('.name').addClass('is-invalid');
+                        }else{
+                            $('.error_name').html('');
+                            $('.name').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.sectionIds){
+                            $('.error_sectionIds').html('Section field is required.');
+                            $('.sectionIds').addClass('is-invalid');
+                        }else{
+                            $('.error_sectionIds').html('');
+                            $('.sectionIds').removeClass('is-invalid');
+                        }
+                    }
+                });
+            });
+        });
+
+    </script> 
 
 @endpush

@@ -18,7 +18,7 @@ class IncomeController extends Controller
         } else {
             $invoiceId = date('dmy') . ++$lastRow->id;
         }
-        $incomes = Income::with('incomeHeader')->latest()->where('year', date('Y'))->get();
+        $incomes = Income::with('incomeHeader')->where('deleted_status', NULL)->latest()->where('year', date('Y'))->get();
         $headers = IncomeHeader::where('status', 1)->where('deleted_status', NULL)->select(['id', 'name'])->latest()->get();
         return view('admin.income.index', compact('incomes', 'headers', 'invoiceId'));
     }
@@ -43,11 +43,7 @@ class IncomeController extends Controller
         $addIncome->note = $request->note;
         $addIncome->save();
 
-        $notification = array(
-            'messege' => 'Income inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        return \response()->json('Income inserted successfully:)');
     }
 
     public function getIncomeByAjax($incomeId)

@@ -23,20 +23,14 @@
             </div>
         <form id="multiple_delete" action="{{ route('admin.academic.section.multiple.delete') }}" method="post">
                 @csrf
-                <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i> Delete all</button>
+                {{--  <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i> Delete all</button>  --}}
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
-                                    <th>
-                                        <label class="chech_container mb-1 p-0">
-                                            Select all
-                                            <input  type="checkbox" id="check_all">
-                                            <span  class="checkmark"></span>
-                                        </label>
-                                    </th>
+                                    <th>Serial</th>
                                     <th>Name</th>
                                     <th>Capacity</th>
                                     <th>Status</th>
@@ -46,13 +40,8 @@
                             <tbody>
                                 @foreach($sections as $section)
                                 <tr class="text-center">
-                                    <td>
-                                        <label class="chech_container mb-4">
-                                            <input type="checkbox" name="deleteId[]" class="checkbox"
-                                                value="{{ $section->id }}">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </td>
+                                  
+                                    <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $section->name }}</td>
                                     <td>{{ $section->capacity }}</td>
                                     @if($section->status==1)
@@ -96,31 +85,33 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Section</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">Add Section</h6>
+                <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.academic.section.store') }}" method="POST">
+                <form id="section_add_form" class="form-horizontal" action="{{ route('admin.academic.section.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                        
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Name </b>:</label>
-                            <input type="text" class="form-control" placeholder="Section name" name="name" required>
+                            <input type="text" class="form-control name" placeholder="Section name" name="name">
+                            <span class="error name_error"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Capacity</b> :</label>
-                            <input type="number" class="form-control" placeholder="Section capatity" name="capacity" required>
+                            <input type="number" class="form-control capacity" placeholder="Section capacity" name="capacity">
+                            <span class="error capacity_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
                         <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
@@ -134,7 +125,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Section</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Section</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -150,6 +141,7 @@
                             <label for="name" class="col-form-label p-0 m-0"><b> Name</b> :</label>
                             <input type="text" class="form-control" name="name" id="name" required>
                             <input type="hidden" name="id" id="id">
+
                         </div>
                     </div>
                     <div class="form-group row">
@@ -170,49 +162,112 @@
     </div>
 </div>
 
-
 @endsection
 
 @push('js')
 
+    <script type="text/javascript">
 
-<script type="text/javascript">
+        $(document).ready(function () {
 
-    $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
 
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
         });
 
-    });
+    </script>
 
-</script>
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
-        $('.edit_section').on('click', function () {
-            var sectionId = $(this).data('id');
-            if (sectionId) {
+        $(document).ready(function () {
+
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
+                }
+            });
+
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.edit_section').on('click', function () {
+                var sectionId = $(this).data('id');
+                if (sectionId) {
+                    $.ajax({
+                        url: "{{ url('admin/academic/section/edit/') }}/" + sectionId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#name").val(data.name);
+                            $("#capacity").val(data.capacity);
+                            $("#id").val(data.id);
+                        }
+                    });
+                } else {
+                    alert('danger');
+                }
+
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#section_add_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
                 $.ajax({
-                    url: "{{ url('admin/academic/section/edit/') }}/" + sectionId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#name").val(data.name);
-                        $("#capacity").val(data.capacity);
-                        $("#id").val(data.id);
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                    $('.error').html('');
+                    $('#section_add_form')[0].reset();
+                    $('#myModal1').modal('hide');
+                    toastr.success(data);
+                    setInterval(function(){
+                        window.location = "{{ url()->current() }}";
+                    }, 900)
+                        
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.name){
+                            $('.name_error').html(err.responseJSON.errors.name[0]);
+                            $('.name').addClass('is-invalid');
+                        }else{
+                            $('.name_error').html('');
+                            $('.name').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.capacity){
+                            $('.capacity_error').html(err.responseJSON.errors.capacity[0]);
+                            $('.capacity').addClass('is-invalid');
+                        }else{
+                            $('.capacity_error').html('');
+                            $('.capacity').removeClass('is-invalid');
+                        }
                     }
                 });
-            } else {
-                alert('danger');
-            }
-
+            });
         });
-    });
-</script>
+
+    </script> 
 
 @endpush

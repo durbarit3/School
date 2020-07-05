@@ -8,6 +8,10 @@
     margin-top: 18rem;
 }
 
+td {
+    line-height: 18px;
+}
+
 </style>
 @endpush
 
@@ -34,7 +38,7 @@
         <form action="" id="multiple_delete" method="post">
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-left">
                                     <th>Class</th>
@@ -80,44 +84,47 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Assign Subject To Class</h4>
+                <h6 class="modal-title">Assign Subject To Class</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-            <form class="form-horizontal" action="{{ route('admin.academic.assign.subject.class') }}" method="POST">
+            <form id="assign_subject_form" class="form-horizontal" action="{{ route('admin.academic.assign.subject.class') }}" method="POST">
                     @csrf
                     <div class="form-group row">
 
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Class</b> :</label>
-                            <select required class="form-control select_class" name="class_id">
+                            <select class="form-control select_class class_id" name="class_id">
                                 <option value="">Select class</option>
                                 @foreach ($formClasses as $class)
                                     <option value="{{ $class->id }}">{{ $class->name }}</option>
                                 @endforeach
                             </select>
+                            <span class="error class_id_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class=" col-form-label p-0 m-0"><b>Select Section</b> :</label>
-                            <select required class="form-control" id="sections" name="section_id">
+                            <select class="form-control section_id" id="sections" name="section_id">
                                 <option value="">Select section</option>
                             </select>
+                            <span class="error section_id_error"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class=" col-form-label p-0 m-0"><b>Select Sbujects</b>  (Multiple) :</label>
-                            <select class="select2" multiple="multiple" name="subject_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;" required>
+                            <select class="select2" multiple="multiple" name="subject_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 @foreach ($formSubjects as $subject)
                                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                 @endforeach
                             </select>
+                            <span class="error subject_ids_error"></span>
                         </div>
                     </div>
 
@@ -137,7 +144,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Assign Subject</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Assign Subject</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -235,5 +242,71 @@
     });
    }
 </script>
+
+<script>
+    $(document).ready(function () {
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('submit', '#assign_subject_form', function(e){
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var type = $(this).attr('method');
+            var request = $(this).serialize();
+            $.ajax({
+                url:url,
+                type:type,
+                data: request,
+                success:function(data){
+
+                    if(!$.isEmptyObject(data.error)){
+                        toastr.error(data.error);
+                    }else{
+                        $('.error').html('');
+                        $('#assign_subject_form')[0].reset();
+                        $('#myModal1').modal('hide');
+                        toastr.success(data.success);
+                        setInterval(function(){
+                            window.location = "{{ url()->current() }}";
+                        }, 900)
+                    }
+                   
+                    
+                },
+                error:function(err){
+                    //log(err.responseJSON.errors);
+                    if(err.responseJSON.errors.class_id){
+                        $('.class_id_error').html('Class field is required.');
+                        $('.class_id').addClass('is-invalid');
+                    }else{
+                        $('.class_id_error').html('');
+                        $('.class_id').removeClass('is-invalid');
+                    }
+
+                    if(err.responseJSON.errors.section_id){
+                        $('.section_id_error').html('Section field is required.');
+                        $('.section_id').addClass('is-invalid');
+                    }else{
+                        $('.section_id_error').html('');
+                        $('.section_id').removeClass('is-invalid');
+                    }
+                    
+                    if(err.responseJSON.errors.subject_ids){
+                        $('.subject_ids_error').html('Subject field is required.');
+                        $('.subject_ids').addClass('is-invalid');
+                    }else{
+                        $('.subject_ids_error').html('');
+                        $('.subject_ids').removeClass('is-invalid');
+                    }
+                }
+            });
+        });
+    });
+
+</script> 
 
 @endpush

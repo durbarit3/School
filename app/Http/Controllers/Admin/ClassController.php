@@ -20,7 +20,8 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:classes,name'
+            'name' => 'required|unique:classes,name',
+            'sectionIds' => 'required|array',
         ]);
 
         $addClass = new Classes();
@@ -33,12 +34,7 @@ class ClassController extends Controller
            $addClassSections->save();
         }
 
-
-        $notification = array(
-            'messege' => 'Class inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        return response()->json('Class inserted successfully:)');
     }
 
     public function edit($classId)

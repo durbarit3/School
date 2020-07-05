@@ -1,0 +1,80 @@
+.earn_table_area table tbody tr td {
+    line-height: 8px;
+    color: black;
+}
+.deduction_table_area table tbody tr td {
+    line-height: 8px;
+    color: black;
+}
+
+.earn_and_deduction_area table tbody tr td {
+    line-height: 11px;
+}
+
+.text-dark {
+    color: #343a40!important;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.earn_and_deduction_area table tbody tr td {
+    line-height: 11px;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    padding: 8px;
+    border-top: 1px solid #e4e5e7;
+    vertical-align: middle;
+    font-size: 13px;
+}
+
+.table-bordered td, .table-bordered th {
+    border: 1px solid #dee2e6;
+}
+
+.table-sm td, .table-sm th {
+    padding: .3rem;
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.text-danger {
+    color: #dc3545!important;
+}
+
+.text-right {
+    text-align: right!important;
+}
+
+.row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+
+.no-gutters>.col, .no-gutters>[class*=col-] {
+    padding-right: 0;
+    padding-left: 0;
+}
