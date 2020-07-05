@@ -428,6 +428,7 @@
                     <li><a href="{{route('admin.fees.group')}}">Fees Group</a></li>
                     <li><a href="{{route('admin.fees.master')}}">Fees Master</a></li>
                     <li><a href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
+                    <li><a href="{{route('admin.fees.search')}}">Search Due Fees</a></li>
                 </ul>
             </li>
 
