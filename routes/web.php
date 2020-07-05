@@ -866,6 +866,10 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
     Route::post('/collect/search/','FeesCotroller@feesCollectSectionSearch')->name('admin.fees.students.collection.search');
     Route::post('/get/fees','FeesCotroller@feesCollectSectionGet')->name('admin.fees.collection.get');
 
+    // search fees
+
+    Route::get('/search','FeesCotroller@studentsFeesSearch')->name('admin.fees.search');
+
 
 
 });
