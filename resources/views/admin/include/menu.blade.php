@@ -392,6 +392,7 @@
                     <span class="menu-text">Inventory</span>
                 </a>
                 <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.inventory.issue')}}">Issue Inventory</a></li>
                     <li><a href="{{route('inventory.item.stock.index')}}">Add Item Stock</a></li>
                     <li><a href="{{route('inventory.category.index')}}">Item Category</a></li>
                     <li><a href="{{route('item.index')}}">Items Store</a></li>
@@ -462,6 +463,8 @@
                 <ul class="dashboard-menu">
                     <li><a href="{{route('admin.menu.setting')}}">Menus</a></li>
                     <li><a class="{{ Request::is('admin/settings/general') ? 'text_active' : '' }}" href="{{route('admin.settings.general.index')}}">General settings</a></li>
+
+                       <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
                 </ul>
             </li>
 

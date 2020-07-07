@@ -37,6 +37,7 @@
                             </th>
                             <th>Items</th>
                             <th>Category</th>
+                            <th>Unit</th>
                             <th>Available Quantity</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -56,7 +57,8 @@
                             <td>{{$item->item}}</td>
                             <td>{{$item->category->category}}</td>
                             
-                            <td>{{$item->description}}</td>
+                            <td>{{$item->unit}}</td>
+                            <td>{{$item->able_qty}}</td>
                             <td>
                                 @if($item->status == 1)
                                 <a href="{{ route('admin.items.status.update', $item->id) }}" class="btn btn-success btn-sm ">
@@ -111,6 +113,8 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Category:</label>
                         <div class="col-sm-8">
@@ -122,6 +126,13 @@
                             @endforeach
                     
                         </select>
+                        </div>
+                    </div>
+
+                      <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Unit:</label>
+                        <div class="col-sm-8">
+                            <input required type="number" class="form-control" placeholder="Item Unit" name="unit" required>
                         </div>
                     </div>
 
@@ -178,6 +189,13 @@
                         </div>
                     </div>
 
+                     <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Unit:</label>
+                        <div class="col-sm-8">
+                            <input required type="number" class="form-control" id="unit" placeholder="Item Unit" name="unit" required>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
@@ -219,6 +237,7 @@
                         
                         $("#item").val(data.item);
                        $(".cateogy").val(data.category_id).select;
+                       $(".unit").val(data.unit);
                         $("#description").val(data.description);
                         $("#id").val(data.id);
                     }

@@ -875,6 +875,20 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
 
     });
 
+
+    // Issue Item
+
+
+    Route::group(['prefix'=>'issue'],function(){
+        Route::get('/','InventoryController@issueIndex')->name('admin.inventory.issue');
+        Route::post('/store','InventoryController@issueStore')->name('inventory.issue.store');
+        Route::get('/items/{id}','InventoryController@issueItems');
+        Route::get('/return/{id}','InventoryController@issueReturn')->name('inventory.issue.return');
+        Route::get('/delete/{id}','InventoryController@issueDelete')->name('inventory.issue.delete');
+
+    });
+
+
 });
 
 Route::group(['prefix'=>'admin/library','namespace'=>'Admin'],function(){
@@ -1112,6 +1126,22 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::get('set/color/theme/{colorThemeId}', 'GeneralSettingsController@setColorTheme')->name('admin.settings.general.set.color.theme');
         
     });
+
+
+
+    // seesion area start
+
+     Route::group(['prefix' => 'session'], function(){
+
+        Route::get('/','SystemController@showSeesion')->name('admin.session.setting');
+
+        Route::post('/create','SystemController@seesionCreate')->name('admin.session.create');
+
+        Route::get('/status/{id}','SystemController@sessionStatus')->name('admin.session.status');
+        Route::get('/edit/{id}','SystemController@getSessionData');
+        Route::get('/delete/{id}','SystemController@getSessionDelete')->name('admin.session.delete');
+        Route::patch('/update','SystemController@sessionUpdate')->name('admin.session.update');
+     });
     
 });
 
