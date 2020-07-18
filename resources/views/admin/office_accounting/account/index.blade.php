@@ -14,8 +14,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add new account</span></a>
+                            @if (json_decode($userPermits->office_accounts_module)['account']['add'])
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add new account</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -55,22 +58,29 @@
                                 @endif
                         
                                 <td data-id="{{$loop->index}}">
-                                    @if($account->status==1)
-                                    <a href="{{ route('admin.office.account.bank.account.change.status', $account->id ) }}"
-                                        class="btn btn-success btn-sm ">
-                                        <i class="fas fa-thumbs-up"></i></a>
-                                    @else
-                                    <a href="{{ route('admin.office.account.bank.account.change.status', $account->id ) }}"
-                                        class="btn btn-danger btn-sm">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </a>
+                                    @if (json_decode($userPermits->office_accounts_module)['account']['edit'])
+                                        @if($account->status==1)
+                                        <a href="{{ route('admin.office.account.bank.account.change.status', $account->id ) }}"
+                                            class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i></a>
+                                        @else
+                                        <a href="{{ route('admin.office.account.bank.account.change.status', $account->id ) }}"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                        @endif
+                                        |
                                     @endif
-                                | <a href="#" data-id="{{ $account->id }}" title="edit" class="edit_bank edit_button btn btn-sm btn-blue text-white"><i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i><img style="display:none;" height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt=""></a> 
-                                |  
-                                    <a id="delete" href="{{ route('admin.office.account.bank.account.delete', $account->id) }}"
+
+                                <a href="#" data-id="{{ $account->id }}" title="edit" class="edit_bank edit_button btn btn-sm btn-blue text-white"><i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i><img style="display:none;" height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt=""></a> 
+                                  
+                                @if (json_decode($userPermits->office_accounts_module)['account']['delete'])
+                                    | <a id="delete" href="{{ route('admin.office.account.bank.account.delete', $account->id) }}"
                                         class="btn btn-danger btn-sm text-white" title="Delete">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
+                                @endif   
+                                 
                                 </td>
                             </tr>
                             @endforeach

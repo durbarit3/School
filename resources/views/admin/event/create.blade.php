@@ -14,7 +14,7 @@
 						</div>
 						<div class="col-md-6 text-right">
 							<div class="panel_title">
-								<a href="" class="btn btn-success"><i class="fas fa-plus"></i></span> <span>All Event</span></a>
+								<a href="{{ route('event.index.all') }}" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></span> <span>All Event</span></a>
 							</div>
 						</div>
 					</div>

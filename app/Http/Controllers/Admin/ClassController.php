@@ -33,7 +33,7 @@ class ClassController extends Controller
            $addClassSections->section_id = $sectionId;
            $addClassSections->save();
         }
-
+        session()->flash('successMsg', 'Successfully class added.');
         return response()->json('Class inserted successfully:)');
     }
 

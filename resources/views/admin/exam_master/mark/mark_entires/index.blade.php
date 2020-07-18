@@ -48,14 +48,14 @@ date_default_timezone_set('Asia/Dhaka');
                             </div>
                         </div>
 
-                        <div class="panel_body">
+                        <div class="panel_body pb-2">
                             <form class="search_form" action="{{ route('admin.exam.master.mark.entire.search.class.section.wise.subjects') }}"
                                 method="get">
                                 @csrf
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Session</label>
-                                        <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
+                                    <div class="col-md-3">
+                                        <label class="m-0"><b>Session </b> </label>
+                                        <select required name="session_id" id="session_id" class="form-control form-control -sm form-control form-control -sm-sm select_session">
                                             <option value="">Select session</option>
                                             @foreach ($sessions as $session)
                                                 <option value="{{ $session->id }}">{{ $session->session_year }}</option>
@@ -64,16 +64,16 @@ date_default_timezone_set('Asia/Dhaka');
                                     </div>
                                     
                                     <div class="col-md-3">
-                                        <label>Exam Name</label>
-                                        <select required name="exam_id" id="exams" class="form-control form-control-sm">
+                                        <label class="m-0"><b>Exam Name </b> </label>
+                                        <select required name="exam_id" id="exams" class="form-control form-control -sm form-control form-control -sm-sm">
                                             <option value="">Select Exam Name</option>
                                             
                                         </select>
                                     </div>
 
-                                    <div class="col-md-2">
-                                        <label>Class</label>
-                                        <select required name="class_id" class="select_class class_id form-control form-control-sm">
+                                    <div class="col-md-3">
+                                        <label class="m-0"><b>Class </b> </label>
+                                        <select required name="class_id" class="select_class class_id form-control form-control -sm form-control form-control -sm-sm">
                                             <option value="">Select class</option>
                                             @foreach ($classes as $class)
                                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -81,18 +81,18 @@ date_default_timezone_set('Asia/Dhaka');
                                         </select>
                                     </div>
 
-                                    <div class="col-md-2">
-                                        <label>Section</label>
+                                    <div class="col-md-3">
+                                        <label class="m-0"><b>Section </b> </label>
                                         <select required name="section_id" id="sections"
-                                            class="form-control form-control-sm select_section section_id">
+                                            class="form-control form-control -sm form-control form-control -sm-sm select_section section_id">
                                             <option value="">Select section</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label>Subject</label>
+                                        <label class="m-0"><b>Subject </b> </label>
                                         <select required name="subject_id" id="subjects"
-                                            class="form-control form-control-sm subject_id">
+                                            class="form-control form-control -sm form-control form-control -sm-sm subject_id">
                                             <option value="">Select Subject</option>
                                         </select>
                                     </div>
@@ -103,9 +103,11 @@ date_default_timezone_set('Asia/Dhaka');
                             </form>
                         </div>
 
-                        <div class="loading"><h4>Loading...</h4> </div>
-                        <div class="panel_body mt-2 student_list">
-                                                
+                        <div class="panel_body 2nd_panel_body py-2 mt-2">
+                            <div class="loading mt-1"><h4>Loading...</h4> </div> 
+                            <div class="student_list">
+
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -140,6 +142,7 @@ date_default_timezone_set('Asia/Dhaka');
 
     <script type="text/javascript">
         $('.loading').hide();
+        $('.2nd_panel_body').hide();
         $(document).ready(function () {
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
@@ -191,8 +194,9 @@ date_default_timezone_set('Asia/Dhaka');
         $(document).ready(function () {
             $('.search_form').on('submit', function (e) {
                 e.preventDefault();
+                $('.panel_body').show(100);
+                $('.loading').show(100);
                 $('.student_list').empty();
-                $('.loading').show();
                 var url = $(this).attr('action');
                 var method = $(this).attr('method');
                 var request = $(this).serialize(); 
@@ -205,7 +209,7 @@ date_default_timezone_set('Asia/Dhaka');
                         //console.log(data);
                         if (!$.isEmptyObject(data)) {
                             $('.student_list').html(data);
-                            $('.loading').hide();
+                            $('.loading').hide(100);
                         }
                     }
                 })
@@ -218,7 +222,7 @@ date_default_timezone_set('Asia/Dhaka');
 
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content');
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             }
         });
         $(document).ready(function () {

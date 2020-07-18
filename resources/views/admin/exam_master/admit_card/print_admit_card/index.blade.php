@@ -147,9 +147,12 @@ date_default_timezone_set('Asia/Dhaka');
                         </form>
                     </div>
 
-                    <div class="loading"><h4>Loading...</h4> </div>
-                    <div class="panel_body mt-2 py-2 another_body student_list">
-                                         
+                    
+                    <div class="panel_body mt-2 py-2 another_body ">
+                        <div class="student_list">
+
+                        </div>
+                        <div class="loading"><h4>Loading...</h4></div>               
                     </div>
                 </div>
             </div>
@@ -187,8 +190,8 @@ date_default_timezone_set('Asia/Dhaka');
     </script>
 
     <script type="text/javascript">
-        $('.loading').hide();
         $('.another_body').hide();
+        $('.loading').hide();
         $(document).ready(function () {
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
@@ -217,6 +220,7 @@ date_default_timezone_set('Asia/Dhaka');
             $('.search_form').on('submit', function (e) {
                 e.preventDefault();
                 $('.student_list').empty();
+                $('.another_body').show();
                 $('.loading').show(100);
                 var url = $(this).attr('action');
                 var method = $(this).attr('method');
@@ -231,7 +235,6 @@ date_default_timezone_set('Asia/Dhaka');
                         if (!$.isEmptyObject(data)) {
                             $('.student_list').html(data);
                             $('.loading').hide(100);
-                            $('.another_body').show();
                         }
                     }
                 })

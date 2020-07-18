@@ -22,6 +22,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
 
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::get('/login', 'AuthController@showLoginForm')->name('admin.login');
+    Route::post('/logout', 'AuthController@logout')->name('admin.logout');
     Route::post('/login', 'AuthController@login')->name('admin.login.submit');
     Route::get('/register', 'AuthController@showRegistationPage');
     Route::post('/register', 'AuthController@register')->name('admin.register');
@@ -208,6 +209,7 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
     });
     
     Route::group(['prefix' => 'exam/attendance'], function() {
+
         route::get('/', 'ExamAttendanceController@index')->name('admin.attendance.exam.attendance.index');
 
         // Ajax Routes
@@ -226,8 +228,12 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         
         route::get('get/subjects/by/class/section/id/{classId}/{sectionId}', 'ExamAttendanceModifyController@getSubjectsByClassSectionId');
 
+        route::get('get/exams/by/{sessionId}', 'ExamAttendanceModifyController@getExamsByAjax');
+
         route::get('search', 'ExamAttendanceModifyController@search')->name('admin.attendance.exam.attendance.modify.search');
+
         route::post('modify', 'ExamAttendanceModifyController@modify')->name('admin.attendance.exam.attendance.modify');
+
     });
     
 });
@@ -420,8 +426,11 @@ Route::group(['prefix' => 'admin/transport', 'namespace' => 'Admin', 'middleware
         Route::get('/', 'TransportController@index')->name('admin.assign.vehicle.index');
         Route::post('store', 'TransportController@store')->name('admin.assign.vehicle.store');
         Route::get('edit/{routeId}', 'TransportController@edit')->name('admin.assign.vehicle.edit');
+
         Route::patch('update/{routeId}', 'TransportController@update')->name('admin.assign.vehicle.update');
+
         Route::get('delete/{routeId}', 'TransportController@delete')->name('admin.assign.vehicle.delete');
+
         Route::post('multiple/delete', 'TransportController@multipleDelete')->name('admin.assign.vehicle.multiple.delete');
 
         // Ajax route
@@ -732,9 +741,17 @@ Route::group(['prefix' => 'admin/student', 'namespace' => 'Admin'], function () 
     Route::get('/create', 'StudentAdmissionController@create')->name('student.create');
     Route::post('/update/{id}', 'StudentAdmissionController@update')->name('student.update');
     Route::get('/all', 'StudentAdmissionController@index')->name('student.index');
+    Route::get('details/{studentId}', 'StudentAdmissionController@details')->name('student.details');
+    Route::get('status/update/{studentId}', 'StudentAdmissionController@StatusUpdate')->name('student.status.update');
     Route::get('/edit/{id}', 'StudentAdmissionController@edit');
     Route::post('/submit', 'StudentAdmissionController@store')->name('student.insert');
     Route::get('/section/all/{id}', 'StudentAdmissionController@getsection');
+    Route::get('/get/sections/by/{classId}', 'StudentAdmissionController@getSectionsByClassId');
+
+    Route::get('get/students/by/{classId}/{sectionId}', 'StudentAdmissionController@getStudentsByClassIdAndSectionId');
+    
+    Route::get('get/student/by/{studentId}', 'StudentAdmissionController@getStudentByStudentId');
+
     Route::get('/route/{id}', 'StudentAdmissionController@getbus');
     Route::get('/get/hostel/{id}','StudentAdmissionController@getroom');
 
@@ -745,9 +762,12 @@ Route::group(['prefix' => 'admin/student', 'namespace' => 'Admin'], function () 
 Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
 
     Route::get('/create', 'EventController@create')->name('event.create');
+    Route::get('edit/{eventId}', 'EventController@edit')->name('event.edit');
+    Route::get('delete/{eventId}', 'EventController@delete')->name('event.delete');
+    Route::get('update/status/{eventId}', 'EventController@updateStatus')->name('event.status.update');
+    Route::post('update/{eventId}', 'EventController@update')->name('event.update');
     Route::post('/create/submit', 'EventController@store')->name('event.submit');
     Route::get('/all', 'EventController@index')->name('event.index.all');
- 
 
 });
 // Event routes group End
@@ -1008,10 +1028,11 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
         
         Route::get('salary/report', 'FinanceReportController@salaryReport')->name('admin.reports.finance.report.salary.report');
 
+        Route::get('fees/report', 'FinanceReportController@feesReport')->name('admin.reports.finance.report.fees.report');
+
     }); 
     
     Route::group(['prefix' => 'attendance_report'], function() {
-
 
         Route::get('/', 'AttendanceReportController@index')->name('admin.reports.attendance.report.index');
         // Ajax Route
@@ -1023,6 +1044,23 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
         Route::get('exam/attendance/report', 'AttendanceReportController@examAttendanceReport')->name('admin.reports.attendance.report.exam.attendance.report');
         
         Route::get('get/exams/by/{sessionId}', 'AttendanceReportController@getExamsBySessionId');
+    
+
+        Route::get('get/sections/{classId}', 'AttendanceReportController@getSection');
+        
+        Route::get('get/subjects/{classId}/{sectionId}', 'AttendanceReportController@getSubjects');
+    });
+
+    Route::group(['prefix' => 'human_resource_report'], function(){
+
+        Route::get('/', 'HumanResourceReportController@index')->name('admin.report.human.resource.report.index');
+
+        Route::get('employee/report', 'HumanResourceReportController@employeeReport')->name('admin.report.human.resource.report.employee.report');
+
+        Route::get('leave/apply/report', 'HumanResourceReportController@leaveApplyReport')->name('admin.report.human.resource.report.leave.apply.report');
+    });
+    
+});
 
 Route::group(['prefix'=>'admin/front/cms','namespace'=>'Admin'],function(){
     Route::group(['prefix'=>'event'],function(){
@@ -1066,24 +1104,7 @@ Route::group(['prefix'=>'admin/front/cms','namespace'=>'Admin'],function(){
     });
 });
 
-
-        Route::get('get/sections/{classId}', 'AttendanceReportController@getSection');
-        
-        Route::get('get/subjects/{classId}/{sectionId}', 'AttendanceReportController@getSubjects');
-    });
-
-    Route::group(['prefix' => 'human_resource_report'], function(){
-        Route::get('/', 'HumanResourceReportController@index')->name('admin.report.human.resource.report.index');
-        
-        Route::get('employee/report', 'HumanResourceReportController@employeeReport')->name('admin.report.human.resource.report.employee.report');
-        
-        Route::get('leave/apply/report', 'HumanResourceReportController@leaveApplyReport')->name('admin.report.human.resource.report.leave.apply.report');
-    });
-    
-});
-
 Route::get('/online/user', 'HomeController@onlineUser')->name('online.user');
-
 
 Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
     
@@ -1105,11 +1126,17 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::get('set/color/theme/{colorThemeId}', 'GeneralSettingsController@setColorTheme')->name('admin.settings.general.set.color.theme');
         
     });
+
+    Route::group(['prefix' => 'role_permissions'], function() {
+        Route::get('/', 'RolePermissionController@index')->name('admin.gen.settings.role.permit.index');
+
+        Route::get('permission/section/{role_id}/{roleName}', 'RolePermissionController@permitSection')->name('admin.gen.settings.role.permit.section');
+        Route::post('permission/{roleId}', 'RolePermissionController@permission')->name('admin.gen.settings.role.permission');
+    });
     
 });
 
 // Inventory area end
-
 
 Route::group(['prefix' => 'admin/user', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
 
@@ -1118,36 +1145,40 @@ Route::group(['prefix' => 'admin/user', 'middleware' => 'auth:admin' , 'namespac
 
 });
 
-
 Auth::routes();
 
 use App\Admin;
-
 use App\MarkEntires;
+use App\RolePermission;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-Route::get('add_admin', function() {
-    Admin::insert([
-        'adminname' => 'Admin',
-        'phone' => '01854284712',
-        'email' => 'admin@gmail.com',
-        'password' => Hash::make('123456789'),
-        'role' => '1',
-    ]);
-});
+// Route::get('add_admin', function() {
+//     Admin::insert([
+//         'adminname' => 'Admin',
+//         'phone' => '01854284712',
+//         'email' => 'admin@gmail.com',
+//         'password' => Hash::make('123456789'),
+//         'role' => '1',
+//     ]);
+// });
 
 Route::get('test', function(){
     
     //$mark = MarkEntires::first();
     //return  count(json_decode($mark->mark_distributions));
-    $employeeSalary = App\EmployeeSalary::where('employee_id', 16)->first();
-    $index = 0;
-    foreach (json_decode($employeeSalary->earn_types) as $earn_type) {
-        echo "<pre>";
-        echo $earn_type .' = '. json_decode($employeeSalary->earns, true)[$index][$earn_type];
-        $index++;
-    }
-   
+    // $employeeSalary = App\EmployeeSalary::where('employee_id', 16)->first();
+    // $index = 0;
+    // foreach (json_decode($employeeSalary->earn_types) as $earn_type) {
+    //     echo "<pre>";
+    //     echo $earn_type .' = '. json_decode($employeeSalary->earns, true)[$index][$earn_type];
+    //     $index++;
+    // }
+
+    // $fees = App\FeesCollection::all();
+    // return $fees;
+    $permissions = App\RolePermission::where('role_id', 1)->firstOrFail();
+    return json_decode($permissions->event_module, true);
 });
 
 

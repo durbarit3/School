@@ -6,11 +6,13 @@ use App\Year;
 use App\Income;
 use App\Classes;
 use App\Expanse;
+use App\FeesGroup;
 use Carbon\Carbon;
 use App\BankAccount;
 use App\IncomeHeader;
 use App\ExpanseHeader;
 use App\EmployeeSalary;
+use App\FeesCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +24,8 @@ class FinanceReportController extends Controller
         $expanseHeaders = ExpanseHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
         $years = Year::all();
-        return view('admin.report.finance_report.index', compact('classes', 'incomeHeaders', 'expanseHeaders', 'years'));
+        $feesGroups = FeesGroup::active();
+        return view('admin.report.finance_report.index', compact('classes', 'incomeHeaders', 'expanseHeaders', 'years', 'feesGroups'));
     }
 
     public function incomeReport(Request $request)
@@ -237,7 +240,7 @@ class FinanceReportController extends Controller
         $dateToFormat = date('Y-m-d', strtotime($request->date_to));
         if ($request->select_type === "period") {
             if ($request->paid_status == 'all') {
-                $salarySheets = EmployeeSalary::whereBetween('paid_date', [$dateFromFormat, $dateToFormat])->get();
+                $salarySheets = EmployeeSalary::whereBetween('created_at', [$dateFromFormat, $dateToFormat])->get();
             }elseif ($request->paid_status === 'paid') {
                 $salarySheets = EmployeeSalary::whereBetween('paid_date', [$dateFromFormat, $dateToFormat])->where('is_paid', 1)->get();
             }elseif($request->paid_status === 'no_paid'){
@@ -257,4 +260,166 @@ class FinanceReportController extends Controller
 
         return view('admin.report.finance_report.ajax_view.salary_report', compact('salarySheets'));
     }
+  
+    public function feesReport(Request $request)
+    {
+        $feesCollections = FeesCollection::with(['student', 'student.Class', 'student.Section'])->get();
+        $collectionArrays = [];
+        $monthAndYear = explode('-',$request->year_month);
+        $year = $monthAndYear[0];
+        $month = $monthAndYear[1];
+        
+        foreach ($feesCollections as $feesCollection) {
+            if ($request->select_type == 'month_wise') {
+                
+                if ($request->paid_status === 'all') {
+                    
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
+                        return $c['month'] == $month && $c['year'] == $year;
+                    });
+                    //return count($filteredArrays);
+                    if (count($filteredArrays) > 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }   
+                    } 
+                }elseif ($request->paid_status === 'paid') {
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
+                        return $c['month'] == $month && $c['year'] == $year && $c['is_paid'] == 1;
+                    });
+                    
+                    if (count($filteredArrays) !== 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }
+                    }
+                }elseif ($request->paid_status === 'no_paid') {
+
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
+                        return $c['month'] == $month && $c['year'] == $year && $c['is_paid'] == null;
+                    });
+                    
+                    if (count($filteredArrays) !== 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }
+                    }
+                }
+                
+            }elseif ($request->select_type == 'year_wise') {
+                if ($request->paid_status === 'all') {
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
+                        return $c['year'] == $year;
+                    });
+                    
+                    if (count($filteredArrays) !== 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }
+                    }
+
+                }elseif ($request->paid_status === 'paid') {
+                    $filteredArrays = array_filter($feesCollection->collection, function($c) use ($month, $year){
+                        return $c['year'] == $year && $c['is_paid'] == 1;
+                    });
+                    
+                    if (count($filteredArrays) !== 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }
+                    }
+                }elseif ($request->paid_status === 'no_paid') {
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
+                        return $c['year'] == $year && $c['is_paid'] == null;
+                    });
+                    
+                    if (count($filteredArrays) !== 0) {
+                        $studentInfoWithFee = [
+                            'name' => $feesCollection->student->first_name,
+                            'class' => $feesCollection->student->Class->name,
+                            'section' => $feesCollection->student->Section->name,
+                            'admission_no' => $feesCollection->student->admission_no,
+                            'roll' => $feesCollection->student->roll_no,
+                            'fees' => [],
+                        ];
+                        foreach ($filteredArrays as $filteredArray) {
+                            array_push($studentInfoWithFee['fees'], $filteredArray);
+                            array_push($collectionArrays, $studentInfoWithFee);
+                            $studentInfoWithFee['fees'] = [];
+                        }
+                    }
+                }
+                
+            }
+            
+        }
+
+       //return $collectionArrays;
+        // foreach ($collectionArrays as $collectionArray) {
+        //     if ($collectionArray !== '') {
+        //         echo $collectionArray['name'];
+
+        //         foreach ($collectionArray['fees'][0] as $fee) {
+        //             echo $fee['month'];
+        //         }
+
+        //     }
+            
+        // }
+
+        return view('admin.report.finance_report.ajax_view.fees_report', compact('collectionArrays'));
+        
+    }
+
+    
 }

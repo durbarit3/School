@@ -1,8 +1,12 @@
 @extends('admin.master')
 @push('css')
     <style>
+        
         .header_modal {
             padding: 5px!important;
+        }
+        .employee_info {
+            color: #222533;
         }
         .pay_slip_modal_header {
             padding: 5px!important;
@@ -45,11 +49,15 @@
         .heading_area {
             border-bottom: 1px solid gray;
             margin-bottom: 6px;
+            color: #222533;
         }
 
         .earn_field_remove_button {
             position: absolute;
             right: 6%;
+        }
+        a.remove_button {
+            box-shadow: 1px 2px 6px 1px rgba(4, 8, 10, 0.4);
         }
 
         .deduction_field_remove_button{
@@ -64,26 +72,32 @@
         }  
 
         .add_more_earn_button {
-            background: gray;
+            background: #222533;
             padding: 0px 8px;
             border-radius: 4px;
             margin-bottom: 2px;
             font-size: 21px;
-            color: black;
+            color: white;
         }
         
         .add_more_deduction_button {
-            background: gray;
+            background: #222533;
             padding: 0px 8px;
             border-radius: 4px;
             margin-bottom: 2px;
             font-size: 21px;
-            color: black;
+            color: white;
         }
 
         .heading_area h6 {
             font-size: 13px;
             margin-top: 5px;
+        }
+
+        .earn_field {color: #222533;}
+
+        .earn_field label {
+            font-size: 14px;
         }
 
         .earn_table_area table tbody tr td {
@@ -230,7 +244,7 @@ date_default_timezone_set('Asia/Dhaka');
     
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title">Pay salary</h5>
+                    <h6 class="modal-title">Pay salary</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
     
@@ -667,7 +681,7 @@ date_default_timezone_set('Asia/Dhaka');
                     importStyle: false,             
                     printContainer: true,           
                     loadCSS: "{{asset('public/admins/css/pay_slip_print_style.css')}}",      
-                    pageTitle: "Exam schedule",                  
+                    pageTitle: "Salary invoice",                  
                     removeInline: true,            
                     removeInlineSelector: "body *",  
                     printDelay: 333,                

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,7 +84,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @stack('css')
 </head>
-
+    
 <body id="page-top">
     <!-- preloader -->
     <div class="preloader">
@@ -92,7 +92,7 @@
     </div>
     <!-- wrapper -->
     <div class="wrapper">
-
+        
         <!-- include top header -->
         @include('admin.include.header_top')
 
@@ -104,6 +104,11 @@
         @yield('content')
 
         </div>
+        <!--/ logout form -->
+            <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST">
+                @csrf
+            </form>
+        <!--/ logout form end -->
         <!--/ content wrapper -->
         <footer>
             <div class="row">

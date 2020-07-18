@@ -1,4 +1,12 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        td{
+            line-height: 0px;
+            width: 25%;
+        }
+    </style>
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -14,8 +22,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Distribution</span></a>
+                            @if (json_decode($userPermits->exam_module,true)['exam']['distribution']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Distribution</span>
+                                </a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -23,7 +34,7 @@
 
             <div class="panel_body">
                 <div class="table-responsive">
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                         <thead>
                             <tr class="text-center">
                                 <th>Serial</th>
@@ -44,25 +55,27 @@
                                 <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                 @endif
                                 <td>
-                                    @if($distribution->status==1)
-                                    <a href="{{ route('admin.exam.master.exam.distribution.update.status', $distribution->id ) }}"
-                                        class="btn btn-success btn-sm ">
-                                        <i class="fas fa-thumbs-up"></i></a>
-                                    @else
-                                    <a href="{{ route('admin.exam.master.exam.distribution.update.status', $distribution->id ) }}"
-                                        class="btn btn-danger btn-sm">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </a>
+                                    @if (json_decode($userPermits->exam_module,true)['exam']['distribution']['edit'] == 1)
+                                        @if($distribution->status==1)
+                                        <a href="{{ route('admin.exam.master.exam.distribution.update.status', $distribution->id ) }}"
+                                            class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i></a>
+                                        @else
+                                        <a href="{{ route('admin.exam.master.exam.distribution.update.status', $distribution->id ) }}"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                        @endif
+                                        |
                                     @endif
-                                    | <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$distribution->id}}"
+                                     <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$distribution->id}}"
                                         title="edit" data-toggle="modal" data-target="#editModal"><i
-                                            class="fas fa-pencil-alt"></i></a> |
-                                    <a id="delete" 
-                                        href="{{ route('admin.exam.master.exam.distribution.delete', $distribution->id) }}"
-                                        class="btn btn-danger btn-sm text-white" 
-                                        title="Delete">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
+                                            class="fas fa-pencil-alt"></i></a> 
+                                    @if (json_decode($userPermits->exam_module,true)['exam']['distribution']['delete'] == 1)       
+                                        | <a id="delete" href="{{ route('admin.exam.master.exam.distribution.delete', $distribution->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -80,7 +93,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Distribution</h4>
+                <h6 class="modal-title">Add Distribution</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -89,16 +102,15 @@
                 <form class="form-horizontal" action="{{ route('admin.exam.master.exam.distribution.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
-                        <label for="name" class="col-sm-3 no-gutters col-form-label text-center">Dist Name : </label>
-                        <div class="col-sm-9 row justify-content-center">
+                        <div class="col-sm-12">
+                            <label for="name"><b>Distribution name : </b></label>
                             <input type="text" class="form-control" placeholder="Distribution name" name="name" required>
                         </div>
                     </div>
                   
-
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue mr-3">Submit</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -130,7 +142,9 @@
                 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue mr-3">Submit</button>
+                        @if (json_decode($userPermits->exam_module,true)['exam']['distribution']['edit'] == 1)
+                            <button type="submit" class="btn btn-sm btn-blue mr-3">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

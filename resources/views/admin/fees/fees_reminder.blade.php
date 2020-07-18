@@ -50,8 +50,12 @@
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a>
-                                </a>
+                                @if (json_decode($userPermits->fees_collection_module, true)['fees_remember']['edit'] == 1)
+                                    <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a>
+                                    </a>
+                                @else 
+                                    <b>N/A</b>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

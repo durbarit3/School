@@ -1,4 +1,4 @@
-.earn_table_area table tbody tr td {
+/* .earn_table_area table tbody tr td {
     line-height: 8px;
     color: black;
 }
@@ -13,6 +13,11 @@
 
 .text-dark {
     color: #343a40!important;
+} */
+
+.earn_and_deduction_area table tr td {
+    font-size: 18px;
+    font-weight: bolder;
 }
 
 .table {
@@ -20,6 +25,10 @@
     max-width: 100%;
     margin-bottom: 1rem;
     background-color: transparent;
+}
+
+.salary_amount_details {
+    margin-top: 50px;
 }
 
 table {
@@ -34,7 +43,7 @@ table {
     line-height: 11px;
 }
 
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+/* .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     padding: 8px;
     border-top: 1px solid #e4e5e7;
     vertical-align: middle;
@@ -77,4 +86,4 @@ table {
 .no-gutters>.col, .no-gutters>[class*=col-] {
     padding-right: 0;
     padding-left: 0;
-}
+} */

@@ -29,6 +29,7 @@ date_default_timezone_set('Asia/Dhaka');
                         <form class="search_form" action="{{ route('admin.attendance.exam.attendance.modify.search') }}" method="get">
                             @csrf
                             <div class="row">
+                                
                                 <div class="col-md-4">
                                     <label class="p-0 m-0">Session : </label>
                                     <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">

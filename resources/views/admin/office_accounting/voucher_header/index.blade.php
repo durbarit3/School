@@ -14,8 +14,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Voucher Header</span></a>
+                            @if (json_decode($userPermits->office_accounts_module, true)['voucher_header']['add'])
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Voucher Header</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -42,23 +45,31 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($voucherHeader->status==1)
-                                        <a href="{{ route('admin.office.account.voucher_header.change.status', $voucherHeader->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.office.account.voucher_header.change.status', $voucherHeader->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->office_accounts_module, true)['voucher_header']['edit'])
+                                            @if($voucherHeader->status==1)
+                                            <a href="{{ route('admin.office.account.voucher_header.change.status', $voucherHeader->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.office.account.voucher_header.change.status', $voucherHeader->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a>
+                                            @endif
+                                            |
                                         @endif
-                                        | <a class="edit_voucher_header btn btn-sm btn-blue text-white" data-id="{{$voucherHeader->id}}"
-                                            title="edit" data-toggle="modal" data-target="#editModal"><i
-                                                class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.office.account.voucher_header.delete', $voucherHeader->id) }}"
-                                            class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+
+                                        <a class="edit_voucher_header btn btn-sm btn-blue text-white" data-id="{{$voucherHeader->id}}"
+                                            title="edit" data-toggle="modal" data-target="#editModal">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a> 
+
+                                        @if (json_decode($userPermits->office_accounts_module, true)['voucher_header']['delete'])        
+                                            | <a id="delete" href="{{ route('admin.office.account.voucher_header.delete', $voucherHeader->id) }}"
+                                                class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -94,7 +105,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->office_accounts_module, true)['voucher_header']['add']) 
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -127,7 +140,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->office_accounts_module, true)['voucher_header']['edit']) 
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

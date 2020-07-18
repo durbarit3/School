@@ -14,8 +14,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign Vehicle</span></a>
+                            @if (json_decode($userPermits->transport_module, true)['assign_vehicle']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Assign Vehicle</span>
+                                </a>
+                            @endif    
                         </div>
                     </div>
                 </div>
@@ -60,11 +63,16 @@
 
                                         <td>
                                         <a href="#" class="edit_assigned_route btn btn-sm btn-blue text-white" data-id="{{ $assignedRoute->id }}" title="edit" data-toggle="modal"
-                                            data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.assign.vehicle.delete', $assignedRoute->id) }}"
+                                            data-target="#editModal"><i class="fas fa-pencil-alt"></i>
+                                        
+                                        </a> 
+
+                                        @if (json_decode($userPermits->transport_module, true)['assign_vehicle']['delete'] == 1)    
+                                            | <a id="delete" href="{{ route('admin.assign.vehicle.delete', $assignedRoute->id) }}"
                                                 class="btn btn-danger btn-sm text-white" title="Delete">
                                                 <i class="far fa-trash-alt"></i>
                                             </a>
+                                        @endif     
                                         </td>
                                     </tr>
                                 @endforeach

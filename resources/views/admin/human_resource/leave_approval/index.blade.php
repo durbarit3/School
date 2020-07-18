@@ -34,80 +34,77 @@
                         </div>
                     </div>
                 </div>
-
             </div>
       
-                <div class="panel_body">
-                    <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Employee</th>
-                                    <th>Leave Type</th>
-                                    <th>Leave Date</th>
-                                    <th>Apply Date</th>
-                                    <th>Day</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+            <div class="panel_body">
+                <div class="table-responsive">
+                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>Leave Date</th>
+                                <th>Apply Date</th>
+                                <th>Day</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($leaveApplies as $leaveApply)
+                                @php
+                                    $start_date = date_create($leaveApply->start_date);
+                                    $end_date = date_create($leaveApply->end_date);
+                                    //difference between two dates
+                                    $diff = date_diff($start_date,$end_date);
+                                    //count days
+                                    $day_count =  $diff->format("%a");
+                                @endphp
+                                <tr class="text-center"
+                                    data-user="
+                                    {{ $leaveApply->employee->adminname }},
+                                    {{ $leaveApply->employee->employee_id }},
+                                    {{ $leaveApply->leaveType->name }},
+                                    {{ $leaveApply->apply_date }},
+                                    {{ $leaveApply->start_date }} <b> - To -</b> {{ $leaveApply->end_date }},
+                                    {{ $day_count + 1 }},
+                                    {{ $leaveApply->approval }},
+                                    {{ $leaveApply->reason }},
+                                    {{ $leaveApply->attachment_file }},
+                                    {{ $leaveApply->id }}
+                                    "
+                                >
+                                    <td>{{ $leaveApply->employee->adminname }}</td>
+                                    <td>{{ $leaveApply->leaveType->name }}</td>
+                                    <td>{{ $leaveApply->start_date }} <b> - To -</b> {{ $leaveApply->end_date }}</td>
+                                    <td>{{ $leaveApply->apply_date }}</td>
+                                    <td>
+                                        {{ $day_count + 1 }}
+                                    </td>
+                                    <td>
+                                        @if ($leaveApply->approval == 0)
+                                            <span class="badge badge-warning approval p-2">Pandding</span>
+                                        @elseif($leaveApply->approval == 1)  
+                                            <span class="badge badge-success approval pb-2 pt-1 py-1">Approved</span> 
+                                        @elseif($leaveApply->approval == 2)
+                                            <span class="badge badge-danger approval p-2">Rejected</span>    
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="Details btn btn-sm btn-blue text-white" 
+                                            title="Details" data-id="{{ $leaveApply->id }}" href="" data-toggle="modal"
+                                            data-target="#LeaveApplyeDetails"><i class="fas fa-file-alt"></i>
+                                        </a>
+                                        <button style="display: none;" class="btn btn-sm button_loader{{ $leaveApply->id }} btn-blue">
+                                            <img height="13" width="13"  src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
+                                        </button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($leaveApplies as $leaveApply)
-                                    @php
-                                        $start_date = date_create($leaveApply->start_date);
-                                        $end_date = date_create($leaveApply->end_date);
-
-                                        //difference between two dates
-                                        $diff = date_diff($start_date,$end_date);
-
-                                        //count days
-                                        $day_count =  $diff->format("%a");
-                                    @endphp
-                                    <tr class="text-center"
-                                        data-user="
-                                        {{ $leaveApply->employee->adminname }},
-                                        {{ $leaveApply->employee->employee_id }},
-                                        {{ $leaveApply->leaveType->name }},
-                                        {{ $leaveApply->apply_date }},
-                                        {{ $leaveApply->start_date }} <b> - To -</b> {{ $leaveApply->end_date }},
-                                        {{ $day_count + 1 }},
-                                        {{ $leaveApply->approval }},
-                                        {{ $leaveApply->reason }},
-                                        {{ $leaveApply->attachment_file }},
-                                        {{ $leaveApply->id }}
-                                        "
-                                    >
-                                        <td>{{ $leaveApply->employee->adminname }}</td>
-                                        <td>{{ $leaveApply->leaveType->name }}</td>
-                                        <td>{{ $leaveApply->start_date }} <b> - To -</b> {{ $leaveApply->end_date }}</td>
-                                        <td>{{ $leaveApply->apply_date }}</td>
-                                        <td>
-                                            {{ $day_count + 1 }}
-                                        </td>
-                                        <td>
-                                            @if ($leaveApply->approval == 0)
-                                                <span class="badge badge-warning approval p-2">Pandding</span>
-                                            @elseif($leaveApply->approval == 1)  
-                                                <span class="badge badge-success approval pb-2 pt-1 py-1">Approved</span> 
-                                            @elseif($leaveApply->approval == 2)
-                                                <span class="badge badge-danger approval p-2">Rejected</span>    
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a class="Details btn btn-sm btn-blue text-white" 
-                                                title="Details" data-id="{{ $leaveApply->id }}" href="" data-toggle="modal"
-                                                data-target="#LeaveApplyeDetails"><i class="fas fa-file-alt"></i>
-                                            </a>
-                                            <button style="display: none;" class="btn btn-sm button_loader{{ $leaveApply->id }} btn-blue">
-                                                <img height="13" width="13"  src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
           
         </div>
     </section>
@@ -155,6 +152,7 @@
                      </div>
                 </div>
 
+                @if (json_decode($userPermits->human_resource_module, true)['leave_approval']['edit'] == 1)
                 <div class="row">
                     <div class="col-md-12">
                         <form class="leave_approval_form" action="{{ route('admin.hr.leave.approval.action') }}" method="POST">
@@ -178,12 +176,11 @@
                                 <div class="col-md-12">
                                     <button class="btn btn-sm btn-blue float-right" type="submit">Submit</button> 
                                 </div>
-                                
                             </div>
                         </form>
                     </div>
                 </div>
-
+                @endif
             </div>
         </div>
     </div>

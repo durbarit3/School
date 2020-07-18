@@ -549,10 +549,8 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\CurrentDayAttendance' => __DIR__ . '/../..' . '/app/CurrentDayAttendance.php',
         'App\\Department' => __DIR__ . '/../..' . '/app/Department.php',
         'App\\Designation' => __DIR__ . '/../..' . '/app/Designation.php',
-
         'App\\EmployeeAttendance' => __DIR__ . '/../..' . '/app/EmployeeAttendance.php',
         'App\\EmployeeSalary' => __DIR__ . '/../..' . '/app/EmployeeSalary.php',
-
         'App\\Event' => __DIR__ . '/../..' . '/app/Event.php',
         'App\\Exam' => __DIR__ . '/../..' . '/app/Exam.php',
         'App\\ExamAttendance' => __DIR__ . '/../..' . '/app/ExamAttendance.php',
@@ -564,6 +562,7 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Expanse' => __DIR__ . '/../..' . '/app/Expanse.php',
         'App\\ExpanseHeader' => __DIR__ . '/../..' . '/app/ExpanseHeader.php',
+        'App\\FeesCollection' => __DIR__ . '/../..' . '/app/FeesCollection.php',
         'App\\FeesDiscount' => __DIR__ . '/../..' . '/app/FeesDiscount.php',
         'App\\FeesGroup' => __DIR__ . '/../..' . '/app/FeesGroup.php',
         'App\\FeesMaster' => __DIR__ . '/../..' . '/app/FeesMaster.php',
@@ -600,14 +599,12 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Http\\Controllers\\Admin\\DepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DepartmentController.php',
         'App\\Http\\Controllers\\Admin\\EmployeeAttendanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EmployeeAttendanceController.php',
         'App\\Http\\Controllers\\Admin\\EmployeeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EmployeeController.php',
-
         'App\\Http\\Controllers\\Admin\\EmployeeSalaryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EmployeeSalaryController.php',
         'App\\Http\\Controllers\\Admin\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/EventController.php',
         'App\\Http\\Controllers\\Admin\\ExamAdmitCardDesignController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamAdmitCardDesignController.php',
         'App\\Http\\Controllers\\Admin\\ExamAdmitCardGenerateController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamAdmitCardGenerateController.php',
         'App\\Http\\Controllers\\Admin\\ExamAttendanceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamAttendanceController.php',
         'App\\Http\\Controllers\\Admin\\ExamAttendanceModifyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamAttendanceModifyController.php',
-
         'App\\Http\\Controllers\\Admin\\ExamController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamController.php',
         'App\\Http\\Controllers\\Admin\\ExamDistributionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamDistributionController.php',
         'App\\Http\\Controllers\\Admin\\ExamHallController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExamHallController.php',
@@ -618,19 +615,17 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Http\\Controllers\\Admin\\ExpanseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExpanseController.php',
         'App\\Http\\Controllers\\Admin\\ExpanseHeaderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ExpanseHeaderController.php',
         'App\\Http\\Controllers\\Admin\\FeesCotroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FeesCotroller.php',
-
         'App\\Http\\Controllers\\Admin\\FinanceReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FinanceReportController.php',
-        'App\\Http\\Controllers\\Admin\\GeneralSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/GeneralSettingsController.php',
-
         'App\\Http\\Controllers\\Admin\\FrontCmsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/FrontCmsController.php',
-
+        'App\\Http\\Controllers\\Admin\\GeneralSettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/GeneralSettingsController.php',
         'App\\Http\\Controllers\\Admin\\HostelController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HostelController.php',
+        'App\\Http\\Controllers\\Admin\\HumanResourceReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HumanResourceReportController.php',
         'App\\Http\\Controllers\\Admin\\IncomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/IncomeController.php',
         'App\\Http\\Controllers\\Admin\\IncomeHeaderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/IncomeHeaderController.php',
         'App\\Http\\Controllers\\Admin\\InventoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/InventoryController.php',
-
+        'App\\Http\\Controllers\\Admin\\LeaveApplyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LeaveApplyController.php',
+        'App\\Http\\Controllers\\Admin\\LeaveApprovalController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LeaveApprovalController.php',
         'App\\Http\\Controllers\\Admin\\LeaveTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LeaveTypeController.php',
-
         'App\\Http\\Controllers\\Admin\\LibraryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LibraryController.php',
         'App\\Http\\Controllers\\Admin\\MarkEntireController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MarkEntireController.php',
         'App\\Http\\Controllers\\Admin\\MarkRangeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MarkRangeController.php',
@@ -646,6 +641,7 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Http\\Controllers\\Admin\\SubjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SubjectController.php',
         'App\\Http\\Controllers\\Admin\\TeacherTimeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TeacherTimeController.php',
         'App\\Http\\Controllers\\Admin\\TransportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/TransportController.php',
+        'App\\Http\\Controllers\\Admin\\UserProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserProfileController.php',
         'App\\Http\\Controllers\\Admin\\VehicleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VehicleController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -670,10 +666,8 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\InventoryItem' => __DIR__ . '/../..' . '/app/InventoryItem.php',
         'App\\Item' => __DIR__ . '/../..' . '/app/Item.php',
         'App\\ItemSupplier' => __DIR__ . '/../..' . '/app/ItemSupplier.php',
-
         'App\\LeaveApply' => __DIR__ . '/../..' . '/app/LeaveApply.php',
         'App\\LeaveType' => __DIR__ . '/../..' . '/app/LeaveType.php',
-
         'App\\LibraryBook' => __DIR__ . '/../..' . '/app/LibraryBook.php',
         'App\\LibraryMember' => __DIR__ . '/../..' . '/app/LibraryMember.php',
         'App\\LibraryStaff' => __DIR__ . '/../..' . '/app/LibraryStaff.php',
@@ -689,12 +683,14 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
+        'App\\RolePermission' => __DIR__ . '/../..' . '/app/RolePermission.php',
         'App\\RoomType' => __DIR__ . '/../..' . '/app/RoomType.php',
         'App\\Route' => __DIR__ . '/../..' . '/app/Route.php',
         'App\\RouteVehicle' => __DIR__ . '/../..' . '/app/RouteVehicle.php',
         'App\\Section' => __DIR__ . '/../..' . '/app/Section.php',
         'App\\SectionDepartment' => __DIR__ . '/../..' . '/app/SectionDepartment.php',
         'App\\SectionDesignation' => __DIR__ . '/../..' . '/app/SectionDesignation.php',
+        'App\\Service\\FeesContiner' => __DIR__ . '/../..' . '/app/Service/FeesContiner.php',
         'App\\Session' => __DIR__ . '/../..' . '/app/Session.php',
         'App\\StockItemIndex' => __DIR__ . '/../..' . '/app/StockItemIndex.php',
         'App\\StudentAdmission' => __DIR__ . '/../..' . '/app/StudentAdmission.php',
