@@ -9,6 +9,7 @@ use App\LibraryMember;
 use App\Classes;
 use App\StudentAdmission;
 use App\LibraryStaff;
+use App\BookIssue;
 
 class LibraryController extends Controller
 {
@@ -312,4 +313,55 @@ class LibraryController extends Controller
         );
         return Redirect()->back()->with($notification);
     }
+
+    // issue book
+
+    public function issueIndex()
+    {
+        $books = BookIssue::with('issuebook')->active();
+        $members = LibraryMember::with('students')->active();
+        $staffs = LibraryStaff::active();
+        $librarybooks = LibraryBook::active();
+        return view('admin.library.bookissue',compact('members','staffs','books','librarybooks'));
+    }
+
+    // book issue store
+
+    public function issueStore(Request $request)
+    {
+
+        BookIssue::create($request->all());
+  
+             $notification = array(
+            'messege' => 'Book issue successfully:)',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+    // issue return
+
+    public function issueReturn($id)
+     {
+         BookIssue::findOrFail($id)->delete();
+
+             $notification = array(
+            'messege' => 'Book Return  successfully:)',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+     } 
+
+     // issue delete
+
+     public function issueDelete($id)
+     {
+         BookIssue::findOrFail($id)->delete();
+
+             $notification = array(
+            'messege' => 'Issued Book Deleted  successfully:)',
+            'alert-type' => 'success'
+        );
+        return Redirect()->back()->with($notification);
+     }
 }

@@ -609,7 +609,7 @@ class InventoryController extends Controller
         $students = StudentAdmission::all();
         $issuers = Admin::all(); 
         $categores = InventoryCategory::active();
-        $inventoryissues = InventoryIssue::active(); 
+        $inventoryissues = InventoryIssue::with(['inventoryItem','inventoryCategory','inventoryStudent','inventoryAdmin'])->active(); 
         return view('admin.inventory.issuitem',compact('roles','students','issuers','categores','inventoryissues'));
     }
 

@@ -410,6 +410,7 @@
                     <span class="menu-text">Library</span>
                 </a>
                 <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.book.issue')}}">Book Issue</a></li>
                     <li><a href="{{route('admin.book.index')}}">Book List</a></li>
                     <li><a href="{{route('admin.library.members')}}">Library Member</a></li>
                     <li><a href="{{route('admin.library.staff')}}">Library Staff</a></li>
@@ -465,6 +466,8 @@
                     <li><a class="{{ Request::is('admin/settings/general') ? 'text_active' : '' }}" href="{{route('admin.settings.general.index')}}">General settings</a></li>
 
                        <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
+                       <li><a href="{{route('admin.notification.setting')}}">Nofification settings</a></li>
+                       <li><a href="{{route('admin.sms.setting')}}">SMS settings</a></li>
                 </ul>
             </li>
 

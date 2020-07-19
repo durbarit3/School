@@ -520,10 +520,10 @@ class FeesCotroller extends Controller
 
     public function feesCollect()
     {
-        $students =StudentAdmission::with('classes','section')->active();
+        // $students =StudentAdmission::with('classes','section')->active();
         $classes = Classes::active();
 
-        return view('admin.fees.fees_collect',compact('students','classes'));
+        return view('admin.fees.fees_collect',compact('classes'));
     }
     // search
     public function feesCollectSearch($id)
@@ -536,6 +536,7 @@ class FeesCotroller extends Controller
     // search
     public function feesCollectSectionSearch(Request $request)
     {
+
         $classes = Classes::active();
         $students =StudentAdmission::where('class',$request->std_class)->where('section',$request->std_section)->with('classes','section')->get();
         return view('admin.fees.fees_collect',compact('students','classes'));
@@ -665,6 +666,15 @@ class FeesCotroller extends Controller
 public function studentsFeesSearch()
 {
     return view('admin.fees.searchfees');
+}
+
+
+// due fees search
+
+public function dueFeesSearch(Request $request)
+{
+    return FeesCollection::all();
+    return $request;
 }
 
 
