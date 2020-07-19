@@ -1,5 +1,12 @@
 @extends('admin.master')
-
+@push('css')
+    <style>
+        td {
+            line-height: 18px;
+            width: 20%;
+        }
+    </style>    
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -15,8 +22,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign Class teacher</span></a>
+                            @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Assign Class teacher</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -47,11 +57,16 @@
                                         </td>
 
                                         <td class="text-center">
-                                            <a onclick="subjectInfo( {{ $classSection['id'] }} )" class="edit_assigned_teacher btn btn-sm btn-blue text-white" data-id="{{ $classSection['id'] }}" title="edit" data-toggle="modal"
-                                                data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                            <a id="delete" href="{{ route('academic.assign.class.teacher.delete', $classSection['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            
+                                            <a onclick="subjectInfo( {{ $classSection['id'] }} )" class="edit_assigned_teacher btn btn-sm btn-blue text-white" data-id="{{ $classSection['id'] }}" title="edit" data-toggle="modal" data-target="#editModal">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a> 
+                                            
+                                            @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['delete'] == 1)
+                                                | <a id="delete" href="{{ route('academic.assign.class.teacher.delete', $classSection['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
                                                     <i class="far fa-trash-alt"></i>
-                                            </a>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
 

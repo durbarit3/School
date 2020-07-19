@@ -159,7 +159,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Admit Card Template</h4>
+                <h6 class="modal-title">Add Admit Card Template</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -170,7 +170,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Template Name (Must be unique)</b> :</label>
-                            <input required placeholder="Template Name" type="text" class="form-control form-control-sm" value="" name="template_name">
+                            <input required placeholder="Template Name" type="text" class="form-control form-control -sm form-control form-control -sm-sm" value="" name="template_name">
                         </div>
                     </div>
 
@@ -178,21 +178,21 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Heading </b> :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Admin card heading" name="heading" required>
+                            <input type="text" class="form-control form-control -sm form-control form-control -sm-sm" placeholder="Admin card heading" name="heading" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Title </b> :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Admin card title" name="title" required>
+                            <input type="text" class="form-control form-control -sm form-control form-control -sm-sm" placeholder="Admin card title" name="title" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Footer Text </b> :</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Footer text" name="footer_text" required>
+                            <input type="text" class="form-control form-control -sm form-control form-control -sm-sm" placeholder="Footer text" name="footer_text" required>
                         </div>
                     </div>
 
@@ -200,7 +200,7 @@
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Left Logo </b> :</label>
                             <input accept=".jpg, .jpeg, .png, .gif" type="file" id="left_logo" name="left_logo" id="input-file-now"
-                                        class="form-control dropify" size="20" required/>  
+                                        class="form-control form-control -sm dropify" size="20" required/>  
                             <span class="error text-danger left_logo_error"></span>            
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Right Logo </b> :</label>
                             <input accept=".jpg, .jpeg, .png, .gif" type="file" id="right_logo" placeholder="Right Logo" name="right_logo" id="input-file-now"
-                                        class="form-control dropify" size="20" required/>  
+                                        class="form-control form-control -sm dropify" size="20" required/>  
                             <span class="error text-danger right_logo_error"></span>
                         </div>
                     </div> 
@@ -218,7 +218,7 @@
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0"><b>Background photo </b> :</label>
                             <input accept=".jpg, .jpeg, .png, .gif" type="file" id="right_logo" placeholder="Background photo" name="background_photo" id="input-file-now"
-                                        class="form-control dropify" size="20" required/>  
+                                        class="form-control form-control -sm dropify" size="20" required/>  
                             <span class="error text-danger background_photo_error"></span>
                         </div>
                     </div>

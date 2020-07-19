@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Role;
 use DB;
+use App\Role;
 use App\Admin;
 use App\Group;
 use App\Gender;
@@ -13,7 +13,9 @@ use App\Designation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Artisan;
 
 class EmployeeController extends Controller
 {
@@ -24,7 +26,9 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        $admins = Admin::with(['group'])
+        $admins = Cache::rememberForever('all-admins', function(){
+
+            return  $admins = Admin::with(['group'])
             ->where('role', 2)
             ->select(['id', 'employee_status', 'adminname', 'employee_id', 'avater', 'gender', 'designation', 'group_id', 'email', 'phone'])
             ->get()->map(function ($admin) {
@@ -40,11 +44,13 @@ class EmployeeController extends Controller
                     'email' => $admin->email,
                     'phone' => $admin->phone,
                     'department' => [
-                       'name' => $admin->group->name
+                    'name' => $admin->group->name
                     ],
                 ];
             });
 
+        });
+        
         return view('admin.employee.employee_list.all_admins', compact('admins'));
     } 
     
@@ -97,7 +103,8 @@ class EmployeeController extends Controller
             ];
         });
        
-    return view('admin.employee.employee_list.all_teachers', compact('teachers'));
+        return view('admin.employee.employee_list.all_teachers', compact('teachers'));
+
     }
     public function librarians()
     {
@@ -122,7 +129,8 @@ class EmployeeController extends Controller
             ];
         });
 
-    return view('admin.employee.employee_list.all_librarians', compact('librarians'));
+        return view('admin.employee.employee_list.all_librarians', compact('librarians'));
+
     }
 
     public function accountant()
@@ -173,7 +181,7 @@ class EmployeeController extends Controller
             ];
         });
 
-    return view('admin.employee.employee_list.all_clerk', compact('clerks'));
+        return view('admin.employee.employee_list.all_clerk', compact('clerks'));
     }
 
     public function drivers()
@@ -296,7 +304,7 @@ class EmployeeController extends Controller
             $employeePhoto = $request->file('photo');
             $employeePhotoName = uniqid() . '.' . $employeePhoto->getClientOriginalExtension();
             Image::make($employeePhoto)->resize(500, 500)->save('public/uploads/employee/' . $employeePhotoName);
-            Admin::insert([
+           $employee = Admin::insertGetId([
                 'employee_id' => $request->employee_id,
                 'adminname' => $request->name,
                 'gender' => $request->gender,
@@ -332,6 +340,31 @@ class EmployeeController extends Controller
                 'created_at' =>  Carbon::now(),
             ]);
         }
+
+        $cacheEmployee = Admin::with(['group'])
+            ->where('id', $employee)
+            ->where('role', 2)
+            ->select(['id', 'employee_status', 'adminname', 'employee_id', 'avater', 'gender', 'designation', 'group_id', 'email', 'phone'])
+            ->first()->map(function ($admin) {
+                return [
+                    'id' => $admin->id,
+                    'name' => $admin->adminname,
+                    'employee_status' => $admin->employee_status,
+                    'employee_id' => $admin->employee_id,
+                    'avater' => $admin->avater,
+                    'gender' => $admin->gender,
+                    'designation' => $admin->designation,
+                    'group_id' => $admin->group_id,
+                    'email' => $admin->email,
+                    'phone' => $admin->phone,
+                    'department' => [
+                    'name' => $admin->group->name
+                    ],
+                ];
+            });
+        
+            
+            Cache::forget('all-admins');
         
         return response()->json(['successMsg' => 'Employee added successfully:)']);
         
@@ -378,7 +411,7 @@ class EmployeeController extends Controller
         $roles = Role::select(['id', 'name', 'role_known_id'])->get();
         $genders = Gender::select(['id', 'name'])->get();
         $employee = Admin::with(['group', 'salaries'])->where('id', $employeeId)->firstOrFail();
- 
+        
         return view('admin.employee.show', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders', 'employee'));
 
     }

@@ -32,7 +32,9 @@
 
     <div class="form-group text-right">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
-        <button type="submit" class="btn btn-sm btn-blue">Update</button>
+        @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['edit'] == 1)
+            <button type="submit" class="btn btn-sm btn-blue">Update</button>
+        @endif    
     </div>
 </form>
 

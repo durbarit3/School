@@ -121,13 +121,14 @@ class EmployeeSalaryController extends Controller
 
     public function salaryPayView($employeeId, $month, $year)
     {
-        $invoiceId = 0;
-        $lastRow = EmployeeSalary::orderBy('id', 'DESC')->first();
-        if (!$lastRow) {
-            $invoiceId = date('dmy') . '1';
-        } else {
-            $invoiceId = date('dmy') . ++$lastRow->id;
+        $i = 6;
+        $a = 0;
+        $invoiceId = ''; 
+        while ($a < $i) {
+            $invoiceId .= rand(1, 9);
+            $a++; 
         }
+        
         $generatedSalary = EmployeeSalary::with(['employee'])->where('employee_id', $employeeId)->where('month', $month)->where('year', $year)->first();
         return view('admin.human_resource.employee_salary.ajax_views.salary_pay_view', compact('generatedSalary','invoiceId', 'month', 'year'));
     }
@@ -138,6 +139,7 @@ class EmployeeSalaryController extends Controller
             'payable_amount' => 'required|numeric',
             'pay_mode' => 'required',
         ]);
+        
         date_default_timezone_set('Asia/Dhaka');
         $paySalary = EmployeeSalary::where('employee_id', $employeeId)->where('month', $request->month)->where('year', $request->year)->first();
         $paySalary->invoice_no = $request->invoice_no;

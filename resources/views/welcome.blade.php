@@ -103,13 +103,13 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Room Type Name" name="room_type" required>
+                            <input required type="text" class="form-control form-control -sm" placeholder="Room Type Name" name="room_type" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
-                            <textarea rows="3" class="form-control" name="description" require></textarea>
+                            <textarea rows="3" class="form-control form-control -sm" name="description" require></textarea>
                             
                         </div>
                     </div>
@@ -140,13 +140,13 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="room_type" id="room_type" required>
+                            <input type="text" class="form-control form-control -sm" name="room_type" id="room_type" required>
                             <input type="hidden" name="id" id="id">
                             <span class="text-danger">{{ $errors->first('room_type') }}</span>
                         </div>
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Description:</label>
                         <div class="col-sm-8 mt-2">
-                            <textarea rows="3" class="form-control" id="description" name="description" require></textarea>
+                            <textarea rows="3" class="form-control form-control -sm" id="description" name="description" require></textarea>
                             <span class="text-danger">{{ $errors->first('description') }}</span>
                         </div>
                     </div>

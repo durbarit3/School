@@ -150,7 +150,9 @@
                                     </ul>
                                 </div>
                                 <div class="col-md-2">
-                                    <button onclick="addMore({{ $class_id }}, {{ $section_id }})"class="btn btn-sm btn-info float-right">Add more</button>
+                                    
+                                        <button onclick="addMore({{ $class_id }}, {{ $section_id }})"class="btn btn-sm btn-info float-right">Add more</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -177,7 +179,9 @@
 
                                     </tbody>
                                 </table>
-                                <button class="btn btn-sm btn-blue float-right" type="submit">Save <span class="button_day">Monday</span> Timebable</button>
+                                @if (json_decode($userPermits->academic_module, true)['class_timetable']['add'] == 1)
+                                    <button class="btn btn-sm btn-blue float-right" type="submit">Save <span class="button_day">Monday</span>Timebable</button>
+                                @endif
                             </form>
                         </div>
                         

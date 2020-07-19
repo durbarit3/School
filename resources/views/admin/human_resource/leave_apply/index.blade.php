@@ -39,8 +39,11 @@ date_default_timezone_set('Asia/Dhaka');
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Apply leave</span></a>
+                            @if (json_decode($userPermits->human_resource_module, true)['leave_apply']['add'] == 1)
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i></span> <span>Apply leave</span>
+                            </a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -180,7 +183,9 @@ date_default_timezone_set('Asia/Dhaka');
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
                         <button type="button" id="submit_loading" class="btn btn-sm btn-blue ">Loading...</button>
-                        <button type="submit" class="btn btn-sm btn-blue submit_button">Submit</button>
+                        @if (json_decode($userPermits->human_resource_module, true)['leave_apply']['add'] == 1)
+                            <button type="submit" class="btn btn-sm btn-blue submit_button">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

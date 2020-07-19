@@ -1,6 +1,10 @@
 @extends('admin.master')
 @push('css')
     <style>
+        .panel .panel_body {
+            border-top: 3px solid;
+            border-radius: 3px;
+        }
         .photo img {
             border-radius: 165px;
             padding: 3px;
@@ -174,7 +178,7 @@
                             
                         </div>
                         <hr class="p-0 m-0 mt-1">
-                        <div class="profile_all_information tab_content">
+                        <div class="profile_all_information tab_content show">
                             <div class="another_basic_information">
                                 <table class="table table-sm">
                                     <tbody>
@@ -304,7 +308,7 @@
                             </div>
                         </div>
                         
-                        <div  class="salary_information tab_content display_none mt-2">
+                        <div  class="salary_information tab_content mt-2">
 
                             @php
                                 $totalPaidNetSalary = 0;
@@ -438,7 +442,7 @@
 
                         </div>
                         
-                        <div  class="leave_information tab_content display_none mt-2">
+                        <div  class="leave_information tab_content mt-2">
 
                             <div class="salary_top_card_area">
                                 <div class="row">
@@ -812,11 +816,13 @@
     <script>
 
         $(document).ready(function(){
+            $('.tab_content').hide();
+            $('.show').show();
             $(document).on('click', '.tab_link', function(e){
                 e.preventDefault();
                 console.log('GET');
                 var className = $(this).data('class');
-                console.log(className);
+                //console.log(className);
                 $('.tab_link').removeClass('active');
                 $('.tab_content').hide();
                 $('.'+className).show();

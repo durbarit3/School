@@ -14,8 +14,7 @@ class UserProfileController extends Controller
     {
         $employee = Admin::with(['salaries', 'leaveApplies', 'leaveApplies.leaveType'])->where('id', Auth::user('admin')->id)->first();
         return view('admin.profile.index', compact('employee'));
-
-        
+ 
     }
 
     public function changePassword(Request $request)

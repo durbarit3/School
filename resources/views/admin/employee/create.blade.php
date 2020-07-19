@@ -2,34 +2,14 @@
 @push('css')
     {{-- <link rel="stylesheet" href="{{asset('public/admins/admin.employee.employee_list.create.css')}}"> --}}
     <style>
-        .dropify-wrapper {
-            height: 67px!important;
-        }
-
-        .border_red{
-            border: 1px solid red;
-            border-radius: 3px;
-        }
-
-        label {
-            font-size: 13px;
-        }
-
-        .dropify-wrapper .dropify-message p {
-            margin: -7px 0 0;
-        }
-
-        .dropify-wrapper {
-            border-radius: 3px;
-        }
-
-        .form_section_heading h6 {
-            letter-spacing: 2px;
-        }
-
-        .text-black{
-            color:#222533;
-        }
+        .dropify-wrapper {height: 67px!important;}
+        .border_red{border: 1px solid red;border-radius: 3px;}
+        label {font-size: 13px;}
+        .dropify-wrapper .dropify-message p {margin: -7px 0 0;}
+        .dropify-wrapper {border-radius: 3px;}
+        .form_section_heading h6 {letter-spacing: 2px;}
+        .form_section_heading {padding: 5px 1px;background: #f2f2f2;}
+        .text-black{color:#222533;}
     </style>
 @endpush
 @section('content')
@@ -329,7 +309,7 @@
 
                     </div>
                     <button class="btn btn-sm btn-blue submit_button float-right" type="submit">Submit</button>
-                    <button class="btn btn-sm btn-blue display_none loading_button float-right" type="button">Loading...</button>
+                    <button class="btn btn-sm btn-blue loading_button float-right" type="button">Loading...</button>
                 </>
             </div>
         </form>
@@ -344,7 +324,7 @@
 
     <script>
         $(document).ready(function () {
-            
+            $('.loading_button').hide();
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

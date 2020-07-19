@@ -57,15 +57,18 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="panel_title">
-                                    <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Select
-                                        Criteria</span>
+                                    <span class="panel_icon"><i class="fas fa-border-all"></i></span><span> Select
+                                        Criteria </span>
                                 </div>
                             </div>
                             <div class="col-md-6 text-right">
                                 <div class="panel_title">
+                                @if (json_decode($userPermits->academic_module,true)['class_timetable']['add'] == 1)    
                                     <a href="{{ route('admin.class.timetable.create') }}"
-                                        class="btn btn-sm btn-success"><i class="fas fa-plus"></i></span> <span>Add And
-                                            Modify</span></a>
+                                        class="btn btn-sm btn-success">
+                                        <i class="fas fa-plus"></i></span> <span> Add And Modify </span>
+                                    </a>
+                                @endif     
                                 </div>
                             </div>
                         </div>
@@ -89,15 +92,15 @@
                                     <select required name="section_id" id="sections" class="form-control form-control-sm">
                                         <option value="">Select section</option>
                                         @if (isset($class_id))
-                                        @php
-                                        $classSections = App\ClassSection::where('class_id', $class_id)->get();
-                                        @endphp
-                                        @foreach ($classSections as $classSection)
-                                        <option @if ($section_id)
-                                            {{ $section_id ==  $classSection->section_id ? "SELECTED" : ""}} @endif
-                                            value="{{ $classSection->section_id }}">{{ $classSection->section->name }}
-                                        </option>
-                                        @endforeach
+                                            @php
+                                            $classSections = App\ClassSection::where('class_id', $class_id)->get();
+                                            @endphp
+                                            @foreach ($classSections as $classSection)
+                                                <option @if ($section_id)
+                                                    {{ $section_id ==  $classSection->section_id ? "SELECTED" : ""}} @endif
+                                                    value="{{ $classSection->section_id }}">{{ $classSection->section->name }}
+                                                </option>
+                                            @endforeach
                                         @endif
                                     </select>
                                 </div>

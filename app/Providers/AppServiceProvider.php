@@ -2,12 +2,18 @@
 
 namespace App\Providers;
 
+
 use App\GeneralSetting;
+use App\RolePermission;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    
+
     /**
      * Register any application services.
      *
@@ -15,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+       
     }
 
     /**
@@ -23,10 +29,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot() 
     {
         Schema::defaultStringLength(191);
         $generalSettings = GeneralSetting::first();
         view()->share('generalSettings', $generalSettings);
-    }
+       
+        view()->composer('admin*', 'App\Http\Controllers\Admin\ViewComposerController@compose');
+        
+     }
 }

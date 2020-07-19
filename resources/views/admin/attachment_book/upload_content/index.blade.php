@@ -33,12 +33,14 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Attachment</span></a>
+                            @if (json_decode($userPermits->attachment_book_module, true)['upload_content']['add'] == 1) 
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span><span>Add Attachment</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
-
             </div>
             
                 <div class="panel_body">
@@ -73,29 +75,36 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Not Published</span></td>
                                     @endif
                                     <td>
-                                        @if($uploadContents->is_published == 1)
-                                        <a href="{{ route('admin.attachment.upload.content.change.status', $uploadContents->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.attachment.upload.content.change.status', $uploadContents->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->attachment_book_module, true)['upload_content']['edit'] == 1)
+                                            @if($uploadContents->is_published == 1)
+                                            <a href="{{ route('admin.attachment.upload.content.change.status', $uploadContents->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.attachment.upload.content.change.status', $uploadContents->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a>
+                                            @endif
+                                            |
                                         @endif
 
-                                    | 
                                     @if($uploadContents->is_published == 1)
                                     <a class="btn btn-sm btn-dark" href="{{url('public/uploads/attachment_file/'.$uploadContents->attachment_file)}}"
                                         download="{{ $uploadContents->attachment_file }}"
                                         ><i class="fas fa-download"></i></a> |
                                     @endif
+
                                     <a href="#" data-id="{{ $uploadContents->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal" class="edit_attachment btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.attachment.upload.content.delete', $uploadContents->id) }}"
+                                        data-target="#editModal" class="edit_attachment btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> 
+
+                                    @if (json_decode($userPermits->attachment_book_module, true)['upload_content']['delete'] == 1)   
+                                        | <a id="delete" href="{{ route('admin.attachment.upload.content.delete', $uploadContents->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                    @endif
+
                                     </td>
                                 </tr>
                                 @endforeach
@@ -209,7 +218,9 @@
 
                     <div class="form-group pt-2 text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        @if (json_decode($userPermits->attachment_book_module, true)['upload_content']['add'] == 1)
+                            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

@@ -16,8 +16,11 @@
 
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Expanse</span></a>
+                            @if (json_decode($userPermits->expanse_module, true)['expanse']['add'] == 0)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Expanse</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -73,24 +76,33 @@
                                     @endif
                                     <td>{{$expanse->amount}}</td>
                                     <td data-id="{{$loop->index}}">
-                                        @if($expanse->status==1)
-                                        <a href="{{ route('admin.expanse.status.update', $expanse->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.expanse.status.update', $expanse->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+
+                                        @if (json_decode($userPermits->expanse_module, true)['expanse']['edit'] == 0)
+                                            @if($expanse->status==1)
+                                                <a href="{{ route('admin.expanse.status.update', $expanse->id ) }}"
+                                                    class="btn btn-success btn-sm ">
+                                                    <i class="fas fa-thumbs-up"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin.expanse.status.update', $expanse->id ) }}"
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </a>
+                                            @endif
+                                            |
                                         @endif
-                                    | <a href="#" data-id="{{ $expanse->id }}" title="edit" class="edit_expanse btn btn-sm btn-blue text-white">
+
+                                    <a href="#" data-id="{{ $expanse->id }}" title="edit" class="edit_expanse btn btn-sm btn-blue text-white">
                                         <i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i>
                                         <img style="display: none;" height="13" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
-                                    </a> |
-                                        <a id="delete" href="{{ route('admin.expanse.delete', $expanse->id) }}"
+                                    </a> 
+
+                                    @if (json_decode($userPermits->expanse_module, true)['expanse']['delete'] == 0)
+                                        | <a id="delete" href="{{ route('admin.expanse.delete', $expanse->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                    @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -192,107 +204,107 @@
 @push('js')
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
-        });
-    });
-
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('.loading').hide();
-        $(document).on('click', '.edit_expanse', function(){
-            var expanse_id = $(this).data('id');
-            var id = $(this).closest('td').data('id');
-            $('.previous-'+id).hide();
-            $('.button_loader-'+id).show();
-            $.ajax({
-                url:"{{ url('admin/expanses/edit') }}" + "/" + expanse_id,
-                type:'get',
-                success:function(data){
-                    $('.edit_modal_body').empty();
-                    $('.edit_modal_body').append(data);
-                    $('#editModal').modal('show');
-                    $('.previous-'+id).show();
-                    $('.button_loader-'+id).hide();
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
                 }
             });
         });
-   });
 
-   $(document).ready(function(){
-        $(".add_ex_date_picker").flatpickr({
-            dateFormat: "d-m-Y",
-        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.loading').hide();
+            $(document).on('click', '.edit_expanse', function(){
+                var expanse_id = $(this).data('id');
+                var id = $(this).closest('td').data('id');
+                $('.previous-'+id).hide();
+                $('.button_loader-'+id).show();
+                $.ajax({
+                    url:"{{ url('admin/expanses/edit') }}" + "/" + expanse_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                        $('#editModal').modal('show');
+                        $('.previous-'+id).show();
+                        $('.button_loader-'+id).hide();
+                    }
+                });
+            });
     });
-</script>
 
-<script>
-    $(document).ready(function () {
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).on('submit', '#add_expanse_form', function(e){
-            e.preventDefault();
-            var url = $(this).attr('action');
-            var type = $(this).attr('method');
-            var request = $(this).serialize();
-            $.ajax({
-                url:url,
-                type:type,
-                data: request,
-                success:function(data){
-
-                   //log(data);
-                   
-                   $('.error').html('');
-                   $('#add_expanse_form')[0].reset();
-                   $('#myModal1').modal('hide');
-                   toastr.success(data);
-                   setInterval(function(){
-                    window.location = "{{ url()->current() }}";
-                   }, 700)
-                   
-                   
-                },
-                error:function(err){
-                    //log(err.responseJSON.errors);
-                    if(err.responseJSON.errors.header_id){
-                        $('.header_error').html('Expanse header is required');
-                        $('.header').addClass('is-invalid');
-                    }else{
-                        $('.header_error').html('');
-                        $('.header').removeClass('is-invalid');
-                    }
-                    if(err.responseJSON.errors.amount){
-                        $('.amount_error').html('');
-                        $('.amount').removeClass('is-invalid');
-                        $('.amount_error').html(err.responseJSON.errors.amount[0]);
-                        
-                        $('.amount').addClass('is-invalid');
-                    }else{
-                        $('.amount_error').html('');
-                        $('.amount').removeClass('is-invalid');
-                    }
-                  
-                }
+    $(document).ready(function(){
+            $(".add_ex_date_picker").flatpickr({
+                dateFormat: "d-m-Y",
             });
         });
-    });
+    </script>
 
-</script> 
+    <script>
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#add_expanse_form', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+
+                    //log(data);
+                    
+                    $('.error').html('');
+                    $('#add_expanse_form')[0].reset();
+                    $('#myModal1').modal('hide');
+                    toastr.success(data);
+                    setInterval(function(){
+                        window.location = "{{ url()->current() }}";
+                    }, 700)
+                    
+                    
+                    },
+                    error:function(err){
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.header_id){
+                            $('.header_error').html('Expanse header is required');
+                            $('.header').addClass('is-invalid');
+                        }else{
+                            $('.header_error').html('');
+                            $('.header').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.amount){
+                            $('.amount_error').html('');
+                            $('.amount').removeClass('is-invalid');
+                            $('.amount_error').html(err.responseJSON.errors.amount[0]);
+                            
+                            $('.amount').addClass('is-invalid');
+                        }else{
+                            $('.amount_error').html('');
+                            $('.amount').removeClass('is-invalid');
+                        }
+                    
+                    }
+                });
+            });
+        });
+
+    </script> 
 
 @endpush

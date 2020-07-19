@@ -22,13 +22,16 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Assigned Subject"\'\"s Teachers</span>
+                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>All Assigned Subject Teachers</span>
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign teacher</span></a>
+                            @if (json_decode($userPermits->academic_module,true)['Assign_teacher_to_subject']['add'] == 1) 
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Assign teacher</span>
+                                </a>
+                            @endif 
                         </div>
                     </div>
                 </div>
@@ -65,21 +68,24 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($subjectTeacher['status']==1)
-                                        <a href="{{ route('academic.assign.subject.teacher.status.update', $subjectTeacher['id'] ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('academic.assign.subject.teacher.status.update', $subjectTeacher['id'] ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->academic_module,true)['Assign_teacher_to_subject']['edit'] == 1)
+                                            @if($subjectTeacher['status']==1)
+                                                <a href="{{ route('academic.assign.subject.teacher.status.update', $subjectTeacher['id'] ) }}" class="btn btn-success btn-sm ">
+                                                    <i class="fas fa-thumbs-up"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('academic.assign.subject.teacher.status.update', $subjectTeacher['id'] ) }}"
+                                                    class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </a>
+                                            @endif
                                         @endif
 
-                                    
-                                        <a id="delete" href="{{ route('academic.assign.subject.teacher.delete', $subjectTeacher['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                                <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->academic_module,true)['Assign_teacher_to_subject']['delete'] == 1)
+                                            | <a id="delete" href="{{ route('academic.assign.subject.teacher.delete', $subjectTeacher['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                                    <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif 
                                     </td>
                                 </tr>
                             @endforeach

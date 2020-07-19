@@ -16,7 +16,7 @@
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label  class="col-form-label p-0 m-">  Voucher Header  :</label>
+            <label  class="col-form-label p-0 m-"> Voucher Header  :</label>
             <select required name="voucher_id" class="form-control edit_voucher_id form-control-sm">
                 <option value="">Select voucher header</option>
                 @foreach ($voucherHeaders as $voucherHeader)
@@ -63,7 +63,9 @@
 
     <div class="form-group text-right">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-        <input type="submit" value="Update" class="btn save btn-sm btn-blue">
+        @if (json_decode($userPermits->office_accounts_module, true)['withdraw']['edit'])
+            <input type="submit" value="Update" class="btn save btn-sm btn-blue">
+        @endif
     </div>
 </form>
 

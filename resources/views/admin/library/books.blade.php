@@ -5,18 +5,21 @@
     <div class="panel">
         <div class="panel_header">
         <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Book List</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Book</span></a>
-                        </div>
-                    </div>
+            <div class="col-md-6">
+                <div class="panel_title">
+                    <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Book List</span>
                 </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="panel_title">
+                    @if (json_decode($userPermits->library_module, true)['book_list']['add'] == 1)
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                            <i class="fas fa-plus"></i></span> <span>Add Book</span>
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
         </div>
         <form action="{{route('admin.book.multidelete')}}" method="post">
             @csrf
@@ -73,22 +76,27 @@
                           
                           
                             <td>
-                                @if($book->status ==1)
-                                <a href="{{ route('admin.book.status', $book->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
-                                @else
-                                <a href="{{ route('admin.book.status', $book->id ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
-                                @endif
-                                
+                                @if (json_decode($userPermits->library_module, true)['book_list']['edit'] == 1)
+                                    @if($book->status ==1)
+                                    <a href="{{ route('admin.book.status', $book->id) }}" class="btn btn-success btn-sm ">
+                                        <i class="fas fa-thumbs-up"></i></a>
+                                    @else
+                                    <a href="{{ route('admin.book.status', $book->id ) }}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </a>
+                                    @endif
+                                    |
+                                @endif  
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$book->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="{{route('admin.book.delete',$book->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$book->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> 
+
+                                @if (json_decode($userPermits->library_module, true)['book_list']['delete'] == 1)
+                                | <a id="delete" href="{{route('admin.book.delete',$book->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
 
@@ -198,7 +206,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->library_module, true)['book_list']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -279,8 +289,6 @@
                         </div>
                     </div>
 
-
-
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Book Price:</label>
                         <div class="col-sm-8">
@@ -299,7 +307,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->library_module, true)['book_list']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -317,7 +327,6 @@
         $('.edit_route').on('click', function() {
             var id = $(this).data('id');
 
-            
             if (id) {
                 $.ajax({
                     url: "{{ url('admin/library/books/edit/') }}/" + id,
