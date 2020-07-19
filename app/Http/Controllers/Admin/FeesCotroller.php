@@ -623,6 +623,13 @@ class FeesCotroller extends Controller
         return $value; 
     } 
 
+// search Student due fees
+
+public function studentsFeesSearch()
+{
+    return view('admin.fees.searchfees');
+}
+
 
 
 

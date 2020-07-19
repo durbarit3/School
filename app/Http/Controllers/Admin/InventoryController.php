@@ -7,7 +7,11 @@ use App\Http\Controllers\Controller;
 use App\InventoryCategory;
 use App\InventoryItem;
 use App\Item;
+use App\Role;
+use App\InventoryIssue;
+
 use App\ItemSupplier;
+use App\StudentAdmission;
 use App\StockItemIndex;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -390,10 +394,17 @@ class InventoryController extends Controller
         $data =$request->validate([
             'item'=>'required',
             'category_id'=>'required',
+            'unit'=>'required',
             'description'=>'required',
         ]);
 
-        Item::create($data);
+        Item::create([
+            'item'=>$request->item,
+            'category_id'=>$request->category_id,
+            'unit'=>$request->unit,
+            'able_qty'=>$request->unit,
+            'description'=>$request->description,
+        ]);
 
         $notification=array(
             'messege'=>'Item created Successfully!',
@@ -420,10 +431,17 @@ class InventoryController extends Controller
         $data =$request->validate([
             'item'=>'required',
             'category_id'=>'required',
+            'unit'=>'required',
             'description'=>'required',
         ]);
 
-        Item::findOrFail($request->id)->update($data);
+        Item::findOrFail($request->id)->update([
+            'item'=>$request->item,
+            'category_id'=>$request->category_id,
+            'unit'=>$request->unit,
+            
+            'description'=>$request->description,
+        ]);
 
         $notification=array(
             'messege'=>'Item Updated Successfully!',
@@ -580,5 +598,93 @@ class InventoryController extends Controller
         $stockitem =StockItemIndex::findOrFail($id);
 
         return response()->json($stockitem);
+    }
+
+
+    // issue inventory
+
+    public function issueIndex()
+    {
+        $roles = Role::all();
+        $students = StudentAdmission::all();
+        $issuers = Admin::all(); 
+        $categores = InventoryCategory::active();
+        $inventoryissues = InventoryIssue::active(); 
+        return view('admin.inventory.issuitem',compact('roles','students','issuers','categores','inventoryissues'));
+    }
+
+    // get issue items
+
+    public function issueItems($id)
+    {
+        
+        $items = Item::where('category_id',$id)->get();
+
+        return response()->json($items);
+    }
+
+    // issue store
+
+    public function issueStore(Request $request)
+    {
+        $item =Item::findOrFail($request->item)->able_qty;
+        $able_qty = $item - $request->qty;
+        if ($item > $request->qty) {
+            
+        $notification=array(
+            'messege'=>' This Number of Items Can not Avilable!',
+            'alert-type'=>'success'
+             );
+         return redirect()->back()->with($notification);
+        } else{
+
+            InventoryIssue::create($request->all());
+            Item::findOrFail($request->item)->update([
+
+                'able_qty'=>$able_qty,
+            ]);
+            
+
+            $notification=array(
+            'messege'=>' Inventory Issued Successfully!',
+            'alert-type'=>'success'
+             );
+         return redirect()->back()->with($notification);
+        }
+    }
+
+    // issue return 
+
+    public function issueReturn($id)
+    {
+        $issues= InventoryIssue::findOrFail($id);
+       $item =Item::findOrFail($issues->item);
+       $item ->update([
+
+        'able_qty'=>intval($item->able_qty) + intval($issues->qty),
+       ]);
+
+       $issues->delete();
+
+
+            $notification=array(
+            'messege'=>' Inventory Return Successfully!',
+            'alert-type'=>'success'
+             );
+         return redirect()->back()->with($notification);
+
+    }
+
+    // issue delete
+
+    public function issueDelete($id)
+    {
+        InventoryIssue::findOrFail($id)->delete();
+        $notification=array(
+            'messege'=>' Inventory Deleted Successfully!',
+            'alert-type'=>'success'
+             );
+         return redirect()->back()->with($notification);
+
     }
 }

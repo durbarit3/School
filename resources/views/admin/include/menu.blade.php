@@ -586,6 +586,7 @@
                     <span class="menu-text">Inventory</span>
                 </a>
                 <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.inventory.issue')}}">Issue Inventory</a></li>
                     <li><a href="{{route('inventory.item.stock.index')}}">Add Item Stock</a></li>
                     <li><a href="{{route('inventory.category.index')}}">Item Category</a></li>
                     <li><a href="{{route('item.index')}}">Items Store</a></li>
@@ -611,6 +612,7 @@
                             <li><a class="{{ Request::is('admin/library/books') ? 'text_active' : '' }}" href="{{route('admin.book.index')}}">Book List</a></li>
                         @endif
 
+
                         @if (jsn($userPermits->library_module)['library_member']['view'] == 1)
                             <li><a class="{{ Request::is('admin/library/member') ? 'text_active' : '' }}" href="{{route('admin.library.members')}}">Library Member</a></li>
                         @endif
@@ -621,6 +623,23 @@
                     </ul>
                 </li>
             @endif
+
+            <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-text">Fees Collection</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.fees.reminder')}}">Fees Reminder</a></li>
+                    <li><a href="{{route('admin.fees.type')}}">Fees Types</a></li>
+                    <li><a href="{{route('admin.fees.discount')}}">Fees Discount</a></li>
+                    <li><a href="{{route('admin.fees.group')}}">Fees Group</a></li>
+                    <li><a href="{{route('admin.fees.master')}}">Fees Master</a></li>
+                    <li><a href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
+                    <li><a href="{{route('admin.fees.search')}}">Search Due Fees</a></li>
+                </ul>
+            </li>
+
 
             @if (jsn($userPermits->fees_collection_module)['fees_remember']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_type']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_group']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_master']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_collection']['view'] == 0)
                 <li></li>
@@ -687,7 +706,12 @@
                 <ul class="dashboard-menu">
                     <li><a href="{{route('admin.menu.setting')}}">Menus</a></li>
                     <li><a class="{{ Request::is('admin/settings/general') ? 'text_active' : '' }}" href="{{route('admin.settings.general.index')}}">General settings</a></li>
+
                     <li><a class="{{ Request::is('admin/settings/role_permission*') ? 'text_active' : '' }}" href="{{ route('admin.gen.settings.role.permit.index') }}">Role Permissions</a></li>
+
+
+                       <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
+
                 </ul>
             </li>
 
