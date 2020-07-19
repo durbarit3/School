@@ -44,7 +44,9 @@
 
     <div class="form-group text-right">
         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-        <button type="submit" class="btn btn-blue">Update</button>
+        @if (json_decode($userPermits->income_module, true)['income']['edit'] == 1)
+            <button type="submit" class="btn btn-blue">Update</button>
+        @endif
     </div>
 </form>
 

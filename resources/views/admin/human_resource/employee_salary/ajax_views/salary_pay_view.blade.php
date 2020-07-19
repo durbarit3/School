@@ -13,11 +13,6 @@
     </div>
 
     <div class="form-group">
-        <label class="m-0 p-0"><b>Payable amount :</b></label>
-        <input readonly type="text" name="payable_amount" class="form-control form-control-sm" value="{{ $generatedSalary->payable }} ">
-    </div>
-    
-    <div class="form-group">
         <label class="m-0 p-0"><b>Total earn :</b></label>
         <input readonly type="text"  class="form-control form-control-sm" value="{{ $generatedSalary->total_earn }} ">
     </div>
@@ -25,6 +20,11 @@
     <div class="form-group">
         <label class="m-0 p-0"><b>Total deduction :</b></label>
         <input readonly type="text"  class="form-control form-control-sm" value="{{ $generatedSalary->total_deduction }} ">
+    </div>
+
+    <div class="form-group">
+        <label class="m-0 p-0"><b>Payable amount :</b></label>
+        <input readonly type="text" name="payable_amount" class="form-control form-control-sm" value="{{ $generatedSalary->payable }} ">
     </div>
     
     <div class="form-group">

@@ -14,8 +14,10 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
+                            @if (json_decode($userPermits->human_resource_module, true)['leave_type']['add'] == 1)
                             <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
                                     class="fas fa-plus"></i></span> <span>Add leave type</span></a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -44,23 +46,30 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($leaveType->status==1)
-                                        <a href="{{ route('admin.hr.leave.type.status.update', $leaveType->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.hr.leave.type.status.update', $leaveType->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->human_resource_module, true)['leave_type']['edit'] == 1)
+                                            @if($leaveType->status==1)
+                                            <a href="{{ route('admin.hr.leave.type.status.update', $leaveType->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.hr.leave.type.status.update', $leaveType->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a>
+                                            @endif
+                                            |
                                         @endif
-                                        | <a class="editLeaveType btn btn-sm btn-blue text-white" data-id="{{$leaveType->id}}"
-                                            title="edit" data-toggle="modal" data-target="#editModal"><i
-                                                class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.hr.leave.type.delete', $leaveType->id) }}"
+                                         <a class="editLeaveType btn btn-sm btn-blue text-white" data-id="{{$leaveType->id}}"
+                                            title="edit" data-toggle="modal" data-target="#editModal">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            </a> 
+
+                                        @if (json_decode($userPermits->human_resource_module, true)['leave_type']['delete'] == 1)        
+                                            | <a id="delete" href="{{ route('admin.hr.leave.type.delete', $leaveType->id) }}"
                                             class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -96,7 +105,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->human_resource_module, true)['leave_type']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -130,7 +141,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->human_resource_module, true)['leave_type']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

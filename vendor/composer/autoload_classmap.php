@@ -161,6 +161,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Role' => $baseDir . '/app/Role.php',
+    'App\\RolePermission' => $baseDir . '/app/RolePermission.php',
     'App\\RoomType' => $baseDir . '/app/RoomType.php',
     'App\\Route' => $baseDir . '/app/Route.php',
     'App\\RouteVehicle' => $baseDir . '/app/RouteVehicle.php',

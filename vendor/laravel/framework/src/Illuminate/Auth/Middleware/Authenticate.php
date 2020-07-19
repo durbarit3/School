@@ -3,6 +3,7 @@
 namespace Illuminate\Auth\Middleware;
 
 use Closure;
+use App\RolePermission;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
@@ -43,6 +44,7 @@ class Authenticate
         return $next($request);
     }
 
+    
     /**
      * Determine if the user is logged in to any of the given guards.
      *

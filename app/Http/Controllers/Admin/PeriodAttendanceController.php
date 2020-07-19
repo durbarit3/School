@@ -56,7 +56,6 @@ class PeriodAttendanceController extends Controller
             $addPeriodAttendance->year = date('Y');
             $addPeriodAttendance->date = date('d-m-Y');
             $addPeriodAttendance->attendance_status = $attendance_status;
-            $addPeriodAttendance->session_id = $currentSession->id;
             $addPeriodAttendance->note = $notes[$index] ? $notes[$index] : NULL;
             $addPeriodAttendance->save();
             $index++;

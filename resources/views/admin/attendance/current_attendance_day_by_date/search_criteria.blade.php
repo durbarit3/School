@@ -74,106 +74,105 @@ date_default_timezone_set('Asia/Dhaka');
 
 @endsection
 @push('js')
-<script type="text/javascript">
-    $('.loading').hide();
-    $('.table_body').hide();
-    $('.update_loding').hide();
-    $(document).ready(function () {
-        $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url: "{{ url('admin/attendance/current/day/by/date/get/sections/by/') }}" + "/" + classId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data, function (key, val) {
-                        $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                    })
-                }
-            })
-        })
-    });
-
-</script>
-
-<script>
+    <script type="text/javascript">
+        $('.loading').hide();
+        $('.table_body').hide();
+        $('.update_loding').hide();
         $(document).ready(function () {
-            
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-    
-            $(document).on('submit', '.current_day_by_date_attendance_from', function (e) {
-                e.preventDefault();
-                console.log('GET');
-                $('.save_button').hide();
-                $('.update_loding').show();
-                var url = $(this).attr('action');
-                var type = $(this).attr('method');
-                var request = $(this).serialize();
+            $('.select_class').on('change', function () {
+                var classId = $(this).val();
                 $.ajax({
-                    url: url,
-                    type: type,
-                    data: request,
+                    url: "{{ url('admin/attendance/current/day/by/date/get/sections/by/') }}" + "/" + classId,
+                    type: 'get',
+                    dataType: 'json',
                     success: function (data) {
-                        
-                        if (!$.isEmptyObject(data.successMsg)) {
-                            toastr.success(data.successMsg);
-                            $('.save_button').show();
-                            $('.update_loding').hide();
-                        }else{
-                            toastr.error(data.errorMsg); 
-                            $('.save_button').show();
-                            $('.update_loding').hide();
-                        }
-                        
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
+                        $.each(data, function (key, val) {
+                            $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
+                        })
                     }
                 })
-            });
-        }) 
-        
+            })
+        });
     </script>
 
-<script>
-    function searchStudent(data) {
-        $('.table_area').empty();
-        $('.table_body').show(); 
-        $('.loading').show(100);
-        var url = $(data).attr('action');
-        var type = $(data).attr('method');
-        var request = $(data).serialize();
-        $.ajax({
-            url: url,
-            type: type,
-            data: request,
-            success: function (data) {
+    <script>
+            $(document).ready(function () {
                 
-                if (!$.isEmptyObject(data)) {
-                    $('.table_area').html(data); 
-                    $('.loading').hide(100);
-                    
-                }
-               
-            }
-        })
-    }
-   
-</script>
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+        
+                $(document).on('submit', '.current_day_by_date_attendance_from', function (e) {
+                    e.preventDefault();
+                    console.log('GET');
+                    $('.save_button').hide();
+                    $('.update_loding').show();
+                    var url = $(this).attr('action');
+                    var type = $(this).attr('method');
+                    var request = $(this).serialize();
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        data: request,
+                        success: function (data) {
+                            
+                            if (!$.isEmptyObject(data.successMsg)) {
+                                toastr.success(data.successMsg);
+                                $('.save_button').show();
+                                $('.update_loding').hide();
+                            }else{
+                                toastr.error(data.errorMsg); 
+                                $('.save_button').show();
+                                $('.update_loding').hide();
+                            }
+                            
+                        }
+                    })
+                });
+            }) 
+            
+        </script>
 
-<script>
-    $(document).ready(function(){
-        $('.datepicker').datepicker(
-            {
-                format: 'dd-mm-yyyy',
-                autoclose:true
-            }
-        );
-    })
-</script>
+    <script>
+        function searchStudent(data) {
+            $('.table_area').empty();
+            $('.table_body').show(); 
+            $('.loading').show(100);
+            var url = $(data).attr('action');
+            var type = $(data).attr('method');
+            var request = $(data).serialize();
+            $.ajax({
+                url: url,
+                type: type,
+                data: request,
+                success: function (data) {
+                    
+                    if (!$.isEmptyObject(data)) {
+                        $('.table_area').html(data); 
+                        $('.loading').hide(100);
+                        
+                    }
+                
+                }
+            })
+        }
+    
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker(
+                {
+                    format: 'dd-mm-yyyy',
+                    autoclose:true
+                }
+            );
+        })
+    </script>
 
 @endpush

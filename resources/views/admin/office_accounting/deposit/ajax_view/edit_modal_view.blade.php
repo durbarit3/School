@@ -62,8 +62,10 @@
     </div>
 
     <div class="form-group text-right">
-        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-        <input type="submit" value="Update" class="btn save btn-sm btn-blue">
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
+        @if (json_decode($userPermits->office_accounts_module, true)['deposit']['edit'])
+            <input type="submit" value="Update" class="btn save btn-sm btn-blue">
+        @endif 
     </div>
 </form>
 

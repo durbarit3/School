@@ -105,33 +105,33 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Event Title" name="title" required>
+                            <input required type="text" class="form-control form-control -sm" placeholder="Event Title" name="title" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Venue:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Event Venue" name="venue" required>
+                            <input required type="text" class="form-control form-control -sm" placeholder="Event Venue" name="venue" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event Start Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" placeholder="Event Start" name="start_date" required>
+                            <input required type="date" class="form-control form-control -sm" placeholder="Event Start" name="start_date" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event End Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" placeholder="Event End Date" name="end_date" required>
+                            <input required type="date" class="form-control form-control -sm" placeholder="Event End Date" name="end_date" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
-                            <textarea rows="3" class="form-control" name="description" require></textarea>
+                            <textarea rows="3" class="form-control form-control -sm" name="description" require></textarea>
                             
                         </div>
                     </div>
@@ -139,14 +139,14 @@
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Add Media Link:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Add Media Link" name="media" required>
+                            <input required type="text" class="form-control form-control -sm" placeholder="Add Media Link" name="media" required>
                         </div>
                     </div>
 
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Add Images:</label>
                         <div class="col-sm-8">
-                            <input required type="file" class="form-control" placeholder="Add Images" name="image" required>
+                            <input required type="file" class="form-control form-control -sm" placeholder="Add Images" name="image" required>
                         </div>
                     </div>
 
@@ -176,33 +176,33 @@
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Title:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="title" placeholder="Event Title" name="title" required>
+                            <input required type="text" class="form-control form-control -sm" id="title" placeholder="Event Title" name="title" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Venue:</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="venue" placeholder="Event Venue" name="venue" required>
+                            <input required type="text" class="form-control form-control -sm" id="venue" placeholder="Event Venue" name="venue" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event Start Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="start" placeholder="Event Start" name="start_date" required>
+                            <input required type="date" class="form-control form-control -sm" id="start" placeholder="Event Start" name="start_date" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Event End Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" id="end" placeholder="Event End Date" name="end_date" required>
+                            <input required type="date" class="form-control form-control -sm" id="end" placeholder="Event End Date" name="end_date" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
-                            <textarea rows="3" class="form-control" id="description" name="description" require></textarea>
+                            <textarea rows="3" class="form-control form-control -sm" id="description" name="description" require></textarea>
                             
                         </div>
                     </div>
@@ -210,14 +210,14 @@
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Add Media Link:</label>
                         <div class="col-sm-8">
-                            <input required type="text" id="media" class="form-control" placeholder="Add Media Link" name="media" required>
+                            <input required type="text" id="media" class="form-control form-control -sm" placeholder="Add Media Link" name="media" required>
                         </div>
                     </div>
 
                      <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Add Images:</label>
                         <div class="col-sm-8">
-                            <input required type="file" id="image" class="form-control" placeholder="Add Images" name="image" required>
+                            <input required type="file" id="image" class="form-control form-control -sm" placeholder="Add Images" name="image" required>
                         </div>
                     </div>
 

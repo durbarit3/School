@@ -62,7 +62,9 @@
                 @endforeach
             </tbody>
         </table>
-        <input type="submit" class="btn btn-sm btn-blue save_button float-right" value="Update">
+        @if (json_decode($userPermits->attendance_module, true)['attendance']['edit'] == 1) 
+            <input type="submit" class="btn btn-sm btn-blue save_button float-right" value="Update">
+        @endif
         <input style="display:none;" type="submit" class="btn btn-sm btn-blue update_loding float-right" value="Loading...">
     </form>
 </div>

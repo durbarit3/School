@@ -105,6 +105,7 @@
     }elseif($employee->role == 1){
         $role = 'super.admins';
     }
+
 @endphp
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- content wrpper -->
@@ -223,7 +224,6 @@
                                                     value="{{ $bloodGroup->id }}">{{ $bloodGroup->group_name }}</option>
                                                 @endforeach
                                             </select>
-
                                         </div>
 
                                         <div class="col-sm-3">
@@ -274,7 +274,10 @@
                                         </div>
                                     </div>
 
-                                    <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @if (json_decode($userPermits->employee_module, true)['edit'] == 1)
+                                        <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @endif
+                                    
                                 </div>
                             </div>
                         </form>
@@ -361,8 +364,10 @@
                                             <span class="text-danger">{{ $errors->first('role') }}</span>
                                         </div>
                                     </div>
-
-                                    <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @if (json_decode($userPermits->employee_module, true)['edit'] == 1)
+                                        <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @endif
+                                    
                                 </div>
                             </div>
                         </form>
@@ -419,8 +424,10 @@
                                         </div>
 
                                     </div>
-
-                                    <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @if (json_decode($userPermits->employee_module,true)['edit'] == 1)
+                                        <button class="btn btn-sm btn-blue float-right" type="submit">Update</button>
+                                    @endif
+                                    
                                 </div>
                             </div>
                         </form>
@@ -576,7 +583,10 @@
                                     <span class="text-danger">{{ $errors->first('twitter_link') }}</span>
                                 </div>
                             </div>
-                            <button class="btn btn-sm btn-blue float-right mb-2" type="submit">Update</button>
+
+                            @if (json_decode($userPermits->employee_module, true)['edit'] == 1)
+                                <button class="btn btn-sm btn-blue float-right mb-2" type="submit">Update</button>
+                            @endif
                         </div>
                     </div>   
                         </form>
@@ -614,7 +624,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body edit_modal_body">
+            <div class="modal-body">
                 <form class="employee_authentication_update_form" action="{{ route('admin.employee.authentication.update', $employee->id) }}" method="POST">
                     @csrf
                     <div class="form-group ">
@@ -635,7 +645,9 @@
                         </div>
                     </div>
 
+                    @if (json_decode($userPermits->employee_module, true)['edit'] == 1)
                     <button type="submit" class="btn btn-sm btn-blue float-right">Update</button>
+                    @endif
 
                 </form>
                 
@@ -685,10 +697,8 @@
         @enderror
     </script>
 
-    
-
     <script>
-            $(document).ready(function () {
+        $(document).ready(function () {
             $(document).on('click', '.edit_bank', function(){
                 var employee_id = $(this).data('id');
                 $.ajax({
@@ -718,8 +728,6 @@
 
     </script>
     
-    
-
     <script>
         $(document).ready(function () {
             

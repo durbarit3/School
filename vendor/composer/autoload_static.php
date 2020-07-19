@@ -685,6 +685,7 @@ class ComposerStaticIniteaa8bf296efb5092a9627eb9ae5dde28
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Role' => __DIR__ . '/../..' . '/app/Role.php',
+        'App\\RolePermission' => __DIR__ . '/../..' . '/app/RolePermission.php',
         'App\\RoomType' => __DIR__ . '/../..' . '/app/RoomType.php',
         'App\\Route' => __DIR__ . '/../..' . '/app/Route.php',
         'App\\RouteVehicle' => __DIR__ . '/../..' . '/app/RouteVehicle.php',

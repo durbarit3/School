@@ -6,7 +6,7 @@
         }
         footer {
             
-            bottom: -220px;
+            bottom: -300px;
           
         }
         .theme_selected {
@@ -142,83 +142,81 @@
 
                 <div class="panel_body mt-2">
                     
-                        <div><h6>Attendance settings</h6></div>
-                        <hr class="m-0 p-0">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="attendance_setting mt-2 text-center">
-                                    <h5><b>Current day attendance -></b> 
+                    <div><h6>Attendance settings</h6></div>
+                    <hr class="m-0 p-0">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="attendance_setting mt-2 text-center">
+                                <h5><b>Current day attendance -></b> 
 
-                                        @if ($generalSettings->current_day_attendance == 1)
-                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-up"></i>
-                                            </a>
-                                        @else  
-                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-down"></i>  
-                                            </a>
-                                        @endif  
+                                    @if ($generalSettings->current_day_attendance == 1)
+                                        <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else  
+                                        <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-down"></i>  
+                                        </a>
+                                    @endif  
 
-                                    </h5> 
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="attendance_setting mt-2 text-center">
-                                    <h5><b>Period attendance -></b> 
-                                        
-                                        @if ($generalSettings->period_attendance == 1)
-                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-up"></i>
-                                            </a>
-                                        @else  
-                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-down"></i> 
-                                            </a>
-                                        @endif
-                                        
-                                    </h5> 
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-4">
-                                <div class="attendance_setting mt-2 text-center">
-                                    <h5><b>Exam  attendance -></b> 
-                                        @if ($generalSettings->exam_attendance == 1)
-                                            <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-up"></i>
-                                            </a>
-                                        @else  
-                                            <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
-                                                <i class="fas fa-thumbs-down"></i> 
-                                            </a>
-                                        @endif
-                                    </h5> 
-                                </div>
+                                </h5> 
                             </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div class="attendance_setting mt-2 text-center">
+                                <h5><b>Period attendance -></b> 
+                                    
+                                    @if ($generalSettings->period_attendance == 1)
+                                        <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else  
+                                        <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-down"></i> 
+                                        </a>
+                                    @endif
+                                    
+                                </h5> 
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="attendance_setting mt-2 text-center">
+                                <h5><b>Exam  attendance -></b> 
+                                    @if ($generalSettings->exam_attendance == 1)
+                                        <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else  
+                                        <a class="btn btn-sm btn-danger" href="{{ route('admin.settings.general.change.exam.attendance.status', $generalSettings->id) }}">
+                                            <i class="fas fa-thumbs-down"></i> 
+                                        </a>
+                                    @endif
+                                </h5> 
+                            </div>
+                        </div>
+                    </div>
                 </div>  
                 
                 <div class="panel_body mt-2">
                     <div><h6>Color theme selection</h6></div>
                     <hr class="m-0 p-0">
-                        <div class="row no-gutters">
-                            <div class="col-md-3">
-                                <a href="{{ route('admin.settings.general.set.color.theme', 1) }}">
-                                    <img height="150" class="rounded {{ $generalSettings->color_theme == 1 ? 'theme_selected' : '' }} float-left mt-1" width="200" src="{{ asset('public/admins/themes/theme_1.png') }}" alt="">
-                                </a>
-                            </div>
-                            
-                            <div class="col-md-3">
-                                <a href="{{ route('admin.settings.general.set.color.theme', 2) }}">
-                                    <img  height="150" class="rounded {{ $generalSettings->color_theme == 2 ? 'theme_selected' : '' }} float-left mt-1" width="200" src="{{ asset('public/admins/themes/theme_2.png') }}" alt="">
-                                </a>
-                            </div>
+                    <div class="row no-gutters">
+                        <div class="col-md-3">
+                            <a href="{{ route('admin.settings.general.set.color.theme', 1) }}">
+                                <img height="150" class="rounded {{ $generalSettings->color_theme == 1 ? 'theme_selected' : '' }} float-left mt-1" width="200" src="{{ asset('public/admins/themes/theme_1.png') }}" alt="">
+                            </a>
                         </div>
+                        
+                        <div class="col-md-3">
+                            <a href="{{ route('admin.settings.general.set.color.theme', 2) }}">
+                                <img  height="150" class="rounded {{ $generalSettings->color_theme == 2 ? 'theme_selected' : '' }} float-left mt-1" width="200" src="{{ asset('public/admins/themes/theme_2.png') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                
-               
-                
+    
             </div>
             </div>
         </section>

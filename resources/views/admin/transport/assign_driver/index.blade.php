@@ -14,49 +14,57 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign Vehicle</span></a>
+                            @if (json_decode($userPermits->transport_module, true)['assign_driver']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Assign Vehicle</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
      
               
-                <div class="panel_body">
-                    <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
-                            <thead>
+            <div class="panel_body">
+                <div class="table-responsive">
+                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Vehicle Model</th>
+                                <th>Driver Name</th>
+                                <th>Employee ID</th>
+                                <th>License</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($vehicles as $vehicle)
                                 <tr class="text-center">
-                                    <th>Vehicle Model</th>
-                                    <th>Driver Name</th>
-                                    <th>Employee ID</th>
-                                    <th>License</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($vehicles as $vehicle)
-                                    <tr class="text-center">
-                                     
-                                        <td>{{ $vehicle['vehicle_model'] }}</td>
-                                        <td>{{ $vehicle['driver_name'] }}</td>
-                                        <td>{{ $vehicle['employee_id'] }}</td>
-                                        <td>{{ $vehicle['license'] }}</td>
-                                        
-                                        <td>
-                                        <a href="#" class="edit_assigned_route btn btn-sm btn-blue text-white" data-id="{{ $vehicle['id'] }}" title="edit" data-toggle="modal"
-                                            data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.assign.vehicle.driver.delete', $vehicle['id']) }}"
-                                                class="btn btn-danger btn-sm text-white" title="Delete">
+                                    
+                                    <td>{{ $vehicle['vehicle_model'] }}</td>
+                                    <td>{{ $vehicle['driver_name'] }}</td>
+                                    <td>{{ $vehicle['employee_id'] }}</td>
+                                    <td>{{ $vehicle['license'] }}</td>
+                                    
+                                    <td>
+
+                                    <a href="#" class="edit_assigned_route btn btn-sm btn-blue text-white" data-id="{{ $vehicle['id'] }}" title="edit" data-toggle="modal" data-target="#editModal">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a> 
+
+                                    @if (json_decode($userPermits->transport_module, true)['assign_driver']['delete'] == 1)    
+                                        | <a id="delete" href="{{ route('admin.assign.vehicle.driver.delete', $vehicle['id']) }}"
+                                            class="btn btn-danger btn-sm text-white" title="Delete">
                                                 <i class="far fa-trash-alt"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                        </a>
+                                    @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
         </div>
     </section>
 </div>
