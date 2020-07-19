@@ -947,6 +947,20 @@ Route::group(['prefix'=>'admin/library','namespace'=>'Admin'],function(){
         Route::post('/staff/multidelete','LibraryController@libraryStaffMultiDelete')->name('admin.staff.multidelete');
     });
 
+
+
+    // issue book
+
+       Route::group(['prefix'=>'issue'],function(){
+        Route::get('/','LibraryController@issueIndex')->name('admin.book.issue');
+        Route::post('/store','LibraryController@issueStore')->name('book.issue.store');
+        Route::get('/items/{id}','LibraryController@issueItems');
+        Route::get('/return/{id}','LibraryController@issueReturn')->name('book.issue.return');
+        Route::get('/delete/{id}','LibraryController@issueDelete')->name('book.issue.delete');
+
+    });
+
+
 });
 
 
@@ -1011,6 +1025,7 @@ Route::group(['prefix'=>'admin/fees','namespace'=>'Admin'],function(){
     // search fees
 
     Route::get('/search','FeesCotroller@studentsFeesSearch')->name('admin.fees.search');
+    Route::post('/search','FeesCotroller@dueFeesSearch')->name('admin.due.fees.search');
 
 
 });
@@ -1169,6 +1184,34 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::get('/edit/{id}','SystemController@getSessionData');
         Route::get('/delete/{id}','SystemController@getSessionDelete')->name('admin.session.delete');
         Route::patch('/update','SystemController@sessionUpdate')->name('admin.session.update');
+     });
+
+
+
+
+
+
+    // notification area start
+
+     Route::group(['prefix' => 'notification'], function(){
+
+        Route::get('/','SystemController@showNotification')->name('admin.notification.setting');
+  
+        Route::get('/edit/{id}','SystemController@getNotificationData');
+        Route::get('/email/status/{id}','SystemController@changeEmailNotificationStatus');
+        Route::get('/sms/status/{id}','SystemController@changeSmsNotificationStatus');
+
+        Route::patch('/update','SystemController@notificationUpdate')->name('admin.session.update');
+     });
+
+
+      // sms notification area start
+
+     Route::group(['prefix' => 'sms'], function(){
+
+        Route::get('/','SystemController@showSmsNotification')->name('admin.sms.setting');
+
+        Route::post('/update','SystemController@smsNotificationUpdate')->name('admin.sms.update');
      });
 
     

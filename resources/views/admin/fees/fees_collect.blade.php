@@ -1,28 +1,186 @@
 @extends('admin.master')
-@section('content')
-<section class="page_content">
-    <!-- panel -->
-    <div class="panel">
-        <div class="panel_header">
-        <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Fees Collect List</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Search Student</span></a>
-                        </div>
-                    </div>
-                </div>
-        </div>
+@push('css')
+    <style>
+        .header_modal {
+            padding: 5px!important;
+        }
+        .pay_slip_modal_header {
+            padding: 5px!important;
+        }
 
-       
-        <div class="panel_body">
-       
-            <div class="table-responsive">
+        .pay_slip_modal_header h4{
+            font-size: 13px;
+        }
+        .header_modal h4 {
+            font-size: 13px;
+        }
+        @media (min-width: 576px){
+
+            .salary_generate_modal_dialog {
+                max-width: 1075px!important;
+                margin: 1.75rem auto;
+            }
+            
+            .pay_slip_modal_dialog {
+                max-width: 900px!important;
+                margin: 1.75rem auto;
+            }
+  
+        }
+
+        .add_earns_area {
+            padding: 3px;
+            border: 1px solid lightgray;
+            height: 300px;
+            overflow: scroll;
+        } 
+        
+        .add_deduction_area {
+            padding: 3px;
+            border: 1px solid lightgray;
+            height: 300px;
+            overflow: scroll;
+        }
+
+        .heading_area {
+            border-bottom: 1px solid gray;
+            margin-bottom: 6px;
+        }
+
+        .earn_field_remove_button {
+            position: absolute;
+            right: 6%;
+        }
+
+        .deduction_field_remove_button{
+            position: absolute;
+            right: 6%;
+        }
+
+        .remove_button {
+            background: crimson;
+            padding: 3px 4px;
+            border-radius: 4px;
+        }  
+
+        .add_more_earn_button {
+            background: gray;
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            font-size: 21px;
+            color: black;
+        }
+        
+        .add_more_deduction_button {
+            background: gray;
+            padding: 0px 8px;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            font-size: 21px;
+            color: black;
+        }
+
+        .heading_area h6 {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .earn_table_area table tbody tr td {
+            line-height: 8px;
+            color: black;
+        }
+        .deduction_table_area table tbody tr td {
+            line-height: 8px;
+            color: black;
+        }
+        
+        .earn_and_deduction_area table tbody tr td {
+            line-height: 11px;
+        }
+
+        .modal-header .print_button {
+            padding: 0px 6px;
+            outline: none;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid lightgray;
+            color: black!important;
+            background: white;
+            font-size: 14px;
+        }
+
+    </style>
+@endpush
+@section('content')
+@php
+date_default_timezone_set('Asia/Dhaka');
+@endphp
+<div class="middle_content_wrapper">
+    <section class="page_content">
+        <!-- panel -->
+        <div class="panel mb-0">
+
+            <div class="col-lg-12">
+                <div class="panel">
+                    <div class="panel_header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel_title">
+                                    <span class="panel_icon"><i class="fas fa-border-all"></i></span>
+                                    <span>Search A Students</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="panel_title">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel_body">
+                        <form class="search_form" action="{{ route('admin.fees.students.collection.search') }}"
+                            method="post">
+                            @csrf
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <label class="m-0 p-0"><b>Class :</b> </label>
+                                    <select required  class="form-control form-control-sm" id="std_class" name="std_class">
+                                        <option value="" selected="" disabled="">--- Select Class ---</option>
+                                        
+                                             @foreach($classes as $row)
+                                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                              @endforeach
+                                        
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <label class="m-0 p-0"><b>Section :</b> </label>
+                                    <select required class="form-control form-control-sm" id="section_id" name="std_section">
+                                        <option selected="" disabled="">Select A Section Name</option>
+                                        
+                                             
+                                        
+                                    </select>
+                                </div>
+
+                               
+                                
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
+                        </form>
+                    </div>
+
+@isset($students )
+
+                     <div class="panel_body table_body mt-3">
+                        
+                        
+                        <div  class="table_area">
+                             <div class="table-responsive">
                 <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
                     <thead>
                         <tr>
@@ -42,7 +200,7 @@
                     </thead>
                     <tbody>
 
-                   @if(count($students) >0 )
+                   
 
                    @foreach($students as $row)
 
@@ -73,112 +231,32 @@
                         </tr>
                         @endforeach
 
-                    @endif
+               
                        
 
                     </tbody>
                 </table>
             </div>
-        </div>
- 
-        <!--/ panel body -->
-    </div>
-    <!--/ panel -->
-</section>
-<!--/ page content -->
-
-<div class="modal fade bd-example-modal-lg" id="myModal1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Search Students</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <form class="form-horizontal" action="{{route('admin.fees.students.collection.search')}}"  method="POST">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
-                        <select class="form-control" id="std_class" name="std_class">
-                          <option selected="" disabled="">Select A Class Name</option>
-                          @foreach($classes as $row)
-                            <option value="{{$row->id}}">{{$row->name}}</option>
-                          @endforeach
-                         
-                        </select>
-                    </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
-                         <div class="col-sm-8">
-                        <select class="form-control" id="section_id" name="std_section">
-                          <option selected="" disabled="">Select A Section Name</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                        </select>
-                    </div>
-                    </div>
-
-                    <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Route</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('room.type.update') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PATCH')
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="room_type" id="room_type" required>
-                            <input type="hidden" name="id" id="id">
-                            <span class="text-danger">{{ $errors->first('room_type') }}</span>
-                        </div>
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Description:</label>
-                        <div class="col-sm-8 mt-2">
-                            <textarea rows="3" class="form-control" id="description" name="description" require></textarea>
-                            <span class="text-danger">{{ $errors->first('description') }}</span>
                         </div>
                     </div>
 
-                    <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
-                    </div>
-                </form>
+
+                </div>
+                @endisset
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
+
+</div>
 
 @endsection
-
 @push('js')
+    <script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
 
-<script type="text/javascript">
+
+
+    <script type="text/javascript">
     $(document).ready(function() {
         $('#std_class').on('change', function() {
             var id = $(this).val();
@@ -206,5 +284,6 @@
         });
     });
 </script>
+
 
 @endpush

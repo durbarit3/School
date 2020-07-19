@@ -598,6 +598,20 @@
 
             <!-- Hostel area end -->
 
+
+               <li class="single-nav-wrapper">
+                <a class="has-arrow menu-item" href="#" aria-expanded="false">
+                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-text">Library</span>
+                </a>
+                <ul class="dashboard-menu">
+                    <li><a href="{{route('admin.book.issue')}}">Book Issue</a></li>
+                    <li><a href="{{route('admin.book.index')}}">Book List</a></li>
+                    <li><a href="{{route('admin.library.members')}}">Library Member</a></li>
+                    <li><a href="{{route('admin.library.staff')}}">Library Staff</a></li>
+                </ul>
+            </li>
+
             @if (jsn($userPermits->library_module)['book_list']['view'] == 0 AND jsn($userPermits->library_module)['library_member']['view'] == 0 AND jsn($userPermits->library_module)['library_staff']['view'] == 0)
                 <li></li>
             @else 
@@ -607,6 +621,7 @@
                         <span class="menu-text">Library</span>
                     </a>
                     <ul class="dashboard-menu">
+
 
                         @if (jsn($userPermits->library_module)['book_list']['view'] == 1)
                             <li><a class="{{ Request::is('admin/library/books') ? 'text_active' : '' }}" href="{{route('admin.book.index')}}">Book List</a></li>
@@ -711,6 +726,9 @@
 
 
                        <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
+
+                       <li><a href="{{route('admin.notification.setting')}}">Nofification settings</a></li>
+                       <li><a href="{{route('admin.sms.setting')}}">SMS settings</a></li>
 
                 </ul>
             </li>
