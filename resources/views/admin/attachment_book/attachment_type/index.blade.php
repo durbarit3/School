@@ -14,8 +14,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Attachment Type</span></a>
+                            @if (json_decode($userPermits->attachment_book_module, true)['attachment_type']['view'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Attachment Type</span>
+                                </a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -44,23 +47,29 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($attachmentType->status==1)
-                                        <a href="{{ route('admin.attachment.type.change.status', $attachmentType->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.attachment.type.change.status', $attachmentType->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->attachment_book_module, true)['attachment_type']['edit'] == 1)
+                                            @if($attachmentType->status==1)
+                                            <a href="{{ route('admin.attachment.type.change.status', $attachmentType->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.attachment.type.change.status', $attachmentType->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a>
+                                            @endif
+                                            |
                                         @endif
-                                        | <a class="edit_attachment_type btn btn-sm btn-blue text-white" data-id="{{$attachmentType->id}}"
+                                        <a class="edit_attachment_type btn btn-sm btn-blue text-white" data-id="{{$attachmentType->id}}"
                                             title="edit" data-toggle="modal" data-target="#editModal"><i
-                                                class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.attachment.type.delete', $attachmentType->id) }}"
-                                            class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                                class="fas fa-pencil-alt"></i></a> 
+
+                                        @if (json_decode($userPermits->attachment_book_module, true)['attachment_type']['delete'] == 1)        
+                                            | <a id="delete" href="{{ route('admin.attachment.type.delete', $attachmentType->id) }}"
+                                                class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -95,8 +104,10 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default mt-2" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue mt-2">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default mt-2" data-dismiss="modal" aria-label=""> Close </button>
+                        @if (json_decode($userPermits->attachment_book_module, true)['attachment_type']['add'] == 1)
+                            <button type="submit" class="btn btn-sm btn-blue mt-2">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -130,7 +141,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        @if (json_decode($userPermits->attachment_book_module, true)['attachment_type']['edit'] == 1)  
+                            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

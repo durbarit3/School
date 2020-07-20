@@ -228,7 +228,10 @@
 
                     <li><a href="{{ route('admin.user.profile.index') }}"><span><i class="fas fa-user"></i></span> User Profile</a></li>
                     <li><a href="#"><span><i class="fas fa-cogs"></i></span> Settings</a></li>
-                    <li><a href="#"><span><i class="fas fa-unlock-alt"></i></span> Login</a></li>
+                    <li><a onclick="
+                        event.preventDefault();
+                        document.getElementById('logoutForm').submit();
+                        " href="#"><span><i class="fas fa-unlock-alt"></i></span> Logout</a></li>
                 </ul>
             </div>
         </li>

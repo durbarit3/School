@@ -1,4 +1,12 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        td{
+            line-height: 0px;
+            width: 25%;
+        }
+    </style>
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -28,7 +36,7 @@
                     <i class="fa fa-trash"></i> Delete all</button>
                 <div class="panel_body">
                     <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
                                     <th>

@@ -1,23 +1,23 @@
 @extends('admin.master')
 @push('css')
-<style>
-    .select2-container--default .select2-selection--single {
-        background-color: #fff;
-        border: 1px solid #aaa;
-        border-radius: 4px;
-        height: 35px;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: #444;
-        line-height: 32px;
-    }
-    td {
-        line-height: 16px;
-    }
-</style> 
+    <style>
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            height: 35px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            line-height: 32px;
+        }
+        td {
+            line-height: 16px;
+        }
+    </style> 
 @endpush
 @section('content')
-
+   
 <div class="middle_content_wrapper">
     <section class="page_content">
         <!-- panel -->
@@ -31,8 +31,9 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Class</span></a>
+                            @if (json_decode($userPermits->academic_module,true)['class']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add Class</span></a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -73,22 +74,28 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($class->status==1)
-                                        <a href="{{ route('admin.class.status.update', $class->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.class.status.update', $class->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->academic_module,true)['class']['edit'] == 1)
+                                            @if($class->status==1)
+                                            <a href="{{ route('admin.class.status.update', $class->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.class.status.update', $class->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a> 
+                                            @endif
+                                            |
                                         @endif
-                                    | <a href="#" class="edit_class btn btn-sm btn-blue text-white" data-id="{{ $class->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal"><i class="fas fa-pencil-alt" ></i></a> |
-                                        <a id="delete" href="{{ route('admin.class.hard.delete', $class->id) }}"
-                                            class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                     <a href="#" class="edit_class btn btn-sm btn-blue text-white" 
+                                        data-id="{{ $class->id }}" title="edit" data-toggle="modal"
+                                        data-target="#editModal"><i class="fas fa-pencil-alt" ></i></a> 
+                                        @if (json_decode($userPermits->academic_module,true)['class']['delete'] == 1)
+                                            | <a id="delete" href="{{ route('admin.class.hard.delete', $class->id) }}"
+                                                class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -146,7 +153,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -164,77 +170,75 @@
     </div>
 </div>
 
-
-
-
 @endsection
 
 @push('js')
 
+    <script>
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
+    <script type="text/javascript">
 
-<script type="text/javascript">
+        $(document).ready(function () {
 
-    $(document).ready(function () {
-
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
-        });
-
-    });
-
-</script>
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $('.modal_close_button').on('click', function(){
-            $('.error').html('');
-            $('.form-control').removeClass('is-invalid');
-        })
-
-    });
-
-</script>
-
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-       //Initialize Select2 Elements
-       $('.select2').select2()
-        //Initialize Select2 Elements
-    });
-</script>
-
-<script>
-
-@error('name')
-toastr.error("{{ $errors->first('name') }}");
-@enderror
-
-</script>
-
-<script>
-     $(document).ready(function () {
-        $(document).on('click', '.edit_class', function(){
-            var class_id = $(this).data('id');
-            $.ajax({
-                url:"{{ url('admin/academic/class/edit/') }}" + "/" + class_id,
-                type:'get',
-                success:function(data){
-                    $('.edit_modal_body').empty();
-                    $('.edit_modal_body').append(data);
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
                 }
             });
+
         });
-    });
- </script>
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
+
+        });
+
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+        //Initialize Select2 Elements
+            $('.select2').select2()
+            //Initialize Select2 Elements
+        });
+    </script>
+
+    <script>
+        @error('name')
+        toastr.error("{{ $errors->first('name') }}");
+        @enderror
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.edit_class', function(){
+                var class_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/academic/class/edit/') }}" + "/" + class_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                    }
+                });
+            });
+        });
+    </script>
 
  
     <script>
@@ -260,11 +264,7 @@ toastr.error("{{ $errors->first('name') }}");
                         $('.error').html('');
                         $('#class_add_form')[0].reset();
                         $('#myModal1').modal('hide');
-                        toastr.success(data);
-                        setInterval(function(){
-                            window.location = "{{ url()->current() }}";
-                        }, 700);
-                        
+                        window.location = "{{ url()->current() }}";
                     },
                     error:function(err){
                         //log(err.responseJSON.errors);

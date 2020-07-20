@@ -168,7 +168,9 @@
                 @endforeach
             </tbody>
         </table>
-        <input type="submit" class="btn float-right create_button my-1 mr-1 btn-sm btn-blue" value="Save schedule">
+        @if (json_decode($userPermits->exam_module,true)['exam_schedule']['create_schedule']['add'] == 1)
+            <input type="submit" class="btn float-right create_button my-1 mr-1 btn-sm btn-blue" value="Save schedule">
+        @endif
         <input type="button" class="btn float-right loading_button my-1 mr-1 btn-sm btn-blue" value="Loading...">
     </form>
 </div>

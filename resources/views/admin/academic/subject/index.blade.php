@@ -9,6 +9,11 @@
         .red_border{
             border: 1px solid red;
         }
+
+        td {
+            width: 20%;
+            
+        }
     </style>
     
 @endpush
@@ -27,8 +32,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Subject</span></a>
+                            @if (json_decode($userPermits->academic_module,true)['subject']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Subject</span>
+                                </a>
+                            @endif        
                         </div>
                     </div>
                 </div>
@@ -43,13 +51,7 @@
                         <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
-                                    <th>
-                                        <label class="chech_container mb-1 p-0">
-                                            Select all
-                                            <input type="checkbox" id="check_all">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </th>
+                                    
                                     <th>Subject Name</th>
                                     <th>Subject Type</th>
                                     <th>Subject Code</th>
@@ -60,13 +62,7 @@
                             <tbody>
                                 @foreach($subjects as $subject)
                                 <tr class="text-center">
-                                    <td>
-                                        <label class="chech_container mb-4">
-                                            <input type="checkbox" name="deleteId[]" class="checkbox"
-                                                value="{{$subject->id}}">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </td>
+                                   
                                     <td>{{$subject->name}}</td>
                                     <td>{{$subject->type == 1 ? 'Theory' : 'Practical'}}</td>
                                     <td>{{$subject->code}}</td>
@@ -76,6 +72,8 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
+                                        
+                                    @if (json_decode($userPermits->academic_module,true)['subject']['edit'] == 1)    
                                         @if($subject->status==1)
                                         <a href="{{ route('admin.academic.subject.status.update', $subject->id ) }}"
                                             class="btn btn-success btn-sm ">
@@ -86,13 +84,19 @@
                                             <i class="fas fa-thumbs-down"></i>
                                         </a>
                                         @endif
-                                    | <a href="#" class="edit_class btn btn-sm btn-blue text-white"
+                                        |
+                                    @endif
+
+                                     <a href="#" class="edit_class btn btn-sm btn-blue text-white"
                                         data-id="{{ $subject->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                        <a id="delete" href="{{ route('admin.academic.subject.delete', $subject->id) }}"
-                                            class="btn btn-danger btn-sm text-white" title="Delete">
+                                        data-target="#editModal"><i class="fas fa-pencil-alt"></i>
+                                    </a>
+
+                                    @if (json_decode($userPermits->academic_module,true)['subject']['delete'] == 1) 
+                                        | <a id="delete" href="{{ route('admin.academic.subject.delete', $subject->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
+                                    @endif    
                                     </td>
                                 </tr>
                                 @endforeach

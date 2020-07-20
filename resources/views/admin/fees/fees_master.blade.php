@@ -12,8 +12,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Fees Master</span></a>
+                            @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Fees Master</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -57,27 +60,30 @@
                             <td>{{$row->date}}</td>
                             
                             <td>
-                                @if($row->status == 1)
-                                <a href="{{ route('fees.master.status.update', $row->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
-                                @else
-                                <a href="{{ route('fees.master.status.update', $row->id ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
+                                @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['edit'] == 1)
+                                    @if($row->status == 1)
+                                    <a href="{{ route('fees.master.status.update', $row->id) }}" class="btn btn-success btn-sm ">
+                                        <i class="fas fa-thumbs-up"></i></a>
+                                    @else
+                                    <a href="{{ route('fees.master.status.update', $row->id ) }}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </a>
+                                    @endif
+                                    |
                                 @endif
-                                
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="{{route('admin.fees.master.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> 
+
+                                @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['delete'] == 1)
+                                    | <a id="delete" href="{{route('admin.fees.master.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                     <i class="far fa-trash-alt"></i>
-                                </a>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
-
                     @endforeach
-                       
 
                     </tbody>
                 </table>
@@ -171,7 +177,10 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+
+                        @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -258,11 +267,12 @@
                         </div>
                     </div>
                   
-                    
-
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+
+                        @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

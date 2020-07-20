@@ -27,10 +27,12 @@
                             <th>Fees Code</th>
                             <th>Due Date </th>
                             <th>Status </th>
-                            <th>Amount </th>
                             <th>Payment ID </th>
                             <th>Mode </th>
-                            <th>Date </th>
+                            <th>Month </th>
+                            <th>Year </th>
+                            <th>Paid Date </th>
+                            <th>Amount </th>
                             <th>Discount </th>
                             <th>Fine </th>
                             <th>Paid </th>
@@ -40,36 +42,17 @@
                     </thead>
                     <tbody>
                        
-
-
-      
-
-                        
-
-
                     @foreach($collections->collection as $row)
                     
-                       
-                        <tr>
+                        <tr class="text-center">
                             <td>
-                                <label class="chech_container mb-4">
-                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            
-                            
-                            <td>{{$row['fees_type']}}</td>
-
-                            <td>{{$row['fees_code']}}</td>
-
-                            <td>{{$row['due_date']}}</td>
-
-                            <td>{{$row['is_paid'] ?'Paid':'UnPaid' }}</td>
-
-                            <td>{{$row['amount']}}</td>
-
-                            <td>{{$row['payment_id']}}</td>
+                                {{ $loop->index + 1 }}
+                            </td>                            
+                            <td>{{ $row['fees_type'] }}</td>
+                            <td>{{ $row['fees_code'] }}</td>
+                            <td>{{ $row['due_date'] }}</td>
+                            <td>{!! $row['is_paid'] ?'<span class="badge badge-success py-1">Paid</span>':'<span class="badge badge-danger py-1">UnPaid</span>' !!}</td>
+                            <td>{{ $row['payment_id'] }}</td>
 
                             @if($row['mode'] == 1)
                                 <td>Cash</td>
@@ -78,53 +61,49 @@
                             @elseif($row['mode'] == 3)
                                 <td>DD</td>
                             @else
-                            <td></td>
-
+                                <td>N/A</td>
                             @endif
 
-                            <td>sdfdsa</td>
-
-                            <td>{{$row['discount']}}</td>
-
-                            <td>{{$row['fine']}}</td>
+                            <td>{{ $row['month'] }}</td>
+                            <td>{{ $row['year'] }}</td>
+                            <td>{{ $row['paid_date'] ? $row['paid_date'] : 'N/A' }}</td>
+                            <td>{{ $row['amount'] }}</td>
+                            <td>{{ $row['discount'] == null ? 0 : $row['discount'] }}</td>
+                            <td>{{ $row['fine'] == null ? 0 : $row['fine'] }}</td>
 
                             @if($row['is_paid'])
-                                <td>{{$row['amount']}}</td>
+                                <td>{{ $row['amount'] }}</td>
                             @else
-                                <td>Null</td>
+                                <td>0</td>
                             @endif
-                       
+    
                             @if(!$row['is_paid'])
-                                <td>{{$row['amount']}}</td>
+                                <td>{{ $row['amount'] }}</td>
                             @else
-                                <td>Null</td>
+                                <td>0</td>
                             @endif
-             
+
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row['fees_id']}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a>
+                                @if (json_decode($userPermits->fees_collection_module, true)['fees_collection']['add'] == 1)
+                                    <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row['fees_id']}}" title="edit" data-toggle="modal" data-target="#editModal">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                @else   
+                                    <b>N/A</b>
+                                @endif
                             </td>
                         </tr>
 
                         @endforeach
                      
-               
-                         <tr  class="header">
-                           <td colspan="4"></td>
-                           <td>Grand Total</td>
-                           <td colspan="4">{{$total_amount}}</td>
-                         
-                           <td>{{$total_discount?$total_discount:''}}</td>
-                           <td>{{$total_fine?$total_fine:''}}</td>
-                           <td>{{$total_paid?$total_paid:''}}</td>
-                           <td>{{$total_blance?$total_blance:'NULL'}}</td>
+                         <tr  class="text-center">
+                           <td colspan="10" class="text-right"><b>Grand Total</b> </td>
+                           <td><b>{{ $total_amount }}</b></td>
+                           <td><b>{{ $total_discount? $total_discount: 0 }}</b></td>
+                           <td><b>{{ $total_fine ? $total_fine : 0 }}</b> </td>
+                           <td><b>{{ $total_paid ? $total_paid : 0 }}</b> </td>
+                           <td><b>{{ $total_blance ? $total_blance : 0 }}</b></td>
                         </tr>
-
-                        
-
-      
-                    
-                       
-
                     </tbody>
                 </table>
             </div>
@@ -135,8 +114,6 @@
     <!--/ panel -->
 </section>
 <!--/ page content -->
-
-
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -159,59 +136,49 @@
                             
                         </div>
 
-
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Amount:</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="amount" required>
-                            
                         </div>
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount Group:</label>
                         <div class="col-sm-8">
-                              <div class="form-group">    
+                            <div class="form-group">    
                                 <select class="form-control" name="discount_group">
-                                @foreach($discounts as $row)
-                                  <option value="{{$row->id}}">{{$row->name}}</option>
+                                    @foreach($discounts as $row)
+                                    <option value="{{$row->id}}">{{$row->name}}</option>
 
-                                @endforeach
-                                  
+                                    @endforeach
                                 </select>
-                              </div>
-                            
+                            </div>
                         </div>
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Discount:</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="discount" id="discount">
-                            
                         </div>
 
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Fine:</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="fine">
-                            
                         </div>
-
 
                         <label for="inputEmail3" class="col-sm-3 mt-2 col-form-label text-right">Payment Mode:</label>
                         <div class="col-sm-8 py-2">
                             
-
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="mode" id="inlineRadio1" value="1">
+                                <label class="form-check-label" for="inlineRadio1">Cash</label>
+                            </div>
 
                             <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio1" value="1">
-                                      <label class="form-check-label" for="inlineRadio1">Cash</label>
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio2" value="2">
-                                      <label class="form-check-label" for="inlineRadio2">Check</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                      <input class="form-check-input" type="radio" name="mode" id="inlineRadio3" value="3">
-                                      <label class="form-check-label" for="inlineRadio3">DD</label>
-                                    </div>
+                                <input class="form-check-input" type="radio" name="mode" id="inlineRadio2" value="2">
+                                <label class="form-check-label" for="inlineRadio2">Check</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="mode" id="inlineRadio3" value="3">
+                                <label class="form-check-label" for="inlineRadio3">DD</label>
+                            </div>
                             
                         </div>
-
 
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Node:</label>
                         <div class="col-sm-8 mt-2">
@@ -222,7 +189,10 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+
+                        @if (json_decode($userPermits->fees_collection_module, true)['fees_collection']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -233,13 +203,13 @@
 
 @push('js')
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.edit_route').on('click', function() {
-            var id = $(this).data('id');
-            $("#id").val(id);
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.edit_route').on('click', function() {
+                var id = $(this).data('id');
+                $("#id").val(id);
+            });
         });
-    });
-</script>
+    </script>
 
 @endpush

@@ -1,4 +1,15 @@
-<div class="print_area">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Print contant</title>
+</head>
+<body>
+   
+<div style="font-family: "Nunito", sans-serif;" class="print_area">
 
     <div class="hearder_area d-none">
         <div class="col-md-12">
@@ -85,7 +96,7 @@
         </div>
     </div>
 
-    <div class="earn_and_deduction_area">
+    <div style="margin-top: 20px;" class="earn_and_deduction_area">
         <div class="col-md-12">
             
             <div class="row no-gutters">
@@ -163,7 +174,7 @@
         </div>
     </div>
 
-    <div class="salary_amount_details">
+    <div style="margin-top: 20px;" class="salary_amount_details">
         <div style="width: 100%;">
             <table class="table table-sm">
                 <thead>
@@ -178,7 +189,7 @@
                     </tr>
 
                     <tr class="text-dark">
-                        <th><b>Vat (TK)</b> </th>
+                        <th style="font-size: 15px;"><b>Vat (TK)</b> </th>
                         <th class="text-center text-danger">({{ $salaryPaySlip->vat }})</th>
                     </tr>
 
@@ -195,3 +206,6 @@
 <div class="form-group text-right">
     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-label=""> Close</button>
 </div>
+
+</body>
+</html>

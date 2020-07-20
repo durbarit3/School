@@ -187,14 +187,15 @@ date_default_timezone_set('Asia/Dhaka');
                             <th>
                                 SL
                             </th>
-                            <th>Class</th>
-                            <th>Section</th>
-                            <th>Admission No </th>
-                            <th>Student Name </th>
-                            <th>Father Name </th>
-                            <th>Date of Birth </th>
-                            <th>Phone </th>
-                            <th>Price </th>
+                            <th> Class </th>
+                            <th> Section </th>
+                            <th> Admission No </th>
+                            <th> Student Name </th>
+                            <th> Father Name </th>
+                            <th> Date of Birth </th>
+                            <th> Gurdian phone </th>
+                            <th> Price </th>
+                            <th> Action </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,14 +211,14 @@ date_default_timezone_set('Asia/Dhaka');
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{$row->classes->name ?? ' '}}</td>
-                            <td>{{$row->section}}</td>
-                            <!-- <td>{{$row->section->name ?? ' '}}</td> -->
+                            <td>{{$row->classes->name ?? ''}}</td>
+                            <td>{{$row->Section->name ?? ''}}</td> 
+                            <td>{{$row->admission_no}}</td>
                             
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
-                            <td>dsgfdsgfds</td>
+                            <td>{{ $row->name }}</td>
+                            <td>{{ $row->father_name }}</td>
+                            <td>{{ $row->date_of_birth }}</td>
+                            <td>{{ $row->guardian_phone }}</td>
                             <td>
                                 
                                dsafdsfdsf
@@ -225,7 +226,7 @@ date_default_timezone_set('Asia/Dhaka');
                             </td>
              
                             <td>
-                                | <a href="{{route('admin.fees.collection',$row ->id)}}" class="edit_route btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
+                                | <a href="{{route('admin.fees.collection',$row->id)}}" class="edit_route btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
                             </td>
                         </tr>
                         @endforeach

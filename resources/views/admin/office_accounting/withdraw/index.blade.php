@@ -14,8 +14,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Withdraw</span></a>
+                            @if (json_decode($userPermits->office_accounts_module, true)['withdraw']['add'])
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Withdraw</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

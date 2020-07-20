@@ -398,6 +398,58 @@
                                 </div>
                                 <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
+                            
+                            <form class="report_form fees_report_form pb-2" action="{{ route('admin.reports.finance.report.fees.report') }}"
+                                method="get">
+                                <div class="heading_area">
+                                    <div class="heading">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h6><b>Salary report form</b><hr class="m-0 p-0"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @csrf
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <label class="m-0">Search Type :</label>
+                                        <select required name="select_type" id="select_type"
+                                            class="form-control form-control-sm">
+                                            <option value="">--- Select Type ---</option>
+                                            <option value="month_wise">Month-wise</option>
+                                            <option value="year_wise">Year-wise</option> 
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 fees_month_wise month_wise">
+                                        <label class="m-0">Year :</label>
+                                        <input type="text" value="{{date('Y-F')}}" name="year_month" class="form-control year_month_picker form-control-sm">
+                                    </div>
+                                    
+                                    <div class="col-md-3 fees_year_wise year_wise">
+                                        <label class="m-0">Month :</label>
+                                        <select  name="year" id="year"
+                                            class="form-control form-control-sm ">
+                                            <option disabled value="">--- Select Month ---</option>
+                                            @foreach ($years as $year)
+                                            <option value="{{ $year->year }}">{{ $year->year }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                   
+                                    <div class="col-md-3">
+                                        <label class="m-0">Paid status :</label>
+                                        <select required name="paid_status" id="paid_status" class="form-control form-control-sm">
+                                            <option value="all">All</option>
+                                            <option value="paid">Paid</option>
+                                            <option value="no_paid">No-Paid/Due</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
+                            </form>
                           
                         </div>
 
@@ -421,6 +473,8 @@
     <script>
 
         var menu = '';
+        $('.fees_year_wise').hide();
+        $('.fees_month_wise').hide();
         $('.report_form').hide();
         $('.table_body').hide();
         $('.form_field_body').hide();
@@ -484,6 +538,18 @@
                 $('.table_body').hide(100);
             });
             
+            $('.fees_report').on('click', function(e){
+                e.preventDefault();
+                $('.report_form').hide(100);
+                $('.fees_report_form')[0].reset();
+                $('.fees_report_form').show(100);
+                $('.form_field_body').show(100);
+                $('.period_field_area').hide(100);
+                $('.month_wise_year_or_month').hide(100);
+                $('.table_area').empty();
+                $('.table_body').hide(100);
+            });
+            
             $('.account_balance_report').on('click', function(e){
                 e.preventDefault();
                 $('.report_form').hide(100);
@@ -514,7 +580,6 @@
 
             });
 
-
             $(document).on('click', '.report_menu_link', function (e){
                 menu = $(this).data('value');
             });
@@ -526,8 +591,14 @@
                     $('.month_wise_year_or_month').hide();
                 }else if(value === 'month_wise'){
                     $('.month_wise_year_or_month').show();
+                    $('.month_wise').show();
+                    $('.year_wise').hide();
                     $('.period_field_area').hide();
-                }else{
+                }else if(value === 'year_wise'){
+                    $('.month_wise').hide();
+                    $('.year_wise').show();
+                }
+                else{
                     $('.period_field_area').hide(); 
                 }
             });
@@ -560,7 +631,6 @@
                             $('.loading').hide(100); 
                             toastr.error(data.error);
                             $('.table_body').hide();
-                            
                         }else{
                             $('.table_area').html(data); 
                             $('.loading').hide(100); 
@@ -704,7 +774,41 @@
                             $('.loading').hide(100); 
                             toastr.error(data.error);
                             $('.table_body').hide();
-                            
+                        }else{
+                            $('.table_area').html(data); 
+                            $('.loading').hide(100); 
+                            $('.table_body').show();
+                        }
+                    },
+                });
+            });
+        });
+
+    </script>
+    
+    <script>
+      
+        $(document).ready(function () {
+
+            $('.fees_report_form').on('submit', function(e){
+                e.preventDefault();
+                $('.table_body').show();
+                $('.table_area').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+    
+                        if (!$.isEmptyObject(data.error)) {
+                            $('.table_body').show();
+                            $('.loading').hide(100); 
+                            toastr.error(data.error);
+                            $('.table_body').hide();
                         }else{
                             $('.table_area').html(data); 
                             $('.loading').hide(100); 
@@ -736,7 +840,7 @@
                             $('#sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                            })
+                            });
                         }
 
                         if(menu == "sibling_report"){
@@ -744,24 +848,27 @@
                             $('#sibling_sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#sibling_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                            })
+                            });
                         }
                         
                         if(menu == "guardian_report"){
+
                             $('#guardian_sections').empty();
                             $('#guardian_sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#guardian_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                            })
+                            });
+
                         }
                         if(menu == "class_subject_report"){
+
                             $('#class_subject_sections').empty();
                             $('#class_subject_sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#class_subject_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                            })
+                            });
+
                         }
-                        
                         
                     }
                 })
@@ -786,7 +893,18 @@
                 format: 'dd-mm-yyyy',
                 autoclose:true
             });
-        })
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            $('.year_month_picker').datepicker({
+                format: "yyyy-MM",
+                viewMode: "months", 
+                minViewMode: "months",
+                autoclose:true
+            });
+        });
     </script>
 
 @endpush

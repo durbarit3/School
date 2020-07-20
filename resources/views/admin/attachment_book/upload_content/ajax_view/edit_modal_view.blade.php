@@ -91,7 +91,10 @@
 
     <div class="form-group pt-2 text-right">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+        @if (json_decode($userPermits->attachment_book_module, true)['upload_content']['edit'] == 1)
+            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+        @endif
+        
     </div>
 </form>
 

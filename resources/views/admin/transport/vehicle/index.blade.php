@@ -14,13 +14,16 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Vehicle</span></a>
+                            @if (json_decode($userPermits->transport_module, true)['vehicle']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Vehicle</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        <form action="{{ route('admin.vehicle.multiple.delete') }}" id="multiple_delete" method="post">
+            <form action="{{ route('admin.vehicle.multiple.delete') }}" id="multiple_delete" method="post">
                 @csrf
                 <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
@@ -68,24 +71,28 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if($vehicle->status==1)
-                                        <a href="{{ route('admin.route.status.update', $vehicle->id) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.route.status.update', $vehicle->id) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->transport_module, true)['vehicle']['edit'] == 1)
+                                            @if($vehicle->status==1)
+                                                <a href="{{ route('admin.route.status.update', $vehicle->id) }}" class="btn btn-success btn-sm ">
+                                                    <i class="fas fa-thumbs-up"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin.route.status.update', $vehicle->id) }}" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-thumbs-down"></i>
+                                                </a>
+                                            @endif
+                                            |
                                         @endif
-                                    | <a data-id="{{ $vehicle->id }}" title="edit" data-toggle="modal"
+                                        <a data-id="{{ $vehicle->id }}" title="edit" 
+                                        data-toggle="modal"
                                         data-target="#editModal" class="edit_vehicle btn btn-sm btn-blue text-white">
                                             <i class="fas fa-pencil-alt"></i>
-                                            </a> |
-                                        <a id="delete" href="{{ route('admin.vehicle.delete', $vehicle->id) }}"
-                                            class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
+                                        </a> 
+                                        @if (json_decode($userPermits->transport_module, true)['vehicle']['delete'] == 1)
+                                            | <a id="delete" href="{{ route('admin.vehicle.delete', $vehicle->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

@@ -41,7 +41,7 @@
                         <td>{{ $attendance->employee->first_name.' '.$attendance->employee->last_name }}</td>
                         
                         <td>
-                            <img height="40" width="40"
+                            <img loading="lazy" height="40" width="40"
                                 src="{{ asset('public/uploads/employee/'.$attendance->employee->avater) }}">
                         </td>
                         <td>
@@ -79,7 +79,9 @@
                     @endforeach
                 </tbody>
             </table>
-            <input type="submit" class="btn btn-sm btn-blue float-right save_button" value="Submit">
+                @if (json_decode($userPermits->human_resource_module, true)['employee_attendance']['add'] == '1')
+                    <input type="submit" class="btn btn-sm btn-blue float-right save_button" value="Submit">
+                @endif
             <input style="display:none;" type="submit" class="btn btn-sm btn-blue loading_button float-right" value="Loading...">
         </form>
     </div>
@@ -161,8 +163,12 @@
                         @endforeach
                     </tbody>
                 </table>
-                <input type="submit" class="btn btn-sm btn-blue float-right save_button" value="Submit">
-                <input style="display:none;" type="submit" class="btn btn-sm btn-blue loading_button float-right" value="Loading...">
+
+                @if (json_decode($userPermits->human_resource_module, true)['employee_attendance']['add'] == '1')
+                    <input type="submit" class="btn btn-sm btn-blue float-right save_button" value="Submit">
+                @endif
+
+                <input style="display:none;" type="button" class="btn btn-sm btn-blue loading_button float-right" value="Loading...">
             </form>
         </div>    
     @else 

@@ -31,24 +31,31 @@
         <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
         @endif
         <td data-id="{{$loop->index}}">
-            @if($deposit->status==1)
-            <a id="chenge_status_button" href="{{ route('admin.office.account.deposit.change.status', $deposit->id ) }}"
-                class="btn btn-success btn-sm ">
-                <i class="fas fa-thumbs-up"></i></a>
-            @else
-            <a id="chenge_status_button" href="{{ route('admin.office.account.deposit.change.status', $deposit->id ) }}"
-                class="btn btn-danger btn-sm">
-                <i class="fas fa-thumbs-down"></i>
-            </a>
+            @if (json_decode($userPermits->office_accounts_module, true)['deposit']['edit'])
+                @if($deposit->status==1)
+                <a id="chenge_status_button" href="{{ route('admin.office.account.deposit.change.status', $deposit->id ) }}"
+                    class="btn btn-success btn-sm ">
+                    <i class="fas fa-thumbs-up"></i></a>
+                @else
+                <a id="chenge_status_button" href="{{ route('admin.office.account.deposit.change.status', $deposit->id ) }}"
+                    class="btn btn-danger btn-sm">
+                    <i class="fas fa-thumbs-down"></i>
+                </a>
+                @endif
+                |
             @endif
-        | <a href="#" data-id="{{ $deposit->id }}" title="edit" class="edit_deposit btn btn-sm btn-blue text-white">
+
+        <a href="#" data-id="{{ $deposit->id }}" title="edit" class="edit_deposit btn btn-sm btn-blue text-white">
             <i class="fas previous-{{ $loop->index }} fa-pencil-alt"></i>
             <img height="13" style="display:none;" width="13" class="button_loader-{{ $loop->index }} loading" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
-        </a> |
-            <a id="delete_deposit" href="{{ route('admin.office.account.deposit.delete', $deposit->id) }}"
+        </a> 
+
+        @if (json_decode($userPermits->office_accounts_module, true)['deposit']['delete'])
+            | <a id="delete_deposit" href="{{ route('admin.office.account.deposit.delete', $deposit->id) }}"
                 class="btn btn-danger btn-sm text-white" title="Delete">
                 <i class="far fa-trash-alt"></i>
             </a>
+        @endif    
         </td>
     </tr>
     @endforeach 

@@ -24,7 +24,7 @@ class SessionYearController extends Controller
         $addSession = new Session();
         $addSession->session_year = $request->session_year;
         $addSession->save();
-    
+        session()->flash('successMsg', 'Successfully session added.');
         return response()->json('Session year inserted successfully:)');
     }
 
@@ -44,11 +44,8 @@ class SessionYearController extends Controller
         $updateSession->session_year = $request->session_year;
         $updateSession->save();
 
-        $notification = array(
-            'messege' => 'Session year updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully session updated.');
+        return response()->json('Class inserted successfully:)');
     }
 
     public function changeStatus($sessionId)

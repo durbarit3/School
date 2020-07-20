@@ -28,8 +28,11 @@ td {
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Assign Subject</span></a>
+                            @if (json_decode($userPermits->academic_module,true)['assign_subject']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Assign Subject</span>
+                                </a>
+                            @endif    
                         </div>
                     </div>
                 </div>
@@ -60,11 +63,15 @@ td {
                                         </td>
 
                                         <td class="text-center">
-                                            <a onclick="subjectInfo( {{ $classSection->id }}, {{ $classSection->class->id }} )" class="edit_assign_subject btn btn-sm btn-blue text-white" data-id="{{ $classSection->id }}" title="edit" data-toggle="modal"
-                                                data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                            <a id="delete" href="{{ route('admin.academic.assign.subject.class.delete', $classSection->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <a onclick="subjectInfo( {{ $classSection->id }}, {{ $classSection->class->id }} )" class="edit_assign_subject btn btn-sm btn-blue text-white" data-id="{{ $classSection->id }}" title="edit" data-toggle="modal" data-target="#editModal">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a> 
+
+                                            @if (json_decode($userPermits->academic_module,true)['assign_subject']['delete'] == 1)   
+                                            | <a id="delete" href="{{ route('admin.academic.assign.subject.class.delete', $classSection->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
                                                     <i class="far fa-trash-alt"></i>
                                             </a>
+                                            @endif  
                                         </td>
                                     </tr>
 
@@ -166,7 +173,9 @@ td {
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Update</button>
+                        @if (json_decode($userPermits->academic_module,true)['assign_subject']['edit'] == 1) 
+                            <button type="submit" class="btn btn-sm btn-blue">Update</button>
+                        @endif     
                     </div>
                 </form>
             </div>

@@ -38,7 +38,7 @@ class AuthController extends Controller
         ]);
 
         $admin = Admin::where('email', request('email'))->where('status',1)->first();
-            if ($admin) {
+            if ($admin && $admin->status == 1) {
                 if (Auth::guard('admin')->attempt(['email' => request('email'), 'password' => request('password')],
                 request('remember'))) {
                     return redirect()->intended(route('admin.home'));
@@ -47,13 +47,20 @@ class AuthController extends Controller
                     return redirect()->back();
                 }
             }else{
-                session()->flash('successMsg', 'Sorry !! Email or Password not matched!');
+                session()->flash('successMsg', 'Sorry !! you do not have any permission to login.');
                 return redirect()->back();
             }
     }
 
 
 
+    // show registration form
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
+    }
     // show registration form
 
     public function showRegistationPage()

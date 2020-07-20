@@ -5,18 +5,21 @@
     <div class="panel">
         <div class="panel_header">
         <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Member List</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Member</span></a>
-                        </div>
-                    </div>
+            <div class="col-md-6">
+                <div class="panel_title">
+                    <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Member List</span>
                 </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="panel_title">
+                    @if (json_decode($userPermits->library_module, true)['library_member']['add'] == 1)
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                            <i class="fas fa-plus"></i></span> <span>Add Member</span>
+                        </a>
+                    @endif
+                </div>
+            </div>
+        </div>
         </div>
         <form action="{{route('admin.library.member.multidelete')}}" method="post">
             @csrf
@@ -51,12 +54,8 @@
                     </thead>
                     <tbody>
 
-
                         @foreach($members as $row)
-                            
-
-                            
-                   
+                        
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
@@ -77,26 +76,29 @@
                                 <td>{{$std->student_mobile}}</td>
                             @endforeach
                             <td>
-                                
-                              
-                                @if($row->status == 0)
-                                <a href="{{ route('admin.library.status', $row->id ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
-                                @else
-                                <a href="{{ route('admin.library.status', $row->id ) }}" class="btn btn-success btn-sm">
-                                    <i class="fas fa-thumbs-up"></i>
-                                </a>
+                                @if (json_decode($userPermits->library_module, true)['library_member']['edit'] == 1)
+                                    @if($row->status == 0)
+                                    <a href="{{ route('admin.library.status', $row->id ) }}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </a>
+                                    @else
+                                    <a href="{{ route('admin.library.status', $row->id ) }}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </a>
+                                    @endif
+                                    | 
                                 @endif
                                 
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> 
 
-                                <a href="{{route('admin.library.member.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                @if (json_decode($userPermits->library_module, true)['library_member']['delete'] == 1)
+                                    | <a href="{{route('admin.library.member.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
+                                @endif
                             </td>
                         </tr>
 
@@ -225,7 +227,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->library_module, true)['library_member']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

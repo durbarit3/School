@@ -98,22 +98,29 @@
                                 <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                 @endif
                                 <td>
-                                    @if($teacher['employee_status']==1)
-                                    <a href="{{ route('admin.employee.status.update', $teacher['id'] ) }}"
-                                        class="btn btn-success btn-sm ">
-                                        <i class="fas fa-thumbs-up"></i></a>
-                                    @else
-                                    <a href="{{ route('admin.employee.status.update', $teacher['id'] ) }}"
-                                        class="btn btn-danger btn-sm">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </a>
+                                    @if (json_decode($userPermits->employee_module, true)['edit'] == 1) 
+                                        @if($teacher['employee_status']==1)
+                                        <a href="{{ route('admin.employee.status.update', $teacher['id'] ) }}"
+                                            class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i></a>
+                                        @else
+                                        <a href="{{ route('admin.employee.status.update', $teacher['id'] ) }}"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                        @endif
+                                        |
                                     @endif
-                                    | <a href="{{ route('admin.employee.edit', $teacher['id']) }}"
-                                        class="btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> |
-                                    <a id="delete" href="{{ route('admin.employee.delete', $teacher['id']) }}"
-                                        class="btn btn-danger btn-sm text-white" title="Delete">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
+
+                                    <a href="{{ route('admin.employee.edit', $teacher['id']) }}"
+                                        class="btn btn-sm btn-blue text-white"><i class="fas fa-pencil-alt"></i></a> 
+
+                                    @if (json_decode($userPermits->employee_module, true)['delete'] == 1) 
+                                        | <a id="delete" href="{{ route('admin.employee.delete', $teacher['id']) }}"
+                                            class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

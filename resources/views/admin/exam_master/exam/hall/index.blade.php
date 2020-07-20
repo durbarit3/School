@@ -1,4 +1,12 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        td{
+            line-height: 0px;
+            width: 20%;
+        }
+    </style>
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -14,8 +22,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Hall</span></a>
+                            @if (json_decode($userPermits->exam_module,true)['exam']['hall']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Hall</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -23,7 +34,7 @@
 
             <div class="panel_body">
                 <div class="table-responsive">
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                         <thead>
                             <tr class="text-center">
                                 <th>Serial</th>
@@ -45,25 +56,28 @@
                                 <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                 @endif
                                 <td>
-                                    @if($halls->status==1)
-                                    <a href="{{ route('admin.exam.master.exam.hall.update.status', $halls->id ) }}"
-                                        class="btn btn-success btn-sm ">
-                                        <i class="fas fa-thumbs-up"></i></a>
-                                    @else
-                                    <a href="{{ route('admin.exam.master.exam.hall.update.status', $halls->id ) }}"
-                                        class="btn btn-danger btn-sm">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </a>
+                                    @if (json_decode($userPermits->exam_module,true)['exam']['hall']['edit'] == 1)
+                                        @if($halls->status==1)
+                                        <a href="{{ route('admin.exam.master.exam.hall.update.status', $halls->id ) }}"
+                                            class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i></a>
+                                        @else
+                                        <a href="{{ route('admin.exam.master.exam.hall.update.status', $halls->id ) }}"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                        @endif
+                                        |
                                     @endif
-                                    | <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$halls->id}}"
-                                        title="edit" data-toggle="modal" data-target="#editModal"><i
-                                            class="fas fa-pencil-alt"></i></a> |
-                                    <a id="delete" 
-                                        href="{{ route('admin.exam.master.exam.hall.delete', $halls->id) }}"
-                                        class="btn btn-danger btn-sm text-white" 
-                                        title="Delete">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
+                                     <a class="editcat btn btn-sm btn-blue text-white" data-id="{{$halls->id}}"
+                                        title="edit" data-toggle="modal" data-target="#editModal">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        </a> 
+                                    @if (json_decode($userPermits->exam_module,true)['exam']['hall']['delete'] == 1)       
+                                        | <a id="delete" href="{{ route('admin.exam.master.exam.hall.delete', $halls->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -81,7 +95,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Exam Hall</h4>
+                <h6 class="modal-title">Add Exam Hall</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -89,22 +103,22 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="{{ route('admin.exam.master.exam.hall.store') }}" method="POST">
                     @csrf
-                    <div class="form-group row justify-content-center">
-                        <label for="inputEmail3" class="col-sm-3 no-gutters col-form-label text-right">Hall No : </label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="m-0"><b>Hall No :</b>  </label>
                             <input type="text" class="form-control" placeholder="Hall number" name="hall_no" required>
                         </div>
                     </div>
-                    <div class="form-group row justify-content-center">
-                        <label for="inputEmail3" class="col-sm-3 no-gutters col-form-label text-right">Capacity : </label>
-                        <div class="col-sm-9">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="m-0"><b>Capacity :</b></label>
                             <input type="number" class="form-control" placeholder="Capacity" name="sit_qty" required>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue mr-4">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button> 
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -117,7 +131,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Exam Hall</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Edit Exam Hall</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -127,22 +141,24 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label for="hall_no" class="col-sm-3 col-form-label text-center">Hall No:</label>
-                        <div class="col-sm-9 row justify-content-center">
-                            <input type="text" class="form-control" name="hall_no" id="hall_no" required>
-                            <input type="hidden" name="id" id="id">
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="m-0"><b>Hall No :</b>  </label>
+                            <input id="hall_no" type="text" class="form-control" placeholder="Hall number" name="hall_no" required>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label for="sit_qty" class="col-sm-3 col-form-label text-center">Capacity:</label>
-                        <div class="col-sm-9 row justify-content-center">
-                            <input type="text" class="form-control" name="sit_qty" id="sit_qty" required>
+                        <div class="col-sm-12">
+                            <label for="inputEmail3" class="m-0"><b>Capacity :</b></label>
+                            <input id="sit_qty" type="number" class="form-control" placeholder="Capacity" name="sit_qty" required>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue mr-3">Submit</button>
+                        @if (json_decode($userPermits->exam_module,true)['exam']['hall']['edit'] == 1) 
+                            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

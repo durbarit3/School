@@ -175,7 +175,9 @@ date_default_timezone_set('Asia/Dhaka');
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <input type="submit" class="btn btn-sm btn-blue" value="Save">
+                                    @if (json_decode($userPermits->attendance_module, true)['period_attendance']['edit'] == 1) 
+                                    <input type="submit" class="btn btn-sm btn-blue" value="Update">
+                                    @endif
                                 </form>
                             </div>
                             @else
