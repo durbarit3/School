@@ -468,6 +468,7 @@
                        <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
                        <li><a href="{{route('admin.notification.setting')}}">Nofification settings</a></li>
                        <li><a href="{{route('admin.sms.setting')}}">SMS settings</a></li>
+                       <li><a href="{{route('admin.email.setting')}}">Email settings</a></li>
                 </ul>
             </li>
 

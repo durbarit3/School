@@ -1185,6 +1185,17 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::post('/update','SystemController@smsNotificationUpdate')->name('admin.sms.update');
      });
     
+
+
+      // Email notification area start
+
+     Route::group(['prefix' => 'email'], function(){
+
+        Route::get('/','SystemController@showEmailNotification')->name('admin.email.setting');
+
+        Route::post('/update','SystemController@emailNotificationUpdate')->name('admin.email.update');
+     });
+    
 });
 
 // Inventory area end

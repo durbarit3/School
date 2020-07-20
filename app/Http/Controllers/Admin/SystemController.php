@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\StudentSession;
 use App\NotificationSetting;
 use App\SmsSetting;
+use App\EmailNotification;
 
 class SystemController extends Controller
 {
@@ -185,6 +186,30 @@ class SystemController extends Controller
 
      $notification = array(
                 'messege' => 'SMS Setting  Updated successfully!',
+                'alert-type' => 'success'
+            );
+            return Redirect()->back()->with($notification);
+   }
+
+
+   // EMAIL Notification area start
+
+   public function showEmailNotification()
+   {
+    
+    $emailsetting = EmailNotification::findOrFail(1);
+     return view('admin.setting.emailsetting',compact('emailsetting'));
+   }
+
+   // SMS Notification Update
+
+   public function emailNotificationUpdate(Request $request)
+   {
+     EmailNotification::findOrFail(1)->update($request->all());
+
+
+     $notification = array(
+                'messege' => 'Email Setting  Updated successfully!',
                 'alert-type' => 'success'
             );
             return Redirect()->back()->with($notification);
