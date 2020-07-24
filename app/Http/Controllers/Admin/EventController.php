@@ -102,7 +102,6 @@ class EventController extends Controller
             $eventUpdate->image = $ImageName;
         }
         $eventUpdate->save();
-
         session()->flash('success', 'Event updated successfully');
         return response()->json('success');
         

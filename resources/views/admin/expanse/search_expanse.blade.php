@@ -1,108 +1,146 @@
 
 @extends('admin.master')
+@push('css')
+    <style>
+        .loading {margin: 0px;padding: 0px;background: white;padding-bottom: 1px;}
+        .loading h4 {margin-left: 24px;}
+        td {line-height: 11px;}
+    </style>
+@endpush
 @section('content')
-<div class="middle_content_wrapper">
-    <section class="page_content">
-        <!-- panel -->
-        <div class="panel mb-0">
-            <div class="panel_header">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Expanse Search</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                        <a href="{{ route('admin.expanse.index') }}" class="btn btn-sm btn-success"><i
-                                    class="fas fa-plus"></i></span> <span>Back</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<div class="col-lg-12">
-    <div class="panel">
-        <div class="panel_header">
-            <div class="panel_title"><span>Expanse Search Form</span></div>
-        </div>
-        <div class="panel_body">
-        <form action="{{ route('admin.expanse.search') }}" method="get">
-                @csrf
-                <div class="row">
-                    <div class="col-md-6">
-                        <label >Year</label>
-                        <select required name="year" class="form-control">
-                            <option value="">Select Year</option>
-                            <option value="2019">2019</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                            <label for="">Date</label>
-                    <input type="date" value="{{ old(date('')) }}" class="form-control" name="date" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
-        </form>
-        </div>
-        @if ($searchExpanses)
-            @if ($searchExpanses->count() > 0)
+    <div class="middle_content_wrapper">
+        <section class="page_content">
+            <!-- panel -->
+            <div class="panel mb-0">
 
-            <div class="panel_body">
-                
-                <div class="table-responsive">
-                        <div class="text-center">
-                            <h6 class="">Search results</h6>
-                            <hr>
+                <div class="col-lg-12">
+                    <div class="panel">
+                        <div class="panel_header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel_title">
+                                        <span class="panel_icon"><i class="fas fa-border-all"></i></span>
+                                        <span>Select criteria for expanse search</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    
+                                </div>
+                            </div>
                         </div>
-                    <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Invoice No</th>
-                                <th>Date</th>
-                                <th>Month</th>
-                                <th>Year</th>
-                                <th>Expanse Head</th>
-                                <th>Note</th>
-                                <th>Status</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($searchExpanses as $expanse)
-                            <tr class="text-center">
+
+                        <div class="panel_body form_field_body">
+                            <form class="expanse_search_form pb-2" action="{{ route('admin.expanse.search.action') }}"
+                                method="get">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="m-0">Search Type :</label>
+                                        <select name="select_type" id="select_type"
+                                            class="form-control form-control-sm select_section section_id">
+                                            <option value="">--- Select Type ---</option>
+                                            <option value="today">Today</option>
+                                            <option value="this_week">This Week</option>
+                                            <option value="last_week">Last Week</option>
+                                            <option value="this_month">This Month</option>
+                                            <option value="last_month">Last Month</option>
+                                            <option value="this_year">This Year</option>
+                                            <option value="last_year">Last Year</option>
+                                            <option value="period">Period</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date From :</label>
+                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                    </div>
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date To :</label>
+                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-left">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="panel_body table_body mt-3">
+                           
+                            <div class="loading"><h4>Loading...</h4> </div>
+                            <div class="table_area">
                                 
-                                <td>{{ $expanse->invoice_no }}</td>
-                                <td>{{ $expanse->date }}</td>
-                                <td>{{ $expanse->month }}</td>
-                                <td>{{ $expanse->year }}</td>
-                                <td>{{ $expanse->ExpanseHeader->name }}</td>
-                                <td>{{ $expanse->note }}</td>
-                                @if($expanse->status==1)
-                                <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
-                                @else
-                                <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
-                                @endif
-                                <td>{{$expanse->amount}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            @else
-            <div class="text-center mt-3 text-light bg-secondary p-2">
-                <h6>No Date Found!</h6>
-            </div>
-            @endif
-        @endif
+        </section>
     </div>
-</div>
-</div>
-</section>
-</div>
 
 @endsection
+
+@push('js')
+
+    <script>
+
+        $(document).ready(function () {
+            $('.period_field_area').hide();
+            $('.table_body').hide();
+            $('.loading').hide();
+            $(document).on('change', '#select_type',function(){
+                var value = $(this).val();
+                if(value === 'period'){
+                    $('.period_field_area').show();
+                }else{
+                    $('.period_field_area').hide(); 
+                }
+            });
+        });
+
+    </script> 
+
+    <script>
+      
+        $(document).ready(function () {
+
+            $('.expanse_search_form').on('submit', function(e){
+                e.preventDefault();
+                $('.table_body').show();
+                $('.table_area').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+    
+                        if (!$.isEmptyObject(data.error)) {
+                            $('.table_body').show();
+                            $('.loading').hide(100); 
+                            toastr.error(data.error);
+                            $('.table_body').hide();
+                        }else{
+                            $('.table_area').html(data); 
+                            $('.loading').hide(100); 
+                            $('.table_body').show();
+                        }
+                    },
+                });
+            });
+        });
+
+    </script>  
+
+    <script>
+        $(document).ready(function(){
+            $('.date_picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        });
+    </script>
+  
+@endpush

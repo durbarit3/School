@@ -104,26 +104,26 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Exam Setup Form</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h6 class="modal-title">Exam Setup Form</h6>
+                <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form id="exam_setup_form" class="form-horizontal" action="{{ route('admin.exam.master.exam.store') }}" method="POST">
+                <form id="exam_setup_form" action="{{ route('admin.exam.master.exam.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right"><b>Exam Name</b> :</label>
-                            <input type="text" placeholder="Exam Name" class="form-control name" name="name">
+                            <label><b>Exam Name</b> :</label>
+                            <input type="text" placeholder="Exam Name" class="form-control form-control-sm name" name="name">
                             <div class="error name_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label  class="col-form-label text-right"><b>Exam Type </b>:</label>
-                            <select name="type" class="form-control type">
+                            <label><b>Exam Type </b>:</label>
+                            <select name="type" class="form-control form-control-sm type">
                                 <option value="">Select Exam Type</option>
                                 @foreach ($types as $type)
                                 <option value="{{ $type->name }}"> {{ $type->name }} </option>
@@ -135,8 +135,8 @@
                     
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right"><b>Exam Term</b> (Optional) :</label>
-                            <select  name="term_id" class="form-control">
+                            <label><b>Exam Term</b> (Optional) :</label>
+                            <select  name="term_id" class="form-control form-control-sm">
                                 <option value="">Select Exam Term</option>
                                 @foreach ($terms as $term)
                                 <option value="{{ $term->id }}"> {{ $term->name }} </option>
@@ -147,24 +147,24 @@
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right"><b>Start Date</b> :</label>
-                            <input autocomplete="off" type="text" placeholder="Day-Month-Year" class="form-control add_exam_date_picker start_date" value="" name="start_date" >
+                            <label><b>Start Date</b> :</label>
+                            <input readonly autocomplete="off" type="text" placeholder="Day-Month-Year" class="form-control readonly_field form-control-sm add_exam_date_picker start_date" value="" name="start_date" >
                             <div class="error start_date_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right"><b>End Date</b> :</label>
-                            <input autocomplete="off" placeholder="Day-Month-Year" type="text" class="form-control add_exam_date_picker end_date" value="" name="end_date">
+                            <label><b>End Date</b> :</label>
+                            <input readonly autocomplete="off" placeholder="Day-Month-Year" type="text" class="form-control readonly_field form-control-sm add_exam_date_picker end_date" value="" name="end_date">
                             <div class="error end_date_error"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <label class="col-form-label text-right"><b>Destributions</b> :</label>
-                            <select name="distributions[]" class="select2" multiple="multiple" id="section" data-placeholder="Destributions" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                            <label><b>Destributions</b> :</label>
+                            <select name="distributions[]" class="select2 form-control form-control-sm" multiple="multiple" id="section" data-placeholder="Destributions" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">Select Destributions</option>
                                 @foreach ($distributions as $distribution)
                                     <option value="{{ $distribution->name }}"> {{ $distribution->name }} </option>
@@ -175,8 +175,9 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" id="dismissModal"  class="btn btn-sm m btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="button" id="dismissModal"  class="btn btn-sm m btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn btn-sm btn-blue loading_button">Loading...</button>
+                        <button type="submit" class="btn btn-sm btn-blue submit_button">Submit</button>
                     </div>
                 </form>
             </div>
@@ -189,7 +190,7 @@
     <div class="modal-dialog">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Created Exam</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Edit Created Exam</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -205,140 +206,191 @@
 @endsection
 
 @push('js')
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            });
         });
-    });
+    </script>
 
-</script>
-
-<script>
-    $(document).ready(function () {
-       $(document).on('click', '.edit_exam', function(){
-           var exam_id = $(this).data('id');
-           $.ajax({
-               url:"{{ url('admin/exam/master/exam/exams/edit') }}" + "/" + exam_id,
-               type:'get',
-               success:function(data){
-                   $('.edit_modal_body').empty();
-                   $('.edit_modal_body').append(data);
-                   $('#editModal').modal('show');
-               }
-           });
-       });
-   });
-
-</script>
-
-<script>
-    $(document).ready(function(){
-        $('.add_exam_date_picker').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose:true
-        });
-    })
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-       //Initialize Select2 Elements
-       $('.select2').select2()
-        //Initialize Select2 Elements
-    });
-</script>
-
-<script>
-    @error('name')
-        toastr.error("{{ $errors->first('name') }}");
-    @enderror
-</script>
-
-<script>
-    $(document).ready(function () {
-        
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).on('submit', '#exam_setup_form', function(e){
-            e.preventDefault();
-            var url = $(this).attr('action');
-            var type = $(this).attr('method');
-            var request = $(this).serialize();
-            $.ajax({
-                url:url,
-                type:type,
-                data: request,
-                success:function(data){
-
-                   //log(data);
-                   
-                   $('.error').html('');
-                   $('#exam_setup_form')[0].reset();
-                   $('#myModal1').modal('hide');
-                   toastr.success(data);
-                   setInterval(function(){
-                    window.location = "{{ url()->current() }}";
-                   }, 700)
-                   
-                   
-                },
-                error:function(err){
-                    //log(err.responseJSON.errors);
-                    if(err.responseJSON.errors.name){
-                        $('.name_error').html(err.responseJSON.errors.name[0]);
-                        $('.name').addClass('is-invalid');
-                    }else{
-                        $('.name_error').html('');
-                        $('.name').removeClass('is-invalid');
-                    }
-                    
-                    if(err.responseJSON.errors.type){
-                        $('.type_error').html(err.responseJSON.errors.type[0]);
-                        $('.type').addClass('is-invalid');
-                    }else{
-                        $('.type_error').html('');
-                        $('.type').removeClass('is-invalid');
-                    }
-                    if(err.responseJSON.errors.start_date){
-                        $('.start_date_error').html(err.responseJSON.errors.start_date[0]);
-                        $('.start_date').addClass('is-invalid');
-                    }else{
-                        $('.start_date_error').html('');
-                        $('.start_date').removeClass('is-invalid');
-                    }
-                    if(err.responseJSON.errors.end_date){
-                        $('.end_date_error').html(err.responseJSON.errors.end_date[0]);
-                        $('.end_date').addClass('is-invalid');
-                    }else{
-                        $('.end_date_error').html('');
-                        $('.end_date').removeClass('is-invalid');
-                    }
-                    if(err.responseJSON.errors.distributions){
-                        $('.distributions_error').html(err.responseJSON.errors.distributions[0]);
-                    
-                    }else{
-                        $('.distributions_error').html('');
-                      
-                    }
-                  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.loading_button').hide();
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
                 }
             });
         });
-    });
+    </script>
 
-</script> 
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.edit_exam', function(){
+                var exam_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/exam/master/exam/exams/edit') }}" + "/" + exam_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                        $('#editModal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.add_exam_date_picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+            //Initialize Select2 Elements
+        });
+    </script>
+
+    <script>
+        @error('name')
+            toastr.error("{{ $errors->first('name') }}");
+        @enderror
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('submit', '#exam_setup_form', function(e){
+                e.preventDefault();
+                $('.submit_button').hide();
+                $('.loading_button').show();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+                    //log(data);
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
+                        $('.error').html('');
+                        $('#exam_setup_form')[0].reset();
+                        $('#myModal1').modal('hide');
+                        window.location = "{{ url()->current() }}";
+                    },
+                    error:function(err){
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
+                        //log(err.responseJSON.errors);
+                        if(err.responseJSON.errors.name){
+                            $('.name_error').html(err.responseJSON.errors.name[0]);
+                            $('.name').addClass('is-invalid');
+                        }else{
+                            $('.name_error').html('');
+                            $('.name').removeClass('is-invalid');
+                        }
+                        
+                        if(err.responseJSON.errors.type){
+                            $('.type_error').html(err.responseJSON.errors.type[0]);
+                            $('.type').addClass('is-invalid');
+                        }else{
+                            $('.type_error').html('');
+                            $('.type').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.start_date){
+                            $('.start_date_error').html(err.responseJSON.errors.start_date[0]);
+                            $('.start_date').addClass('is-invalid');
+                        }else{
+                            $('.start_date_error').html('');
+                            $('.start_date').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.end_date){
+                            $('.end_date_error').html(err.responseJSON.errors.end_date[0]);
+                            $('.end_date').addClass('is-invalid');
+                        }else{
+                            $('.end_date_error').html('');
+                            $('.end_date').removeClass('is-invalid');
+                        }
+                        if(err.responseJSON.errors.distributions){
+                            $('.distributions_error').html(err.responseJSON.errors.distributions[0]);
+                        
+                        }else{
+                            $('.distributions_error').html('');
+                        }
+                    }
+                });
+            });
+        });
+    </script> 
+
+    <script>
+		$(document).ready(function () {
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#edit_exam_setup_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}";
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+						$.each(err.responseJSON.errors,function(key, error){
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+	</script> 
 
 @endpush

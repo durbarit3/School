@@ -2,18 +2,9 @@
 @push('css')
 
     <style>
-        .radio_input {
-            padding: 2px;
-            
-        }
-        .red_border{
-            border: 1px solid red;
-        }
-
-        td {
-            width: 20%;
-            
-        }
+        .radio_input {padding: 2px;}
+        .red_border{border: 1px solid red;}
+        td {width: 20%;}
     </style>
     
 @endpush
@@ -40,9 +31,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-        <form id="multiple_delete" action="{{ route('admin.academic.subject.multiple.delete') }}" method="post">
+            <form id="multiple_delete" action="{{ route('admin.academic.subject.multiple.delete') }}" method="post">
                 @csrf
                 {{--  <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>  --}}
@@ -51,7 +41,6 @@
                         <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
                             <thead>
                                 <tr class="text-center">
-                                    
                                     <th>Subject Name</th>
                                     <th>Subject Type</th>
                                     <th>Subject Code</th>
@@ -67,36 +56,36 @@
                                     <td>{{$subject->type == 1 ? 'Theory' : 'Practical'}}</td>
                                     <td>{{$subject->code}}</td>
                                     @if($subject->status==1)
-                                    <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
+                                        <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
                                     @else
-                                    <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
+                                        <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
                                         
-                                    @if (json_decode($userPermits->academic_module,true)['subject']['edit'] == 1)    
-                                        @if($subject->status==1)
-                                        <a href="{{ route('admin.academic.subject.status.update', $subject->id ) }}"
-                                            class="btn btn-success btn-sm ">
-                                            <i class="fas fa-thumbs-up"></i></a>
-                                        @else
-                                        <a href="{{ route('admin.academic.subject.status.update', $subject->id ) }}"
-                                            class="btn btn-danger btn-sm">
-                                            <i class="fas fa-thumbs-down"></i>
-                                        </a>
+                                        @if (json_decode($userPermits->academic_module,true)['subject']['edit'] == 1)    
+                                            @if($subject->status==1)
+                                            <a href="{{ route('admin.academic.subject.status.update', $subject->id ) }}"
+                                                class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i></a>
+                                            @else
+                                            <a href="{{ route('admin.academic.subject.status.update', $subject->id ) }}"
+                                                class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
+                                            </a>
+                                            @endif
+                                            |
                                         @endif
-                                        |
-                                    @endif
 
-                                     <a href="#" class="edit_class btn btn-sm btn-blue text-white"
-                                        data-id="{{ $subject->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal"><i class="fas fa-pencil-alt"></i>
-                                    </a>
-
-                                    @if (json_decode($userPermits->academic_module,true)['subject']['delete'] == 1) 
-                                        | <a id="delete" href="{{ route('admin.academic.subject.delete', $subject->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                            <i class="far fa-trash-alt"></i>
+                                        <a href="#" class="edit_subject btn btn-sm btn-blue text-white"
+                                        data-id="{{ $subject->id }}" title="edit">
+                                            <i class="fas fa-pencil-alt"></i>
                                         </a>
-                                    @endif    
+
+                                        @if (json_decode($userPermits->academic_module,true)['subject']['delete'] == 1) 
+                                            | <a id="delete" href="{{ route('admin.academic.subject.delete', $subject->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif    
                                     </td>
                                 </tr>
                                 @endforeach
@@ -152,7 +141,8 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="submit" class="btn loading_button btn-sm btn-blue">Loading...</button>
+                        <button type="submit" class="btn submit_button btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -180,17 +170,23 @@
 @endsection
 
 @push('js')
-    <script type="text/javascript">
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
+    <script type="text/javascript">
         $(document).ready(function () {
             $('.modal_close_button').on('click', function(){
                 $('.error').html('');
                 $('.form-control').removeClass('is-invalid');
                 $('.radio_input').removeClass('red_border');
-            })
+            });
         });
     </script>
-
+    
     <script type="text/javascript">
         $(document).ready(function () {
             $('#check_all').on('click', function (e) {
@@ -201,12 +197,11 @@
                 }
             });
         });
-
     </script>
 
     <script>
         $(document).ready(function () {
-            $(document).on('click', '.edit_class', function(){
+            $(document).on('click', '.edit_subject', function(){
                 var subject_id = $(this).data('id');
                 $.ajax({
                     url:"{{ url('admin/academic/subject/edit/') }}" + "/" + subject_id,
@@ -214,6 +209,7 @@
                     success:function(data){
                         $('.edit_modal_body').empty();
                         $('.edit_modal_body').append(data);
+                        $('#editModal').modal('show');
                     }
                 });
             });
@@ -222,7 +218,6 @@
 
     <script>
         $(document).ready(function () {
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -231,6 +226,8 @@
 
             $(document).on('submit', '#subject_add_form', function(e){
                 e.preventDefault();
+                $('.submit_button').hide();
+				$('.loading_button').show();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -239,17 +236,16 @@
                     type:type,
                     data: request,
                     success:function(data){
-
-                    $('.error').html('');
-                    $('#subject_add_form')[0].reset();
-                    $('#myModal1').modal('hide');
-                    toastr.success(data);
-                    setInterval(function(){
-                        window.location = "{{ url()->current() }}";
-                    }, 900)
-                        
+                        $('.submit_button').show();
+				        $('.loading_button').hide();
+                        $('.error').html('');
+                        $('#subject_add_form')[0].reset();
+                        $('#myModal1').modal('hide');
+                        window.location = "{{ url()->current() }}";  
                     },
                     error:function(err){
+                        $('.submit_button').show();
+				        $('.loading_button').hide();
                         //log(err.responseJSON.errors);
                         if(err.responseJSON.errors.name){
                             $('.name_error').html(err.responseJSON.errors.name[0]);
@@ -279,4 +275,67 @@
             });
         });
     </script> 
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.edit_subject', function(){
+                var subject_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/academic/subject/edit/') }}" + "/" + subject_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#edit_subject_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}"; 
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+	</script> 
 @endpush

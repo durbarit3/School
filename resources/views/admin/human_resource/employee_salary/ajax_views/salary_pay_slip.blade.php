@@ -55,9 +55,7 @@
             </div>
         </div>
     </div>
-
     <hr>
-
     <div class="employee_info_area">
         <div class="col-md-12">
             <div class="row no-gutters">
@@ -89,7 +87,6 @@
                                 <td class="text-dark"><b>{{ $salaryPaySlip->employee->phone }}</b></td>
                             </tr>
                         </tbody>
-                        
                     </table>
                 </div>
             </div>
@@ -98,7 +95,6 @@
 
     <div style="margin-top: 20px;" class="earn_and_deduction_area">
         <div class="col-md-12">
-            
             <div class="row no-gutters">
                 <div style="width: 48%">
                     <table class="table table-sm table-bordered">
@@ -131,7 +127,6 @@
                                 <td><b>Total Earning :</b></td>
                                 <td class="text-right"><b>{{ $salaryPaySlip->total_earn == NULL ? 0 : $salaryPaySlip->total_earn }}</b></td>
                             </tr>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -166,7 +161,6 @@
                                 <td><b>Total Deduction :</b></td>
                                 <td class="text-right text-danger"> <b>({{ $salaryPaySlip->total_deduction == NULL ? 0 : $salaryPaySlip->total_deduction }})</b></td>
                             </tr>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -182,17 +176,14 @@
                         <th><b>Pay mode</b> </th>
                         <th class="text-center">Cheque</th>
                     </tr>
-
                     <tr class="text-dark">
                         <th><b>Basic salary (TK)</b> </th>
                         <th class="text-center">{{ $salaryPaySlip->basic_salary }}</th>
                     </tr>
-
                     <tr class="text-dark">
                         <th style="font-size: 15px;"><b>Vat (TK)</b> </th>
                         <th class="text-center text-danger">({{ $salaryPaySlip->vat }})</th>
                     </tr>
-
                     <tr class="text-dark">
                         <th><b>Net salary (TK)</b> </th>
                         <th class="text-center">{{ $salaryPaySlip->total_paid }}</th>

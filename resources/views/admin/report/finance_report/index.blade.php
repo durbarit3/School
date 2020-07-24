@@ -73,31 +73,47 @@
                                     <div class="col-md-4">
                                         <ul class="report_menu_ul">
                                             <li class="report_menu_list">
-                                                <a data-value="income_report" class="report_menu_link income_report" href="#"><i class="fas fa-info-circle"></i> 
-                                                    <b>Income Report</b> </a>
+                                                <a data-value="income_report" class="report_menu_link text-dark income_report" href="#">
+                                                    <i class="fas fa-file-alt"></i>  
+                                                    <b>Income report</b> 
+                                                </a>
                                             </li>
 
                                             <li class="report_menu_list">
-                                                <a data-value="income_group_report" class="report_menu_link income_group_report" href="#"><i class="fas fa-info-circle"></i> <b>Income Group Report</b> </a>
+                                                <a data-value="income_group_report" class="report_menu_link text-dark income_group_report" href="#">
+                                                    <i class="fas fa-file-alt"></i> 
+                                                    <b>Income group report</b> 
+                                                </a>
                                             </li>
                                             
                                             <li class="report_menu_list">
-                                                <a class="report_menu_link expanse_report" data-value="expanse_report"  href="#"><i class="fas fa-info-circle"></i> <b>Expanse Report</b></a>
+                                                <a class="report_menu_link text-dark expanse_report" data-value="expanse_report"  href="#">
+                                                    <i class="fas fa-file-alt"></i>  
+                                                    <b>Expanse report</b>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="report_menu_ul">
                                             <li class="report_menu_list">
-                                                <a data-value="expanse_group_report" class="report_menu_link expanse_group_report" href="#"><i class="fas fa-info-circle"></i> <b>Expanse Group Report</b> </a>
+                                                <a data-value="expanse_group_report" class="report_menu_link text-dark expanse_group_report" href="#">
+                                                    <i class="fas fa-file-alt"></i>  
+                                                    <b>Expanse group report</b> 
+                                                </a>
                                             </li>
                                             
                                             <li class="report_menu_list">
-                                                <a data-route="{{ route('admin.reports.finance.report.account.report') }}" class="report_menu_link account_balance_report" href="#"><i class="fas fa-info-circle"></i> <b>Account Balance Report</b> </a>
+                                                <a data-route="{{ route('admin.reports.finance.report.account.report') }}" class="report_menu_link text-dark  account_balance_report" href="#">
+                                                    <i class="fas fa-file-alt"></i> 
+                                                    <b>Account balance report</b> </a>
                                             </li>
 
                                             <li class="report_menu_list">
-                                                <a data-value="salary_report" class="report_menu_link salary_report" href="#"><i class="fas fa-info-circle"></i> <b>Salary Report</b> </a>
+                                                <a data-value="salary_report" class="report_menu_link text-dark salary_report" href="#">
+                                                    <i class="fas fa-file-alt"></i>  
+                                                    <b>Salary report</b> 
+                                                </a>
                                             </li>
                                            
                                         </ul>
@@ -106,11 +122,17 @@
                                         <ul class="report_menu_ul">
                                            
                                             <li class="report_menu_list">
-                                                <a data-value="fees_report" class="report_menu_link fees_report" href="#"><i class="fas fa-info-circle"></i> <b>Fees Report</b> </a>
+                                                <a data-value="fees_report" class="report_menu_link text-dark fees_report" href="#">
+                                                    <i class="fas fa-file-alt"></i>  
+                                                    <b>Fees report</b> 
+                                                </a>
                                             </li>
                                             
                                             <li class="report_menu_list">
-                                                <a data-value="leaser_sheet" class="report_menu_link leaser_sheet" href="#"><i class="fas fa-info-circle"></i> <b>Leasar Sheet</b> </a>
+                                                <a data-value="leaser_sheet" class="report_menu_link text-dark leaser_sheet" href="#">
+                                                    <i class="fas fa-file-alt"></i> 
+                                                    <b>Leasar sheet</b> 
+                                                </a>
                                             </li>
                                            
                                         </ul>

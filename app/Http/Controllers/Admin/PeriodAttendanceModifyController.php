@@ -47,9 +47,7 @@ class PeriodAttendanceModifyController extends Controller
 
     public function update(Request $request)
     {
-       
         $notes = $request->notes;
-        
         date_default_timezone_set('Asia/Dhaka');
         foreach ($request->attendance_ids as $attendance_id => $attendance_status) {
             $updatePeriodAttendance = PeriodAttendance::where('id', $attendance_id)->first();
@@ -57,18 +55,7 @@ class PeriodAttendanceModifyController extends Controller
             $updatePeriodAttendance->note = $notes[$attendance_id] ? $notes[$attendance_id] : NULL;
             $updatePeriodAttendance->save();
         }
-
         return \response()->json(['successMsg' => 'Successfully period attendance has been updated.']);
-
-    }
-
-    public function getSectionsByClassId($classId)
-    {
-        $classSection = ClassSection::with('section')
-            ->where('class_id', $classId)
-            ->select(['id', 'section_id'])
-            ->get();
-        return response()->json($classSection);
     }
 
     public function getSubjectsByClassIdAndSectionId($classId, $sectionId)

@@ -1,11 +1,7 @@
-<style>
-    th{
-        line-height: 14px;
-    }
-    td{
-        line-height: 11px;
-    }
-</style>
+    <style>
+        th{line-height: 14px;}
+        td{line-height: 11px;}
+    </style>
 @if ($expanseGroupReports->count() > 0)
 
         <div class="text-left">

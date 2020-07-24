@@ -29,11 +29,8 @@ class SubjectController extends Controller
         $addSubject->code = $request->code;
         $addSubject->save();
 
-        $notification = array(
-            'messege' => 'Subject inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully subject added.');
+        return response()->json('Subject added successfully:)');
     }
 
     public function edit($subjectId)
@@ -57,11 +54,8 @@ class SubjectController extends Controller
         $updateSubject->code = $request->code;
         $updateSubject->save();
 
-        $notification = array(
-            'messege' => 'Subject updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully subject updated.');
+        return response()->json('Subject updated successfully:)');
     }
 
     public function changeStatus($subjectId)

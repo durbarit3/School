@@ -238,19 +238,12 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        date_default_timezone_set('Asia/Dhaka');
-        $employee = Admin::orderBy('id', 'desc')->select('id')->first();
-        if (!$employee) {
-            $employeeId = 'E' . date('m') . date('y') . '0' . '1';
-        } else {
-            $employeeId = 'E' . date('m') . date('y') . ($employee->id <= 8 ? '0' : '') . ++$employee->id;
-        }
         $bloodGroups = DB::table('blood_groups')->select(['group_name', 'id'])->get();
         $groups = DB::table('groups')->select(['id', 'name'])->get();
         $designations = DB::table('designations')->select(['id', 'name'])->get();
         $roles = DB::table('roles')->select(['id', 'name', 'role_known_id'])->get();
         $genders = DB::table('genders')->select(['id', 'name'])->get();
-        return view('admin.employee.create', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders', 'employeeId'));
+        return view('admin.employee.create', compact('bloodGroups', 'groups', 'designations', 'roles', 'genders'));
     }
 
     public function store(Request $request)
@@ -587,5 +580,26 @@ class EmployeeController extends Controller
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
+    }
+
+    public function generateEmployeeId()
+    {
+        date_default_timezone_set('Asia/Dhaka');
+        //$employee = Admin::orderBy('id', 'desc')->select('id')->first();
+        //$employeeId = '';
+        // if (!$employee) {
+        //     $employeeId = 'E' . date('m') . date('y') . '0' . '1';
+        // } else {
+        //     $employeeId = 'E' . date('m') . date('y') . ($employee->id <= 8 ? '0' : '') . ++$employee->id;
+        // }
+        $prefix = 'E' . date('my');
+        $index = 0;
+        $tillNumber = 3;
+        $Id = '';
+        while ($index < $tillNumber) {
+            $Id .= rand(0, 9);
+            $index++;
+        }
+        return $prefix.$Id;
     }
 }

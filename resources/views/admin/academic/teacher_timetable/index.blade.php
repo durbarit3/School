@@ -1,66 +1,18 @@
 @extends('admin.master')
 @push('css')
   <style>
-
-    .loading {
-        margin: 0px;
-        padding: 0px;
-        background: white;
-        padding-bottom: 1px;
-    }
+    .loading {margin: 0px;padding: 0px;background: white;padding-bottom: 1px;}
+    .loading h4 { margin-left: 24px;}
+    button {margin-top: 25px;}
+    .day_area {width: 14%;height: auto;}
+    p {margin-top: 0;margin-bottom: 1rem;line-height: 17px;}
+    .day_grid {width: 14%;text-align: center;display: flex;flex-direction: column;}
     
-    .loading h4 {
-        margin-left: 24px;
-    }
+    .time_list {font-size: 12px;font-weight: 600;box-sizing: border-box;margin: 4px;border: 1px solid;  border-radius: 7px;background: #f7f7f7;color: #353c48;}
 
-    button {
-        margin-top: 25px;
-    }
-
-    .day_area {
-        width: 14%;
-        height: auto;
-    }
-
-    p {
-        margin-top: 0;
-        margin-bottom: 1rem;
-        line-height: 17px;
-    }
-
-    .day_grid {
-
-        width: 14%;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .time_list {
-        font-size: 12px;
-        font-weight: 600;
-        box-sizing: border-box;
-        margin: 4px;
-        border: 1px solid;
-        border-radius: 7px;
-        background: #f7f7f7;
-        color: #353c48;
-    }
-
-    .day_heading {
-        height: 37px;
-        padding-top: 10px;
-        margin: 4px;
-        border: 1px solid;
-        border-radius: 7px;
-    }
-
-    .time_list.no_scheduled {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+    .day_heading {height: 37px;padding-top: 10px;margin: 4px;border: 1px solid;border-radius: 7px;}
+    .time_list.no_scheduled {height: 100%;display: flex;flex-direction: column;justify-content: center;}
+    .select2-container--default .select2-selection--single .select2-selection__rendered {color: #444;line-height: 26px;}
   </style>
 @endpush
 @section('content')
@@ -95,7 +47,7 @@ date_default_timezone_set('Asia/Dhaka');
 
                                 <div class="col-md-6 no-gutters">
                                     <label class=" p-0 m-0"><b>Select Teacher :</b> </label>
-                                    <select required name="teacher_id" id="teacher_id" class="form-control form-control-sm">
+                                    <select required name="teacher_id" id="teacher_id" class="form-control form-control-sm select2" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">Select teacher</option>
                                         @foreach ($teachers as $teacher)
                                             <option value="{{ $teacher->id }}">{{ $teacher->adminname }}</option>
@@ -122,35 +74,41 @@ date_default_timezone_set('Asia/Dhaka');
 
 @push('js')
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+            //Initialize Select2 Elements
+        });
+    </script>
 
-    $(document).ready(function () {
-        $('.loading').hide();
-        $('.another_body').hide();
-        $('.search_form').on('submit', function (e) {
-            e.preventDefault();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.loading').hide();
             $('.another_body').hide();
-            $('.time_table_list').empty();
-            $('.loading').show(100);
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var request = $(this).serialize(); 
-            //console.log(request);
-            $.ajax({
-                url: url,
-                type: method,
-                data:request,
-                success: function (data) {
-                    //console.log(data);
-                    if (!$.isEmptyObject(data)) {
-                        $('.time_table_list').html(data);
-                        $('.loading').hide(100);
-                        $('.another_body').show();
+            $('.search_form').on('submit', function (e) {
+                e.preventDefault();
+                $('.another_body').hide();
+                $('.time_table_list').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var request = $(this).serialize(); 
+                //console.log(request);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data:request,
+                    success: function (data) {
+                        //console.log(data);
+                        if (!$.isEmptyObject(data)) {
+                            $('.time_table_list').html(data);
+                            $('.loading').hide(100);
+                            $('.another_body').show();
+                        }
                     }
-                }
-            })
-        })
-    });
-
-</script>
+                });
+            });
+        });
+    </script>
 @endpush

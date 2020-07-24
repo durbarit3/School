@@ -111,7 +111,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Vehicle</h4>
+                <h6 class="modal-title">Add Vehicle</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -156,8 +156,8 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close </button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
 
                 </form>
@@ -172,7 +172,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Vehicle</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Vehicle</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

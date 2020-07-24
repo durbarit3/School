@@ -32,49 +32,48 @@
                 </div>
             </div>
 
-       
-                <div class="panel_body">
-                    <div class="table-responsive">
-                        <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
-                            <thead>
+            <div class="panel_body">
+                <div class="table-responsive">
+                    <table id="dataTableExample1" class="table table-bordered table-hover mb-2">
+                        <thead>
+                            <tr class="text-left">
+                                <th>Class</th>
+                                <th>Section</th>
+                                <th>Teacher</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($classSections as $classSection)
+
                                 <tr class="text-left">
-                                    <th>Class</th>
-                                    <th>Section</th>
-                                    <th>Teacher</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($classSections as $classSection)
-
-                                    <tr class="text-left">
-                                        <td>{{ $classSection['class'] }}</td>
-                                        <td>{{ $classSection['section'] }}</td>
-                                        <td class="text-left">
-                                            @foreach ($classSection['classTeachers'] as $teacher)
+                                    <td>{{ $classSection['class'] }}</td>
+                                    <td>{{ $classSection['section'] }}</td>
+                                    <td class="text-left">
+                                        @foreach ($classSection['classTeachers'] as $teacher)
                                             <b>- {{ $teacher['name'] }}</b> <br/>
-                                            @endforeach
-                                        </td>
+                                        @endforeach
+                                    </td>
 
-                                        <td class="text-center">
-                                            
-                                            <a onclick="subjectInfo( {{ $classSection['id'] }} )" class="edit_assigned_teacher btn btn-sm btn-blue text-white" data-id="{{ $classSection['id'] }}" title="edit" data-toggle="modal" data-target="#editModal">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a> 
-                                            
-                                            @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['delete'] == 1)
-                                                | <a id="delete" href="{{ route('academic.assign.class.teacher.delete', $classSection['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
+                                    <td class="text-center">
+                                        
+                                        <a onclick="subjectInfo( {{ $classSection['id'] }} )" class="edit_assigned_teacher btn btn-sm btn-blue text-white" data-id="{{ $classSection['id'] }}" title="edit" data-toggle="modal" data-target="#editModal">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a> 
+                                        
+                                        @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['delete'] == 1)
+                                            | <a id="delete" href="{{ route('academic.assign.class.teacher.delete', $classSection['id']) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
 
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+            </div>
         </div>
     </section>
 </div>
@@ -119,7 +118,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class=" col-form-label text-right"><b>Select teacher</b> :</label>
-                            <select class="select2" multiple="multiple" name="teacher_ids[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                            <select class="select2" multiple="multiple" name="teachers[]" data-placeholder="Section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">----Select Teacher----</option>
                                 @foreach ($teachers as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->adminname }}</option>  
@@ -131,14 +130,14 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close </button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="submit" class="btn loading_button btn-sm btn-blue">Loading...</button>
+                        <button type="submit" class="btn submit_button btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -156,19 +155,31 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 @push('js')
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
-        $('.select_class').on('change', function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select_class').on('change', function () {
                 var classId = $(this).val();
                 $.ajax({
-                    url:"{{ url('admin/academic/assign/class/teachers/get/sections/by/') }}"+"/"+classId,
+                    url:"{{ url('admin/ajax/class/sections/') }}"+"/"+classId,
                     type:'get',
                     dataType:'json',
                     success:function(data){
@@ -180,53 +191,45 @@
                         })
                     }
                 })
-        })
+            })
         });
-
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
+            //Initialize Select2 Elements
+            $('.select2').select2()
             //Initialize Select2 Elements
         });
-
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
-
             $('.modal_close_button').on('click', function(){
                 $('.error').html('');
                 $('.form-control').removeClass('is-invalid');
             })
-
         });
     </script>
 
-    
     <script>
         $(document).ready(function () {
-        $(document).on('click', '.edit_assigned_teacher', function(){
-            var class_section_id = $(this).data('id');
-            $.ajax({
-                url:"{{ url('admin/academic/assign/class/teachers/edit') }}" + "/" + class_section_id,
-                type:'get',
-                success:function(data){
-                    $('.edit_modal_body').empty();
-                    $('.edit_modal_body').append(data);
-                }
+            $(document).on('click', '.edit_assigned_teacher', function(){
+                var class_section_id = $(this).data('id');
+                $.ajax({
+                    url:"{{ url('admin/academic/assign/class/teachers/edit') }}" + "/" + class_section_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                    }
+                });
             });
         });
-    });
     </script>
 
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -235,6 +238,8 @@
 
             $(document).on('submit', '#assign_class_teacher_form', function(e){
                 e.preventDefault();
+                $('.submit_button').hide();
+				$('.loading_button').show();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -245,21 +250,22 @@
                     success:function(data){
 
                         if(!$.isEmptyObject(data.error)){
+                            $('.submit_button').show();
+						    $('.loading_button').hide();
                             toastr.error(data.error);
                         }else{
+                            $('.submit_button').show();
+						    $('.loading_button').hide();
                             $('.error').html('');
                             $('#assign_class_teacher_form')[0].reset();
                             $('#myModal1').modal('hide');
-                            toastr.success(data.success);
-                            setInterval(function(){
-                                window.location = "{{ url()->current() }}";
-                            }, 700)
+                            window.location = "{{ url()->current() }}";
                         }
-                       
-                        
                     },
                     error:function(err){
                         //log(err.responseJSON.errors);
+                        $('.submit_button').show();
+						$('.loading_button').hide();
                         if(err.responseJSON.errors.class_id){
                             $('.class_id_error').html('Class field is required.');
                             $('.class_id').addClass('is-invalid');
@@ -276,7 +282,7 @@
                             $('.section_id').removeClass('is-invalid');
                         }
                         
-                        if(err.responseJSON.errors.teacher_ids){
+                        if(err.responseJSON.errors.teachers){
                             $('.teacher_ids_error').html('Teacher field is required.');
                             $('.teacher_ids').addClass('is-invalid');
                         }else{
@@ -287,9 +293,52 @@
                 });
             });
         });
-
     </script> 
 
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
 
-
+			$(document).on('submit', '#edit_assign_teacher_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}"; 
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+	</script> 
 @endpush

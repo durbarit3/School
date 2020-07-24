@@ -17,33 +17,27 @@ class ExamTermController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:exam_terms,name'
+            'name' => 'required'
         ]);
         $addCategory = new ExamTerm();
         $addCategory->name = $request->name;
         $addCategory->save();
 
-        $notification = array(
-            'messege' => 'Term inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Term inserted successfully:)');
+        return response()->json('Term inserted successfully');
     }
 
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:exam_terms,name,' . $request->id
+            'name' => 'required'
         ]);
         $updateCategory = ExamTerm::where('id', $request->id)->first();
         $updateCategory->name = $request->name;
         $updateCategory->save();
 
-        $notification = array(
-            'messege' => 'Term updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Term updated successfully:)');
+        return response()->json('Term updated successfully');
     }
 
     public function changeStatus($termId)

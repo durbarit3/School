@@ -21,12 +21,21 @@
 Route::namespace('Admin')->prefix('admin')->group(function () {
 
     Route::get('/', 'AdminController@index')->name('admin.home');
+    Route::get('expanse/chart', 'AdminController@expanseArray');
+    Route::get('incomes/chart', 'AdminController@incomeArray');
+    Route::get('financial/report', 'AdminController@financialChartData');
+    
     Route::get('/login', 'AuthController@showLoginForm')->name('admin.login');
     Route::post('/logout', 'AuthController@logout')->name('admin.logout');
     Route::post('/login', 'AuthController@login')->name('admin.login.submit');
     Route::get('/register', 'AuthController@showRegistationPage');
     Route::post('/register', 'AuthController@register')->name('admin.register');
 
+});
+
+Route::group(['prefix' => 'admin/ajax', 'namespace' => 'Admin', 'middleware' => 'auth:admin'], function () {
+    Route::get('class/sections/{classId}', 'AjaxFixedQueryController@getSectionsClassWise');
+    Route::get('route/vehicles/{routeId}', 'AjaxFixedQueryController@getVehiclesRouteWise');
 });
 
 // Menu area start
@@ -36,7 +45,6 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     Route::get('/url/setting', 'AdminController@urlSetting')->name('admin.url.setting');
     Route::get('/get/url/name/{id}', 'AdminController@getUrlName');
 });
-
 
 Route::group(['prefix' => 'admin/categories', 'namespace' => 'Admin', 'middleware' => 'auth:admin'], function () {
 
@@ -52,20 +60,6 @@ Route::group(['prefix' => 'admin/categories', 'namespace' => 'Admin', 'middlewar
 });
 
 Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::group(['prefix' => 'session'], function () {
-        Route::get('/', 'SessionYearController@index')->name('admin.academic.session.index');
-        Route::post('store', 'SessionYearController@store')->name('admin.academic.session.store');
-
-        Route::post('update', 'SessionYearController@update')->name('admin.academic.session.update');
-
-        Route::get('status/change/{sessionId}', 'SessionYearController@changeStatus')->name('admin.academic.session.status.update');
-
-        Route::get('delete/{sessionId}', 'SessionYearController@delete')->name('admin.academic.session.delete');
-
-        // Ajax Route
-        Route::get('edit/{sessionId}', 'SessionYearController@edit');
-
-    });
     
     Route::group(['prefix' => 'class'], function () {
         Route::get('/', 'ClassController@index')->name('admin.class.index');
@@ -90,7 +84,7 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::get('delete/{subjectId}', 'SubjectController@delete')->name('admin.academic.subject.delete');
         Route::post('multiple/delete', 'SubjectController@multipleDelete')->name('admin.academic.subject.multiple.delete');
         Route::get('edit/{subjectId}', 'SubjectController@edit')->name('admin.academic.subject.edit');
-        Route::patch('update/{subjectId}', 'SubjectController@update')->name('admin.academic.subject.update');
+        Route::post('update/{subjectId}', 'SubjectController@update')->name('admin.academic.subject.update');
 
         // Ajax Route
         Route::get('edit/{subjectId}', 'SubjectController@edit')->name('admin.academic.subject.edit');
@@ -99,7 +93,7 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
     Route::group(['prefix' => 'section'], function () {
         Route::get('/', 'SectionController@index')->name('admin.academic.section.index');
         Route::post('store', 'SectionController@store')->name('admin.academic.section.store');
-        Route::patch('update', 'SectionController@update')->name('admin.academic.section.update');
+        Route::post('update', 'SectionController@update')->name('admin.academic.section.update');
         Route::get('delete/{section}', 'SectionController@delete')->name('admin.academic.delete');
         Route::post('multiple/delete', 'SectionController@multipleDelete')->name('admin.academic.section.multiple.delete');
         Route::get('change/status/{section}', 'SectionController@changeStatus')->name('admin.academic.section.status.update');
@@ -124,10 +118,9 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::get('/', 'AssignClassTeacherController@index')->name('academic.assign.class.teacher.index');
         Route::post('store', 'AssignClassTeacherController@store')->name('admin.academic.assign.class.teacher.store');
         Route::get('delete/{classSectionId}', 'AssignClassTeacherController@delete')->name('academic.assign.class.teacher.delete');
-        Route::patch('update/{classSectionId}', 'AssignClassTeacherController@update')->name('academic.assign.class.teacher.update');
+        Route::post('update/{classSectionId}', 'AssignClassTeacherController@update')->name('academic.assign.class.teacher.update');
 
         //Ajax Route
-        Route::get('/get/sections/by/{classId}', 'AssignClassTeacherController@getSectionByAjax');
         Route::get('edit/{classSectionId}', 'AssignClassTeacherController@edit');
     });
 
@@ -138,7 +131,6 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::get('update/status/{subjectTeacherId}', 'AssignSubjectTeacherController@updateStatus')->name('academic.assign.subject.teacher.status.update');
 
         //Ajax Route
-        Route::get('/get/sections/by/{classId}', 'AssignSubjectTeacherController@getSectionByAjax');
         Route::get('get/subjects/by/classId/sectionId/{classId}/{sectionId}', 'AssignSubjectTeacherController@getSubjectsByClassIdAndSectionId');
     });
 
@@ -149,7 +141,6 @@ Route::group(['prefix' => 'admin/academic', 'namespace' => 'admin', 'middleware'
         Route::post('store', 'ClassTimetableController@store')->name('admin.class.timetable.store');
         
         // Ajax route
-        Route::get('get/sections/by/{classId}', 'ClassTimetableController@getSectionsByClassId');
         Route::get('list/single/delete/{timetableId}', 'ClassTimetableController@singleTimetableListDelete');
         Route::get('get/timetable/list/{classId}/{sectionId}/{day}', 'ClassTimetableController@getTimetableListByAjax');
         Route::get('get/more/timetable/list/{classId}/{sectionId}', 'ClassTimetableController@getTimetableMoreListByAjax');
@@ -173,7 +164,7 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         
         // Ajax Routes
         route::post('store', 'PeriodAttendanceController@store')->name('admin.attendance.period.attendance.store');
-        Route::get('get/sections/by/{classId}', 'PeriodAttendanceController@getSectionsByClassId');
+
         Route::get('get/subjects/by/{classId}/{sectionId}','PeriodAttendanceController@getSubjectsByClassIdAndSectionId');
     });
 
@@ -182,7 +173,6 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         
         // Ajax Routes
         route::post('update', 'PeriodAttendanceModifyController@update')->name('admin.attendance.period.by.date.attendance.update');
-        Route::get('get/sections/by/{classId}', 'PeriodAttendanceModifyController@getSectionsByClassId');
         Route::get('get/subjects/by/{classId}/{sectionId}','PeriodAttendanceModifyController@getSubjectsByClassIdAndSectionId');
     });
 
@@ -193,7 +183,6 @@ Route::group(['prefix' => 'admin/attendance', 'namespace' => 'Admin', 'middlewar
         
         // Ajax Routes
         route::post('store', 'CurrentDayAttendanceController@store')->name('admin.attendance.current.day.attendance.store');
-        Route::get('get/sections/by/{classId}', 'CurrentDayAttendanceController@getSectionsByClassId');
         Route::get('get/subjects/by/{classId}/{sectionId}','CurrentDayAttendanceController@getSubjectsByClassIdAndSectionId');
     });
 
@@ -460,7 +449,7 @@ Route::group(['prefix' => 'admin/expanses', 'middleware' => 'auth:admin', 'names
         Route::get('status/change/{expanseId}', 'ExpanseController@statusChange')->name('admin.expanse.status.update');
         Route::get('delete/{expanseId}', 'ExpanseController@delete')->name('admin.expanse.delete');
         Route::post('multiple/delete', 'ExpanseController@multipleDelete')->name('admin.expanse.multiple.delete');
-        Route::get('search', 'ExpanseController@search')->name('admin.expanse.search');
+        Route::get('search', 'ExpanseController@searchIndex')->name('admin.expanse.search.index');
         Route::get('search/action', 'ExpanseController@searchAction')->name('admin.expanse.search.action');
 
         //Ajax route
@@ -523,7 +512,7 @@ Route::group(['prefix' => 'admin/incomes', 'middleware' => 'auth:admin', 'namesp
         Route::get('status/change/{incomeId}', 'IncomeController@statusChange')->name('admin.income.status.update');
         Route::get('delete/{incomeId}', 'IncomeController@delete')->name('admin.income.delete');
         Route::post('multiple/delete', 'IncomeController@multipleDelete')->name('admin.income.multiple.delete');
-        Route::get('search', 'IncomeController@search')->name('admin.income.search');
+        Route::get('search', 'IncomeController@searchIndex')->name('admin.income.search.index');
         Route::get('search/action', 'IncomeController@searchAction')->name('admin.income.search.action');
 
         //Ajax route
@@ -595,6 +584,7 @@ Route::group(['prefix' => 'admin/employees', 'namespace' => 'Admin'], function (
     Route::post('authentication/{employeeId}', 'EmployeeController@authenticationUpdate')->name('admin.employee.authentication.update');
     // Ajax Route
     Route::get('bank/edit/{employeeId}', 'EmployeeController@editBank');
+    Route::get('/generate/employeeId', 'EmployeeController@generateEmployeeId');
 });
 
 
@@ -846,6 +836,7 @@ Route::group(['prefix' => 'admin/event', 'namespace' => 'Admin'], function () {
 
 // Inventory area start
 Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
+
     Route::group(['prefix'=>'category'],function(){
         Route::get('/','InventoryController@categoryIndex')->name('inventory.category.index');
         Route::post('/store','InventoryController@categoryStore')->name('inventory.category.store');
@@ -879,7 +870,6 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
         Route::get('/','InventoryController@supplierIndex')->name('admin.inventory.supplier');
         Route::post('/store','InventoryController@supplierStore')->name('inventory.supplier.store');
         Route::get('/edit/{id}','InventoryController@supplierEdit');
-
         Route::patch('/update','InventoryController@supplierUpdate')->name('inventory.supplier.update');
         Route::get('/delete/{id}','InventoryController@supplierDelete')->name('inventory.supplier.delete');
         Route::post('/multi/delete','InventoryController@supplierMultiDelete')->name('admin.inventory.supplier.multidelete');
@@ -887,18 +877,12 @@ Route::group(['prefix'=>'admin/inventory','namespace'=>'Admin'],function(){
     });
 
     Route::group(['prefix'=>'item/stock'],function(){
-
         Route::get('/','InventoryController@stockItemIndex')->name('inventory.item.stock.index');
         Route::post('/store','InventoryController@stockItemStore')->name('inventory.item.stock.create');
-
         Route::get('/edit/{id}','InventoryController@stockItemEdit');
-
     });
 
-
     // Issue Item
-
-
     Route::group(['prefix'=>'issue'],function(){
         Route::get('/','InventoryController@issueIndex')->name('admin.inventory.issue');
         Route::post('/store','InventoryController@issueStore')->name('inventory.issue.store');
@@ -1096,6 +1080,31 @@ Route::group(['prefix' => 'admin/reports', 'namespace'=>'Admin', 'middleware' =>
         Route::get('leave/apply/report', 'HumanResourceReportController@leaveApplyReport')->name('admin.report.human.resource.report.leave.apply.report');
     });
     
+    Route::group(['prefix' => 'hostel/report'], function(){
+        Route::get('/', 'HostelReportController@index')->name('admin.report.hostel.report.index');
+        Route::get('student/hostel/report', 'HostelReportController@getHostelReport')->name('admin.report.hostel.report');
+    });
+    
+    Route::group(['prefix' => 'transport/report'], function(){
+        Route::get('/', 'TransportReportController@index')->name('admin.report.transport.report.index');
+        Route::get('student/transport/report', 'TransportReportController@getTransportReport')->name('admin.report.transport.report');
+    });
+    
+    Route::group(['prefix' => 'library/report'], function(){
+        Route::get('/', 'LibraryReportController@index')->name('admin.report.library.report.index');
+        Route::get('library/book/issue/report', 'LibraryReportController@getBookIssueReport')->name('admin.report.library.book.issue.report');
+
+        Route::get('library/book/issue/return/report', 'LibraryReportController@getBookIssueReturnReport')->name('admin.report.library.book.issue.return.report'); 
+        
+        Route::get('library/book/due/report', 'LibraryReportController@getBookDueReport')->name('admin.report.library.book.due.report');
+    });
+    
+    Route::group(['prefix' => 'inventory/report'], function(){
+        Route::get('/', 'InventoryReportController@index')->name('admin.report.inventory.report.index');
+        Route::get('/stock/report', 'InventoryReportController@stockReport')->name('admin.report.inventory.report.stock');
+        Route::get('/issue/report', 'InventoryReportController@issueReport')->name('admin.report.inventory.issue.report');
+    });
+    
 });
 
 Route::group(['prefix'=>'admin/front/cms','namespace'=>'Admin'],function(){
@@ -1170,30 +1179,19 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::post('permission/{roleId}', 'RolePermissionController@permission')->name('admin.gen.settings.role.permission');
     });
 
-
-
     // seesion area start
-
-     Route::group(['prefix' => 'session'], function(){
-
-        Route::get('/','SystemController@showSeesion')->name('admin.session.setting');
-
-        Route::post('/create','SystemController@seesionCreate')->name('admin.session.create');
-
-        Route::get('/status/{id}','SystemController@sessionStatus')->name('admin.session.status');
-        Route::get('/edit/{id}','SystemController@getSessionData');
-        Route::get('/delete/{id}','SystemController@getSessionDelete')->name('admin.session.delete');
-        Route::patch('/update','SystemController@sessionUpdate')->name('admin.session.update');
-     });
-
-
-
-
-
+    Route::group(['prefix' => 'session'], function () {
+        Route::get('/', 'SessionYearController@index')->name('admin.setting.session.index');
+        Route::post('store', 'SessionYearController@store')->name('admin.setting.session.store');
+        Route::post('update', 'SessionYearController@update')->name('admin.setting.session.update');
+        Route::get('status/change/{sessionId}', 'SessionYearController@changeStatus')->name('admin.setting.session.status.update');
+        Route::get('delete/{sessionId}', 'SessionYearController@delete')->name('admin.setting.session.delete');
+        // Ajax Route
+        Route::get('edit/{sessionId}', 'SessionYearController@edit');
+    });
 
     // notification area start
-
-     Route::group(['prefix' => 'notification'], function(){
+    Route::group(['prefix' => 'notification'], function(){
 
         Route::get('/','SystemController@showNotification')->name('admin.notification.setting');
   
@@ -1202,19 +1200,16 @@ Route::group(['prefix' => 'admin/settings', 'middleware' => 'auth:admin' , 'name
         Route::get('/sms/status/{id}','SystemController@changeSmsNotificationStatus');
 
         Route::patch('/update','SystemController@notificationUpdate')->name('admin.session.update');
-     });
+    });
 
 
-      // sms notification area start
-
-     Route::group(['prefix' => 'sms'], function(){
+    // sms notification area start
+    Route::group(['prefix' => 'sms'], function(){
 
         Route::get('/','SystemController@showSmsNotification')->name('admin.sms.setting');
 
         Route::post('/update','SystemController@smsNotificationUpdate')->name('admin.sms.update');
      });
-
-    
 });
 
 // Inventory area end
@@ -1230,6 +1225,7 @@ Auth::routes();
 
 use App\Admin;
 use App\MarkEntires;
+use App\FeesCollection;
 use App\RolePermission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1258,8 +1254,12 @@ Route::get('test', function(){
 
     // $fees = App\FeesCollection::all();
     // return $fees;
+
     $permissions = App\RolePermission::where('role_id', 1)->firstOrFail();
     return json_decode($permissions->event_module, true);
+
+    // $fees = FeesCollection::all();
+    // return $fees->chunk(100);
 });
 
 

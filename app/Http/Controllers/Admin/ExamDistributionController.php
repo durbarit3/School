@@ -24,11 +24,8 @@ class ExamDistributionController extends Controller
         $addCategory->name = $request->name;
         $addCategory->save();
 
-        $notification = array(
-            'messege' => 'Exam distribution inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Exam distribution inserted successfully:)');
+        return response()->json('Exam distribution inserted successfully');
     }
 
     public function update(Request $request)

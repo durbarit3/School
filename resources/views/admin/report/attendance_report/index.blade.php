@@ -1,74 +1,20 @@
 @extends('admin.master')
 @push('css')
     <style>
-        .loading {
-            margin: 0px;
-            padding: 0px;
-            background: white;
-            padding-bottom: 1px;
-        }
-
-        section {
-            display: block;
-            overflow: hidden;
-            padding: 0px 0px;
-        }
-        
-        .loading h4 {
-            margin-left: 24px;
-        }
-
-        td {
-            line-height: 11px;
-        }
-        
-        a.report_menu_link {
-            width: 100%;
-            display: block;
-            padding: 4px 7px;
-            color: #444;
-            margin-left: 19px;
-        }
-        
-        li.report_menu_list {
-            display: block;
-            margin-top: 4px;
-        }
-
-        .list_background{
-            background: #dceeff;
-        }
-
-        li.report_menu_list a:hover {
-            color:black;
-        }
-        
+        .loading {margin: 0px;padding: 0px;background: white;padding-bottom: 1px;}
+        section {display: block;overflow: hidden;padding: 0px 0px;}
+        .loading h4 {margin-left: 24px;}
+        td {line-height: 11px;}
+        a.report_menu_link {width: 100%;display: block;padding: 4px 7px;color: #444;margin-left: 19px;}
+        li.report_menu_list {display: block;margin-top: 4px;}
+        .list_background{background: #dceeff;}
+        li.report_menu_list a:hover {color:black;}
         a.report_menu_link svg {font-size: 16px;}
-
-        .report_list_area {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-            background-color: #fff;
-        }
-
-        .student_attendance_report_table th{
-            line-height: 15px;
-        }
-
+        .report_list_area {box-shadow: 0 2px 10px rgba(0, 0, 0, .2);background-color: #fff;}
+        .student_attendance_report_table th{line-height: 15px;}
         .table_area {overflow-x: scroll;}
-
-        .attendance_status_marking_area {
-            border: 1px solid gray;
-            padding: 1px 10px;
-            margin-bottom: 7px;
-            border-radius: 5px;
-            width: 450px;
-        }
-        
-        .attendance_status_marking_area h6 {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
+        .attendance_status_marking_area {border: 1px solid gray;padding: 1px 10px;margin-bottom: 7px;border-radius: 5px;width: 450px;}
+        .attendance_status_marking_area h6 {margin-top: 5px;margin-bottom: 5px;}
     </style>
 @endpush
 @section('content')
@@ -99,16 +45,19 @@
                                     <div class="col-md-4">
                                         <ul class="report_menu_ul">
                                             <li class="report_menu_list">
-                                                <a data-value="student_attendance_report" class="report_menu_link student_attendance_report" href="#"><i class="fas fa-info-circle"></i> 
-                                                    <b>Student Attendance Report</b> </a>
+                                                <a data-value="student_attendance_report" class="report_menu_link text-dark student_attendance_report" href="#">
+                                                    <i class="fas fa-file-alt"></i> <b>Student Attendance Report</b> 
+                                                </a>
                                             </li>
 
                                             <li class="report_menu_list">
-                                                <a data-value="employee_attendance_report" class="report_menu_link employee_attendance_report" href="#"><i class="fas fa-info-circle"></i> <b>Employee Attendance Report</b> </a>
+                                                <a data-value="employee_attendance_report" class="report_menu_link text-dark employee_attendance_report" href="#">
+                                                    <i class="fas fa-file-alt"></i> <b>Employee Attendance Report</b> 
+                                                </a>
                                             </li>
                                             
                                             <li class="report_menu_list">
-                                                <a class="report_menu_link exam_attendance_report" data-value="exam_attendance_report"  href="#"><i class="fas fa-info-circle"></i> <b>Exam Attendance Report</b></a>
+                                                <a class="report_menu_link text-dark exam_attendance_report" data-value="exam_attendance_report"  href="#"><i class="fas fa-file-alt"></i> <b>Exam Attendance Report</b></a>
                                             </li>
                                         </ul>
                                     </div>

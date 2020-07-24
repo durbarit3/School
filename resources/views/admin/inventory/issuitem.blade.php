@@ -5,27 +5,26 @@
     <!-- panel -->
     <div class="panel">
         <div class="panel_header">
-        <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Issue Item</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Issue Item</span></a>
-                        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel_title">
+                        <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Issue Item</span>
                     </div>
                 </div>
+                <div class="col-md-6 text-right">
+                    <div class="panel_title">
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
+                                class="fas fa-plus"></i></span> <span>Add Issue Item</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
     
         <div class="panel_body">
-       
             <div class="table-responsive">
                 <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>
                                 SL
                             </th>
@@ -41,30 +40,25 @@
                     </thead>
                     <tbody>
 
-                   @foreach($inventoryissues as $row)
+                    @foreach($inventoryissues as $row)
                         <tr>
-                            <td>
-                                <label class="chech_container mb-4">
-                                    <input type="checkbox" name="deleteId[]" class="checkbox" value="">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>{{$row->inventoryItem->item}}</td>
-                            <td>{{$row->inventoryCategory->category}}</td>
-                            <td>{{$row->isuereturn}}</td>
+                            <td>{{ $loop->index +1 }}</td>
+                            <td>{{ $row->inventoryItem->item }}</td>
+                            <td>{{ $row->inventoryCategory->category }}</td>
+                            <td>{{ $row->isuereturn }}</td>
                             <!-- <td>{{$row->issuedate}} - {{$row->returndate}}</td> -->
                             
-                            
-                               <td>{{$row->inventoryStudent->name}}</td>
-                               <td>{{$row->inventoryAdmin->adminname}}</td>
-                               <td>{{$row->qty}}</td>
-                            
-                            
+                            <td>{{ $row->inventoryStudent->name }}</td>
+                            <td>{{ $row->inventoryAdmin->adminname }}</td>
+                            <td>{{ $row->qty }}</td>
                             <td>
-                                
-                                <a href="{{ route('inventory.issue.return', $row->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up" title="Click To Return"></i></a>
-                                
+                                @if ($row->returned_status == 0)
+                                    <a href="{{ route('inventory.issue.return', $row->id) }}" class="btn btn-danger btn-sm ">
+                                        Click to return
+                                    </a>
+                                @else
+                                    <h6 class="badge badge-success"><b>Book returned</b> </h6>
+                                @endif 
                             </td>
              
                             <td>
@@ -73,10 +67,7 @@
                                 </a>
                             </td>
                         </tr>
-
                     @endforeach
-                       
-
                     </tbody>
                 </table>
             </div>
@@ -105,47 +96,43 @@
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Role:</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="exampleFormControlSelect1" name="role">
-                                  <option> --- Select Role ---</option>
-                                  @foreach($roles as $row)
+                                <option> --- Select Role ---</option>
+                                @foreach($roles as $row)
                                     <option value="{{$row->role_known_id}}">{{$row->name}}</option>
-                                  @endforeach
+                                @endforeach
                               
-                                </select>
+                            </select>
                         </div>
                     </div>
 
-                      <div class="form-group row">
+                    <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue By:</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="exampleFormControlSelect1" name="issueby">
-                                  <option>Select</option>
-                                        @foreach($issuers as $row)
-                                            <option value="{{$row->id}}">{{$row->adminname}}</option>
-                                        @endforeach
-
-                                </select>
+                                <option>Select</option>
+                                @foreach($issuers as $row)
+                                    <option value="{{$row->id}}">{{$row->adminname}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue To:</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="exampleFormControlSelect1" name="issueto">
-                                  <option>Select</option>
-                                  @foreach($students as $row)
+                                <option>Select</option>
+                                @foreach($students as $row)
                                     <option value="{{$row->id}}">{{$row->name}}</option>
-                                  @endforeach
-                                </select>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue Date</label>
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="issuedate" require/>
-                            
                         </div>
                     </div>
 
@@ -153,7 +140,6 @@
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Return Date</label>
                         <div class="col-sm-8">
                             <input type="date" class="form-control" name="returndate" require/>
-                            
                         </div>
                     </div>
 
@@ -161,22 +147,20 @@
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Item Category:</label>
                         <div class="col-sm-8">
                             <select class="form-control" id="cateory" name="category">
-                                  <option>-- Category --</option>
-                                  @foreach($categores as $row)
+                                <option>-- Category --</option>
+                                @foreach($categores as $row)
                                   <option value="{{$row->id}}">{{$row->category}}</option>
-                                  @endforeach
-                                  
-                                </select>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Item:</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="item" id="cat_items">
                                
-                                </select>
+                            </select>
                         </div>
                     </div>
 
@@ -187,12 +171,10 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
                             <textarea rows="3"  class="form-control" name="description" require></textarea>
-                            
                         </div>
                     </div>
 
@@ -206,40 +188,32 @@
     </div>
 </div>
 
-
-
 @endsection
 
 @push('js')
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#cateory').on('change', function() {
-            var id = $( this ).val();
-            
-            
-            if (id) {
-                $.ajax({
-                    url: "{{ url('admin/inventory/issue/items') }}/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-
-                        console.log(data);
-
-                        $('#cat_items').empty();
-                        $('#cat_items').append(' <option value="0">--Please Select Your Items--</option>');
-                        $.each(data,function(index,itemobj){
-                            $('#cat_items').append('<option value="' + itemobj.id + '">'+itemobj.item+'</option>');
-                        });
-                    }
-                });
-            } else {
-                // alert('danger');
-            }
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#cateory').on('change', function() {
+                var id = $( this ).val();
+                if (id) {
+                    $.ajax({
+                        url: "{{ url('admin/inventory/issue/items') }}/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            console.log(data);
+                            $('#cat_items').empty();
+                            $('#cat_items').append(' <option value="0">--Please Select Your Items--</option>');
+                            $.each(data,function(index,itemobj){
+                                $('#cat_items').append('<option value="' + itemobj.id + '">'+itemobj.item+'</option>');
+                            });
+                        }
+                    });
+                } else {
+                    // alert('danger');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 @endpush

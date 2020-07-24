@@ -55,7 +55,7 @@ date_default_timezone_set('Asia/Dhaka');
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="m-0"><b>Session </b> </label>
-                                        <select required name="session_id" id="session_id" class="form-control form-control -sm form-control form-control -sm-sm select_session">
+                                        <select required name="session_id" id="session_id" class="form-control form-control-sm select_session">
                                             <option value="">Select session</option>
                                             @foreach ($sessions as $session)
                                                 <option value="{{ $session->id }}">{{ $session->session_year }}</option>
@@ -65,7 +65,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     
                                     <div class="col-md-3">
                                         <label class="m-0"><b>Exam Name </b> </label>
-                                        <select required name="exam_id" id="exams" class="form-control form-control -sm form-control form-control -sm-sm">
+                                        <select required name="exam_id" id="exams" class="form-control form-control-sm">
                                             <option value="">Select Exam Name</option>
                                             
                                         </select>
@@ -73,7 +73,7 @@ date_default_timezone_set('Asia/Dhaka');
 
                                     <div class="col-md-3">
                                         <label class="m-0"><b>Class </b> </label>
-                                        <select required name="class_id" class="select_class class_id form-control form-control -sm form-control form-control -sm-sm">
+                                        <select required name="class_id" class="select_class class_id form-control form-control-sm form-control form-control -sm-sm">
                                             <option value="">Select class</option>
                                             @foreach ($classes as $class)
                                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
@@ -84,7 +84,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     <div class="col-md-3">
                                         <label class="m-0"><b>Section </b> </label>
                                         <select required name="section_id" id="sections"
-                                            class="form-control form-control -sm form-control form-control -sm-sm select_section section_id">
+                                            class="form-control form-control-sm form-control form-control -sm-sm select_section section_id">
                                             <option value="">Select section</option>
                                         </select>
                                     </div>
@@ -92,7 +92,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     <div class="col-md-3">
                                         <label class="m-0"><b>Subject </b> </label>
                                         <select required name="subject_id" id="subjects"
-                                            class="form-control form-control -sm form-control form-control -sm-sm subject_id">
+                                            class="form-control form-control-sm form-control form-control -sm-sm subject_id">
                                             <option value="">Select Subject</option>
                                         </select>
                                     </div>

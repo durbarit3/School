@@ -45,7 +45,6 @@
                     <tbody>
 
                     @foreach($items as $item)
-                   
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
@@ -53,9 +52,9 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <td>{{$item->name}}</td>
-                            <td>{{$item->code}}</td>
-                            <td>{{$item->description}}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->code }}</td>
+                            <td>{{ $item->description }}</td>
                             <td>
                                 @if($item->status == 1)
                                 <a href="{{ route('inventory.item.status.update',$item->id) }}" class="btn btn-success btn-sm ">
@@ -65,7 +64,6 @@
                                     <i class="fas fa-thumbs-down"></i>
                                 </a>
                                 @endif
-                                
                             </td>
              
                             <td>
@@ -75,12 +73,7 @@
                                 </a>
                             </td>
                         </tr>
-
-                        @endforeach
-
-                    
-                       
-
+                    @endforeach
                     </tbody>
                 </table>
             </div>

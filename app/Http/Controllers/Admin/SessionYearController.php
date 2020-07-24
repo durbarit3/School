@@ -12,7 +12,7 @@ class SessionYearController extends Controller
     {
         $sessions = Session::active();
        
-        return view('admin.academic.session.index', compact('sessions'));
+        return view('admin.setting.session.index', compact('sessions'));
     }
 
     public function store(Request $request)

@@ -2,16 +2,10 @@
 @section('content')
 @push('css')
     <style>
-        .select2-container--default .select2-selection--single {
-            background-color: #fff;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            height: 35px;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            line-height: 32px;
-        }
+        .select2-container--default .select2-selection--single {background-color: #fff;border: 1px solid #aaa;
+            border-radius: 4px;height: 35px;}
+        .select2-container--default .select2-selection--single .select2-selection__rendered {color: #444;
+            line-height: 32px;}
     </style>
 @endpush
 <div class="middle_content_wrapper">
@@ -104,12 +98,12 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h6 class="modal-title">Assign Teacher To Class</h6>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close modal_close_button" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-            <form id="assign_subject_teacher_form" class="form-horizontal" action="{{ route('academic.assign.subject.teacher.store') }}" method="POST">
+                <form id="assign_subject_teacher_form" class="form-horizontal" action="{{ route('academic.assign.subject.teacher.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
@@ -170,8 +164,9 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close </button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close </button>
+                        <button type="submit" class="btn loading_button btn-sm btn-blue">Loading...</button>
+                        <button type="submit" class="btn submit_button btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -184,13 +179,28 @@
 
 @push('js')
 
-    <script type="text/javascript">
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
         $(document).ready(function () {
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
                 $.ajax({
-                    url:"{{ url('admin/academic/assign/subject/teachers/get/sections/by/') }}"+"/"+classId,
+                    url:"{{ url('admin/ajax/class/sections/') }}"+"/"+classId,
                     type:'get',
                     dataType:'json',
                     success:function(data){
@@ -205,7 +215,7 @@
         });
 
         $(document).ready(function () {
-        $('.select_section').on('change', function () {
+            $('.select_section').on('change', function () {
                 var classId = $('.select_class').val();
                 var sectionId = $(this).val();
                 
@@ -221,24 +231,20 @@
                         })
                     }
                 })
-        })
+            })
         });
-
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
             //Initialize Select2 Elements
         $('.select2').select2()
             //Initialize Select2 Elements
         });
-
     </script>
 
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -247,6 +253,8 @@
 
             $(document).on('submit', '#assign_subject_teacher_form', function(e){
                 e.preventDefault();
+                $('.submit_button').hide();
+                $('.loading_button').show();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -255,21 +263,16 @@
                     type:type,
                     data: request,
                     success:function(data){
-
-                        if(!$.isEmptyObject(data.error)){
-                            toastr.error(data.error);
-                        }else{
-                            $('.error').html('');
-                            $('#assign_subject_teacher_form')[0].reset();
-                            $('#myModal1').modal('hide');
-                            toastr.success(data.success);
-                            setInterval(function(){
-                                window.location = "{{ url()->current() }}";
-                            }, 900)
-                        }
-                          
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
+                        $('.error').html('');
+                        $('#assign_subject_teacher_form')[0].reset();
+                        $('#myModal1').modal('hide');
+                        window.location = "{{ url()->current() }}";  
                     },
                     error:function(err){
+                        $('.submit_button').show();
+                        $('.loading_button').hide();
                         //log(err.responseJSON.errors);
                         if(err.responseJSON.errors.class_id){
                             $('.class_id_error').html('Class field is required.');
@@ -306,8 +309,5 @@
                 });
             });
         });
-
     </script> 
-
-
 @endpush

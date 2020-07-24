@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class RouteController extends Controller
 {
@@ -26,6 +27,7 @@ class RouteController extends Controller
         $addRoute->fare = $request->fare;
         $addRoute->save();
 
+        Cache::forget('all-routes');
         $notification = array(
             'messege' => 'Route inserted successfully:)',
             'alert-type' => 'success'
@@ -43,7 +45,7 @@ class RouteController extends Controller
         $updateRoute->name = $request->name;
         $updateRoute->fare = $request->fare;
         $updateRoute->save();
-
+        Cache::forget('all-routes');
         $notification = array(
             'messege' => 'Route updated successfully:)',
             'alert-type' => 'success'
@@ -58,6 +60,7 @@ class RouteController extends Controller
             'messege' => 'Route is deleted',
             'alert-type' => 'success'
         );
+        Cache::forget('all-routes');
         return Redirect()->back()->with($notification);
     }
 
@@ -74,6 +77,7 @@ class RouteController extends Controller
                 Route::where('id', $route_id)->singleDelete();
             }
         }
+        Cache::forget('all-routes');
         $notification = array(
             'messege' => 'Route is deleted successfully:)',
             'alert-type' => 'success'
@@ -91,6 +95,7 @@ class RouteController extends Controller
                 'messege' => 'Route is deactivated',
                 'alert-type' => 'success'
             );
+            Cache::forget('all-routes');
             return Redirect()->back()->with($notification);
         } else {
             $statusChange->status = 1;
@@ -99,6 +104,7 @@ class RouteController extends Controller
                 'messege' => 'Route is activated',
                 'alert-type' => 'success'
             );
+            Cache::forget('all-routes');
             return Redirect()->back()->with($notification);
         }
     }

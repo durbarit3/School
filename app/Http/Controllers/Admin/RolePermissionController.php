@@ -67,12 +67,6 @@ class RolePermissionController extends Controller
                 'edit' => isset($request->class_edit) ? $request->class_edit : 0,
                 'delete' => isset($request->class_delete) ? $request->class_delete : 0,
             ],
-            'session' => [
-                'view' => isset($request->session_view) ? $request->session_view : 0,
-                'add' => isset($request->session_add) ? $request->session_add : 0,
-                'edit' => isset($request->session_edit) ? $request->session_edit : 0,
-                'delete' => isset($request->session_delete) ? $request->session_delete : 0,
-            ],
             'section' => [
                 'view' => isset($request->section_view) ? $request->section_view : 0,
                 'add' => isset($request->section_add) ? $request->section_add : 0,

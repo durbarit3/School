@@ -29,9 +29,7 @@ date_default_timezone_set('Asia/Dhaka');
                         <form class="search_form" action="{{ route('admin.attendance.exam.attendance.search') }}"
                             method="get">
                             @csrf
-
                             <div class="row">
-                             
                                 <div class="col-md-3">
                                     <label class="p-0 m-0"><b>Exam Name :</b></label>
                                     <select required name="exam_id" id="exams" class="form-control form-control-sm">
@@ -68,13 +66,11 @@ date_default_timezone_set('Asia/Dhaka');
                                         <option value="">--- Select subject ---</option>
                                     </select>
                                 </div>
-                                
-                                
+ 
                             </div>
                             <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
                         </form>
                     </div>
-
 
                     <div class="panel_body table_body mt-3">
                         
@@ -98,7 +94,7 @@ date_default_timezone_set('Asia/Dhaka');
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
                 $.ajax({
-                    url: "{{ url('admin/attendance/current/day/get/sections/by/') }}" + "/" + classId,
+                    url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {

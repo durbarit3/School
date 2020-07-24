@@ -131,7 +131,7 @@ date_default_timezone_set('Asia/Dhaka');
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
                 $.ajax({
-                    url: "{{ url('admin/attendance/current/day/get/sections/by/') }}" + "/" + classId,
+                    url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {

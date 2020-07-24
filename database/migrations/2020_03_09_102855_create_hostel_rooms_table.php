@@ -22,6 +22,9 @@ class CreateHostelRoomsTable extends Migration
             $table->string('cost_per_bed')->nullable();
             $table->text('description')->nullable();
             $table->integer('status')->default(1);
+            $table->boolean('deleted_status')->nullable();
+            $table->string('deleted_by')->nullable();
+            $table->string('deleted_at')->nullable();
             $table->timestamps();
         });
     }

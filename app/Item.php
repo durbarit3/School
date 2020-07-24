@@ -12,4 +12,9 @@ class Item extends Model
     {
         return $this->belongsTo('App\InventoryCategory','category_id','id');
     }
+    
+    public function inventoryIssue()
+    {
+        return $this->hasMany(InventoryIssue::class, 'item');
+    }
 }

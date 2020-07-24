@@ -65,7 +65,7 @@
                                     <td>{{ $income->month }}</td>
                                     <td>{{ $income->year }}</td>
                                     <td>{{ $income->incomeHeader->name }}</td>
-                                    <td>{{ $income->note }}</td>
+                                    <td>{{ Str::limit($income->note, 20) }}</td>
                                     @if($income->status==1)
                                         <td class="center"><span class="btn btn-sm btn-success">Active</span></td>
                                     @else
@@ -113,7 +113,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Income</h4>
+                <h6 class="modal-title">Add Income</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -132,7 +132,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label><b>Date :</b></label>
-                            <input type="text" class="form-control add_in_date_picker" value="{{ date('d-m-Y') }}" name="date">
+                            <input type="text" class="form-control readonly_field add_in_date_picker" value="{{ date('d-m-Y') }}" name="date">
                         </div>
                     </div>
 
@@ -167,9 +167,10 @@
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="button" class="btn btn-sm loading_button btn-blue">Loading...</button>
                         @if (json_decode($userPermits->income_module, true)['income']['add'] == 1)
-                            <button type="submit" class="btn btn-blue">Submit</button>
+                            <button type="submit" class="btn btn-sm submit_button btn-blue">Submit</button>
                         @endif
                     </div>
                 </form>
@@ -183,7 +184,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Income</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Update Income</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -198,12 +199,24 @@
 @endsection
 
 @push('js')
-
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
+        });
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
             $('#check_all').on('click', function (e) {
                 if ($(this).is(':checked', true)) {
                     $(".checkbox").prop('checked', true);
@@ -212,32 +225,30 @@
                 }
             });
         });
-
     </script>
 
     <script>
         $(document).ready(function () {
-            $('.loading').hide();
-        $(document).on('click', '.edit_income', function(){
-            var income_id = $(this).data('id');
-            var id = $(this).closest('td').data('id');
-                $('.previous-'+id).hide();
-                $('.button_loader-'+id).show();
-            $.ajax({
-                url:"{{ url('admin/incomes/edit') }}" + "/" + income_id,
-                type:'get',
-                success:function(data){
-                    $('.edit_modal_body').empty();
-                    $('.edit_modal_body').append(data);
-                    $('#editModal').modal('show');
-                    $('.previous-'+id).show();
-                    $('.button_loader-'+id).hide();
-                }
+            $(document).on('click', '.edit_income', function(){
+                var income_id = $(this).data('id');
+                var id = $(this).closest('td').data('id');
+                    $('.previous-'+id).hide();
+                    $('.button_loader-'+id).show();
+                $.ajax({
+                    url:"{{ url('admin/incomes/edit') }}" + "/" + income_id,
+                    type:'get',
+                    success:function(data){
+                        $('.edit_modal_body').empty();
+                        $('.edit_modal_body').append(data);
+                        $('#editModal').modal('show');
+                        $('.previous-'+id).show();
+                        $('.button_loader-'+id).hide();
+                    }
+                });
             });
         });
-    });
 
-    $(document).ready(function(){
+        $(document).ready(function(){
             $(".add_in_date_picker").flatpickr({
                 dateFormat: "d-m-Y",
             });
@@ -255,6 +266,8 @@
 
             $(document).on('submit', '#add_income_form', function(e){
                 e.preventDefault();
+                $('.loading_button').show();
+                $('.submit_button').hide();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -263,20 +276,17 @@
                     type:type,
                     data: request,
                     success:function(data){
-
-                    //log(data);
-                    
-                    $('.error').html('');
-                    $('#add_income_form')[0].reset();
-                    $('#myModal1').modal('hide');
-                    toastr.success(data);
-                    setInterval(function(){
+                        //log(data);
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
+                        $('.error').html('');
+                        $('#add_income_form')[0].reset();
+                        $('#myModal1').modal('hide');
                         window.location = "{{ url()->current() }}";
-                    }, 700)
-                    
-                    
                     },
                     error:function(err){
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
                         //log(err.responseJSON.errors);
                         if(err.responseJSON.errors.header_id){
                             $('.header_error').html('Income header is required');
@@ -290,19 +300,63 @@
                             $('.amount_error').html('');
                             $('.amount').removeClass('is-invalid');
                             $('.amount_error').html(err.responseJSON.errors.amount[0]);
-                            
                             $('.amount').addClass('is-invalid');
                         }else{
                             $('.amount_error').html('');
                             $('.amount').removeClass('is-invalid');
                         }
-                    
                     }
                 });
             });
         });
-
     </script> 
 
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#edit_income_form', function(e){
+                e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}";
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+                
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+	</script> 
 @endpush
 

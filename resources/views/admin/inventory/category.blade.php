@@ -4,26 +4,24 @@
     <!-- panel -->
     <div class="panel">
         <div class="panel_header">
-        <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Hostel List</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Hostel</span></a>
-                        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel_title">
+                        <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Hostel List</span>
                     </div>
                 </div>
+                <div class="col-md-6 text-right">
+                    <div class="panel_title">
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add Hostel</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <form action="{{route('inventory.category.multidelete')}}" method="post">
             @csrf
         <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
         <div class="panel_body">
-       
             <div class="table-responsive">
                 <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
                     <thead>
@@ -43,9 +41,7 @@
                     </thead>
                     <tbody>
 
-
                     @foreach($cateogres as $cateogry)
-                   
                         <tr>
                             <td>
                                 <label class="chech_container mb-4">
@@ -57,28 +53,24 @@
                             <td>{{$cateogry->description}}</td>
                             <td>
                                 @if($cateogry->status ==  1)
-                                <a href="{{ route('room.type.status.update', $cateogry->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
+                                    <a href="{{ route('room.type.status.update', $cateogry->id) }}" class="btn btn-success btn-sm ">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </a>
                                 @else
-                                
-                                <a href="{{ route('room.type.status.update', $cateogry->id ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
+                                    <a href="{{ route('room.type.status.update', $cateogry->id ) }}" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </a>
                                 @endif
-                                
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$cateogry->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$cateogry->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
                                 <a id="delete" href="{{route('inventory.category.delete',$cateogry->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
-
                     @endforeach
-                       
-
                     </tbody>
                 </table>
             </div>
@@ -170,35 +162,28 @@
     </div>
 </div>
 
-
 @endsection
-
 @push('js')
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.edit_route').on('click', function() {
-            var id = $(this).data('id');
-            
-            
-            if (id) {
-                $.ajax({
-                    url: "{{ url('admin/inventory/category/edit/') }}/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
-                        
-                        $("#category").val(data.category);
-                        $("#description").val(data.description);
-                        $("#id").val(data.id);
-                    }
-                });
-            } else {
-                // alert('danger');
-            }
-
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.edit_route').on('click', function() {
+                var id = $(this).data('id');
+                if (id) {
+                    $.ajax({
+                        url: "{{ url('admin/inventory/category/edit/') }}/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            
+                            $("#category").val(data.category);
+                            $("#description").val(data.description);
+                            $("#id").val(data.id);
+                        }
+                    });
+                } else {
+                    // alert('danger');
+                }
+            });
         });
-    });
-</script>
-
+    </script>
 @endpush

@@ -12,12 +12,15 @@ use App\ExamSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class ExamScheduleCheckController extends Controller
 {
     public function index()
     {
-        $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
+        $classes = Cache::rememberForever('all-classes', function(){
+            return $classes = Classes::where('status', 1)->where('deleted_status', NULL)->get();
+        });
         $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
         return view('admin.exam_master.schedule.check_schedule.index', compact('classes', 'sessions'));
     }

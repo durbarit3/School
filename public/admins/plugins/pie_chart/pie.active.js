@@ -7,25 +7,46 @@ $(document).ready(function(){
 
 	// Draw the chart and set the chart values
 	function drawChart() {
-	  var data = google.visualization.arrayToDataTable([
-	  ['Task', 'Hours per Day'],
-	  ['Work', 8],
-	  ['Eat', 2],
-	  ['TV', 4],
-	  ['Gym', 2],
-	  ['Sleep', 8]
-	]);
+	
+		var expanseArray = [];
+		var array = $.ajax({
+			url:window.location.href+'/'+'expanse/chart',
+			async: false,
+			dataType: 'json'
+		}).responseJSON;
 
-	  // Optional; add a title and set the width and height of the chart
-	  var options = {'title':'My Average Day', 'width':600, 'height':530};
+		$.each(array, function(key,arr){
+			expanseArray.push(arr);
+		})
+		
+	  	var data = google.visualization.arrayToDataTable(expanseArray);
+	  	// Optional; add a title and set the width and height of the chart
+	  	var options = {'title':'Expanses', 'width':600, 'height':300};
+	  	// Display the chart inside the <div> element with id="piechart"
+	  	var expanseChart = new google.visualization.PieChart(document.getElementById('expanse_chart'));
+		  expanseChart.draw(data, options);
+		  
+		var incomeArray = [];
+		var array = $.ajax({
+			url:window.location.href+'/'+'incomes/chart',
+			async: false,
+			dataType: 'json'
+		}).responseJSON;
 
-	  // Display the chart inside the <div> element with id="piechart"
-	  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-	  chart.draw(data, options);
+		$.each(array, function(key,arr){
+			incomeArray.push(arr);
+		})
+		
+	  	var data = google.visualization.arrayToDataTable(incomeArray);
+	  	// Optional; add a title and set the width and height of the chart
+	  	var options = {'title':'Incomes', 'width':600, 'height':300};
+	  	// Display the chart inside the <div> element with id="piechart"
+	  	var incomeChart = new google.visualization.PieChart(document.getElementById('income_chart'));
+	  	incomeChart.draw(data, options);
 	}
-
-
-	
-
-	
 });
+
+
+
+
+

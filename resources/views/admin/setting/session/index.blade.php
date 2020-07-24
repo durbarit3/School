@@ -22,16 +22,15 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            @if (json_decode($userPermits->academic_module,true)['session']['add'] == 1)
-                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add session</span>
-                                </a>
-                            @endif        
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i></span> <span>Add session</span>
+                            </a>    
                         </div>
                     </div>
                 </div>
-
             </div>
-        <form id="multiple_delete" action="{{ route('admin.class.multiple.hard.delete') }}" method="post">
+
+            <form id="multiple_delete" action="{{ route('admin.class.multiple.hard.delete') }}" method="post">
                 @csrf
                 {{--  <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i> Delete all</button>
@@ -59,29 +58,23 @@
                                     <td class="center"><span class="btn btn-sm btn-danger">Inactive</span></td>
                                     @endif
                                     <td>
-                                        @if (json_decode($userPermits->academic_module,true)['session']['edit'] == 1)
-                                            @if($session->status==1)
-                                                <a href="{{ route('admin.academic.session.status.update', $session->id) }}" class="btn btn-success btn-sm ">
-                                                    <i class="fas fa-thumbs-up"></i>
-                                                </a>
-                                            @else
-                                                <a href="{{ route('admin.academic.session.status.update', $session->id) }}" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-thumbs-down"></i>
-                                                </a>
-                                            @endif
-                                            |
-                                        @endif
-
-                                         <a href="#" class="edit_session btn btn-sm btn-blue text-white" 
-                                        data-id="{{$session->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal"><i class="fas fa-pencil-alt" ></i></a> 
-                                        
-                                        @if (json_decode($userPermits->academic_module,true)['session']['delete'] == 1)
-                                            | <a id="delete" href="{{ route('admin.academic.session.delete', $session->id) }}"
-                                                class="btn btn-danger btn-sm text-white" title="Delete">
-                                                <i class="far fa-trash-alt"></i>
+                                        @if($session->status==1)
+                                            <a href="{{ route('admin.setting.session.status.update', $session->id) }}" class="btn btn-success btn-sm ">
+                                                <i class="fas fa-thumbs-up"></i>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('admin.setting.session.status.update', $session->id) }}" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-thumbs-down"></i>
                                             </a>
                                         @endif
+                                            |
+                                        <a href="#" class="edit_session btn btn-sm btn-blue text-white" 
+                                        data-id="{{$session->id }}" title="edit" data-toggle="modal"
+                                        data-target="#editModal"><i class="fas fa-pencil-alt" ></i></a> 
+
+                                        | <a id="delete" href="{{ route('admin.setting.session.delete', $session->id) }}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                            <i class="far fa-trash-alt"></i>
+                                         </a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -97,7 +90,6 @@
 <div class="modal fade bd-example-modal-lg" id="myModal1">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h6 class="modal-title">Add Session</h6>
@@ -106,7 +98,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form id="session_add_form" class="form-horizontal" action="{{ route('admin.academic.session.store') }}" method="POST">
+                <form id="session_add_form" class="form-horizontal" action="{{ route('admin.setting.session.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
@@ -127,7 +119,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -139,7 +130,7 @@
                 </button>
             </div>
             <div class="modal-body edit_modal_body">
-                <form id="edit_session_form" class="form-horizontal" action="{{ route('admin.academic.session.update') }}" method="POST">
+                <form id="edit_session_form" class="form-horizontal" action="{{ route('admin.setting.session.update') }}" method="POST">
                     @csrf
                     <input type="hidden" name="session_id" id="session_id">
                     <div class="form-group row">
@@ -153,9 +144,7 @@
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button> 
                         <button type="button" class="btn loading_button btn-sm btn-blue">Loading...</button>
-                        @if (json_decode($userPermits->academic_module,true)['session']['edit'] == 1)
-                            <button type="submit" class="btn submit_button btn-sm btn-blue">Update</button>
-                        @endif
+                        <button type="submit" class="btn submit_button btn-sm btn-blue">Update</button>
                     </div>
                 </form>
             </div>
@@ -188,10 +177,10 @@
             $(document).on('click', '.edit_session', function(){
                 var session_id = $(this).data('id');
                 $.ajax({
-                    url:"{{ url('admin/academic/session/edit/') }}" + "/" + session_id,
+                    url:"{{ url('admin/settings/session/edit/') }}" + "/" + session_id,
                     type:'get',
                     success:function(data){
-                        console.log(data);
+                        //console.log(data);
                         $('#session_id').val(data.id);
                         $('#session_year').val(data.session_year);
                     }
@@ -290,7 +279,6 @@
 							$('.'+key+'_error').html(error[0]);
 							$('#'+key).addClass('is-invalid');
 						});
-
 					}
 				});
 			});

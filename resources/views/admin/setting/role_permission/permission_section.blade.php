@@ -84,23 +84,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="text-left">
-                                        <td class="text-dark"></td>
-                                        <td>Session</td>
-                                        <td>
-                                            <input {{ json($permits->academic_module)['session']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="session_view" value="1">
-                                        </td>
-                                        <td>
-                                            <input {{ json($permits->academic_module)['session']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="session_add" value="1">
-                                        </td>
-                                        <td>
-                                            <input {{ json($permits->academic_module)['session']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="session_edit" value="1">
-                                        </td>
-                                        <td>
-                                            <input {{ json($permits->academic_module)['session']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="session_delete" value="1">
-                                        </td>
-                                    </tr>
-
+                                   
                                     <tr class="text-left">
                                         <td class="text-dark"></td>
                                         <td>Section</td>

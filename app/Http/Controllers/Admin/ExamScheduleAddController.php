@@ -11,6 +11,7 @@ use App\ClassSubject;
 use App\ExamSchedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ExamScheduleAddController extends Controller
 {
@@ -22,10 +23,9 @@ class ExamScheduleAddController extends Controller
         ->where('status', 1)
         ->get();
 
-        $classes = Classes::select(['id', 'name'])
-        ->where('deleted_status', NULL)
-        ->where('status', 1)
-        ->get();
+        $classes = Cache::rememberForever('all-classes', function(){
+            return $classes = Classes::where('status', 1)->where('deleted_status', NULL)->get();
+        });
         return view('admin.exam_master.schedule.create_schedule.create', compact('classes', 'exams'));
     }
 

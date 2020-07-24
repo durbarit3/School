@@ -24,10 +24,10 @@ class CreateStockItemIndicesTable extends Migration
             $table->string('data');
             $table->string('document')->default('doc.jpg');
             $table->text('description')->nullable();
+            $table->string('status')->default(1);
             $table->string('deleted_by')->nullable();
             $table->string('deleted_at')->nullable();
             $table->string('deleted_status')->nullable();
-            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

@@ -63,15 +63,6 @@ class ClassTimetableController extends Controller
         return view('admin.academic.class_timetable.index', compact('classes', 'class_id', 'section_id','sundayTimeLists', 'saturdayTimeLists', 'fridayTimeLists', 'thursdayTimeLists', 'wednesdayTimeLists', 'tuesdayTimeLists', 'mondayTimeLists'));
     }
 
-    public function getSectionsByClassId($classId)
-    {
-        $classSection = ClassSection::with('section')
-            ->where('class_id', $classId)
-            ->select(['id', 'section_id'])
-            ->get();
-        return response()->json($classSection);
-    }
-
     public function getTimetableListByAjax($classId, $sectionId, $day)
     {
         $day = $day ? $day : 'Monday';

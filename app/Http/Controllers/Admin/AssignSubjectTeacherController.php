@@ -72,23 +72,9 @@ class AssignSubjectTeacherController extends Controller
             $assignSubjectTeacher->group_id = $request->group_id;
             $assignSubjectTeacher->save();
         }
-        
 
-        $notification = array(
-            'messege' => 'Assigned teacher to subject successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
-    }
-
-    public function getSectionByAjax($classId)
-    {
-        $classSection = ClassSection::with('section')
-        ->where('class_id', $classId)
-        ->select(['id', 'section_id'])
-        ->get();
-        
-        return response()->json($classSection);
+        session()->flash('successMsg', 'Assigned teacher to subject successfully:)');
+        return response()->json('Assigned teacher to subject successfully:)');
     }
 
     public function getSubjectsByClassIdAndSectionId($classId, $sectionId)
@@ -97,7 +83,7 @@ class AssignSubjectTeacherController extends Controller
         ->select('id')->first();
         $classSubjects = ClassSubject::with('subject')->where('class_section_id', $classSectionId->id)->get();
 
-        return \response()->json($classSubjects);
+        return response()->json($classSubjects);
     }
 
 

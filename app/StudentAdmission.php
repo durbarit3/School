@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Route;
+use App\Hostel;
 use App\Vehicle;
+use App\HostelRoom;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentAdmission extends Model
@@ -57,6 +59,16 @@ class StudentAdmission extends Model
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+    
+    public function hostel()
+    {
+        return $this->belongsTo(Hostel::class, 'hostel_id');
+    }
+    
+    public function hostelRoom()
+    {
+        return $this->belongsTo(HostelRoom::class, 'room_num');
     }
     
     public function feesCollection()

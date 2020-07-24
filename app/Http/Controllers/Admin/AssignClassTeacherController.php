@@ -42,15 +42,6 @@ class AssignClassTeacherController extends Controller
         return view('admin.academic.class_teacher_assign.index', compact('formClasses', 'teachers', 'classSections'));
     }
 
-    public function getSectionByAjax($classId)
-    {
-        $classSection = ClassSection::with('section')
-        ->where('class_id', $classId)
-        ->select(['id', 'section_id'])
-        ->get();
-        return response()->json($classSection);
-    }
-
     public function edit($classSectionId)
     {
         $classSection = ClassSection::with('class', 'section', 'classTeachers')
@@ -69,29 +60,28 @@ class AssignClassTeacherController extends Controller
     
     public function update(Request $request, $classSectionId)
     {
-        
+        $this->validate($request, [
+            'teachers' => 'required|array',
+        ]);
+
         $ClassClassTeachers = ClassTeacher::where('class_section_id', $classSectionId)->get();
         foreach($ClassClassTeachers as $ClassClassTeacher){
             $ClassClassTeacher->delete();
         }
 
-        foreach ($request->teacher_ids as $teacherId) {
+        foreach ($request->teachers as $teacherId) {
             $assignClassTeacherUpdate = new ClassTeacher();
             $assignClassTeacherUpdate->class_section_id = $classSectionId;
             $assignClassTeacherUpdate->employee_id = $teacherId;
             $assignClassTeacherUpdate->save();
         }
 
-        $notification = array(
-            'messege' => 'Assigned class teacher updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully assigned class teacher updated.');
+        return response()->json('Successfully assigned class teacher updated.');
     }
 
     public function delete($classSectionId)
     {
-        
         $ClassClassTeachers = ClassTeacher::where('class_section_id', $classSectionId)->get();
         foreach($ClassClassTeachers as $ClassClassTeacher){
             $ClassClassTeacher->singleDelete();
@@ -113,7 +103,7 @@ class AssignClassTeacherController extends Controller
         $this->validate($request, [
             'class_id' => 'required',
             'section_id' => 'required',
-            'teacher_ids' => 'required|array',
+            'teachers' => 'required|array',
         ]);
 
         $ClassSection = ClassSection::where('class_id', $request->class_id)
@@ -125,7 +115,7 @@ class AssignClassTeacherController extends Controller
             return response()->json(['error' => 'Class teacher has already been assigned in this class and section :)']);
         }
 
-        foreach ($request->teacher_ids as $teacherId) {
+        foreach ($request->teachers as $teacherId) {
             $assignSubject = new ClassTeacher();
             $assignSubject->class_section_id = $ClassSection->id;
             $assignSubject->employee_id = $teacherId;
@@ -134,7 +124,8 @@ class AssignClassTeacherController extends Controller
         $ClassSection->is_assigned_teacher = 1;
         $ClassSection->save();
 
-        return response()->json(['success' => 'Teacher assigned successfully:)']);
+        session()->flash('successMsg', 'Successfully class teacher assigned.');
+        return response()->json('Successfully class teacher assigned.');
     }
 
     

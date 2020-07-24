@@ -32,26 +32,21 @@ class AttendanceReportController extends Controller
         ]);
         $yearMonth = $request->year_month;
         $splitYearMonth = explode('-', $yearMonth);
-
         $requestYear = $splitYearMonth[0];
         $requestMonth = $splitYearMonth[1];
-       
         $monthLists = [
             'January' => 1, 'February' => 2, 'March' => 3, 'April' => 4,'May' => 5, 'June' => 6, 'July' => 7, 'August' => 8, 'September' => 9, 'October' => 10, 'November' => 11, 'December' => 12
         ];
 
         $monthDates = array();
-
-            $month = $monthLists[$requestMonth];
-            $year = $requestYear;
-
-            for($d=1; $d<=31; $d++)
-            {
-                $time = mktime(12, 0, 0, $month, $d, $year);          
-                if (date('m', $time) == $month)       
-                $monthDates[] = date('d-D', $time);
-            }
-        
+        $month = $monthLists[$requestMonth];
+        $year = $requestYear;
+        for($d=1; $d<=31; $d++)
+        {
+            $time = mktime(12, 0, 0, $month, $d, $year);          
+            if (date('m', $time) == $month)       
+            $monthDates[] = date('d-D', $time);
+        }
         $students = StudentAdmission::where('class', $request->class_id)->where('section', $request->section_id)->where('session_id', $request->session_id)->get();
        
         return view('admin.report.attendance_report.ajax_view.student_attendance_report', compact('students', 'monthDates', 'requestMonth', 'requestYear'));
@@ -62,31 +57,25 @@ class AttendanceReportController extends Controller
         $this->validate($request, [
 
         ]);
-
+        
         $yearMonth = $request->year_month;
         $splitYearMonth = explode('-', $yearMonth);
-
         $requestYear = $splitYearMonth[0];
         $requestMonth = $splitYearMonth[1];
-       
         $monthLists = [
             'January' => 1, 'February' => 2, 'March' => 3, 'April' => 4, 'May' => 5, 'June' => 6, 'July' => 7, 'August' => 8, 'September' => 9, 'October' => 10, 'November' => 11, 'December' => 12
         ];
 
         $monthDates = array();
-
         $month = $monthLists[$requestMonth];
         $year = $requestYear;
-
         for($d=1; $d<=31; $d++)
         {
             $time = mktime(12, 0, 0, $month, $d, $year);          
             if (date('m', $time) == $month)       
             $monthDates[] = date('d-D', $time);
         }
-        
         $employees = Admin::where('role', $request->role_known_id)->get();
-       
         return view('admin.report.attendance_report.ajax_view.employee_attendance_report', compact('employees', 'monthDates', 'requestMonth', 'requestYear'));
     }
 
@@ -106,7 +95,6 @@ class AttendanceReportController extends Controller
         ->where('class_id', $classId)
         ->select(['id', 'section_id'])
         ->get();
-        
         return response()->json($classSection);
     }
     
@@ -117,15 +105,12 @@ class AttendanceReportController extends Controller
     }
 
     public function getSubjects($classId, $sectionId)
-    {
-        
+    { 
         $classSection = ClassSection::where('class_id', $classId)
         ->where('section_id', $sectionId)
         ->select(['id'])
         ->first();
-
         $classSubjects = ClassSubject::with(['subject'])->where('class_section_id', $classSection->id)->get();
-
         return response()->json($classSubjects);
     }
 

@@ -1,129 +1,49 @@
 @extends('admin.master')
 @push('css')
     <style>
-        
-        .header_modal {
-            padding: 5px!important;
-        }
-        .employee_info {
-            color: #222533;
-        }
-        .pay_slip_modal_header {
-            padding: 5px!important;
-        }
+        .header_modal {padding: 5px!important;}
 
-        .pay_slip_modal_header h4{
-            font-size: 13px;
-        }
-        .header_modal h4 {
-            font-size: 13px;
-        }
+        .employee_info {color: #222533;}
+
+        .pay_slip_modal_header {padding: 5px!important;}
+
+        .pay_slip_modal_header h4{font-size: 13px;}
+
+        .header_modal h4 {font-size: 13px;}
         @media (min-width: 576px){
-
-            .salary_generate_modal_dialog {
-                max-width: 1075px!important;
-                margin: 1.75rem auto;
-            }
-            
-            .pay_slip_modal_dialog {
-                max-width: 900px!important;
-                margin: 1.75rem auto;
-            }
-  
+            .salary_generate_modal_dialog {max-width: 1075px!important;margin: 1.75rem auto;}
+            .pay_slip_modal_dialog {max-width: 900px!important;margin: 1.75rem auto;}
         }
-
-        .add_earns_area {
-            padding: 3px;
-            border: 1px solid lightgray;
-            height: 300px;
-            overflow: scroll;
-        } 
+        .add_earns_area {padding: 3px;border: 1px solid lightgray;height: 300px;overflow: scroll;} 
         
-        .add_deduction_area {
-            padding: 3px;
-            border: 1px solid lightgray;
-            height: 300px;
-            overflow: scroll;
-        }
+        .add_deduction_area {padding: 3px;border: 1px solid lightgray;height: 300px;overflow: scroll;}
 
-        .heading_area {
-            border-bottom: 1px solid gray;
-            margin-bottom: 6px;
-            color: #222533;
-        }
+        .heading_area {border-bottom: 1px solid gray;margin-bottom: 6px;color: #222533;}
 
-        .earn_field_remove_button {
-            position: absolute;
-            right: 6%;
-        }
-        a.remove_button {
-            box-shadow: 1px 2px 6px 1px rgba(4, 8, 10, 0.4);
-        }
+        .earn_field_remove_button {position: absolute;right: 6%;}
+        a.remove_button {box-shadow: 1px 2px 6px 1px rgba(4, 8, 10, 0.4);}
 
-        .deduction_field_remove_button{
-            position: absolute;
-            right: 6%;
-        }
+        .deduction_field_remove_button{position: absolute;right: 6%;}
 
-        .remove_button {
-            background: crimson;
-            padding: 3px 4px;
-            border-radius: 4px;
-        }  
+        .remove_button {background: crimson;padding: 3px 4px;border-radius: 4px;}  
 
-        .add_more_earn_button {
-            background: #222533;
-            padding: 0px 8px;
-            border-radius: 4px;
-            margin-bottom: 2px;
-            font-size: 21px;
-            color: white;
-        }
+        .add_more_earn_button {background: #222533;padding: 0px 8px;border-radius: 4px;margin-bottom: 2px;  font-size: 21px;color: white;box-shadow: 0px 0px 0px 2px lightgrey;}
         
-        .add_more_deduction_button {
-            background: #222533;
-            padding: 0px 8px;
-            border-radius: 4px;
-            margin-bottom: 2px;
-            font-size: 21px;
-            color: white;
-        }
+        .add_more_deduction_button {background: #222533;padding: 0px 8px;border-radius: 4px;margin-bottom: 2px;font-size: 21px;color: white;box-shadow: 0px 0px 0px 2px lightgrey;}
 
-        .heading_area h6 {
-            font-size: 13px;
-            margin-top: 5px;
-        }
+        .heading_area h6 {font-size: 13px;margin-top: 5px;}
 
         .earn_field {color: #222533;}
 
-        .earn_field label {
-            font-size: 14px;
-        }
+        .earn_field label {font-size: 14px;}
 
-        .earn_table_area table tbody tr td {
-            line-height: 8px;
-            color: black;
-        }
-        .deduction_table_area table tbody tr td {
-            line-height: 8px;
-            color: black;
-        }
+        .earn_table_area table tbody tr td {line-height: 8px;color: black;}
+
+        .deduction_table_area table tbody tr td {line-height: 8px;color: black;}
         
-        .earn_and_deduction_area table tbody tr td {
-            line-height: 11px;
-        }
+        .earn_and_deduction_area table tbody tr td {line-height: 11px;}
 
-        .modal-header .print_button {
-            padding: 0px 6px;
-            outline: none;
-            border-radius: 7px;
-            border-style: none;
-            border: 1px solid lightgray;
-            color: black!important;
-            background: white;
-            font-size: 14px;
-        }
-
+        .modal-header .print_button {padding: 0px 6px;outline: none;border-radius: 7px;border-style: none;border: 1px solid lightgray;color: black!important;background: white;font-size: 14px;}
     </style>
 @endpush
 @section('content')
@@ -157,7 +77,6 @@ date_default_timezone_set('Asia/Dhaka');
                             method="get">
                             @csrf
                             <div class="row">
-
                                 <div class="col-md-4">
                                     <label class="m-0 p-0"><b>Role :</b> </label>
                                     <select required name="role_known_id" class="form-control form-control-sm">
@@ -191,7 +110,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     <label class="m-0 p-0"><b>Year :</b> </label> 
                                     <select required name="year" class="form-control form-control-sm">
                                         <option value="">--- Select year ---</option>
-                                        
+                                       
                                         <option {{ date('Y') == 2020 ? 'SELECTED' : ''}} value="2020">2020</option>
                                         <option {{ date('Y') == 2021 ? 'SELECTED' : ''}} value="2021">2021</option>
                                         <option {{ date('Y') == 2022 ? 'SELECTED' : ''}} value="2021">2022</option>
@@ -199,7 +118,6 @@ date_default_timezone_set('Asia/Dhaka');
                                         <option {{ date('Y') == 2024 ? 'SELECTED' : ''}} value="2024">2024</option>
                                         <option {{ date('Y') == 2025 ? 'SELECTED' : ''}} value="2025">2025</option>
                                         <option {{ date('Y') == 2026 ? 'SELECTED' : ''}} value="2026">2026</option>
-
                                     </select>
                                 </div>
                             </div>
@@ -207,9 +125,7 @@ date_default_timezone_set('Asia/Dhaka');
                         </form>
                     </div>
 
-
                     <div style="display:none;" class="panel_body table_body mt-3">
-                        
                         <div style="display:none;" class="loading"><h4>Loading...</h4> </div>
                         <div  class="table_area">
                              
@@ -223,13 +139,11 @@ date_default_timezone_set('Asia/Dhaka');
     <div class="modal fade bd-example-modal-lg salaryGenerateModal" id="salaryGenerateModal">
         <div class="modal-dialog salary_generate_modal_dialog">
             <div class="modal-content">
-    
                 <!-- Modal Header -->
                 <div class="modal-header header_modal">
                     <h4 class="modal-title salary_generate_modal_title">Generate salary</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-    
                 <!-- Modal body -->
                 <div class="modal-body generate_salary_modal_body">
                     
@@ -241,13 +155,11 @@ date_default_timezone_set('Asia/Dhaka');
     <div class="modal fade bd-example-modal-lg salaryPayModal" id="salaryPayModal">
         <div class="modal-dialog">
             <div class="modal-content">
-    
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h6 class="modal-title">Pay salary</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-    
                 <!-- Modal body -->
                 <div class="modal-body pay_salary_modal_body">
                     
@@ -259,14 +171,12 @@ date_default_timezone_set('Asia/Dhaka');
     <div class="modal fade bd-example-modal-lg salaryPaySlipModal" id="salaryPaySlipModal">
         <div class="modal-dialog pay_slip_modal_dialog">
             <div class="modal-content">
-    
                 <!-- Modal Header -->
                 <div class="modal-header pay_slip_modal_header">
                     <h5 class="modal-title">Pay slip</h5>
                     <button type="button" class="text-primary print_button"><i class="fas fa-print"></i>&nbsp;<b>Print</b></span>
                     </button>
                 </div>
-    
                 <!-- Modal body -->
                 <div class="modal-body pay_slip_salary_modal_body">
 
@@ -281,13 +191,12 @@ date_default_timezone_set('Asia/Dhaka');
     <script src="{{ asset('public/admins/plugins/print_this/printThis.js') }}"></script>
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-    
+
             $(document).on('submit', '.employee_attendance_from', function (e) {
                 e.preventDefault();
                 //console.log('GET');
@@ -301,27 +210,21 @@ date_default_timezone_set('Asia/Dhaka');
                     type: type,
                     data: request,
                     success: function (data) {
-                        
                         if(!$.isEmptyObject(data.successMsg)){
-
                             toastr.success(data.successMsg);
                             $('.save_button').show();
                             $('.loading_button').hide();
                             
                             $('.table_area').empty();
                             $('.table_area').html('<span class="alert alert-success d-block">Successfully employee attendance has been taken in this date. Now you can edit these.</span>');
-
-                        }
-                        
+                        }                        
                     }
-                })
+                });
             });
-        })   
-         
+        });
     </script>
 
     <script>
-
         function searchEmployee(data) {
             $('.table_area').empty();
             $('.table_body').show(); 
@@ -334,16 +237,13 @@ date_default_timezone_set('Asia/Dhaka');
                 type: type,
                 data: request,
                 success: function (data) {
-                    
                     if (!$.isEmptyObject(data)) {
                         $('.table_area').html(data); 
                         $('.loading').hide(100);  
                     }
-                
                 }
-            })
+            });
         }
-    
     </script>
 
     <script>
@@ -367,8 +267,8 @@ date_default_timezone_set('Asia/Dhaka');
                  more_earm_field += '</div>';
                  more_earm_field += '</div>';
                 $('.earn_fields').append(more_earm_field);
-            })
-        })  
+            });
+        });
     </script>
     
     <script>
@@ -391,8 +291,8 @@ date_default_timezone_set('Asia/Dhaka');
                     more_deduction_field += '</div>';
                     more_deduction_field += '</div>';
                 $('.deduction_fields').append(more_deduction_field);
-            })
-        })  
+            });
+        });
     </script>
     
     <script>
@@ -411,8 +311,8 @@ date_default_timezone_set('Asia/Dhaka');
                 var minusNetSalary = totalNetSalary - value;
                 $('#net_total').val(minusNetSalary);
                 $(this).closest('.earn_field').remove(); 
-            })
-        })  
+            });
+        });
     </script>
     
     <script>
@@ -431,8 +331,8 @@ date_default_timezone_set('Asia/Dhaka');
                 var plusNetSalary = parseFloat(totalNetSalary) + parseFloat(value);
                 $('#net_total').val(plusNetSalary);
                 $(this).closest('.deduction_field').remove();
-            })
-        })  
+            });
+        });
     </script>
     
     <script>
@@ -450,10 +350,9 @@ date_default_timezone_set('Asia/Dhaka');
                 earn_amount.forEach(function(val){
                     if(val.value != ''){
                         total += parseFloat(val.value);
-                    }
-                        
+                    }     
                 });
-              
+
                 $('#total_earn').val(0);
                 $('#total_earn').val(total);
 
@@ -466,14 +365,10 @@ date_default_timezone_set('Asia/Dhaka');
                 var gross_pay_amount = parseFloat(total_earning) + parseFloat(basic_salary) - parseFloat(total_deduction);
               
                 $('#gross_pay').val(gross_pay_amount);
-
                 var net_total = parseFloat(gross_pay_amount) - parseFloat(vat_amount);
-
                 $('#net_total').val(net_total);
-        
-           
-            })
-        })  
+            });
+        });
     </script>
     
     <script>
@@ -486,53 +381,42 @@ date_default_timezone_set('Asia/Dhaka');
                 }else{
                     $('#deduction_type'+data_id).prop('required', false); 
                 }
-               var deduction_amount = document.querySelectorAll('#deduction_amount');
-               var total = 0;
+                var deduction_amount = document.querySelectorAll('#deduction_amount');
+                var total = 0;
                 
                 deduction_amount.forEach(function(val){
                     if(val.value != ''){
                         total += parseFloat(val.value);
                     }        
-                });
-              
+                });              
                 $('#total_deduction').val(0);
                 $('#total_deduction').val(total);
 
                 var total_earning = $('#total_earn').val();
                 var total_deduction = $('#total_deduction').val();
-
                 var basic_salary = $('#basic_salary').val();
-
                 var vat_amount = $('#vat_amount').val();
-
                 var gross_pay_amount = parseFloat(total_earning) + parseFloat(basic_salary) - parseFloat(total_deduction);
-              
                 $('#gross_pay').val(gross_pay_amount);
-
                 var net_total = parseFloat(gross_pay_amount) - parseFloat(vat_amount);
-
                 $('#net_total').val(net_total);
-            })
-        })  
+            });
+        });  
     </script> 
     
     <script>
         $(document).ready(function () {
             $(document).on('input', '#vat_amount', function(e){
-                
                 var vat_amount = $(this).val();
-            
                 var total_gross_pay = $('#gross_pay').val();
                 var net_total = parseFloat(total_gross_pay) - parseFloat(vat_amount);
-                $('#net_total').val(net_total);
-                
-            })
-        })  
+                $('#net_total').val(net_total); 
+            });
+        });  
     </script>
     
     <script>
         $(document).ready(function () {
-            
             $(document).on('click', '.salary_generate_button', function(e){
                 e.preventDefault();
                 var url = $(this).attr('href');
@@ -549,15 +433,13 @@ date_default_timezone_set('Asia/Dhaka');
                         $('.loading_button'+data_id).hide();
                         $('.salaryGenerateModal').modal('show');
                     }
-                })
-              
-            })
-        })  
+                });
+            });
+        });
     </script>
     
     <script>
         $(document).ready(function () {
-            
             $(document).on('submit', '#salary_generate_form', function(e){
                 e.preventDefault();
                $('.generate_loading').show(); 
@@ -574,22 +456,19 @@ date_default_timezone_set('Asia/Dhaka');
                         if(!$.isEmptyObject(data.successMsg)){
                             var searchFrom = $('.search_form');
                             searchEmployee(searchFrom);
-                            
                             $('.generate_loading').hide(); 
                             $('.generate_button').show();
                             $('.salaryGenerateModal').modal('hide');
                             toastr.success(data.successMsg);
                         }
                     }
-                })
-              
-            })
-        })  
+                });
+            });
+        });
     </script>
 
     <script>
         $(document).ready(function () {
-            
             $(document).on('click', '.salary_pay_button', function(e){
                 e.preventDefault();
                 var url = $(this).attr('href');
@@ -606,15 +485,13 @@ date_default_timezone_set('Asia/Dhaka');
                         $('.loading_button'+data_id).hide();
                         $('.salaryPayModal').modal('show');
                     }
-                })
-              
-            })
-        })  
+                });
+            });
+        });
     </script>
-    
+
     <script>
-        $(document).ready(function () {
-            
+        $(document).ready(function () { 
             $(document).on('submit', '#pay_salary_form', function(e){
                 e.preventDefault();
                 $('.pay_loading').show(); 
@@ -634,12 +511,40 @@ date_default_timezone_set('Asia/Dhaka');
                             $('.pay_button').show();
                             $('.salaryPayModal').modal('hide');
                             toastr.success(data.successMsg);
+                        }else{
+                            var searchFrom = $('.search_form');
+                            searchEmployee(searchFrom);
+                            $('.pay_loading').hide(); 
+                            $('.pay_button').show();
+                            $('.salaryPayModal').modal('hide');
+                            toastr.success('Successfully salary has been paid', 'Successfull');
+                            $(data).printThis({
+                                debug: true,                   
+                                importCSS: true,                
+                                importStyle: false,             
+                                printContainer: true,           
+                                loadCSS: "{{asset('public/admins/css/pay_slip_print_style.css')}}",      
+                                pageTitle: "Salary invoice",                  
+                                removeInline: true,            
+                                removeInlineSelector: "body *",  
+                                printDelay: 333,                
+                                header: '',                   
+                                footer: '<h3 style="text-align:right; margin-top:100px;">Principal\'s Signature</h3>',
+                                base: true,                    
+                                formValues: true,              
+                                canvas: true,                  
+                                doctypeString: '...',           
+                                removeScripts: true,          
+                                copyTagClasses: true,       
+                                beforePrintEvent: null,         
+                                beforePrint: null,              
+                                afterPrint: null  
+                            });
                         }
                     }
-                })
-              
-            })
-        })  
+                });
+            });
+        });
     </script> 
     
     <script>
@@ -663,15 +568,14 @@ date_default_timezone_set('Asia/Dhaka');
                        $('.loading_button'+data_id).hide();
                        $('.salaryPaySlipModal').modal('show');
                    }
-               })
-            })
-        })  
+               });
+            });
+        });
     </script>
 
     <script type="text/javascript">
 
         $(document).ready(function () {
-            
             $(document).on('click', '.print_button', function (e) {
                 var heading = $('.hearder_area').html();
                 console.log(heading);
@@ -703,13 +607,21 @@ date_default_timezone_set('Asia/Dhaka');
 
     <script>
         $(document).ready(function(){
+            $(document).on('click', '.pay_button', function(){
+                var value = $(this).val();
+                $('#submit_action').val(value);
+            })
+        });
+    </script>
+    
+    <script>
+        $(document).ready(function(){
             $('.datepicker').datepicker(
                 {
                     format: 'dd-mm-yyyy',
                     autoclose:true
                 }
             );
-        })
+        });
     </script>
-
 @endpush

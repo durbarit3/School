@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Classes;
-use App\ClassSection;
-use App\Http\Controllers\Controller;
 use App\Section;
+use App\ClassSection;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ClassController extends Controller
 {
     public function index()
     {
-        $classes = Classes::with(['classSections', 'classSections.section'])->active();
+        $classes = Classes::with(['classSections', 'classSections.section'])->where('deleted_status', NULL)->get();
         $sections = Section::where('status', 1)->select('id','name')->active();
         return view('admin.academic.class.index', compact('classes', 'sections'));
     }
@@ -21,18 +22,21 @@ class ClassController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:classes,name',
-            'sectionIds' => 'required|array',
+            'sections' => 'required|array',
         ]);
 
         $addClass = new Classes();
         $addClass->name = $request->name;
         $addClass->save();
-        foreach ($request->sectionIds as $sectionId) {
+
+        foreach ($request->sections as $sectionId) {
            $addClassSections = new ClassSection();
            $addClassSections->class_id = $addClass->id;
            $addClassSections->section_id = $sectionId;
            $addClassSections->save();
         }
+        
+        Cache::forget('all-classes');
         session()->flash('successMsg', 'Successfully class added.');
         return response()->json('Class inserted successfully:)');
     }
@@ -47,7 +51,8 @@ class ClassController extends Controller
     public function update(Request $request, $classId)
     {
         $this->validate($request, [
-            'name' => 'required|unique:classes,name,' . $classId
+            'name' => 'required|unique:classes,name,' . $classId,
+            'sections' => 'required|array',
         ]);
 
         $updateClass = Classes::where('id', $classId)->first();
@@ -61,7 +66,7 @@ class ClassController extends Controller
             $value->save();
         }
 
-        foreach ($request->sectionIds as $sectionId) {
+        foreach ($request->sections as $sectionId) {
            $classSection = ClassSection::where('class_id', $classId)->where('section_id', $sectionId)->first();
            if ($classSection) {
                 $classSection->prepare_to_update = 0;
@@ -79,12 +84,9 @@ class ClassController extends Controller
         foreach ($OldClassSections as $value) {
             $value->delete();
         }
-
-        $notification = array(
-            'messege' => 'Class updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        Cache::forget('all-classes');
+        session()->flash('successMsg', 'Class updated successfully:)');
+        return response()->json('Class updated successfully:)');
     }
 
     public function changeStatus($classId)
@@ -97,6 +99,7 @@ class ClassController extends Controller
                 'messege' => 'Class is deactivated',
                 'alert-type' => 'success'
             );
+            Cache::forget('all-classes');
             return Redirect()->back()->with($notification);
         } else {
             $statusChange->status = 1;
@@ -105,6 +108,7 @@ class ClassController extends Controller
                 'messege' => 'Class is activated',
                 'alert-type' => 'success'
             );
+            Cache::forget('all-classes');
             return Redirect()->back()->with($notification);
         }
     }
@@ -124,6 +128,7 @@ class ClassController extends Controller
             'messege' => 'Class is deleted permanently',
             'alert-type' => 'success'
         );
+        Cache::forget('all-classes');
         return Redirect()->back()->with($notification);
     }
 
@@ -140,6 +145,7 @@ class ClassController extends Controller
                 Classes::where('id', $classId)->singleDelete();
             }
         }
+        Cache::forget('all-classes');
         $notification = array(
             'messege' => 'Class is deleted permanently:)',
             'alert-type' => 'success'

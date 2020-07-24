@@ -1,4 +1,5 @@
 <form id="pay_salary_form" action="{{ route('admin.hr.employee.salary.pay',$generatedSalary->employee_id) }}" method="POST">
+    <input type="hidden" id="submit_action" name="submit_action">
     @csrf
     <input type="hidden" name="month" value="{{ $month }}">
     <input type="hidden" name="year" value="{{ $year }}">
@@ -50,8 +51,8 @@
     <div class="form-group text-right">
         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" aria-label=""> Close</button>
         
-        <button type="submit" class="btn btn-blue btn-sm pay_button">Pay</button>
-        <button type="submit" class="btn btn-blue btn-sm pay_button">Pay and print</button>
+        <button type="submit" value="pay" class="btn btn-blue btn-sm pay_button">Pay</button>
+        <button type="submit" value="pay_and_print" class="btn btn-blue btn-sm pay_button">Pay and print</button>
         <button style="display: none;" type="button" class="btn btn-blue btn-sm pay_loading">Loading...</button>
     </div>
 </form>

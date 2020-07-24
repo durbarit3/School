@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Year;
 use App\Income;
-use App\Classes;
 use App\Expanse;
 use App\FeesGroup;
 use Carbon\Carbon;
@@ -15,6 +14,7 @@ use App\EmployeeSalary;
 use App\FeesCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class FinanceReportController extends Controller
 {
@@ -22,10 +22,9 @@ class FinanceReportController extends Controller
     {
         $incomeHeaders = IncomeHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
         $expanseHeaders = ExpanseHeader::where('status', 1)->where('deleted_status', NULL)->get(['id', 'name']);
-        $classes = Classes::select(['id', 'name'])->where('deleted_status', NULL)->where('status', 1)->get();
         $years = Year::all();
         $feesGroups = FeesGroup::active();
-        return view('admin.report.finance_report.index', compact('classes', 'incomeHeaders', 'expanseHeaders', 'years', 'feesGroups'));
+        return view('admin.report.finance_report.index', compact('incomeHeaders', 'expanseHeaders', 'years', 'feesGroups'));
     }
 
     public function incomeReport(Request $request)

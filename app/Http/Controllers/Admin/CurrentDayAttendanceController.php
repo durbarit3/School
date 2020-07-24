@@ -72,16 +72,6 @@ class CurrentDayAttendanceController extends Controller
         }
 
         return \response()->json(['successMsg' => 'Successfully Current day attendance has been taken.']);
-
-    }
-
-    public function getSectionsByClassId($classId)
-    {
-        $classSection = ClassSection::with('section')
-            ->where('class_id', $classId)
-            ->select(['id', 'section_id'])
-            ->get();
-        return response()->json($classSection);
     }
 
 }

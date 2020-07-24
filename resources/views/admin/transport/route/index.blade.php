@@ -101,7 +101,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Route</h4>
+                <h6 class="modal-title">Add route</h6>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -109,22 +109,18 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="{{ route('admin.route.store') }}" method="POST">
                     @csrf
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control" placeholder="Route name" name="name" required>
-                        </div>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input required type="text" class="form-control" placeholder="Route name" name="name" required>
                     </div>
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Fare:</label>
-                        <div class="col-sm-8">
-                            <input required type="number" class="form-control" placeholder="Fare Amount" name="fare" required>
-                        </div>
+                    <div class="form-group">
+                        <label >Fare:</label>
+                        <input required type="number" class="form-control" placeholder="Fare Amount" name="fare" required>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
+                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -137,7 +133,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content edit_content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Route</h5>
+                <h6 class="modal-title" id="exampleModalLabel">Edit route</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -147,24 +143,22 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
-                        <div class="col-sm-8">
+                    <div class="form-group">
+                            <label>Name:</label>
                             <input type="text" class="form-control" name="name" id="name" required>
                             <input type="hidden" name="id" id="id">
                             <span class="text-danger">{{ $errors->first('name') }}</span>
-                        </div>
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right mt-2">Fare:</label>
-                        <div class="col-sm-8 mt-2" >
+                        </div>    
+                        <div class="form-group">
+                            <label>Fare:</label>
                             <input type="number" class="form-control" name="fare" id="fare" required>
                             <span class="text-danger">{{ $errors->first('fare') }}</span>
                         </div>
-                    </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
                         @if (json_decode($userPermits->transport_module, true)['route']['edit'] == 1)
-                            <button type="submit" class="btn btn-blue">Submit</button>
+                            <button type="submit" class="btn btn-sm btn-sm btn-blue">Submit</button>
                         @endif 
                     </div>
                 </form>

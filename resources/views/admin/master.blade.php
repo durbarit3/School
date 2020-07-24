@@ -12,13 +12,11 @@
     <!--Page title-->
     <style>
         .header_area{
-
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
             @else 
                 background-color: #353C48;
             @endif
-           
         }
 
         .panel_header{
@@ -148,8 +146,10 @@
     <script src="{{asset('public/admins/plugins/counter/js/counter.js')}}"></script>
     <!-- chart -->
 
-    <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.min.js')}}"></script>
-   
+    
+    {{--  <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.min.js')}}"></script>  --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.js')}}"></script>
     <!-- pie chart -->
     <script src="{{asset('public/admins/plugins/pie_chart/chart.loader.js')}}"></script>
 

@@ -1,76 +1,22 @@
 @extends('admin.master')
 @push('css')
-<style>
-    .panel_body.day_tab_area {
-        padding-bottom: 106px;
-    }
-
-    .day_tab_area ul {
-        display: block;
-    }
-
-    .day_tab_area ul li {
-        display: inline-block;
-        margin-left: 9px;
-    }
-
-    .day_tab_area a {
-        display: block;
-        padding: 0px 0px 0px 0px;
-        color: white;
-
-    }
-
-    .day_tab_area a:hover {
-      
-        border-bottom: 1px solid white;
-
-    }
-
-    .tab_lists {
-        border: 1px solid lightgray;
-        padding: 4px 9px;
-        margin-bottom: 2px;
-       /* background: #353c48; */
-       background: #181b27;
-    }
-
-   
-
-    .active {
-        border-bottom: 1px solid;
-    }
-
-    {{-- Time picker Css --}}
-    .prev.action-next {
-        height: 4px;
-        width: 4px;
-        font-size: 4px;
-    }
-    
-    .prev {
-        background-size: 9px;
-        height: px;
-        padding: 8px;
-    }
-
-    input.timepicki-input {
-        background: none repeat scroll 0 0 #FFFFFF;
-        border: 1px solid #CCCCCC;
-        border-radius: 5px 5px 5px 5px;
-        float: none;
-        margin: 0;
-        text-align: center;
-        width: 61%;
-        font-size: 11px;
-    }
-
-    .next {
-    background-position: 47% 150%;
-    background-size: 9px;
-    padding: 8px;
-}
-</style>
+    <style>
+        .panel_body.day_tab_area {padding-bottom: 106px;}
+        .day_tab_area ul {display: block;}
+        .day_tab_area ul li {display: inline-block;margin-left: 9px;}
+        .day_tab_area a {display: block;padding: 0px 0px 0px 0px;color: white;}
+        .day_tab_area a:hover {border-bottom: 1px solid white;}
+        .tab_lists {border: 1px solid lightgray;padding: 4px 9px;margin-bottom: 2px;
+        /* background: #353c48; */
+        background: #181b27;
+        }
+        .active {border-bottom: 1px solid;}
+        /* Time picker Css */
+        .prev.action-next {height: 4px;width: 4px;font-size: 4px;}
+        .prev {background-size: 9px;height: px;padding: 8px;}
+        input.timepicki-input {background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #CCCCCC;border-radius: 5px 5px 5px 5px;float: none;margin: 0;text-align: center;width: 61%;font-size: 11px;}
+        .next {background-position: 47% 150%;background-size: 9px;padding: 8px;}
+    </style>
 @endpush
 @section('content')
 <div class="middle_content_wrapper">
@@ -91,7 +37,7 @@
                             <div class="col-md-6 text-right">
                                 <div class="panel_title">
                                     <a href="{{ route('admin.class.timetable.search') }}"
-                                        class="btn btn-sm btn-success"></span>
+                                        class="btn btn-sm btn-info"></span>
                                         <span>Back</span></a>
                                 </div>
                             </div>
@@ -150,9 +96,7 @@
                                     </ul>
                                 </div>
                                 <div class="col-md-2">
-                                    
-                                        <button onclick="addMore({{ $class_id }}, {{ $section_id }})"class="btn btn-sm btn-info float-right">Add more</button>
-                                    
+                                     <button onclick="addMore({{ $class_id }}, {{ $section_id }})"class="btn btn-sm btn-info float-right">Add more</button>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +118,6 @@
                                             <th>Room No</th>
                                         </tr>
                                     </thead>
-
                                     <tbody class="class_timetable_list">
 
                                     </tbody>
@@ -184,7 +127,6 @@
                                 @endif
                             </form>
                         </div>
-                        
                     </div>
                     @endif
                 </div>
@@ -195,164 +137,153 @@
 
 @endsection
 @push('js')
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url: "{{ url('admin/academic/class/timetable/get/sections/by/') }}" + "/" + classId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data, function (key, val) {
-                        $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                    })
-                }
-            })
-        })
-    });
-
-</script>
-
-<script>
-    function getData(classId, sectionId, day) {
-         $('#day').val(day.text);
-         //console.log(day.text);
-         $('.button_day').text(day.text);
-        $.ajax({
-            url: "{{url('admin/academic/class/timetable/get/timetable/list/')}}" + "/" + classId + "/" + sectionId + "/" + day.text,
-            type: 'get',
-            success: function (data) {
-                $('.class_timetable_list').empty();
-                $('.class_timetable_list').append(data);
-            }
-        })
-    }
-
-    function getLists(classId, sectionId, day) {
-        //console.log(day);
-        $.ajax({
-            url: "{{url('admin/academic/class/timetable/get/timetable/list/')}}" + "/" + classId + "/" + sectionId + "/" + day,
-            type: 'get',
-            success: function (data) {
-                $('.class_timetable_list').empty();
-                $('.class_timetable_list').append(data);
-            }
-        })
-    }
-    
-    getLists({{ $class_id }}, {{ $section_id }}, 'Monday');
-    
-</script>
-
-<script>
-    function addMore(classId, sectionId) {
-        $('.off_day_message').remove();
-        $.ajax({
-            url: "{{url('admin/academic/class/timetable/get/more/timetable/list/')}}" + "/" + classId + "/" + sectionId,
-            type: 'get',
-            success: function (data) {
-                $('.class_timetable_list').append(data);
-            }
-        })
-    }
-
-    function deleteRow(row){
-        $(row).closest('.new_list').remove();
-    }
-</script>
-
-<script>
-    $(document).ready(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#timetable_add_form').on('submit', function(e){
-            e.preventDefault();
-            var allDatas = $(this).serialize();
-            //console.log(allDatas);
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var class_id = $('#class_id').val();
-            var section_id = $('#section_id').val();
-            var day = $('#day').val();
-            var subject_ids = $('#suject_ids').val();
-            var teacher_ids = $('#teacher_ids').val();
-            var start_times = $('#start_times').val();
-            var end_times = $('#end_times').val();
-            var room_numbers = $('#room_numbers').val();
-            $.ajax({
-                url:url,
-                type:method,
-                data:allDatas,
-                dataType:'json',
-                success:function(data){
-                    toastr.success(data);
-                    $('.class_timetable_list').hide(200);
-                    $('.class_timetable_list').show(200);
-                    getLists(class_id , section_id , day);
-                }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select_class').on('change', function () {
+                var classId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
+                        $.each(data, function (key, val) {
+                            $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
-<script>
-    $(document).ready(function(){
-        
-        $('.day').on('click', function(){
-            $('.class_timetable_list').hide(200);
-            $('.class_timetable_list').show(200);
-            $('.day').removeClass('active');
-            $(this).addClass('active');
-        })
+    <script>
+        function getData(classId, sectionId, day) {
+            $('#day').val(day.text);
+            //console.log(day.text);
+            $('.button_day').text(day.text);
+            $.ajax({
+                url: "{{url('admin/academic/class/timetable/get/timetable/list/')}}" + "/" + classId + "/" + sectionId + "/" + day.text,
+                type: 'get',
+                success: function (data) {
+                    $('.class_timetable_list').empty();
+                    $('.class_timetable_list').append(data);
+                }
+            });
+        }
 
-    });
+        function getLists(classId, sectionId, day) {
+            //console.log(day);
+            $.ajax({
+                url: "{{url('admin/academic/class/timetable/get/timetable/list/')}}" + "/" + classId + "/" + sectionId + "/" + day,
+                type: 'get',
+                success: function (data) {
+                    $('.class_timetable_list').empty();
+                    $('.class_timetable_list').append(data);
+                }
+            });
+        }
+        getLists({{ $class_id }}, {{ $section_id }}, 'Monday');
+    </script>
 
+    <script>
+        function addMore(classId, sectionId) {
+            $('.off_day_message').remove();
+            $.ajax({
+                url: "{{url('admin/academic/class/timetable/get/more/timetable/list/')}}" + "/" + classId + "/" + sectionId,
+                type: 'get',
+                success: function (data) {
+                    $('.class_timetable_list').append(data);
+                }
+            });
+        }
 
-    function deleteTimeTableList(timetableId){
-        var timetable_id = $(timetableId).data('id');
-        var class_id = $('#class_id').val();
-        var section_id = $('#section_id').val();
-        var day = $('#day').val();
-        swal({
-            title: "Are you sure to delete this subject from this timetable list ?",
-            text: "Once Delete, This will be Permanently Delete!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                //$(timetableId).closest('.old_list').remove();
+        function deleteRow(row){
+            $(row).closest('.new_list').remove();
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#timetable_add_form').on('submit', function(e){
+                e.preventDefault();
+                var allDatas = $(this).serialize();
+                //console.log(allDatas);
+                var url = $(this).attr('action');
+                var method = $(this).attr('method');
+                var class_id = $('#class_id').val();
+                var section_id = $('#section_id').val();
+                var day = $('#day').val();
+                var subject_ids = $('#suject_ids').val();
+                var teacher_ids = $('#teacher_ids').val();
+                var start_times = $('#start_times').val();
+                var end_times = $('#end_times').val();
+                var room_numbers = $('#room_numbers').val();
                 $.ajax({
-                    url:"{{url('admin/academic/class/timetable/list/single/delete/')}}"+"/"+timetable_id,
-                    type:'get',
+                    url:url,
+                    type:method,
+                    data:allDatas,
                     dataType:'json',
                     success:function(data){
                         toastr.success(data);
+                        $('.class_timetable_list').hide(200);
+                        $('.class_timetable_list').show(200);
                         getLists(class_id , section_id , day);
                     }
                 });
-            } else {
-                swal("Safe Data!");
-            }
-        })
-   }
+            });
+        });
+    </script>
 
- 
-    $(document).ready(function(){
-        $('.time_picker').timepicki(); 
-    });
+    <script>
+        $(document).ready(function(){
+            
+            $('.day').on('click', function(){
+                $('.class_timetable_list').hide(200);
+                $('.class_timetable_list').show(200);
+                $('.day').removeClass('active');
+                $(this).addClass('active');
+            })
+        });
+        function deleteTimeTableList(timetableId){
+            var timetable_id = $(timetableId).data('id');
+            var class_id = $('#class_id').val();
+            var section_id = $('#section_id').val();
+            var day = $('#day').val();
+            swal({
+                title: "Are you sure to delete this subject from this timetable list ?",
+                text: "Once Delete, This will be Permanently Delete!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+            .then((willDelete) => {
+                if (willDelete) {
+                    //$(timetableId).closest('.old_list').remove();
+                    $.ajax({
+                        url:"{{url('admin/academic/class/timetable/list/single/delete/')}}"+"/"+timetable_id,
+                        type:'get',
+                        dataType:'json',
+                        success:function(data){
+                            toastr.success(data);
+                            getLists(class_id , section_id , day);
+                        }
+                    });
+                } else {
+                    swal("Safe Data!");
+                }
+            });
+        }
 
-
-</script>
-
+        $(document).ready(function(){
+            $('.time_picker').timepicki(); 
+        });
+    </script>
 @endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Income;
+use Carbon\Carbon;
 use App\IncomeHeader;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,7 +44,8 @@ class IncomeController extends Controller
         $addIncome->note = $request->note;
         $addIncome->save();
 
-        return \response()->json('Income inserted successfully:)');
+        session()->flash('successMsg', 'Successfully income added.');
+        return response()->json('Class income successfully:)');
     }
 
     public function getIncomeByAjax($incomeId)
@@ -59,7 +61,11 @@ class IncomeController extends Controller
             'header_id' => 'required',
             'amount' => 'required|numeric',
             'date' => 'required',
-        ]);
+        ],
+        [
+            'header_id.required' => 'Income header is required.'
+        ]
+    );
 
         date_default_timezone_set('Asia/Dhaka');
         $updateIncome = Income::where('id', $incomeId)->first();
@@ -72,11 +78,8 @@ class IncomeController extends Controller
         $updateIncome->note = $request->note;
         $updateIncome->save();
 
-        $notification = array(
-            'messege' => 'Income updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Income updated successfully:)');
+        return response()->json('Income updated successfully:)');
     }
 
     public function statusChange($incomeId)
@@ -131,12 +134,57 @@ class IncomeController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function search(Request $request)
+    public function searchIndex()
+    {
+       return view('admin.income.search_income',);
+    }
+
+    public function searchAction(Request $request)
     {
         date_default_timezone_set('Asia/Dhaka');
-        $searchIncomes = Income::where('year', $request->year)->where('date', date('d-m-Y', strtotime($request->date)))->get();
+        if (!$request->select_type) {
+            return response()->json(['error' => 'You did not select any type']); 
+        }
 
-       return view('admin.income.search_income', compact('searchIncomes'));
+        $income_search = '';
+        if ($request->select_type === 'today') {
+          $income_search = Income::with(['incomeHeader'])->whereDate('created_at', Carbon::today())
+            ->get();
+        }elseif($request->select_type === 'this_week') {
+            $income_search = Income::with(['incomeHeader'])->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->get();
+        }elseif($request->select_type === 'last_week') {
+            $previous_week = strtotime("-1 week +1 day");
+            $start_week = strtotime("last sunday midnight",$previous_week);
+            $end_week = strtotime("next saturday",$start_week);
+            $start_week = date("Y-m-d",$start_week);
+            $end_week = date("Y-m-d",$end_week);
+            $income_search = Income::with(['incomeHeader'])->whereBetween('created_at', [$start_week, $end_week])
+            ->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'this_month') {
+           
+            $income_search = Income::with(['incomeHeader'])->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'last_month') {
+            $lastMonth = date('m', strtotime('-1 month'));
+            $income_search = Income::with(['incomeHeader'])->whereMonth('created_at', $lastMonth)->get();
+        }elseif($request->select_type === 'this_year') {
+            $income_search = Income::with(['incomeHeader'])->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'last_year') {
+            $lastYear = date('Y', strtotime('-1 year'));
+            $income_search = Income::with(['incomeHeader'])->whereYear('created_at', $lastYear)->get();
+        }elseif($request->select_type === 'period') {
+            
+            if (!$request->date_from AND !$request->date_to) {
+                return response()->json(['error' => 'Please select the period fields']); 
+            }
+           $dateFromFormat = date('Y-m-d', strtotime($request->date_from));
+           $dateToFormat = date('Y-m-d', strtotime($request->date_to));
+           $income_search = Income::with(['incomeHeader'])->whereBetween('created_at', [$dateFromFormat, $dateToFormat])->get();
+
+        }
+
+        return view('admin.income.ajax_view.income_search', compact('income_search'));
     }
 
 }

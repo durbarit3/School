@@ -1,48 +1,15 @@
 @extends('admin.master')
 @push('css')
     <style>
-        .loading {
-            margin: 0px;
-            padding: 0px;
-            background: white;
-            padding-bottom: 1px;
-        }
-        
-        .loading h4 {
-            margin-left: 24px;
-        }
-
-        td {
-            line-height: 11px;
-        }
-        
-        a.report_menu_link {
-            width: 100%;
-            display: block;
-            padding: 4px 7px;
-            color: #444;
-            margin-left: 19px;
-        }
-        
-        li.report_menu_list {
-            display: block;
-            margin-top: 4px;
-        }
-
-        .list_background{
-            background: #dceeff;
-        }
-
-        li.report_menu_list a:hover {
-            color:black;
-        }
-        
+        .loading {margin: 0px;padding: 0px;background: white;padding-bottom: 1px;}
+        .loading h4 {margin-left: 24px;}
+        td {line-height: 11px;}
+        a.report_menu_link {width: 100%;display: block;padding: 4px 7px;color: #444;margin-left: 19px;} 
+        li.report_menu_list {display: block;margin-top: 4px;}
+        .list_background{background: #dceeff;}
+        li.report_menu_list a:hover {color:black;}
         a.report_menu_link svg {font-size: 16px;}
-
-        .report_list_area {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-            background-color: #fff;
-        }
+        .report_list_area {box-shadow: 0 2px 10px rgba(0, 0, 0, .2);background-color: #fff;}
     </style>
 @endpush
 @section('content')
@@ -73,7 +40,8 @@
                                     <div class="col-md-4">
                                         <ul class="report_menu_ul">
                                             <li class="report_menu_list">
-                                                <a data-value="employee_report" class="report_menu_link employee_report" href="#"><i class="fas fa-info-circle"></i> 
+                                                <a data-value="employee_report" class="report_menu_link text-dark employee_report" href="#">
+                                                    <i class="fas fa-file-alt"></i> 
                                                     <b>Employee report</b> </a>
                                             </li>
                                         </ul>
@@ -82,7 +50,8 @@
                                     <div class="col-md-4">
                                         <ul class="report_menu_ul">
                                             <li class="report_menu_list">
-                                                <a data-value="leave_report" class="report_menu_link leave_report" href="#"><i class="fas fa-info-circle"></i> 
+                                                <a data-value="leave_report" class="report_menu_link text-dark leave_report" href="#">
+                                                    <i class="fas fa-file-alt"></i>
                                                     <b>Leave report</b> </a>
                                             </li>
                                         </ul>

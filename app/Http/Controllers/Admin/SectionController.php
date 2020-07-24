@@ -17,36 +17,33 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:sections,name',
+            'name' => 'required',
             'capacity' => 'required',
         ]);
+        
         $addSection = new Section();
         $addSection->name = $request->name;
         $addSection->capacity = $request->capacity;
         $addSection->save();
 
-        $notification = array(
-            'messege' => 'Section inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully section added.');
+        return response()->json('Section inserted successfully:)');
     }
 
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:sections,name,' . $request->id
+            'name' => 'required',
+            'capacity' => 'required',
         ]);
+
         $updateSection = Section::where('id', $request->id)->first();
         $updateSection->name = $request->name;
         $updateSection->capacity = $request->capacity;
         $updateSection->save();
 
-        $notification = array(
-            'messege' => 'Section updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully section updated.');
+        return response()->json('Section updated successfully:)');
     }
 
     public function delete($sectionId )

@@ -25,4 +25,5 @@ class HomeController extends Controller
         $admins =Admin::all();
         return view('admin.user.online_user',compact('admins'));
      }
+
 }

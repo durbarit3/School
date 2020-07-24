@@ -1,6 +1,6 @@
-<form class="form-horizontal" action="{{ route('academic.assign.class.teacher.update', $classSection->id) }}" method="POST" enctype="multipart/form-data">
+<form id="edit_assign_teacher_form" action="{{ route('academic.assign.class.teacher.update', $classSection->id) }}" method="POST">
     @csrf
-    @method('PATCH')
+
     {{-- <input type="hidden" id="class_id" name="class_id" value="{{$class->id}}"> --}}
     <div class="form-group row">
         <div class="col-sm-12">
@@ -9,13 +9,13 @@
     </div>
     <div class="form-group row">
         <div class="col-sm-12">
-            <input readonly type="text" class="form-control" placeholder="name" name="name" value="{{$classSection->section->name}}" required>
+            <input readonly type="text" class="form-control" placeholder="name" name="name" value="{{$classSection->section->name}}">
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <select required class="section_select subjects" id="subjects" multiple="multiple" name="teacher_ids[]"
+            <select class="section_select" id="teachers" multiple="multiple" name="teachers[]"
                 data-placeholder="Subjects" data-dropdown-css-class="select2-purple" style="width: 100%;">
                 @foreach ($teachers as $teacher)
                 <option
@@ -27,13 +27,15 @@
                 </option>
                 @endforeach
             </select>
+            <span class="error e_error_teachers"></span>
         </div>
     </div>
 
     <div class="form-group text-right">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+        <button type="button" class="btn loading_button btn-sm btn-blue">Loading...</button>
         @if (json_decode($userPermits->academic_module,true)['assign_class_teacher']['edit'] == 1)
-            <button type="submit" class="btn btn-sm btn-blue">Update</button>
+            <button type="submit" class="btn submit_button btn-sm btn-blue">Update</button>
         @endif    
     </div>
 </form>
@@ -42,8 +44,9 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-       //Initialize Select2 Elements
-       $('.section_select').select2();
+        $('.loading_button').hide();
+        //Initialize Select2 Elements
+        $('.section_select').select2();
         //Initialize Select2 Elements
     });
 

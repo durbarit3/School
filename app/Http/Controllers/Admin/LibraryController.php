@@ -318,7 +318,7 @@ class LibraryController extends Controller
 
     public function issueIndex()
     {
-        $books = BookIssue::with('issuebook')->active();
+        $books = BookIssue::with(['issuebook', 'libraryMember', 'libraryMember.student'])->active();
         $members = LibraryMember::with('students')->active();
         $staffs = LibraryStaff::active();
         $librarybooks = LibraryBook::active();
@@ -326,12 +326,9 @@ class LibraryController extends Controller
     }
 
     // book issue store
-
     public function issueStore(Request $request)
     {
-
         BookIssue::create($request->all());
-  
              $notification = array(
             'messege' => 'Book issue successfully:)',
             'alert-type' => 'success'
@@ -343,13 +340,25 @@ class LibraryController extends Controller
 
     public function issueReturn($id)
      {
-         BookIssue::findOrFail($id)->delete();
-
-             $notification = array(
-            'messege' => 'Book Return  successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+     
+        $bookReturn = BookIssue::where('id', $id)->first();
+        if ($bookReturn->returned_status == 1) {
+            $bookReturn->returned_status = 0;
+            $bookReturn->save();
+            $notification = array(
+                'messege' => 'Book Return  successfully:)',
+                'alert-type' => 'success'
+            );
+            return Redirect()->back()->with($notification);
+        } else {
+            $bookReturn->returned_status = 1;
+            $bookReturn->save();
+            $notification = array(
+                'messege' => 'Book Return  successfully:)',
+                'alert-type' => 'success'
+            );
+            return Redirect()->back()->with($notification);
+        }
      } 
 
      // issue delete

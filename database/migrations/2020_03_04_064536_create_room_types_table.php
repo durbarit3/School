@@ -17,7 +17,10 @@ class CreateRoomTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('room_type');
             $table->text('description');
-            $table->text('status')->default(1);
+            $table->boolean('status')->default(1);
+            $table->boolean('deleted_status')->nullable();
+            $table->string('deleted_by')->nullable();
+            $table->string('deleted_at')->nullable();
             $table->timestamps();
         });
     }

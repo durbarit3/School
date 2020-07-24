@@ -23,67 +23,56 @@
         <div class="panel_body">
        
             <div class="table-responsive">
-                <table id="dataTableExample1" class="table table-bordered table-striped table-hover mb-2">
+                <table id="dataTableExample1" class="table table-bordered  table-hover mb-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>
                                 SL
                             </th>
+                            <th>Book Name.</th>
                             <th>Book No.</th>
                             <th>Rack Number</th>
                             <th>Issue-Return </th>
                             <th>Issue To </th>
+                            <th>Card no </th>
                             <th>Issued By </th>
                             <th>Quantity </th>
-                            <th>Status </th>
+                            <th>Return Status </th>
                             <th>Action </th>
                         </tr>
                     </thead>
                     <tbody>
-
-
-
                         @foreach($books as $row)
-
-                        <tr>
-                            <td>
-                                
-                            </td>
-                            <td>{{$row->issuebook->book_no}}</td>
-                            <td>{{$row->issuebook->Rack_no}}</td>
-                            
-                            <td>{{$row->issuedate}} - {{$row->returndate}} </td>
-                      
-                            
-                            
-                               <td>{{$row->issueto}}</td>
-                               <td>{{$row->issueby}}</td>
-                               <td>{{$row->qty}}</td>
-                               
-                               
-                            
-                            
-                            <td>
-                                
-                                <a href="{{ route('book.issue.return', $row->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up" title="Click To Return"></i></a>
-                                
-                            </td>
-             
-                            <td>
-                                <a id="delete" href="{{route('book.issue.return',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
-
+                            <tr class="text-center">
+                                <td>{{$loop->index + 1}}</td>
+                                <td>{{$row->issuebook->title}}</td>
+                                <td>{{$row->issuebook->book_no}}</td>
+                                <td>{{$row->issuebook->Rack_no}}</td>
+                                <td>{{$row->issuedate}} - {{$row->returndate}}</td>
+                                <td>
+                                    {{$row->libraryMember->student->first_name .' '.$row->libraryMember->student->last_name}}
+                                </td>
+                                <td>{{$row->libraryMember->card_no}}</td>
+                                <td>{{$row->issueby}}</td>
+                                <td>{{$row->qty}}</td>
+                                <td>
+                                    {{-- <i class="fas fa-thumbs-up" title=""></i> --}}
+                                    @if ($row->returned_status == 0)
+                                        <a href="{{ route('book.issue.return', $row->id) }}" class="btn btn-danger btn-sm ">
+                                            Click to return
+                                        </a> 
+                                    @else
+                                        <h6 class="badge badge-success"><b>Book returned</b> </h6>
+                                    @endif
+                                </td>
+                
+                                <td>
+                                    <a id="delete" href="{{route('book.issue.return',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         @endforeach
-
-                   
-
-
-                       
-
                     </tbody>
                 </table>
             </div>
@@ -108,53 +97,39 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="{{ route('book.issue.store') }}" method="POST">
                     @csrf
-
-
-                    
-
                       <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issued Book:</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="exampleFormControlSelect1" name="bookid">
-                                  <option disabled="" selected="">-- Select Book ---</option>
-                                    @foreach($librarybooks as $row)    
-                                        <option value="{{$row->id}}">{{$row->title}}</option>
-                                    @endforeach
-                                     
-
-                                </select>
+                            <select required class="form-control" id="exampleFormControlSelect1" name="bookid">
+                                <option value="">--- Select Book ---</option>
+                                @foreach($librarybooks as $row)    
+                                    <option value="{{$row->id}}">{{$row->title}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
-
-                      <div class="form-group row">
+                    <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue To:</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="exampleFormControlSelect1" name="issueto">
-                                  <option disabled="" selected="">-- Select Library Member ---</option>
-                                    @foreach($members as $row)    
-                                        <option value="{{$row->id}}">{{$row->student_id}}</option>
-                                    @endforeach
-                                     
-
-                                </select>
+                            <select required class="form-control" id="exampleFormControlSelect1" name="issueto">
+                                <option value="">-- Select Library Member ---</option>
+                                @foreach($members as $row)    
+                                    <option value="{{$row->id}}">{{$row->student->first_name .' '.$row->student->last_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-
-                    
-
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue By:</label>
                         <div class="col-sm-8">
-                            <select class="form-control" id="exampleFormControlSelect1" name="issueby">
-                                  <option  disabled="" selected="">-- Select Library Staff --</option>
-                                  @foreach($staffs as $row)
-                                 
-                                        <option value="{{$row->id}}">{{$row->name}}</option>
-                                    @endforeach
-                                  
-                                </select>
+                            <select required class="form-control" id="exampleFormControlSelect1" name="issueby">
+                                <option value="">-- Select Library Staff --</option>
+                                @foreach($staffs as $row)
+                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                @endforeach 
+                            </select>
                         </div>
                     </div>
 
@@ -162,23 +137,21 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Issue Date</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" name="issuedate" require/>
-                            
+                            <input required type="date" class="form-control" name="issuedate" />
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Return Date</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" name="returndate" require/>
-                            
+                            <input required type="date" class="form-control" name="returndate"/>
                         </div>
                     </div>
 
-                       <div class="form-group row">
+                    <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Quantity:</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" name="qty" placeholder="Enter Quantity..">
+                            <input required type="number" class="form-control" name="qty" placeholder="Enter Quantity..">
                         </div>
                     </div>
 
@@ -186,8 +159,7 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
                         <div class="col-sm-8">
-                            <textarea rows="3"  class="form-control" name="description" require></textarea>
-                            
+                            <textarea required rows="3"  class="form-control" name="description"></textarea>
                         </div>
                     </div>
 

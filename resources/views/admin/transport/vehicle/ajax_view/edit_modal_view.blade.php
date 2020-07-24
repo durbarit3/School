@@ -34,9 +34,9 @@
     </div>
 
     <div class="form-group text-right">
-        <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="">Close</button>
-        @if (json_decode($userPermits->transport_module)['vehicle']['edit'] == 1)
-            <button type="submit" class="btn btn-blue">Update</button>
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+        @if (json_decode($userPermits->transport_module, true)['vehicle']['edit'] == 1)
+            <button type="submit" class="btn btn-sm btn-blue">Update</button>
         @endif
     </div>
 </form>

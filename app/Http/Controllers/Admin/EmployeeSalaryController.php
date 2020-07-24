@@ -140,17 +140,32 @@ class EmployeeSalaryController extends Controller
             'pay_mode' => 'required',
         ]);
         
-        date_default_timezone_set('Asia/Dhaka');
-        $paySalary = EmployeeSalary::where('employee_id', $employeeId)->where('month', $request->month)->where('year', $request->year)->first();
-        $paySalary->invoice_no = $request->invoice_no;
-        $paySalary->total_paid = $request->payable_amount;
-        $paySalary->note = $request->note;
-        $paySalary->due = 0;
-        $paySalary->is_paid = 1;
-        $paySalary->date = date('d-m-Y');
-        $paySalary->paid_date = Carbon::now();
-        $paySalary->save();
-        return response()->json(['successMsg' => 'Salary is paid successfully.']);
+        if ($request->submit_action == 'pay') {
+            date_default_timezone_set('Asia/Dhaka');
+            $paySalary = EmployeeSalary::where('employee_id', $employeeId)->where('month', $request->month)->where('year', $request->year)->first();
+            $paySalary->invoice_no = $request->invoice_no;
+            $paySalary->total_paid = $request->payable_amount;
+            $paySalary->note = $request->note;
+            $paySalary->due = 0;
+            $paySalary->is_paid = 1;
+            $paySalary->date = date('d-m-Y');
+            $paySalary->paid_date = Carbon::now();
+            $paySalary->save();
+            return response()->json(['successMsg' => 'Salary is paid successfully.']);
+        }else {
+            date_default_timezone_set('Asia/Dhaka');
+            $paySalary = EmployeeSalary::with(['employee'])->where('employee_id', $employeeId)->where('month', $request->month)->where('year', $request->year)->first();
+            $paySalary->invoice_no = $request->invoice_no;
+            $paySalary->total_paid = $request->payable_amount;
+            $paySalary->note = $request->note;
+            $paySalary->due = 0;
+            $paySalary->is_paid = 1;
+            $paySalary->date = date('d-m-Y');
+            $paySalary->paid_date = Carbon::now();
+            $paySalary->save();
+            $salaryPaySlip = $paySalary;
+            return view('admin.human_resource.employee_salary.ajax_views.pay_and_print_view', compact('salaryPaySlip'));
+        }
     }
 
     public function salaryPaySlip($employeeId, $month, $year)

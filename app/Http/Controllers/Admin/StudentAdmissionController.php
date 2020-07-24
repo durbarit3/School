@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Classes;
-use App\Gender;
-use App\Route;
-use App\HostelRoom;
-use App\Hostel;
-use App\RouteVehicle;
-use App\StudentAdmission;
-use App\Category;
-use App\ClassSection;
-use App\BloodGroup;
-use App\Group;
-use App\Vehicle;
-use App\FeesType;
-use App\FeesMaster;
-use App\FeesCollection;
-use App\Service\FeesContiner;
-use App\Section;
-use Carbon\Carbon;
 use Image;
+use App\Group;
+use App\Route;
+use App\Gender;
+use App\Hostel;
+use App\Classes;
+use App\Section;
+use App\Vehicle;
+use App\Category;
+use App\FeesType;
+use Carbon\Carbon;
+use App\BloodGroup;
+use App\FeesMaster;
+use App\HostelRoom;
+use App\ClassSection;
+use App\RouteVehicle;
+use App\FeesCollection;
+use App\StudentAdmission;
+use Illuminate\Http\Request;
+use App\Service\FeesContiner;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class StudentAdmissionController extends Controller
 {
@@ -41,14 +42,23 @@ class StudentAdmissionController extends Controller
     //create
     public function create(){
 
-    	$allClass = Classes::where('deleted_status', NULL)->where('status',1)->select(['id','name'])->get();
-    	$gender = Gender::select(['id','name'])->get();
+    	$classes = Cache::rememberForever('all-classes', function(){
+            return $classes = Classes::where('status', 1)->where('deleted_status', NULL)->get();
+        });
+
+        $gender = Cache::rememberForever('all-genders', function(){
+            return $gender = Gender::select(['id','name'])->get();
+        });
+
     	$category = Category::where('status',1)->select(['id','name'])->active();
-    	$routes = Route::where('status',1)->select(['id','name'])->get();
+    	$routes = Cache::rememberForever('all-routes', function(){
+            return $classes = Route::where('status', 1)->where('deleted_status', NULL)->get();
+        });
+        
     	$hostel = Hostel::where('status',1)->select(['id','hostel_name'])->get();
         $bloodgroup = BloodGroup::select(['id','group_name'])->get();
         $groups = Group::OrderBy('id','DESC')->select(['id','name'])->get();
-        return view('admin.student.add',compact('allClass','gender','category','routes','hostel','bloodgroup','groups'));
+        return view('admin.student.add',compact('classes','gender','category','routes','hostel','bloodgroup','groups'));
         
     }
     // get section

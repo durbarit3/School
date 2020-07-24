@@ -101,24 +101,29 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.exam.master.exam.hall.store') }}" method="POST">
+                <form id="add_exam_term_form" action="{{ route('admin.exam.master.exam.hall.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="m-0"><b>Hall No :</b>  </label>
-                            <input type="text" class="form-control" placeholder="Hall number" name="hall_no" required>
+                            <input type="text" class="form-control" placeholder="Hall number" id="hall_no" name="hall_no">
+                            <span class="error error_hall_no"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="m-0"><b>Capacity :</b></label>
-                            <input type="number" class="form-control" placeholder="Capacity" name="sit_qty" required>
+                            <input type="number" class="form-control" placeholder="Capacity" name="sit_qty" id="sit_qty">
+                            <span class="error error_sit_qty"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button> 
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="button" class="btn btn-sm btn-blue loading_button">Loading...</button>
+                        @if (json_decode($userPermits->exam_module,true)['exam']['hall']['add'] == 1) 
+                            <button type="submit" class="btn btn-sm submit_button btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -137,27 +142,31 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.exam.master.exam.hall.update') }}" method="POST"
+                <form id="edit_exam_hall_form" action="{{ route('admin.exam.master.exam.hall.update') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="m-0"><b>Hall No :</b>  </label>
-                            <input id="hall_no" type="text" class="form-control" placeholder="Hall number" name="hall_no" required>
+                            <input id="id" type="hidden" name="id">
+                            <input id="e_hall_no" type="text" class="form-control hall_no" placeholder="Hall number" name="hall_no">
+                            <span class="error e_error_hall_no"></span>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="m-0"><b>Capacity :</b></label>
-                            <input id="sit_qty" type="number" class="form-control" placeholder="Capacity" name="sit_qty" required>
+                            <input id="e_sit_qty" type="number" class="form-control sit_qty" placeholder="Capacity" name="sit_qty">
+                            <span class="error e_error_sit_qty"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="button" class="btn btn-sm btn-blue loading_button">Loading...</button>
                         @if (json_decode($userPermits->exam_module,true)['exam']['hall']['edit'] == 1) 
-                            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                            <button type="submit" class="btn btn-sm submit_button btn-blue">Submit</button>
                         @endif
                     </div>
                 </form>
@@ -170,49 +179,151 @@
 @endsection
 
 @push('js')
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
 
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        $('#check_all').on('click', function (e) {
-            if ($(this).is(':checked', true)) {
-                $(".checkbox").prop('checked', true);
-            } else {
-                $(".checkbox").prop('checked', false);
-            }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
         });
+    </script>
 
-    });
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-</script>
-<script type="text/javascript">
-
-    $(document).ready(function () {
-        $('.editcat').on('click', function () {
-            var hallId = $(this).data('id');
-            if (hallId) {
-                $.ajax({
-                    url: "{{ url('admin/exam/master/exam/halls/edit') }}/" + hallId,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (data) {
-                        $("#hall_no").val(data.hall_no);
-                        $("#sit_qty").val(data.sit_qty);
-                        $("#id").val(data.id);
-                    }
-                });
-            } else {
-                alert('danger');
-            }
-
+            $('#check_all').on('click', function (e) {
+                if ($(this).is(':checked', true)) {
+                    $(".checkbox").prop('checked', true);
+                } else {
+                    $(".checkbox").prop('checked', false);
+                }
+            });
         });
-    });
-</script>
+    </script>
 
-<script>
-@error('hall_no')
-    toastr.error("{{ $errors->first('hall_no') }}");
-@enderror
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.editcat').on('click', function () {
+                var hallId = $(this).data('id');
+                if (hallId) {
+                    $.ajax({
+                        url: "{{ url('admin/exam/master/exam/halls/edit') }}/" + hallId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            $(".hall_no").val(data.hall_no);
+                            $(".sit_qty").val(data.sit_qty);
+                            $("#id").val(data.id);
+                        }
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+        });
+    </script>
+
+    <script>
+		$(document).ready(function () {
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#add_exam_term_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#myModal1').modal('hide');
+						window.location = "{{ url()->current() }}";
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+                        
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.error_'+key).html(error[0]);
+							$('#'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+
+    </script>  
+
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#edit_exam_hall_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}";
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+
+	</script> 
+
 @endpush

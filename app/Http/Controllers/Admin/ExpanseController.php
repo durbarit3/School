@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Expanse;
+use Carbon\Carbon;
 use App\ExpanseHeader;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ExpanseController extends Controller
 {
@@ -44,7 +45,8 @@ class ExpanseController extends Controller
         $addExpanse->note = $request->note;
         $addExpanse->save();
 
-        return \response()->json('Expanse inserted successfully:)');
+        session()->flash('successMsg', 'Expanse inserted successfully:)');
+        return response()->json('Expanse inserted successfully:)');
     }
 
     public function getExpanseByAjax($expanseId)
@@ -60,7 +62,11 @@ class ExpanseController extends Controller
             'header_id' => 'required',
             'amount' => 'required|numeric',
             'date' => 'required',
-        ]);
+        ],
+        [
+            'header_id.required' => 'Expanse header is required.', 
+        ]
+    );
 
         date_default_timezone_set('Asia/Dhaka');
         $updateExpanse = Expanse::where('id', $expanseId)->first();
@@ -73,11 +79,8 @@ class ExpanseController extends Controller
         $updateExpanse->note = $request->note;
         $updateExpanse->save();
 
-        $notification = array(
-            'messege' => 'Expanse updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Expanse updated successfully:)');
+        return response()->json('Expanse updated successfully:)');
     }
 
     public function statusChange($expanseId)
@@ -132,12 +135,57 @@ class ExpanseController extends Controller
         return Redirect()->back()->with($notification);
     }
 
-    public function search(Request $request)
+    public function searchIndex()
+    {
+       return view('admin.expanse.search_expanse');
+    }
+
+    public function searchAction(Request $request)
     {
         date_default_timezone_set('Asia/Dhaka');
-        $searchExpanses = Expanse::where('year', $request->year)->where('date', date('d-m-Y', strtotime($request->date)))->get();
+        if (!$request->select_type) {
+            return response()->json(['error' => 'You did not select any type']); 
+        }
 
-       return view('admin.expanse.search_expanse', compact('searchExpanses'));
+        $expanse_search = '';
+        if ($request->select_type === 'today') {
+          $expanse_search = Expanse::with(['expanseHeader'])->whereDate('created_at', Carbon::today())
+            ->get();
+        }elseif($request->select_type === 'this_week') {
+            $expanse_search = Expanse::with(['expanseHeader'])->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->get();
+        }elseif($request->select_type === 'last_week') {
+            $previous_week = strtotime("-1 week +1 day");
+            $start_week = strtotime("last sunday midnight",$previous_week);
+            $end_week = strtotime("next saturday",$start_week);
+            $start_week = date("Y-m-d",$start_week);
+            $end_week = date("Y-m-d",$end_week);
+            $expanse_search = Expanse::with(['expanseHeader'])->whereBetween('created_at', [$start_week, $end_week])
+            ->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'this_month') {
+           
+            $expanse_search = Expanse::with(['expanseHeader'])->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'last_month') {
+            $lastMonth = date('m', strtotime('-1 month'));
+            $expanse_search = Expanse::with(['expanseHeader'])->whereMonth('created_at', $lastMonth)->get();
+        }elseif($request->select_type === 'this_year') {
+            $expanse_search = Expanse::with(['expanseHeader'])->whereYear('created_at', date('Y'))->get();
+        }elseif($request->select_type === 'last_year') {
+            $lastYear = date('Y', strtotime('-1 year'));
+            $expanse_search = Expanse::with(['expanseHeader'])->whereYear('created_at', $lastYear)->get();
+        }elseif($request->select_type === 'period') {
+            
+            if (!$request->date_from AND !$request->date_to) {
+                return response()->json(['error' => 'Please select the period fields']); 
+            }
+           $dateFromFormat = date('Y-m-d', strtotime($request->date_from));
+           $dateToFormat = date('Y-m-d', strtotime($request->date_to));
+           $expanse_search = Expanse::with(['expanseHeader'])->whereBetween('created_at', [$dateFromFormat, $dateToFormat])->get();
+
+        }
+
+        return view('admin.expanse.ajax_view.expanse_search', compact('expanse_search'));
     }
 
 

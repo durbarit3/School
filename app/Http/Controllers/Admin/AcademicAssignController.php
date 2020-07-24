@@ -37,11 +37,7 @@ class AcademicAssignController extends Controller
             ->first();
 
         if ($ClassSection->is_assigned_subject == 1) {
-            $notification = array(
-                'messege' => 'Subjects has already been assigned in this class and section :)',
-                'alert-type' => 'error'
-            );
-            return Redirect()->back()->with($notification);
+            return response()->json(['error' => 'Subjects has already been assigned in this class section.']);
         }
 
         foreach ($request->subject_ids as $subjectId) {
@@ -54,11 +50,8 @@ class AcademicAssignController extends Controller
         $ClassSection->is_assigned_subject = 1;
         $ClassSection->save();
 
-        $notification = array(
-            'messege' => 'Subjects assigned successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Successfully subject assigned.');
+        return response()->json('Successfully subject assigned.');
     }
 
     public function getSectionByAjax($classId)

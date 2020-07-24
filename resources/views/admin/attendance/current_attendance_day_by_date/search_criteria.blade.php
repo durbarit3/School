@@ -31,7 +31,7 @@ date_default_timezone_set('Asia/Dhaka');
                             @csrf
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label>class</label>
+                                    <label class="m-0"><b>Class :</b></label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">--- Select Class ---</option>
                                         @foreach ($classes as $class)
@@ -40,7 +40,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <label>Section</label>
+                                    <label class="m-0"><b>Section :</b> </label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         
@@ -48,19 +48,15 @@ date_default_timezone_set('Asia/Dhaka');
                                     <small class="text-danger is_subjects"> </small>
                                 </div>
                                 <div class="col-md-4">
-                                
-                                        <label>Select Date</label>
-                                        <input type="text" required name="date" class="datepicker form-control form-control-sm" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
-                                   
+                                    <label class="m-0"><b>Select Date :</b> </label>
+                                    <input type="text" required name="date" class="datepicker form-control form-control-sm" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
                         </form>
                     </div>
 
-
                     <div class="panel_body table_body mt-3">
-                        
                         <div class="loading"><h4>Loading...</h4> </div>
                         <div class="table_area">
                              
@@ -82,7 +78,7 @@ date_default_timezone_set('Asia/Dhaka');
             $('.select_class').on('change', function () {
                 var classId = $(this).val();
                 $.ajax({
-                    url: "{{ url('admin/attendance/current/day/by/date/get/sections/by/') }}" + "/" + classId,
+                    url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {
@@ -93,50 +89,48 @@ date_default_timezone_set('Asia/Dhaka');
                             $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
                         })
                     }
-                })
-            })
+                });
+            });
         });
     </script>
 
     <script>
-            $(document).ready(function () {
-                
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $(document).ready(function () {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            $(document).on('submit', '.current_day_by_date_attendance_from', function (e) {
+                e.preventDefault();
+                console.log('GET');
+                $('.save_button').hide();
+                $('.update_loding').show();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: request,
+                    success: function (data) {
+                        if (!$.isEmptyObject(data.successMsg)) {
+                            toastr.success(data.successMsg);
+                            $('.save_button').show();
+                            $('.update_loding').hide();
+                        }else{
+                            toastr.error(data.errorMsg); 
+                            $('.save_button').show();
+                            $('.update_loding').hide();
+                        }  
                     }
                 });
-        
-                $(document).on('submit', '.current_day_by_date_attendance_from', function (e) {
-                    e.preventDefault();
-                    console.log('GET');
-                    $('.save_button').hide();
-                    $('.update_loding').show();
-                    var url = $(this).attr('action');
-                    var type = $(this).attr('method');
-                    var request = $(this).serialize();
-                    $.ajax({
-                        url: url,
-                        type: type,
-                        data: request,
-                        success: function (data) {
-                            
-                            if (!$.isEmptyObject(data.successMsg)) {
-                                toastr.success(data.successMsg);
-                                $('.save_button').show();
-                                $('.update_loding').hide();
-                            }else{
-                                toastr.error(data.errorMsg); 
-                                $('.save_button').show();
-                                $('.update_loding').hide();
-                            }
-                            
-                        }
-                    })
-                });
-            }) 
+            });
+        });
             
-        </script>
+    </script>
 
     <script>
         function searchStudent(data) {
@@ -151,17 +145,13 @@ date_default_timezone_set('Asia/Dhaka');
                 type: type,
                 data: request,
                 success: function (data) {
-                    
                     if (!$.isEmptyObject(data)) {
                         $('.table_area').html(data); 
                         $('.loading').hide(100);
-                        
                     }
-                
                 }
-            })
+            });
         }
-    
     </script>
 
     <script>
@@ -172,7 +162,7 @@ date_default_timezone_set('Asia/Dhaka');
                     autoclose:true
                 }
             );
-        })
+        });
     </script>
 
 @endpush

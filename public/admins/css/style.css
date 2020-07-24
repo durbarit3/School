@@ -178,7 +178,7 @@ button,
 .panel {
     display: block;
     overflow: hidden;
-    padding: 5px;
+    padding: 0px;
     margin-bottom: 35px;
 }
 
@@ -189,7 +189,7 @@ button,
 .panel_header {
     display: block;
     overflow: hidden;
-    padding: 8px;
+    padding: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, .6);
 }
 
@@ -1125,9 +1125,14 @@ footer .developby a:hover {
 }
 
 /*chart area*/
-.chart_area #bar-canvas {
+/* .chart_area #bar-canvas {
     width: 100% !important;
     height: auto !important;
+} */
+
+.chart_area #bar-canvas {
+    width: 67% !important;
+    height: 90%!important;
 }
 
 
@@ -2332,3 +2337,5 @@ label.chech_container {
 .display_none {
     display: none;
 }
+
+.readonly_field {background-color: #ffffff!important;}

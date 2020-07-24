@@ -27,8 +27,6 @@ class InventoryController extends Controller
     }
 
     // show all category
-
-
     public function categoryIndex()
     {
         $cateogres = InventoryCategory::all();
@@ -36,19 +34,18 @@ class InventoryController extends Controller
     }
 
     // store category
-
     public function categoryStore(Request $request)
     {
         $data = $request->validate([
             'category' => 'required|unique:inventory_categories|max:225',
             'description' => 'required',
         ]);
+
         InventoryCategory::insert([
             'category' => $request->category,
             'description' => $request->description,
             'created_at' => Carbon::now(),
         ]);
-
 
         $notification = array(
             'messege' => 'Category Created successfully:)',
@@ -58,8 +55,6 @@ class InventoryController extends Controller
     }
 
     // edit category
-
-
     public function categoryEdit($id)
     {
         $category = InventoryCategory::findOrFail($id);
@@ -67,7 +62,6 @@ class InventoryController extends Controller
     }
 
     // update category
-
     public function categoryUpdate(Request $request)
     {
         $request->validate([
@@ -125,15 +119,11 @@ class InventoryController extends Controller
 
     public function itemIndex()
     {
-    
         $items = InventoryItem::active();
-
         return view('admin.inventory.item', compact('items'));
     }
 
-
     // store item
-
     public function itemStore(Request $request)
     {
 
@@ -158,7 +148,6 @@ class InventoryController extends Controller
     }
 
     // edit Item
-
     public function itemEdit($id)
     {
         $item = InventoryItem::findOrFail($id);
@@ -167,7 +156,6 @@ class InventoryController extends Controller
 
 
     // Update item
-
     public function itemUpdate(Request $request)
     {
 
@@ -222,8 +210,6 @@ class InventoryController extends Controller
 
         if($request->Input('deleteId') != NULL){
 
-
-
             $deleteid =InventoryItem::whereIn('id', $deleteid)->singleDelete();
             
              if($deleteid){
@@ -273,7 +259,6 @@ class InventoryController extends Controller
 
     public function supplierStore(Request $request)
     {
-        
         $request->validate([
             'item_supplier'=>'required',
             'phone'=>'required',
@@ -331,8 +316,6 @@ class InventoryController extends Controller
 
     public function supplierDelete ($id)
     {
-
-        
         ItemSupplier::where('id',$id)->singleDelete();
 
         $notification=array(
@@ -347,37 +330,32 @@ class InventoryController extends Controller
     public function supplierMultiDelete(Request $request)
     {
         $deleteid = $request->Input('deleteId');
-
         if($request->Input('deleteId') != NULL){
-
-
-
             $deleteid =ItemSupplier::whereIn('id', $deleteid)->singleDelete();
             
              if($deleteid){
                  $notification=array(
                     'messege'=>'Supplier Item Multi Deleted Successfully!',
                     'alert-type'=>'success'
-                     );
-                 return redirect()->back()->with($notification);
+                );
+                return redirect()->back()->with($notification);
              }else{
-                 $notification=array(
+                $notification=array(
                     'messege'=>'error',
                     'alert-type'=>'error'
                      );
-                 return redirect()->back()->with($notification);
-                }
-         }else{
+                return redirect()->back()->with($notification);
+            }
+        }else{
             $notification=array(
                 'messege'=>'Nothing To Delete',
                 'alert-type'=>'info'
                  );
-             return redirect()->back()->with($notification);
-         }
+            return redirect()->back()->with($notification);
+        }
     }
 
     // add item controller start from here
-
     public function addItems()
     {
         $categores =InventoryCategory::active();
@@ -387,7 +365,6 @@ class InventoryController extends Controller
 
 
     // add items create
-
     public function itemsStore(Request $request)
     {
         
@@ -411,13 +388,9 @@ class InventoryController extends Controller
             'alert-type'=>'success'
              );
          return redirect()->back()->with($notification);
-
-
-
     }
 
     // item edit
-
     public function itemsEdit($id)
     {
         $item =Item::edit($id);
@@ -428,7 +401,7 @@ class InventoryController extends Controller
 
     public function itemsUpdate(Request $request)
     {
-        $data =$request->validate([
+        $data = $request->validate([
             'item'=>'required',
             'category_id'=>'required',
             'unit'=>'required',
@@ -450,10 +423,8 @@ class InventoryController extends Controller
          return redirect()->back()->with($notification);
     }
 
-    
     // items delete
-
-    public function itemsDelete ($id)
+    public function itemsDelete($id)
     {
         Item::where('id',$id)->singleDelete();
         $notification=array(
@@ -464,7 +435,6 @@ class InventoryController extends Controller
     }
 
     // update status
-
     public function itemsStatusUpdate($id)
     {
         $statusChange = Item::findOrFail($id);
@@ -488,17 +458,12 @@ class InventoryController extends Controller
     }
 
     // multi delete
-
     public function itemsMultiDelete (Request $request)
     {
         $deleteid = $request->Input('deleteId');
 
         if($request->Input('deleteId') != NULL){
-
-
-
             $deleteid =Item::whereIn('id', $deleteid)->singleDelete();
-            
              if($deleteid){
                  $notification=array(
                     'messege'=>' Item Multi Deleted Successfully!',
@@ -516,34 +481,25 @@ class InventoryController extends Controller
             $notification=array(
                 'messege'=>'Nothing To Delete',
                 'alert-type'=>'info'
-                 );
-             return redirect()->back()->with($notification);
+            );
+            return redirect()->back()->with($notification);
          }
-        
     }
 
-
     // item stock area start
-
-
     public function stockItemIndex()
     {
-  
-
         $categores = InventoryCategory::active();
         $inventoryitems = InventoryItem::active();
         $suppliers = ItemSupplier::active();
         $stores = Item::active();
-        $stockitems =StockItemIndex::with(['inventoryitem','category','supplier','store'])->active(); 
+        $stockitems = StockItemIndex::with(['inventoryitem','category','supplier','store'])->active(); 
         return view('admin.inventory.item_stock',compact('categores','inventoryitems','suppliers','stores','stockitems'));
     }
 
-
     // item sttock sore
-
     public function stockItemStore(Request $request)
     {
-        
         $request->validate([
             'category_id'=>'required',
             'items_id'=>'required',
@@ -560,7 +516,7 @@ class InventoryController extends Controller
             'purchase.numeric'=>'Store Field must be Numberic!',
         ]);
 
-        $data =StockItemIndex::insertgetid ([
+        $data = StockItemIndex::insertgetid ([
             'category_id'=>$request->category_id,
             'items_id'=>$request->items_id,
             'supplier_id'=>$request->supplier_id,
@@ -572,6 +528,7 @@ class InventoryController extends Controller
             'description'=>$request->description,
             'created_at'=>Carbon::now(),
         ]);
+
         $data =StockItemIndex::findOrFail($data);
 
         if ($request->hasFile('doc_file')){
@@ -579,112 +536,103 @@ class InventoryController extends Controller
             $data->save();
         }
 
-
         $notification=array(
             'messege'=>' Stock Items Created Successfully!',
             'alert-type'=>'success'
              );
-         return redirect()->back()->with($notification);
-
-
-        
+        return redirect()->back()->with($notification);
+ 
     }
 
-
     // item stock edit
-
     public function stockItemEdit($id)
     {
-        $stockitem =StockItemIndex::findOrFail($id);
+        $stockitem = StockItemIndex::findOrFail($id);
 
         return response()->json($stockitem);
     }
 
-
     // issue inventory
-
     public function issueIndex()
     {
         $roles = Role::all();
         $students = StudentAdmission::all();
         $issuers = Admin::all(); 
         $categores = InventoryCategory::active();
-        $inventoryissues = InventoryIssue::with(['inventoryItem','inventoryCategory','inventoryStudent','inventoryAdmin'])->active(); 
-        return view('admin.inventory.issuitem',compact('roles','students','issuers','categores','inventoryissues'));
+        $inventoryissues = InventoryIssue::with(['inventoryItem', 'inventoryCategory', 'inventoryStudent','inventoryAdmin'])->active(); 
+
+        return view('admin.inventory.issuitem', compact('roles','students','issuers','categores','inventoryissues'));
     }
 
     // get issue items
-
     public function issueItems($id)
     {
-        
-        $items = Item::where('category_id',$id)->get();
-
+        $items = Item::where('category_id', $id)->get();
         return response()->json($items);
     }
 
     // issue store
-
     public function issueStore(Request $request)
     {
-        $item =Item::findOrFail($request->item)->able_qty;
+        $item = Item::findOrFail($request->item)->able_qty;
         $able_qty = $item - $request->qty;
         if ($item > $request->qty) {
-            
-        $notification=array(
+            $notification=array(
             'messege'=>' This Number of Items Can not Avilable!',
             'alert-type'=>'success'
              );
-         return redirect()->back()->with($notification);
+            return redirect()->back()->with($notification);
         } else{
-
             InventoryIssue::create($request->all());
             Item::findOrFail($request->item)->update([
-
-                'able_qty'=>$able_qty,
+                'able_qty' => $able_qty,
             ]);
             
-
             $notification=array(
-            'messege'=>' Inventory Issued Successfully!',
-            'alert-type'=>'success'
-             );
+                'messege'=>' Inventory Issued Successfully!',
+                'alert-type'=>'success'
+            );
          return redirect()->back()->with($notification);
         }
     }
 
     // issue return 
-
     public function issueReturn($id)
     {
-        $issues= InventoryIssue::findOrFail($id);
-       $item =Item::findOrFail($issues->item);
-       $item ->update([
-
-        'able_qty'=>intval($item->able_qty) + intval($issues->qty),
+       $issues= InventoryIssue::findOrFail($id);
+       $item = Item::findOrFail($issues->item);
+       $item->update([
+            'able_qty' => intval($item->able_qty) + intval($issues->qty),
        ]);
 
-       $issues->delete();
-
-
+       $inventoryReturn = InventoryIssue::where('id', $id)->first();
+        if ($inventoryReturn->returned_status == 1) {
+            $inventoryReturn->returned_status = 0;
+            $inventoryReturn->save();
             $notification=array(
-            'messege'=>' Inventory Return Successfully!',
-            'alert-type'=>'success'
-             );
-         return redirect()->back()->with($notification);
-
+                'messege'=>' Inventory Return Successfully!',
+                'alert-type'=>'success'
+            );
+            return redirect()->back()->with($notification);
+        } else {
+            $inventoryReturn->returned_status = 1;
+            $inventoryReturn->save();
+            $notification=array(
+                'messege'=>' Inventory Return Successfully!',
+                'alert-type'=>'success'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 
     // issue delete
-
     public function issueDelete($id)
     {
         InventoryIssue::findOrFail($id)->delete();
         $notification=array(
             'messege'=>' Inventory Deleted Successfully!',
             'alert-type'=>'success'
-             );
-         return redirect()->back()->with($notification);
-
+        );
+        return redirect()->back()->with($notification);
     }
 }

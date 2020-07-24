@@ -17,36 +17,33 @@ class ExamHallController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'hall_no' => 'required|unique:exam_halls,hall_no',
+            'hall_no' => 'required',
             'sit_qty' => 'required'
         ]);
+
         $addCategory = new ExamHall();
         $addCategory->hall_no = $request->hall_no;
         $addCategory->sit_qty = $request->sit_qty;
         $addCategory->save();
 
-        $notification = array(
-            'messege' => 'Exam hall inserted successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Exam hall inserted successfully:)');
+        return response()->json('Exam hall inserted successfully');
     }
 
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:exam_halls,hall_no,' . $request->id
+            'hall_no' => 'required',
+            'sit_qty' => 'required'
         ]);
+
         $updateCategory = ExamHall::where('id', $request->id)->first();
         $updateCategory->hall_no = $request->hall_no;
         $updateCategory->sit_qty = $request->sit_qty;
         $updateCategory->save();
 
-        $notification = array(
-            'messege' => 'Exam hall updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Exam hall updated successfully:)');
+        return response()->json('Exam hall updated successfully');
     }
 
     public function changeStatus($hallId)

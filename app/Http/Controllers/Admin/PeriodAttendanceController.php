@@ -62,16 +62,6 @@ class PeriodAttendanceController extends Controller
         }
 
         return \response()->json(['successMsg' => 'Successfully period attendance has been taken.']);
-
-    }
-
-    public function getSectionsByClassId($classId)
-    {
-        $classSection = ClassSection::with('section')
-            ->where('class_id', $classId)
-            ->select(['id', 'section_id'])
-            ->get();
-        return response()->json($classSection);
     }
 
     public function getSubjectsByClassIdAndSectionId($classId, $sectionId)

@@ -53,7 +53,6 @@ date_default_timezone_set('Asia/Dhaka');
                         </form>
                     </div>
 
-
                     <div class="panel_body mt-3">
                         <div class="text-left">
                             <h6 style="color:black; border-bottom:1px solid;"><b>Today : {{ date('d-F-Y') }}</b></h6>
@@ -77,7 +76,7 @@ date_default_timezone_set('Asia/Dhaka');
         $('.select_class').on('change', function () {
             var classId = $(this).val();
             $.ajax({
-                url: "{{ url('admin/attendance/current/day/get/sections/by/') }}" + "/" + classId,
+                url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {

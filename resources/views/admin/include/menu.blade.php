@@ -1,16 +1,7 @@
-<style>
-    .text_active {
-        color: cornflowerblue!important;
-        font-size: 0.9em !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.6px;
-        font-family: unset;
-    }
-
-    .text_active:hover {
-        background: white !important;
-    }
-</style>
+    <style>
+        .text_active {color: cornflowerblue!important;font-size: 0.9em !important;font-weight: 600 !important;letter-spacing: 0.6px;font-family: unset;}
+        .text_active:hover {background: white !important;}
+    </style>
 @php
     function jsn($data) {
         return json_decode($data, true);
@@ -66,10 +57,7 @@
                     <ul class="dashboard-menu">
 
                         <li>
-                            @if (jsn($userPermits->academic_module)['session']['view'] == 1)
-                                <a class="{{ Request::is('admin/academic/session') ? 'text_active' : '' }}" href="{{ route('admin.academic.session.index') }}"> Session</a>
-                            @endif
-
+                           
                             @if (jsn($userPermits->academic_module)['class']['view'] == 1)
                                 <a class="{{ Request::is('admin/academic/class') ? 'text_active' : '' }}" href="{{ route('admin.class.index') }}"> Class</a>
                             @endif
@@ -227,7 +215,6 @@
                                     <a class="{{ Request::is('admin/exam/master/admit/card/print') ? 'text_active' : '' }}" href="{{ route('admin.exam.master.admit.card.print.index') }}">
                                         Print Admit Card
                                     </a>
-                                
                                 </ul>
                             </li>
                         @endif
@@ -427,7 +414,7 @@
 
                     @if (jsn($userPermits->income_module)['income_search']['view'] == 1)
                         <li>
-                            <a class="{{ Request::is('admin/incomes/search') ? 'text_active' : '' }}" href="{{ route('admin.income.search') }}">Search income</a>
+                            <a class="{{ Request::is('admin/incomes/search') ? 'text_active' : '' }}" href="{{ route('admin.income.search.index') }}">Search income</a>
                         </li>
                     @endif
 
@@ -459,7 +446,7 @@
 
                     @if (jsn($userPermits->expanse_module)['expanse_search']['view'] == 1)
                         <li>
-                            <a class="{{ Request::is('admin/expanses/search') ? 'text_active' : '' }}"  href="{{ route('admin.expanse.search') }}">Search expanse
+                            <a class="{{ Request::is('admin/expanses/search') ? 'text_active' : '' }}"  href="{{ route('admin.expanse.search.index') }}">Search expanse
                             </a>
                         </li>
                     @endif
@@ -562,55 +549,53 @@
 
 
             <!-- Hostel area start -->
-
-            <li class="single-nav-wrapper">
+            
+            <li class="single-nav-wrapper {{ Request::is('admin/hostel*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-text">Hostel</span>
                 </a>
+
                 <ul class="dashboard-menu">
-                    <li><a href="{{route('hostel.addroom')}}">Hostel Room</a></li>
-                    <li><a href="{{route('room.type')}}">Room Type</a></li>
-                    <li><a href="{{route('admin.hostel')}}">Hostel</a></li>
-                    <li><a href="chart-float.html">Student Hostel Report</a></li>
+                    <li><a class="{{ Request::is('admin/hostel/add/room') ? 'text_active' : '' }}" href="{{route('hostel.addroom')}}">Hostel Room</a></li>
+                    <li><a class="{{ Request::is('admin/hostel/room/type*') ? 'text_active' : '' }}" href="{{route('room.type')}}">Room Type</a></li>
+                    <li><a class="{{ Request::is('admin/hostel') ? 'text_active' : '' }}" href="{{route('admin.hostel')}}">Hostel</a></li>
                 </ul>
             </li>
 
             <!-- Hostel area end -->
 
             <!-- Hostel area start -->
-
-            <li class="single-nav-wrapper">
+            
+            <li class="single-nav-wrapper {{ Request::is('admin/inventory*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-text">Inventory</span>
                 </a>
                 <ul class="dashboard-menu">
-                    <li><a href="{{route('admin.inventory.issue')}}">Issue Inventory</a></li>
-                    <li><a href="{{route('inventory.item.stock.index')}}">Add Item Stock</a></li>
-                    <li><a href="{{route('inventory.category.index')}}">Item Category</a></li>
-                    <li><a href="{{route('item.index')}}">Items Store</a></li>
-                    <li><a href="{{route('admin.inventory.supplier')}}">Supplier</a></li>
-                    <li><a href="{{route('admin.item.index')}}">Add Items</a></li>
-                    <li><a href="chart-float.html">Student Hostel Report</a></li>
+                    <li>
+                        <a class="{{ Request::is('admin/inventory/issue') ? 'text_active' : '' }}" href="{{route('admin.inventory.issue')}}">Issue Inventory</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/inventory/item/stock') ? 'text_active' : '' }}" href="{{route('inventory.item.stock.index')}}">Add Item Stock</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/inventory/category') ? 'text_active' : '' }}" href="{{route('inventory.category.index')}}">Item Category</a>
+                    </li>
+                    <li>
+                        <a href="{{route('item.index')}}">Items Store</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/inventory/supplier') ? 'text_active' : '' }}" href="{{route('admin.inventory.supplier')}}">Supplier</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/inventory/item') ? 'text_active' : '' }}" href="{{route('admin.item.index')}}">Add Items</a>
+                    </li>
                 </ul>
             </li>
 
             <!-- Hostel area end -->
 
-
-               <li class="single-nav-wrapper">
-                <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
-                    <span class="menu-text">Library</span>
-                </a>
-                <ul class="dashboard-menu">
-                    <li><a href="{{route('admin.book.issue')}}">Book Issue</a></li>
-                    <li><a href="{{route('admin.book.index')}}">Book List</a></li>
-                    <li><a href="{{route('admin.library.members')}}">Library Member</a></li>
-                    <li><a href="{{route('admin.library.staff')}}">Library Staff</a></li>
-                </ul>
-            </li>
 
             @if (jsn($userPermits->library_module)['book_list']['view'] == 0 AND jsn($userPermits->library_module)['library_member']['view'] == 0 AND jsn($userPermits->library_module)['library_staff']['view'] == 0)
                 <li></li>
@@ -621,8 +606,8 @@
                         <span class="menu-text">Library</span>
                     </a>
                     <ul class="dashboard-menu">
-
-
+                        <li><a class="{{ Request::is('admin/library/issue') ? 'text_active' : '' }}" href="{{route('admin.book.issue')}}">Book Issue</a></li>
+                        
                         @if (jsn($userPermits->library_module)['book_list']['view'] == 1)
                             <li><a class="{{ Request::is('admin/library/books') ? 'text_active' : '' }}" href="{{route('admin.book.index')}}">Book List</a></li>
                         @endif
@@ -639,23 +624,7 @@
                 </li>
             @endif
 
-            <li class="single-nav-wrapper">
-                <a class="has-arrow menu-item" href="#" aria-expanded="false">
-                    <span class="left-icon"><i class="fas fa-chart-line"></i></span>
-                    <span class="menu-text">Fees Collection</span>
-                </a>
-                <ul class="dashboard-menu">
-                    <li><a href="{{route('admin.fees.reminder')}}">Fees Reminder</a></li>
-                    <li><a href="{{route('admin.fees.type')}}">Fees Types</a></li>
-                    <li><a href="{{route('admin.fees.discount')}}">Fees Discount</a></li>
-                    <li><a href="{{route('admin.fees.group')}}">Fees Group</a></li>
-                    <li><a href="{{route('admin.fees.master')}}">Fees Master</a></li>
-                    <li><a href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
-                    <li><a href="{{route('admin.fees.search')}}">Search Due Fees</a></li>
-                </ul>
-            </li>
-
-
+           
             @if (jsn($userPermits->fees_collection_module)['fees_remember']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_type']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_group']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_master']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_collection']['view'] == 0)
                 <li></li>
             @else
@@ -710,6 +679,20 @@
                     <li>
                         <a class="{{ Request::is('admin/reports/human_resource_report*') ? 'text_active' : '' }}" href="{{ route('admin.report.human.resource.report.index') }}">Human resource</a>
                     </li>
+                    <li>
+                        <a class="{{ Request::is('admin/reports/hostel/report*') ? 'text_active' : '' }}" href="{{ route('admin.report.hostel.report.index') }}">Hostel report</a>
+                    </li>
+                    <li>
+                        <a class="{{ Request::is('admin/reports/transport/report*') ? 'text_active' : '' }}" href="{{ route('admin.report.transport.report.index') }}">Transport report</a>
+                    </li>
+                    
+                    <li>
+                        <a class="{{ Request::is('admin/reports/library/report*') ? 'text_active' : '' }}" href="{{ route('admin.report.library.report.index') }}">Library report</a>
+                    </li>
+                    
+                    <li>
+                        <a class="{{ Request::is('admin/reports/inventory/report*') ? 'text_active' : '' }}" href="{{ route('admin.report.inventory.report.index') }}">Inventory report</a>
+                    </li>
                 </ul>
             </li>
 
@@ -723,13 +706,11 @@
                     <li><a class="{{ Request::is('admin/settings/general') ? 'text_active' : '' }}" href="{{route('admin.settings.general.index')}}">General settings</a></li>
 
                     <li><a class="{{ Request::is('admin/settings/role_permission*') ? 'text_active' : '' }}" href="{{ route('admin.gen.settings.role.permit.index') }}">Role Permissions</a></li>
-
-
-                       <li><a href="{{route('admin.session.setting')}}">Session settings</a></li>
-
-                       <li><a href="{{route('admin.notification.setting')}}">Nofification settings</a></li>
-                       <li><a href="{{route('admin.sms.setting')}}">SMS settings</a></li>
-
+                    <li>
+                        <a class="{{ Request::is('admin/settings/session') ? 'text_active' : '' }}" href="{{ route('admin.setting.session.index') }}"> Session</a>
+                    </li>
+                    <li><a href="{{route('admin.notification.setting')}}">Nofification settings</a></li>
+                    <li><a href="{{route('admin.sms.setting')}}">SMS settings</a></li>
                 </ul>
             </li>
 

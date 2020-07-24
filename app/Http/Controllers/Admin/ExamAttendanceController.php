@@ -30,12 +30,8 @@ class ExamAttendanceController extends Controller
         ->first();
 
         $classSubjects = ClassSubject::with(['subject'])->where('class_section_id', $classSection->id)->get();
-
-        return response()->json($classSubjects);
-        
+        return response()->json($classSubjects); 
     }
-
-   
 
     public function search(Request $request)
     {

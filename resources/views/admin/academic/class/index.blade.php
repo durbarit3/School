@@ -1,19 +1,11 @@
 @extends('admin.master')
 @push('css')
     <style>
-        .select2-container--default .select2-selection--single {
-            background-color: #fff;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            height: 35px;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            line-height: 32px;
-        }
-        td {
-            line-height: 16px;
-        }
+        .select2-container--default .select2-selection--single {background-color: #fff;border: 1px solid #aaa;
+            border-radius: 4px;height: 35px;}
+        .select2-container--default .select2-selection--single .select2-selection__rendered {color: #444; 
+              line-height: 32px;}
+        td {line-height: 16px;width: 20%;}
     </style> 
 @endpush
 @section('content')
@@ -37,7 +29,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         <form id="multiple_delete" action="{{ route('admin.class.multiple.hard.delete') }}" method="post">
                 @csrf
@@ -88,8 +79,7 @@
                                             |
                                         @endif
                                      <a href="#" class="edit_class btn btn-sm btn-blue text-white" 
-                                        data-id="{{ $class->id }}" title="edit" data-toggle="modal"
-                                        data-target="#editModal"><i class="fas fa-pencil-alt" ></i></a> 
+                                        data-id="{{ $class->id }}" title="edit"><i class="fas fa-pencil-alt" ></i></a> 
                                         @if (json_decode($userPermits->academic_module,true)['class']['delete'] == 1)
                                             | <a id="delete" href="{{ route('admin.class.hard.delete', $class->id) }}"
                                                 class="btn btn-danger btn-sm text-white" title="Delete">
@@ -133,19 +123,20 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Select section</b> (Multiple) :</label>
-                            <select name="sectionIds[]" class="select2 sectionIds" multiple="multiple" id="section" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                            <select name="sections[]" class="select2 sections" multiple="multiple" id="section" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                 <option value="">Select Sections</option>
                                 @foreach ($sections as $section)
                                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 @endforeach
                             </select>
-                            <span class="error error_sectionIds"></span>
+                            <span class="error error_sections"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
                         <button type="button" class="btn modal_close_button btn-sm btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="submit" class="btn btn-sm loading_button btn-blue">Loading...</button>
+                        <button type="submit" class="btn btn-sm submit_button btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -173,11 +164,20 @@
 @endsection
 
 @push('js')
-
     <script>
+        $('.loading_button').hide();
         @if (Session::has("successMsg"))
             toastr.success('{{ session('successMsg') }}', 'Successfull');
         @endif
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.modal_close_button').on('click', function(){
+                $('.error').html('');
+                $('.form-control').removeClass('is-invalid');
+            })
+        });
     </script>
 
     <script type="text/javascript">
@@ -209,19 +209,12 @@
 
     </script>
 
-
     <script type="text/javascript">
         $(document).ready(function () {
         //Initialize Select2 Elements
             $('.select2').select2()
             //Initialize Select2 Elements
         });
-    </script>
-
-    <script>
-        @error('name')
-        toastr.error("{{ $errors->first('name') }}");
-        @enderror
     </script>
 
     <script>
@@ -234,16 +227,15 @@
                     success:function(data){
                         $('.edit_modal_body').empty();
                         $('.edit_modal_body').append(data);
+                        $('#editModal').modal('show')
                     }
                 });
             });
         });
     </script>
 
- 
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -252,6 +244,8 @@
 
             $(document).on('submit', '#class_add_form', function(e){
                 e.preventDefault();
+                $('.loading_button').show();
+                $('.submit_button').hide();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -260,13 +254,16 @@
                     type:type,
                     data: request,
                     success:function(data){
-
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
                         $('.error').html('');
                         $('#class_add_form')[0].reset();
                         $('#myModal1').modal('hide');
                         window.location = "{{ url()->current() }}";
                     },
                     error:function(err){
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
                         //log(err.responseJSON.errors);
                         if(err.responseJSON.errors.name){
                             $('.error_name').html(err.responseJSON.errors.name[0]);
@@ -275,12 +272,12 @@
                             $('.error_name').html('');
                             $('.name').removeClass('is-invalid');
                         }
-                        if(err.responseJSON.errors.sectionIds){
-                            $('.error_sectionIds').html('Section field is required.');
-                            $('.sectionIds').addClass('is-invalid');
+                        if(err.responseJSON.errors.sections){
+                            $('.error_sections').html(err.responseJSON.errors.sections[0]);
+                            $('.sections').addClass('is-invalid');
                         }else{
-                            $('.error_sectionIds').html('');
-                            $('.sectionIds').removeClass('is-invalid');
+                            $('.error_sections').html('');
+                            $('.sections').removeClass('is-invalid');
                         }
                     }
                 });
@@ -288,5 +285,54 @@
         });
 
     </script> 
+
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#edit_class_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}";
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+                        
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+
+	</script> 
 
 @endpush

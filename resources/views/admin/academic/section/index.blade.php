@@ -1,4 +1,9 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        td {line-height: 16px;width: 20%;}
+    </style> 
+@endpush
 @section('content')
 
 <div class="middle_content_wrapper">
@@ -102,7 +107,6 @@
                 <form id="section_add_form" class="form-horizontal" action="{{ route('admin.academic.section.store') }}" method="POST">
                     @csrf
                     <div class="form-group row">
-                       
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Name </b>:</label>
                             <input type="text" class="form-control name" placeholder="Section name" name="name">
@@ -110,7 +114,6 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        
                         <div class="col-sm-12">
                             <label for="inputEmail3" class="col-form-label p-0 m-0"><b>Capacity</b> :</label>
                             <input type="number" class="form-control capacity" placeholder="Section capacity" name="capacity">
@@ -120,7 +123,8 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                        <button type="submit" class="btn loading_button btn-sm btn-blue">Loading...</button>
+                        <button type="submit" class="btn submit_button btn-sm btn-blue">Submit</button>
                     </div>
                 </form>
             </div>
@@ -134,36 +138,37 @@
         <div class="modal-content edit_content">
             <div class="modal-header">
                 <h6 class="modal-title" id="exampleModalLabel">Update Section</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close modal_close_button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.academic.section.update') }}" method="POST"
+                <form id="section_edit_form" action="{{ route('admin.academic.section.update') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
-                    @method('PATCH')
                     <div class="form-group row">
                         
                         <div class="col-sm-12">
                             <label for="name" class="col-form-label p-0 m-0"><b> Name</b> :</label>
-                            <input type="text" class="form-control" name="name" id="name" required>
-                            <input type="hidden" name="id" id="id">
-
+                            <input type="text" class="form-control name" name="name" id="e_name" placeholder="Section name">
+                            <input type="hidden" name="id" class="id">
+                            <span class="error e_error_name"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         
                         <div class="col-sm-12">
                             <label for="capacity" class="col-form-label p-0 m-0"><b>Capacity</b> :</label>
-                            <input type="text" class="form-control" name="capacity" id="capacity" required>
+                            <input type="text" class="form-control capacity" name="capacity" id="e_capacity" placeholder="Section capacity">
+                            <span class="error e_error_capacity"></span>
                         </div>
                     </div>
 
                     <div class="form-group text-right">
-                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="button" class="btn btn-sm btn-default modal_close_button" data-dismiss="modal" aria-label="">Close</button>
+                        <button type="button" class="btn loading_button btn-sm btn-blue">Loading...</button>
                         @if (json_decode($userPermits->academic_module,true)['section']['edit'] == 1)
-                            <button type="submit" class="btn btn-sm btn-blue">Submit</button>
+                            <button type="submit" class="btn submit_button btn-sm btn-blue">Submit</button>
                         @endif
                     </div>
                 </form>
@@ -176,23 +181,24 @@
 
 @push('js')
 
+    <script>
+        $('.loading_button').hide();
+        @if (Session::has("successMsg"))
+            toastr.success('{{ session('successMsg') }}', 'Successfull');
+        @endif
+    </script>
+
     <script type="text/javascript">
-
         $(document).ready(function () {
-
             $('.modal_close_button').on('click', function(){
                 $('.error').html('');
                 $('.form-control').removeClass('is-invalid');
             })
-
         });
-
     </script>
 
     <script type="text/javascript">
-
         $(document).ready(function () {
-
             $('#check_all').on('click', function (e) {
                 if ($(this).is(':checked', true)) {
                     $(".checkbox").prop('checked', true);
@@ -200,37 +206,11 @@
                     $(".checkbox").prop('checked', false);
                 }
             });
-
-        });
-
-    </script>
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            $('.edit_section').on('click', function () {
-                var sectionId = $(this).data('id');
-                if (sectionId) {
-                    $.ajax({
-                        url: "{{ url('admin/academic/section/edit/') }}/" + sectionId,
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data) {
-                            $("#name").val(data.name);
-                            $("#capacity").val(data.capacity);
-                            $("#id").val(data.id);
-                        }
-                    });
-                } else {
-                    alert('danger');
-                }
-
-            });
         });
     </script>
-
+    
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -239,6 +219,8 @@
 
             $(document).on('submit', '#section_add_form', function(e){
                 e.preventDefault();
+                $('.loading_button').show();
+                $('.submit_button').hide();
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
@@ -247,17 +229,16 @@
                     type:type,
                     data: request,
                     success:function(data){
-
-                    $('.error').html('');
-                    $('#section_add_form')[0].reset();
-                    $('#myModal1').modal('hide');
-                    toastr.success(data);
-                    setInterval(function(){
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
+                        $('.error').html('');
+                        $('#section_add_form')[0].reset();
+                        $('#myModal1').modal('hide');
                         window.location = "{{ url()->current() }}";
-                    }, 900)
-                        
                     },
                     error:function(err){
+                        $('.loading_button').hide();
+                        $('.submit_button').show();
                         //log(err.responseJSON.errors);
                         if(err.responseJSON.errors.name){
                             $('.name_error').html(err.responseJSON.errors.name[0]);
@@ -277,7 +258,74 @@
                 });
             });
         });
-
     </script> 
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.edit_section').on('click', function () {
+                var sectionId = $(this).data('id');
+                if (sectionId) {
+                    $.ajax({
+                        url: "{{ url('admin/academic/section/edit/') }}/" + sectionId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            $(".name").val(data.name);
+                            $(".capacity").val(data.capacity);
+                            $(".id").val(data.id);
+                        }
+                    });
+                } else {
+                    alert('danger');
+                }
+            });
+        });
+    </script>
+
+    <script>
+		$(document).ready(function () {
+			$('.loading_button').hide();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+
+			$(document).on('submit', '#section_edit_form', function(e){
+				e.preventDefault();
+				var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var data = $(this).serialize();
+				$('.submit_button').hide();
+				$('.loading_button').show();
+				//var form = document.querySelector('#employee_add_form');
+				//var formData = new URLSearchParams(Array.from(new FormData(form))).toString();
+				$.ajax({
+					url:url,
+					type:type,
+					data:data,
+					success:function(data){
+						$('.form-control').removeClass('is-invalid');
+						$('.error').html('');
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						$('#editModal').modal('hide');
+						window.location = "{{ url()->current() }}"; 
+					},
+					error:function(err){
+						$('.submit_button').show();
+						$('.loading_button').hide();
+						toastr.error('Please check again all form field.','Some thing want wrong.');
+						$('.error').html('');
+                        $('.form-control').removeClass('is-invalid');
+						$.each(err.responseJSON.errors,function(key, error){
+							//console.log(key);
+							$('.e_error_'+key).html(error[0]);
+							$('#e_'+key).addClass('is-invalid');
+						});
+					}
+				});
+			});
+		});
+	</script> 
 @endpush

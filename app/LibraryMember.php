@@ -13,4 +13,10 @@ class LibraryMember extends Model
     {
         return $this->hasMany(StudentAdmission::class,'id','student_id');
     }
+    
+    public function student()
+    {
+        return $this->belongsTo(StudentAdmission::class, 'student_id');
+    }
+
 }

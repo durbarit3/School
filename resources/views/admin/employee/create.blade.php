@@ -10,6 +10,7 @@
         .form_section_heading h6 {letter-spacing: 2px;}
         .form_section_heading {padding: 5px 1px;background: #f2f2f2;}
         .text-black{color:#222533;}
+       
     </style>
 @endpush
 @section('content')
@@ -40,7 +41,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <label class="text-center m-0"><b>Employee ID</b></label>
-                                <input autocomplete="off" readonly type="text" id="employee_id" value="{{ $employeeId }}" class="form-control form-control-sm" name="employee_id" required>
+                                <input autocomplete="off" readonly type="text" id="employee_id" value="" class="form-control form-control-sm" name="employee_id" required>
                             </div>
 
                             <div class="col-sm-4">
@@ -87,7 +88,7 @@
                             <div class="col-sm-4">
                                 <label class="text-center m-0"><b>Date of birth</b>  <span
                                     style="color: red">*</span></label>
-                                <input readonly autocomplete="off" type="text" autocomplete="off" class="form-control form-control-sm pick_date_of_birth" id="date_of_birth" name="date_of_birth" placeholder="yyyy-mm-dd">
+                                <input readonly autocomplete="off" type="text" autocomplete="off" class="form-control readonly_field form-control-sm pick_date_of_birth" id="date_of_birth" name="date_of_birth" placeholder="yyyy-mm-dd">
                                 <span class="error date_of_birth_error"></span>
                             </div>
                         
@@ -186,7 +187,7 @@
                         <div class="col-sm-4">
                             <label class="text-center m-0"><b>Joining date</b> <span
                                     style="color: red">*</span></label>
-                            <input readonly autocomplete="off" type="text" value="{{ date('d-m-Y') }}" name="joining_date" id="joining_date" class="form-control form-control-sm date_picker"/>
+                            <input readonly autocomplete="off" type="text" value="{{ date('d-m-Y') }}" name="joining_date" id="joining_date" class="form-control readonly_field form-control-sm date_picker"/>
                             <span class="error joining_date_error"></span>
                         </div>
 
@@ -355,6 +356,7 @@
                         $('.dropify-preview').hide();
                         $('.submit_button').show();
                         $('.loading_button').hide();
+                        generateEmployeeId();
                         toastr.success(data.successMsg, 'Successfull');
                     },
                     error:function(err){
@@ -378,8 +380,20 @@
                 });
             });
         });
-
     </script> 
+
+    <script>
+        function generateEmployeeId(){
+            $.ajax({
+                url:"{{ url('admin/employees/generate/employeeId') }}",
+                type: 'get',
+                success:function(data){
+                    $('#employee_id').val(data);
+                }
+            });
+        }
+        generateEmployeeId();
+    </script>
 
     <script>
         $(document).ready(function(){
@@ -396,7 +410,4 @@
             });
         });
     </script>
-
-
-    
 @endpush

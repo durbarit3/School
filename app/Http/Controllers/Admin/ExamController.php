@@ -53,7 +53,8 @@ class ExamController extends Controller
         $addExam->distributions = json_encode($request->distributions);
         $addExam->save();
 
-        return response()->json('Exam created successfully:)');
+        session()->flash('successMsg', 'Exam created successfully:)');
+        return response()->json('Exam created successfully');
         
     }
 
@@ -62,16 +63,15 @@ class ExamController extends Controller
         
         $this->validate($request, [
             'name' => 'required|unique:exams,name,'.$examId,
-            'session_id' => 'required',
             'type' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            //'distributions' => 'required|array',
+            'distributions' => 'required|array',
         ]);
-        
+
+    
         $updateExam = Exam::where('id', $examId)->first();
         $updateExam->name = $request->name;
-        $updateExam->session_id = $request->session_id;
         $updateExam->type = $request->type;
         $updateExam->exam_term_id = $request->term_id;
         $updateExam->year = date('Y');
@@ -82,12 +82,8 @@ class ExamController extends Controller
             $updateExam->distributions = json_encode($request->distributions); 
         }
         $updateExam->save();
-
-        $notification = array(
-            'messege' => 'Exam updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Exam updated successfully:)');
+        return response()->json('Exam updated successfully:)');
     }
 
     public function changeStatus($examId)

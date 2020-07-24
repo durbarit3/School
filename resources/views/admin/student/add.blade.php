@@ -3,87 +3,33 @@
 	@push('css')
 
 	<style>
-		.dropify-wrapper {
-			display: block;
-			position: relative;
-			cursor: pointer;
-			overflow: hidden;
-			width: 100%;
-			max-width: 100%;
-			height: 37px;
-			padding: 4px 3px;
-			font-size: 3px;
-			line-height: 0px;
-			color: #777;
-			background-color: #FFF;
-			background-image: none;
-			text-align: center;
-			border: 3px solid #E5E5E5;
-			-webkit-transition: border-color .15s linear;
-			transition: border-color .15s linear;
+		.dropify-wrapper {display: block;position: relative;cursor: pointer;overflow: hidden;width: 100%;max-width: 100%;height: 37px;padding: 4px 3px;font-size: 3px;line-height: 0px;color: #777;background-color: #FFF;background-image: none;text-align: center;border: 3px solid #E5E5E5;-webkit-transition: border-color .15s linear;transition: border-color .15s linear;
 		}
-
-		.form-group {
-			margin-bottom: 1rem !important;
-		}
-
-		.collapsed a {
-			color: #ffffff;
-
-		}
-
-		label.text-left.shibling {
-			margin-top: 34px;
-		}
-
-		a.anchor-collaps.collapsed {
-			color: #fff;
-		}
-
-		.shibling {
-			padding-top: 6px;
-		}
-
-		.sibling_name {
-			font-size: 11px;
-			margin-top: 43px;
-			padding: 3px 0px;
-			padding-left: 4px;
-		}
-
-		.select2-container--default .select2-selection--single {
-            background-color: #fff;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            height: 35px;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            line-height: 32px;
-        }
+		.form-group {margin-bottom: 1rem !important;}
+		.collapsed a {color: #ffffff;}
+		label.text-left.shibling {margin-top: 34px;}
+		a.anchor-collaps.collapsed {color: #fff;}
+		.shibling {padding-top: 6px;}
+		.sibling_name {font-size: 11px;margin-top: 43px;padding: 3px 0px;padding-left: 4px;}
+		.select2-container--default .select2-selection--single {background-color: #fff;border: 1px solid #aaa;border-radius: 4px;height: 35px;}
+        .select2-container--default .select2-selection--single .select2-selection__rendered {color: #444;line-height: 32px;}
 	</style>
 		
 @endpush
 @section('content')
-	
-
 <!-- content wrpper -->
-
 <!--middle content wrapper-->
 <div class="middle_content_wrapper">
-
 	<section class="page_area">
 		<form action="{{url('admin/student/submit')}}" method="POST" enctype="multipart/form-data">
 			@csrf
 			<div class="panel">
 				<div class="panel_header">
 					<div class="row">
-
 						<div class="panel_title">
 							<span class="panel_icon"><i class="fas fa-plus-square"></i></span>
 							<span>Student Information</span>
 						</div>
-
 					</div>
 				</div>
 				<div class="panel_body">
@@ -108,8 +54,8 @@
 							<label for="inputEmail3" class="text-center">Class <span style="color:red">*</span></label>
 							<select class="form-control" name="select_class" id="select_class" required>
 								<option value="">Selecet</option>
-								@foreach($allClass as $cleases)
-								<option value="{{ $cleases->id }}">{{ $cleases->name }}</option>
+								@foreach($classes as $class)
+								<option value="{{ $class->id }}">{{ $class->name }}</option>
 								@endforeach
 								<select>
 						</div>
@@ -550,8 +496,7 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-1">
-											<!-- -->
-
+									
 										</div>
 										<div class="col-sm-5">
 											<label class="text-left">Title</label>
@@ -604,7 +549,6 @@
 </div>
 <!--/middle content wrapper-->
 
-
 <div class="modal fade" id="myModal1">
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
@@ -618,7 +562,7 @@
 						<label for="email" class="col-md-3">Class</label>
 						<select class="form-control select_class class_id col-md-8">
 							<option value="1">--Select class--</option>
-							@foreach ($allClass as $class)
+							@foreach ($classes as $class)
 								<option value="{{ $class->id }}">{{ $class->name }}</option>
 							@endforeach
 						</select>
@@ -646,91 +590,21 @@
 	</div>
 </div>
 
-<style>
-	.invalid-feedback {
-		display: flex;
-		width: 100%;
-		margin-top: .25rem;
-		font-size: 80%;
-		color: #dc3545;
-	}
-
-	label.text-left.shibling {
-		margin-top: 33px;
-	}
-
-	h4.panel-title {
-		margin: 0px;
-		color: #fff;
-	}
-
-	h4.panel-title a {
-
-		color: #fff;
-	}
-
-
-	.panel-default {
-		border-color: #fff;
-	}
-
-	.icon {
-		font-size: 30px;
-		color: #fff;
-		line-height: 15px;
-	}
-
-	.blue {
-		background-color: #006DB4 !important;
-		color: #FFF !important;
-	}
-
-	.plus-minus-toggle {
-		cursor: pointer;
-		height: 15px;
-		position: relative;
-		width: 15px;
-		float: right;
-		top: 5px;
-	}
-
-	.plus-minus-toggle:before {
-		background: #fff;
-		content: '';
-		height: 5px;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 15px;
-		transition: background 500ms, transform 500ms;
-		transform: rotate(90deg);
-	}
-
-	.plus-minus-toggle:after {
-		background: #fff;
-		content: '';
-		height: 5px;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 15px;
-		transition: background 500ms, transform 500ms;
-	}
-
-	.plus-minus-toggle:after {
-		transform-origin: center;
-	}
-
-	.plus-minus-toggle.custom-collapsed:after {
-		transform: rotate(180deg);
-		background: #FFF;
-	}
-
-	.plus-minus-toggle.custom-collapsed:before {
-		transform: rotate(180deg);
-		background: #FFF;
-	}
-</style>
+	<style>
+		.invalid-feedback {display: flex;width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;}
+		label.text-left.shibling {margin-top: 33px;}
+		h4.panel-title {margin: 0px;color: #fff;}
+		h4.panel-title a {color: #fff;}
+		.panel-default {border-color: #fff;}
+		.icon {font-size: 30px;color: #fff;line-height: 15px;}
+		.blue {background-color: #006DB4 !important;color: #FFF !important;}
+		.plus-minus-toggle {cursor: pointer;height: 15px;position: relative;width: 15px;float: right;top: 5px;}
+		.plus-minus-toggle:before {background: #fff;content: '';height: 5px;left: 0;position: absolute;top: 0;width: 15px;transition: background 500ms, transform 500ms;transform: rotate(90deg);}
+		.plus-minus-toggle:after {background: #fff;content: '';height: 5px;left: 0;position: absolute;top: 0;width: 15px;transition: background 500ms, transform 500ms;}
+		.plus-minus-toggle:after {transform-origin: center;}
+		.plus-minus-toggle.custom-collapsed:after {transform: rotate(180deg);background: #FFF;}
+		.plus-minus-toggle.custom-collapsed:before {transform: rotate(180deg);background: #FFF;}
+	</style>
 
 @endsection
 
@@ -750,7 +624,7 @@
 						$('#class_sections').append(' <option value="">--Select Section--</option>');
 						$.each(data, function (key, val) {
 							$('#class_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-						})
+						});
 					}
 				})
 			})

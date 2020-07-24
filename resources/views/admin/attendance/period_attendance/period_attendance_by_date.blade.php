@@ -31,7 +31,7 @@ date_default_timezone_set('Asia/Dhaka');
                             @csrf
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label>Select Class</label>
+                                    <label class="m-0"><b>Class :</b></label>
                                     <select required name="class_id" class="select_class class_id form-control form-control-sm">
                                         <option value="">Select class</option>
                                         @foreach ($classes as $class)
@@ -43,7 +43,7 @@ date_default_timezone_set('Asia/Dhaka');
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label>Select Section</label>
+                                    <label class="m-0"><b>Section :</b> </label>
                                     <select required name="section_id" id="sections"
                                         class="form-control form-control-sm select_section section_id">
                                         <option value="">Select section</option>
@@ -63,7 +63,7 @@ date_default_timezone_set('Asia/Dhaka');
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label>Select Subject</label>
+                                    <label class="m-0"><b>Subject :</b> </label>
                                     <select required name="subject_id" id="subjects" class="form-control form-control-sm">
                                         <option value="">Select subject</option>
                                         @if (isset($class_section_id))
@@ -83,9 +83,8 @@ date_default_timezone_set('Asia/Dhaka');
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label>Select Date</label>
+                                    <label class="m-0"><b>Date :</b> </label>
                                     <input type="text" required name="date" class="datepicker form-control form-control-sm" value="{{ isset($date) ? $date : date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
-                                    
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-sm btn-blue float-right mt-2">Search</button>
@@ -192,95 +191,95 @@ date_default_timezone_set('Asia/Dhaka');
 </div>
 
 @endsection
+
 @push('js')
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.select_class').on('change', function () {
-            var classId = $(this).val();
-            $.ajax({
-                url: "{{ url('admin/attendance/period/by/date/get/sections/by/') }}" + "/" + classId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    //console.log(data);
-                    $('#sections').empty();
-                    $('#sections').append(' <option value="">--Select Section--</option>');
-                    $.each(data, function (key, val) {
-                        $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
-                    })
-                }
-            })
-        })
-    });
-
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.is_subjects').hide();
-        $('.select_section').on('change', function () {
-            var classId = $('.class_id').val();
-            var sectionId = $(this).val()
-            $.ajax({
-                url: "{{ url('admin/attendance/period/by/date/get/subjects/by/') }}" + "/" + classId + "/" + sectionId,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    $('.is_subjects').empty();
-                    $('#subjects').empty(500);
-                    if (!$.isEmptyObject(data)) {
-                        $('#subjects').append(' <option value="">--Select Subject--</option>');
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.select_class').on('change', function () {
+                var classId = $(this).val();
+                $.ajax({
+                    url: "{{ url('admin/ajax/class/sections/') }}" + "/" + classId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        //console.log(data);
+                        $('#sections').empty();
+                        $('#sections').append(' <option value="">--Select Section--</option>');
                         $.each(data, function (key, val) {
-                            $('#subjects').append(' <option value="' + val.subject_id + '">' + val.subject.name + '</option>');
+                            $('#sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
                         })
-                    } else {
-                        $('.is_subjects').hide(100);
-                        $('.is_subjects').show(100);
-                        $('.is_subjects').html('<b>Subject is not available in this class section</b>');
                     }
-                }
+                })
             })
-        })
-    });
-
-</script>
-
-<script>
-    $(document).ready(function () {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
         });
+    </script>
 
-        $('#attendance_modify_from').submit(function (e) {
-            e.preventDefault();
-            var url = $(this).attr('action');
-            var type = $(this).attr('method');
-            var request = $(this).serialize();
-            $.ajax({
-                url: url,
-                type: type,
-                data: request,
-                success: function (data) {
-                    console.log(data);
-                    if (!$.isEmptyObject(data.successMsg)) {
-                        toastr.success(data.successMsg);
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.is_subjects').hide();
+            $('.select_section').on('change', function () {
+                var classId = $('.class_id').val();
+                var sectionId = $(this).val()
+                $.ajax({
+                    url: "{{ url('admin/attendance/period/by/date/get/subjects/by/') }}" + "/" + classId + "/" + sectionId,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        $('.is_subjects').empty();
+                        $('#subjects').empty(500);
+                        if (!$.isEmptyObject(data)) {
+                            $('#subjects').append(' <option value="">--Select Subject--</option>');
+                            $.each(data, function (key, val) {
+                                $('#subjects').append(' <option value="' + val.subject_id + '">' + val.subject.name + '</option>');
+                            })
+                        } else {
+                            $('.is_subjects').hide(100);
+                            $('.is_subjects').show(100);
+                            $('.is_subjects').html('<b>Subject is not available in this class section</b>');
+                        }
                     }
-                }
+                })
             })
-
-        })
-    }) 
-</script>
-
-<script>
-    $(document).ready(function(){
-        $('.datepicker').datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose:true
         });
-    })
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#attendance_modify_from').submit(function (e) {
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: request,
+                    success: function (data) {
+                        console.log(data);
+                        if (!$.isEmptyObject(data.successMsg)) {
+                            toastr.success(data.successMsg);
+                        }
+                    }
+                })
+
+            })
+        }) 
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        })
+    </script>
 @endpush

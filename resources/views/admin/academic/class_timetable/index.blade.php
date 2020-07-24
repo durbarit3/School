@@ -1,49 +1,14 @@
 @extends('admin.master')
 @push('css')
-<style>
-    .day_area {
-        width: 14%;
-        height: auto;
-    }
-
-    .day_grid {
-
-        width: 14%;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .time_list {
-        font-size: 12px;
-        font-weight: 600;
-        box-sizing: border-box;
-        margin: 4px;
-        border: 1px solid;
-        border-radius: 7px;
-
-    }
-
-    .time_list p {
-        line-height: 21px;
-    }
-   
-    .day_heading {
-        height: 37px;
-        padding-top: 10px;
-        margin: 4px;
-        border: 1px solid;
-        border-radius: 7px;
-    }
-
-    .time_list.no_scheduled {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-</style>
+    <style>
+        .day_area {width: 14%;height: auto;}
+        .day_grid {width: 14%;text-align: center;display: flex;flex-direction: column;}
+        .time_list {font-size: 12px;font-weight: 600;box-sizing: border-box;margin: 4px;border: 1px solid;
+            border-radius: 7px;}
+        .time_list p {line-height: 21px;}
+        .day_heading { height: 37px;padding-top: 10px;margin: 4px;border: 1px solid;border-radius: 7px;}
+        .time_list.no_scheduled {height: 100%;display: flex;flex-direction: column;justify-content: center;}
+    </style>
 @endpush
 @section('content')
 <div class="middle_content_wrapper">
@@ -267,7 +232,7 @@
         $('.select_class').on('change', function () {
             var classId = $(this).val();
             $.ajax({
-                url: "{{ url('admin/academic/class/timetable/get/sections/by/') }}" + "/" +classId,
+                url: "{{ url('admin/ajax/class/sections/') }}" + "/" +classId,
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {

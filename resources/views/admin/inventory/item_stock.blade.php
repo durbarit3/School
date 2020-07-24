@@ -75,7 +75,7 @@
                                 </td>
 
                                 <td>
-                                    | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                    <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
                                     <a id="delete" href="" class="btn btn-danger btn-sm text-white" title="Delete">
                                         <i class="far fa-trash-alt"></i>
                                     </a>

@@ -17,8 +17,6 @@ class ExamAttendanceModifyController extends Controller
     {
         $classes = Classes::select(['id', 'name'])->get();
         $sessions = Session::where('deleted_status', NULL)->where('status', 1)->orderBy('id', 'desc')->get(['id', 'session_year']);
-
-
         return view('admin.attendance.exam_attendance_modify.index', compact('classes', 'sessions'));
     }
 
@@ -62,9 +60,7 @@ class ExamAttendanceModifyController extends Controller
         if ($request->attendance_ids == NULL) {
             return \response()->json(['errorMsg' => 'You did not check any student\'s attendance status.']);
         }
-
         $notes = $request->notes;
-    
         foreach ($request->attendance_ids as $attendance_id => $attendance_status) {
 
             $modifyExamAttendance = ExamAttendance::where('id', $attendance_id)->first();
@@ -73,7 +69,6 @@ class ExamAttendanceModifyController extends Controller
             $modifyExamAttendance->save();
         
         }
-
         return \response()->json(['successMsg' => 'Attendance is modified successfully.']);
     }
 }
