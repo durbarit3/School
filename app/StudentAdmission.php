@@ -6,6 +6,8 @@ use App\Route;
 use App\Hostel;
 use App\Vehicle;
 use App\HostelRoom;
+use App\FeesCollection;
+use App\CurrentDayAttendance;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentAdmission extends Model
@@ -73,7 +75,7 @@ class StudentAdmission extends Model
     
     public function feesCollection()
     {
-        return $this->hasOne(feesCollection::class, 'student_id');
+        return $this->hasOne(FeesCollection::class, 'student_id');
     }
 
     public function attendances()

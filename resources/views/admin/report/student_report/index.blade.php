@@ -249,7 +249,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select name="select_type" id="select_type"
@@ -264,7 +263,6 @@
                                             <option value="last_year">Last Year</option>
                                             <option value="period">Period</option>
                                         </select>
-                                     
                                     </div>
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date From :</label>
@@ -279,7 +277,6 @@
                                         <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-left">Search</button>
                                     </div>
                                 </div>
-                                
                             </form>
                             
                             <form class="report_form class_subject_report_form" action="{{ route('admin.reports.student.report.class.subject') }}"
@@ -296,7 +293,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-6">
                                         <label>Class :</label>
                                         <select name="class_id" class="select_class class_id form-control form-control-sm">
@@ -314,15 +310,12 @@
                                             <option value="">--- Select section ---</option>
                                         </select>
                                     </div>
-                                  
                                 </div>
                                 <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
                         </div>
 
-
                         <div class="panel_body table_body mt-2">
-                           
                             <div class="loading"><h4>Loading...</h4> </div>
                             <div class="table_area">
                                 
@@ -344,9 +337,7 @@
         $('.table_body').hide();
         $('.form_field_body').hide();
         $('.period_field_area').hide();
-
         $(document).ready(function () {
-
             $('.student_report').on('click', function(e){
                 e.preventDefault();
                 $('.report_form').hide();
@@ -411,10 +402,8 @@
                     $('.period_field_area').hide(); 
                 }
             });
+        });
 
-       });
-
-       
     </script> 
 
     <script>
@@ -434,13 +423,44 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
                             toastr.error(data.error);
-                            $('.table_body').hide();
-                            
+                            $('.table_body').hide(); 
+                        }else{
+                            $('.table_area').html(data); 
+                            $('.loading').hide(100); 
+                            $('.table_body').show();
+                        }
+                    },
+                });
+            });
+       });
+    </script>   
+    
+    <script>
+      
+       $(document).ready(function () {
+
+            $('.sibling_report_form').on('submit', function(e){
+                e.preventDefault();
+                $('.table_body').show();
+                $('.table_area').empty();
+                $('.loading').show(100);
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+                        if (!$.isEmptyObject(data.error)) {
+                            $('.table_body').show();
+                            $('.loading').hide(100); 
+                            toastr.error(data.error);
+                            $('.table_body').hide(); 
                         }else{
                             $('.table_area').html(data); 
                             $('.loading').hide(100); 
@@ -454,8 +474,7 @@
 
     <script>
       
-       $(document).ready(function () {
-
+        $(document).ready(function () {
             $('.guardian_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -483,14 +502,12 @@
                     },
                 });
             });
-       });
-
+        });
     </script>
     
     <script>
       
        $(document).ready(function () {
-
             $('.admission_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -519,13 +536,10 @@
                 });
             });
        });
-       
     </script>    
     
     <script>
-      
        $(document).ready(function () {
-
             $('.class_subject_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -554,19 +568,16 @@
                 });
             });
        });
-       
     </script>
 
-
     <script type="text/javascript">
-        
         $('.loading').hide(200);
         $(document).ready(function () {
             $(document).on('change','.select_class', function () {
                 var classId = $(this).val();
                 //console.log(menu);
                 $.ajax({
-                    url: "{{ url('admin/attendance/current/day/by/date/get/sections/by/') }}" + "/" + classId,
+                    url: "{{ url('admin/reports/student_report/get/class/section/by/') }}" + "/" + classId,
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {

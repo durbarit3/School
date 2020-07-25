@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\LibraryMember;
 use Illuminate\Database\Eloquent\Model;
 
 class BookIssue extends Model
@@ -18,8 +19,6 @@ class BookIssue extends Model
 
 	public function libraryMember()
 	{
-    	return $this->belongsTo(libraryMember::class, 'issueto');
+    	return $this->belongsTo(LibraryMember::class, 'issueto');
 	}
-
-	
 }

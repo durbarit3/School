@@ -10,7 +10,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label class="col-form-label p-0 m-0">Date  :</label>
-            <input type="text" autocomplete="off" placeholder="dd-mm-yyyy" class="form-control add_with_date_picker edit_date form-control-sm" name="date" value="{{ $withdraw->date }}" required>
+            <input readonly type="text" autocomplete="off" placeholder="dd-mm-yyyy" class="form-control add_with_date_picker readonly_field edit_date form-control-sm" name="date" value="{{ $withdraw->date }}" required>
         </div>
     </div>
 
@@ -69,11 +69,11 @@
     </div>
 </form>
 
-<script>
-    $(document).ready(function(){
-        $(".add_with_date_picker").datepicker({
-            format: 'dd-mm-yyyy',
-            autoclose:true
+    <script>
+        $(document).ready(function(){
+            $(".add_with_date_picker").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
         });
-    });
-</script>
+    </script>

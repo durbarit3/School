@@ -39,6 +39,7 @@ class RolePermissionController extends Controller
         $addPermission->office_accounts_module = $this->officeAccountsPermission($request);
         $addPermission->hostel_module = $this->hostelPermission($request);
         $addPermission->library_module = $this->libraryPermission($request);
+        $addPermission->inventory_module = $this->inventoryPermission($request);
         $addPermission->attendance_module = $this->attendancePermission($request);
         $addPermission->fees_collection_module = $this->feesCollectionPermission($request);
         $addPermission->save();
@@ -428,6 +429,12 @@ class RolePermissionController extends Controller
                 'edit' => isset($request->book_list_edit) ? $request->book_list_edit : 0,
                 'delete' => isset($request->book_list_delete) ? $request->book_list_delete : 0,  
             ],
+            'book_issue' => [
+                'view' => isset($request->book_issue_view) ? $request->book_issue_view : 0,
+                'add' => isset($request->book_issue_add) ? $request->book_issue_add : 0,
+                'edit' => isset($request->book_issue_edit) ? $request->book_issue_edit : 0,
+                'delete' => isset($request->book_issue_delete) ? $request->book_issue_delete : 0,  
+            ],
             'library_member' => [
                 'view' => isset($request->library_member_view) ? $request->library_member_view : 0,
                 'add' => isset($request->library_member_add) ? $request->library_member_add : 0,
@@ -483,6 +490,50 @@ class RolePermissionController extends Controller
         ];
 
         return json_encode($feesCollectionPermission); 
+    }   
+    
+    private function inventoryPermission($request)
+    {
+        $inventoryPermission = [        
+            'inventory_issue' => [
+                'view' => isset($request->inventory_issue_view) ? $request->inventory_issue_view : 0,
+                'add' => isset($request->inventory_issue_add) ? $request->inventory_issue_add : 0,
+                'edit' => isset($request->inventory_issue_edit) ? $request->inventory_issue_edit : 0,
+                'delete' => isset($request->inventory_issue_delete) ? $request->inventory_issue_delete : 0,
+            ],
+            'add_item_stock' => [
+                'view' => isset($request->add_item_stock_view) ? $request->add_item_stock_view : 0,
+                'add' => isset($request->add_item_stock_add) ? $request->add_item_stock_add : 0,
+                'edit' => isset($request->add_item_stock_edit) ? $request->add_item_stock_edit : 0,
+                'delete' => isset($request->add_item_stock_delete) ? $request->add_item_stock_delete : 0,  
+            ],
+            'item_category' => [
+                'view' => isset($request->item_category_view) ? $request->item_category_view : 0,
+                'add' => isset($request->item_category_add) ? $request->item_category_add : 0,
+                'edit' => isset($request->item_category_edit) ? $request->item_category_edit : 0,
+                'delete' => isset($request->item_category_delete) ? $request->item_category_delete : 0,  
+            ],
+            'item_store' => [
+                'view' => isset($request->item_store_view) ? $request->item_store_view : 0,
+                'add' => isset($request->item_store_add) ? $request->item_store_add : 0,
+                'edit' => isset($request->item_store_edit) ? $request->item_store_edit : 0,
+                'delete' => isset($request->item_store_delete) ? $request->item_store_delete : 0,  
+            ],
+            'item_supplier' => [
+                'view' => isset($request->item_supplier_view) ? $request->item_supplier_view : 0,
+                'add' => isset($request->item_supplier_add) ? $request->item_supplier_add : 0,
+                'edit' => isset($request->item_supplier_edit) ? $request->item_supplier_edit : 0,
+                'delete' => isset($request->item_supplier_delete) ? $request->item_supplier_delete : 0,  
+            ],
+            'add_item' => [
+                'view' => isset($request->add_item_view) ? $request->add_item_view : 0,
+                'add' => isset($request->add_item_add) ? $request->add_item_add : 0,
+                'edit' => isset($request->add_item_edit) ? $request->add_item_edit : 0,
+                'delete' => isset($request->add_item_delete) ? $request->add_item_delete : 0,
+            ], 
+        ];
+
+        return json_encode($inventoryPermission); 
     }
 
 

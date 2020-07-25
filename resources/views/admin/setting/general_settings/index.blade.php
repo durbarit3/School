@@ -1,19 +1,9 @@
 @extends('admin.master')
 @push('css')
     <style>
-        .dropify-wrapper {
-            height: 70px!important;
-        }
-        footer {
-            
-            bottom: -300px;
-          
-        }
-        .theme_selected {
-            padding: 3px;
-            background-color: cornflowerblue;
-            margin: 4px;
-        }
+        .dropify-wrapper {height: 70px!important;}
+        footer {bottom: -300px;}
+        .theme_selected {padding: 3px;background-color: cornflowerblue;margin: 4px;}
     </style>
 
 @endpush
@@ -35,36 +25,39 @@
                     </div>
                 </div>
                 <div class="panel_body">
-                    <div><h6>Logo settings</h6></div>
+                    <div><h6>Logo / Background settings</h6></div>
                     <hr class="m-0 p-0">
                     <form action="{{ route('admin.settings.general.logo.update', $generalSettings->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="inputEmail3" class="text-center m-0"><b>App logo</b></label>
                                 <input data-default-file="{{ asset('public/uploads/logos/'.$generalSettings->app_logo) }}" accept=".jpg, .jpeg, .png, .gif" type="file" id="app_logo" name="app_logo" id="input-file-now"
                                     class="dropify" size="20"/>
                                 <span class="text-danger">{{ $errors->first('app_logo') }}</span>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <label for="inputEmail3" class="text-center m-0"><b>Print logo</b></label>
                                 <input data-default-file="{{ asset('public/uploads/logos/'.$generalSettings->print_logo) }}" accept=".jpg, .jpeg, .png, .gif" type="file" id="print_logo" name="print_logo" id="input-file-now"
                                     class="dropify" size="20"/>
                                 <span class="text-danger">{{ $errors->first('print_logo') }}</span>
                             </div>
+                            
+                            <div class="col-sm-4">
+                                <label for="inputEmail3" class="text-center m-0"><b>App login page background</b></label>
+                                <input data-default-file="{{ asset('public/uploads/login_page_background/'.$generalSettings->login_background) }}" accept=".jpg, .jpeg, .png, .gif" type="file" id="login_background" name="login_background" id="input-file-now"
+                                    class="dropify" size="20"/>
+                                <span class="text-danger">{{ $errors->first('login_background') }}</span>
+                            </div>
                         </div>
-
                         <button class="btn btn-sm btn-blue float-right">Save</button>
                     </form>
-
-                    
                 </div>
 
                 <div class="panel_body mt-2">
                     <div><h6>School information settings</h6></div>
                     <hr class="m-0 p-0">
-
                     <form action="{{ route('admin.settings.general.school.information.update', $generalSettings->id) }}" method="POST">
                         @csrf
                         <div class="form-group row">
@@ -109,7 +102,6 @@
                             </div>
                         </div> 
                         
-
                         <button class="btn btn-sm btn-blue float-right">Save</button>
                     </form>
                 </div>
@@ -141,14 +133,12 @@
                 </div>
 
                 <div class="panel_body mt-2">
-                    
                     <div><h6>Attendance settings</h6></div>
                     <hr class="m-0 p-0">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="attendance_setting mt-2 text-center">
                                 <h5><b>Current day attendance -></b> 
-
                                     @if ($generalSettings->current_day_attendance == 1)
                                         <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.current.day.attendance.status', $generalSettings->id) }}">
                                             <i class="fas fa-thumbs-up"></i>
@@ -158,7 +148,6 @@
                                             <i class="fas fa-thumbs-down"></i>  
                                         </a>
                                     @endif  
-
                                 </h5> 
                             </div>
                         </div>
@@ -166,7 +155,6 @@
                         <div class="col-md-4">
                             <div class="attendance_setting mt-2 text-center">
                                 <h5><b>Period attendance -></b> 
-                                    
                                     @if ($generalSettings->period_attendance == 1)
                                         <a class="btn btn-sm btn-success" href="{{ route('admin.settings.general.change.period.attendance.status', $generalSettings->id) }}">
                                             <i class="fas fa-thumbs-up"></i>
@@ -176,7 +164,6 @@
                                             <i class="fas fa-thumbs-down"></i> 
                                         </a>
                                     @endif
-                                    
                                 </h5> 
                             </div>
                         </div>
@@ -216,17 +203,10 @@
                         </div>
                     </div>
                 </div>
-    
             </div>
             </div>
         </section>
     </div>
-
 <!--/middle content wrapper-->
 <!-- hostel select rooom find -->
 @endsection
-
-@push('js')
-    
-    
-@endpush

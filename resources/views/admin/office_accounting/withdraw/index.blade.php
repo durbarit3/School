@@ -22,7 +22,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="panel_body">
@@ -59,7 +58,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label class="col-form-label p-0 m-0">Date  :</label>
-                            <input type="text" autocomplete="off" placeholder="dd-mm-yyyy" class="form-control add_dipo_date_picker date form-control-sm" name="date" required>
+                            <input readonly type="text" autocomplete="off" placeholder="dd-mm-yyyy" class="form-control readonly_field add_dipo_date_picker date form-control-sm" name="date" required>
                         </div>
                     </div>
 

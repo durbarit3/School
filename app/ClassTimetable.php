@@ -2,8 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Admin;
+use App\Classes;
 use App\Subject;
+use Illuminate\Database\Eloquent\Model;
 
 class ClassTimetable extends Model
 {
@@ -23,7 +25,7 @@ class ClassTimetable extends Model
 
     public function class()
     {
-        return $this->belongsTo(classes::class, 'class_id');
+        return $this->belongsTo(Classes::class, 'class_id');
     }
     
 }

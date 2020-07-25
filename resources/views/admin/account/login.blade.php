@@ -26,7 +26,7 @@
         <!-- contnet wrapper -->
         <div class="content_wrapper">
             <!-- page content -->
-            <div class="login_page center_container" style="background: url('{{asset('public/admins/images/inventory-bg.jpg')}}');">
+            <div class="login_page center_container" style="background: url('{{ asset('public/uploads/login_page_background/'.$generalSettings->login_background) }}');">
                 <div class="center_content">
                     <div class="logo">
                         <!-- <img src="assets/images/logo.png" alt="" class="img-fluid"> -->

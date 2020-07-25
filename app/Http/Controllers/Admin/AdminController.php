@@ -26,7 +26,6 @@ class AdminController extends Controller
     }
 
     // show home page
-    
     public function index()
     {
         //$query = @unserialize (file_get_contents('http://ip-api.com/php/'));

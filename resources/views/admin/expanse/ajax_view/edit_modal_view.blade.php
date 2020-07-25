@@ -11,7 +11,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label><b>Date</b> : </label>
-            <input type="text" class="form-control date_picker" value="{{$expanse->date}}" name="date" id="e_date">
+            <input readonly type="text" class="form-control readonly_field date_picker" value="{{$expanse->date}}" name="date" id="e_date">
             <div class="error e_error_date"></div>
         </div>
     </div>
@@ -53,17 +53,13 @@
     </div>
 </form>
 
-<script>
-    $(document).ready(function(){
-        $('.loading_button').hide();
-        $(".date_picker").flatpickr({
-            dateFormat: "d-m-Y",
+    <script>
+        $(document).ready(function(){
+            $('.loading_button').hide();
+            $('.date_picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
         });
-    
-        $(".pick_date_of_birth").flatpickr({
-            dateFormat: "Y-m-d",
-            readonly:false,
-        });
-    });
-</script>
+    </script>
 

@@ -18,7 +18,6 @@
                 background-color: #353C48;
             @endif
         }
-
         .panel_header{
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
@@ -26,7 +25,6 @@
                 background-color: #353C48;
             @endif
         }
-
         .sidebar-wrapper ul li .menu-item{
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
@@ -34,7 +32,6 @@
                 background-color: #353C48;
             @endif 
         }
-
         .modal-header {
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
@@ -42,7 +39,6 @@
                 background-color: #353C48;
             @endif
         }
-        
         .header_area .sidebar_logo {
             @if ($generalSettings->color_theme == 1)
                 background-color: #222533;
@@ -102,11 +98,7 @@
         @yield('content')
 
         </div>
-        <!--/ logout form -->
-            <form id="logoutForm" action="{{ route('admin.logout') }}" method="POST">
-                @csrf
-            </form>
-        <!--/ logout form end -->
+        
         <!--/ content wrapper -->
         <footer>
             <div class="row">
@@ -144,17 +136,7 @@
     <script src="{{asset('public/admins/plugins/scrollbar/scroll.active.js')}}"></script>
     <!-- counter -->
     <script src="{{asset('public/admins/plugins/counter/js/counter.js')}}"></script>
-    <!-- chart -->
 
-    
-    {{--  <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.min.js')}}"></script>  --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script src="{{asset('public/admins/plugins/chartjs-bar-chart/Chart.js')}}"></script>
-    <!-- pie chart -->
-    <script src="{{asset('public/admins/plugins/pie_chart/chart.loader.js')}}"></script>
-
-
-    <script src="{{asset('public/admins/plugins/pie_chart/pie.active.js')}}"></script>
     <!-- @basic_donut_chart -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js'></script>
 
@@ -170,9 +152,9 @@
     
     <script src="{{asset('public/admins/plugins/select2/js/select2.full.min.js')}}"></script>
     <!-- drofify -->
-      <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>
+    <script src="{{asset('public/admins/plugins')}}/dist/js/dropify.min.js"></script>
       {{--  Date picker Link Js CDN  --}}
-      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
         $(document).ready(function(){
@@ -191,19 +173,15 @@
 
             // Used events
             var drEvent = $('#input-file-events').dropify();
-
             drEvent.on('dropify.beforeClear', function(event, element){
                 return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
             });
-
             drEvent.on('dropify.afterClear', function(event, element){
                 alert('File deleted');
             });
-
             drEvent.on('dropify.errors', function(event, element){
                 console.log('Has Errors');
             });
-
             var drDestroy = $('#input-file-to-destroy').dropify();
             drDestroy = drDestroy.data('dropify')
             $('#toggleDropify').on('click', function(e){
@@ -239,9 +217,7 @@
         }
         @endif
     </script>
-
     {{-- <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script> --}}
-
     <script>
         $(document).on("click", "#delete", function (e) {
             e.preventDefault();
@@ -289,6 +265,5 @@
     <script src="{{asset('public/admins/plugins/bootstrap_time_picker/js/bootstrap-datepicker.js')}}"></script>
 
     @stack('js')
-
 </body>
 </html>

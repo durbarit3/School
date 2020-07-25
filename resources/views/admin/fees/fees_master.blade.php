@@ -4,22 +4,22 @@
     <!-- panel -->
     <div class="panel">
         <div class="panel_header">
-        <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel_title">
-                            <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Fees Master List</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <div class="panel_title">
-                            @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['add'] == 1)
-                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
-                                    <i class="fas fa-plus"></i></span> <span>Add Fees Master</span>
-                                </a>
-                            @endif
-                        </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel_title">
+                        <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Fees Master List</span>
                     </div>
                 </div>
+                <div class="col-md-6 text-right">
+                    <div class="panel_title">
+                        @if (json_decode($userPermits->fees_collection_module, true)['fees_master']['add'] == 1)
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i></span> <span>Add Fees Master</span>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <form action="{{route('admin.fees.master.multi.delete')}}" method="post">
             @csrf
@@ -136,7 +136,7 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Due Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" class="form-control" placeholder="Due date" name="date" required>
+                            <input required type="text" class="form-control date_picker" name="date" required placeholder="dd-mm-yyyy">
                         </div>
                     </div>
 
@@ -229,7 +229,7 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Due Date:</label>
                         <div class="col-sm-8">
-                            <input required type="date" id="date" class="form-control" placeholder="Due date" name="date" required>
+                            <input required type="text" id="date" class="form-control date_picker" placeholder="dd-mm-yyyy" name="date" required>
                         </div>
                     </div>
 
@@ -285,34 +285,40 @@
 
 @push('js')
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.edit_route').on('click', function() {
-            var id = $(this).data('id');
-            
-            if (id) {
-                $.ajax({
-                    url: "{{ url('admin/fees/master/edit/') }}/" + id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function(data) {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.edit_route').on('click', function() {
+                var id = $(this).data('id');
+                if (id) {
+                    $.ajax({
+                        url: "{{ url('admin/fees/master/edit/') }}/" + id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
 
-                        $("#group").val(data.group);
-                        $("#types").val(data.types);
-                        $("#date").val(data.date);
-                        $("#amount").val(data.amount);
-                        $("#fine_type").val(data.fine_type);
-                        $("#percentage").val(data.percentage);
-                        $("#fine_amount").val(data.fine_amount);
-                        $("#id").val(data.id);
-                    }
-                });
-            } else {
-                // alert('danger');
-            }
-
+                            $("#group").val(data.group);
+                            $("#types").val(data.types);
+                            $("#date").val(data.date);
+                            $("#amount").val(data.amount);
+                            $("#fine_type").val(data.fine_type);
+                            $("#percentage").val(data.percentage);
+                            $("#fine_amount").val(data.fine_amount);
+                            $("#id").val(data.id);
+                        }
+                    });
+                } else {
+                    // alert('danger');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
+    <script>
+        $(document).ready(function(){
+            $(".date_picker").datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        });
+    </script>
 @endpush

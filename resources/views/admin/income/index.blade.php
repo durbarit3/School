@@ -132,7 +132,7 @@
                     <div class="form-group row">
                         <div class="col-sm-12">
                             <label><b>Date :</b></label>
-                            <input type="text" class="form-control readonly_field add_in_date_picker" value="{{ date('d-m-Y') }}" name="date">
+                            <input readonly type="text" class="form-control readonly_field date_picker" value="{{ date('d-m-Y') }}" name="date">
                         </div>
                     </div>
 
@@ -247,17 +247,10 @@
                 });
             });
         });
-
-        $(document).ready(function(){
-            $(".add_in_date_picker").flatpickr({
-                dateFormat: "d-m-Y",
-            });
-        });
     </script>
 
     <script>
         $(document).ready(function () {
-            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -357,6 +350,15 @@
 				});
 			});
 		});
-	</script> 
+    </script> 
+    
+    <script>
+        $(document).ready(function(){
+            $('.date_picker').datepicker({
+                format: 'dd-mm-yyyy',
+                autoclose:true
+            });
+        });
+    </script>
 @endpush
 

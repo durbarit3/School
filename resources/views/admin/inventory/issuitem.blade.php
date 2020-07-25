@@ -13,8 +13,11 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="panel_title">
-                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                class="fas fa-plus"></i></span> <span>Add Issue Item</span></a>
+                        @if (json_decode($userPermits->inventory_module, true)['inventory_issue']['add'] == 1)
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i></span> <span>Add Issue Item</span>
+                            </a>
+                        @endif 
                     </div>
                 </div>
             </div>
@@ -53,18 +56,24 @@
                             <td>{{ $row->qty }}</td>
                             <td>
                                 @if ($row->returned_status == 0)
-                                    <a href="{{ route('inventory.issue.return', $row->id) }}" class="btn btn-danger btn-sm ">
-                                        Click to return
-                                    </a>
+                                    @if (json_decode($userPermits->inventory_module, true)['inventory_issue']['edit'] == 1)
+                                        <a href="{{ route('inventory.issue.return', $row->id) }}" class="btn btn-danger btn-sm ">
+                                            Click to return
+                                        </a>
+                                    @else
+                                        <h6 class="badge badge-danger"><b>Item due</b> </h6>
+                                    @endif 
                                 @else
-                                    <h6 class="badge badge-success"><b>Book returned</b> </h6>
+                                    <h6 class="badge badge-success"><b>Item returned</b> </h6>
                                 @endif 
                             </td>
              
                             <td>
-                                <a id="delete" href="{{route('inventory.issue.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                @if (json_decode($userPermits->inventory_module, true)['inventory_issue']['delete'] == 1)
+                                    <a id="delete" href="{{route('inventory.issue.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                @endif 
                             </td>
                         </tr>
                     @endforeach
@@ -180,7 +189,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->inventory_module, true)['inventory_issue']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

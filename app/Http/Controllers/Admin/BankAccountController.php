@@ -37,6 +37,7 @@ class BankAccountController extends Controller
         $addBankAccount->balance = $request->opening_balance;
         $addBankAccount->save();
 
+        session()->flash('successMsg', 'Bank account added successfully:)');
         return response()->json('Bank account added successfully:)');
         
     }
@@ -79,6 +80,8 @@ class BankAccountController extends Controller
             'account_no' => 'required',
             'opening_balance' => 'required|numeric',
             'address' => 'required',
+        ],[
+            'bank_id.required' => 'Bank name is required'
         ]);
 
         $updateBankAccount = BankAccount::where('id', $accountId)->first();
@@ -90,11 +93,8 @@ class BankAccountController extends Controller
         $updateBankAccount->address = $request->address;
         $updateBankAccount->save();
 
-        $notification = array(
-            'messege' => 'Bank account is updated successfully:)',
-            'alert-type' => 'success'
-        );
-        return Redirect()->back()->with($notification);
+        session()->flash('successMsg', 'Bank account is updated successfully:)');
+        return response()->json('Bank account is updated successfully:)');
     }
 
     public function delete($accountId)

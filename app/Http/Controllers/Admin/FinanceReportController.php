@@ -267,14 +267,12 @@ class FinanceReportController extends Controller
         $monthAndYear = explode('-',$request->year_month);
         $year = $monthAndYear[0];
         $month = $monthAndYear[1];
-        
+        $onlyYear = $request->year;
         foreach ($feesCollections as $feesCollection) {
             if ($request->select_type == 'month_wise') {
-                
                 if ($request->paid_status === 'all') {
-                    
                     $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
-                        return $c['month'] == $month && $c['year'] == $year;
+                        return $c['month'] === $month && $c['year'] === $year;
                     });
                     //return count($filteredArrays);
                     if (count($filteredArrays) > 0) {
@@ -334,11 +332,10 @@ class FinanceReportController extends Controller
                         }
                     }
                 }
-                
             }elseif ($request->select_type == 'year_wise') {
                 if ($request->paid_status === 'all') {
-                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
-                        return $c['year'] == $year;
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($onlyYear){
+                        return $c['year'] === $onlyYear;
                     });
                     
                     if (count($filteredArrays) !== 0) {
@@ -358,8 +355,8 @@ class FinanceReportController extends Controller
                     }
 
                 }elseif ($request->paid_status === 'paid') {
-                    $filteredArrays = array_filter($feesCollection->collection, function($c) use ($month, $year){
-                        return $c['year'] == $year && $c['is_paid'] == 1;
+                    $filteredArrays = array_filter($feesCollection->collection, function($c) use ($onlyYear){
+                        return $c['year'] === $onlyYear && $c['is_paid'] == 1;
                     });
                     
                     if (count($filteredArrays) !== 0) {
@@ -378,8 +375,8 @@ class FinanceReportController extends Controller
                         }
                     }
                 }elseif ($request->paid_status === 'no_paid') {
-                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($month, $year){
-                        return $c['year'] == $year && $c['is_paid'] == null;
+                    $filteredArrays = array_filter($feesCollection->collection,function($c) use ($onlyYear){
+                        return $c['year'] == $onlyYear && $c['is_paid'] == null;
                     });
                     
                     if (count($filteredArrays) !== 0) {
@@ -397,28 +394,10 @@ class FinanceReportController extends Controller
                             $studentInfoWithFee['fees'] = [];
                         }
                     }
-                }
-                
-            }
-            
+                }  
+            } 
         }
 
-       //return $collectionArrays;
-        // foreach ($collectionArrays as $collectionArray) {
-        //     if ($collectionArray !== '') {
-        //         echo $collectionArray['name'];
-
-        //         foreach ($collectionArray['fees'][0] as $fee) {
-        //             echo $fee['month'];
-        //         }
-
-        //     }
-            
-        // }
-
         return view('admin.report.finance_report.ajax_view.fees_report', compact('collectionArrays'));
-        
-    }
-
-    
+    }  
 }

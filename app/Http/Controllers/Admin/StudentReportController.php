@@ -28,6 +28,15 @@ class StudentReportController extends Controller
         return view('admin.report.student_report.index', compact('sessions','classes', 'categories', 'genders'));
     }
 
+    public function getClassSections($classId)
+    {
+        $classSection = ClassSection::with('section')
+            ->where('class_id', $classId)
+            ->select(['id', 'section_id'])
+            ->get();
+        return response()->json($classSection);
+    }
+
     public function studentReport(Request $request)
     {
         $this->validate($request,[
@@ -90,6 +99,12 @@ class StudentReportController extends Controller
         }
 
         return view('admin.report.student_report.ajax_view.student_report', compact('student_reports'));
+    }
+
+    public function studentSiblingReport(Request $request)
+    {
+        $student_siblings = StudentAdmission::where('class', $request->class_id)->where('section', $request->section_id)->where('sibling_student_id', '!=', NULL)->get();
+        return view('admin.report.student_report.ajax_view.sibling_report', compact('student_siblings'));
     }
 
     public function studentGuardianReport(Request $request)

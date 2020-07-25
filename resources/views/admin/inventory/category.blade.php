@@ -12,7 +12,11 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="panel_title">
-                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add Hostel</span></a>
+                        @if (json_decode($userPermits->inventory_module, true)['item_category']['add'] == 1)
+                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                <i class="fas fa-plus"></i></span> <span>Add Hostel</span>
+                            </a>
+                        @endif    
                     </div>
                 </div>
             </div>
@@ -52,22 +56,37 @@
                             <td>{{$cateogry->category}}</td>
                             <td>{{$cateogry->description}}</td>
                             <td>
-                                @if($cateogry->status ==  1)
-                                    <a href="{{ route('room.type.status.update', $cateogry->id) }}" class="btn btn-success btn-sm ">
-                                        <i class="fas fa-thumbs-up"></i>
-                                    </a>
-                                @else
-                                    <a href="{{ route('room.type.status.update', $cateogry->id ) }}" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-thumbs-down"></i>
-                                    </a>
+                                @if (json_decode($userPermits->inventory_module, true)['item_category']['edit'] == 1)
+                                    @if($cateogry->status ==  1)
+                                        <a href="{{ route('room.type.status.update', $cateogry->id) }}" class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('room.type.status.update', $cateogry->id ) }}" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                    @endif
+                                @else  
+                                    @if($cateogry->status == 1)
+                                        <a href="#" class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                    @endif
                                 @endif
                             </td>
              
                             <td>
-                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$cateogry->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                <a id="delete" href="{{route('inventory.category.delete',$cateogry->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$cateogry->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> 
+                                
+                                @if (json_decode($userPermits->inventory_module, true)['item_category']['delete'] == 1)
+                                    | <a id="delete" href="{{route('inventory.category.delete',$cateogry->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -108,13 +127,14 @@
                         <div class="col-sm-8">
                             <textarea rows="3" class="form-control" name="description" require></textarea>
                             <span class="text-danger">{{ $errors->first('description') }}</span>
-                            
                         </div>
                     </div>
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->inventory_module, true)['item_category']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>
@@ -154,7 +174,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->inventory_module, true)['item_category']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif
                     </div>
                 </form>
             </div>

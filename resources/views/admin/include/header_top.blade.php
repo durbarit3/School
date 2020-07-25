@@ -4,12 +4,16 @@
     <div class="sidebar_logo">
         <a href="{{ route('admin.home') }}">
             <img src="{{asset('public/uploads/logos/'.$generalSettings->app_logo)}}" alt="" class="img-fluid logo1">
-          
         </a>
     </div>
     <div class="sidebar_btn">
         <button class="sidbar-toggler-btn"><i class="fas fa-bars"></i></button>
+        
     </div>
+    <div class="sidebar_btn">
+        <h6 class="text-light"><b>Version 1.1</b> </h6>
+    </div>
+    
     <ul class="header_menu">
         <li><a href="#" class="search_btn" data-toggle="modal" data-target="#myModal"><i class="fas fa-search"></i></a>
             <div class="modal fade search_box" id="myModal">
@@ -238,6 +242,12 @@
         <li><a class="responsive_menu_toggle" href="#"><i class="fas fa-bars"></i></a></li>
     </ul>
 </header><!-- / header area -->
+
+<!--/ logout form -->
+            <form style="display: none;" id="logoutForm" action="{{ route('logout') }}" method="POST">
+                @csrf
+            </form>
+<!--/ logout form end -->
 
 
 

@@ -1,48 +1,15 @@
 @extends('admin.master')
 @push('css')
     <style>
-        .loading {
-            margin: 0px;
-            padding: 0px;
-            background: white;
-            padding-bottom: 1px;
-        }
-        
-        .loading h4 {
-            margin-left: 24px;
-        }
-
-        td {
-            line-height: 11px;
-        }
-        
-        a.report_menu_link {
-            width: 100%;
-            display: block;
-            padding: 4px 7px;
-            color: #444;
-            margin-left: 19px;
-        }
-        
-        li.report_menu_list {
-            display: block;
-            margin-top: 4px;
-        }
-
-        .list_background{
-            background: #dceeff;
-        }
-
-        li.report_menu_list a:hover {
-            color:black;
-        }
-        
+        .loading {margin: 0px;padding: 0px;background: white;padding-bottom: 1px;}
+        .loading h4 {margin-left: 24px;}
+        td {line-height: 11px;}
+        a.report_menu_link {: 100%;display: block;padding: 4px 7px;color: #444;margin-left: 19px;}
+        li.report_menu_list {display: block;margin-top: 4px;}
+        .list_background{background: #dceeff;}
+        li.report_menu_list a:hover {color:black;}
         a.report_menu_link svg {font-size: 16px;}
-
-        .report_list_area {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
-            background-color: #fff;
-        }
+        .report_list_area {box-shadow: 0 2px 10px rgba(0, 0, 0, .2);background-color: #fff;}
     </style>
 @endpush
 @section('content')
@@ -50,7 +17,6 @@
         <section class="page_content">
             <!-- panel -->
             <div class="panel mb-0">
-
                 <div class="col-lg-12">
                     <div class="panel">
                         <div class="panel_header">
@@ -61,12 +27,8 @@
                                         <span>Select criteria for finance report</span>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    
-                                </div>
                             </div>
                         </div>
-
                         <div class="report_list_area">
                             <div class="report_list">
                                 <div class="row">
@@ -128,13 +90,12 @@
                                                 </a>
                                             </li>
                                             
-                                            <li class="report_menu_list">
+                                            {{-- <li class="report_menu_list">
                                                 <a data-value="leaser_sheet" class="report_menu_link text-dark leaser_sheet" href="#">
                                                     <i class="fas fa-file-alt"></i> 
                                                     <b>Leasar sheet</b> 
                                                 </a>
-                                            </li>
-                                           
+                                            </li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -143,7 +104,6 @@
                         </div>
                         
                         <div class="panel_body form_field_body">
-
                             <form class="report_form income_report_form pb-2" action="{{ route('admin.reports.finance.report.income') }}"
                                 method="get">
                                 <div class="heading_area">
@@ -157,7 +117,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select name="select_type" id="select_type"
@@ -172,22 +131,22 @@
                                             <option value="last_year">Last Year</option>
                                             <option value="period">Period</option>
                                         </select>
-                                     
                                     </div>
+
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date From :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
                                     </div>
+
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date To :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
                                     </div>
+
                                     <div class="col-md-1">
-                                        
                                         <button style="margin-top: 26px;" type="submit" class="btn btn-sm btn-blue float-left">Search</button>
                                     </div>
                                 </div>
-                            
                             </form>
                             
                             <form class="report_form income_group_report_form pb-2" action="{{ route('admin.reports.finance.report.income.group') }}"
@@ -203,7 +162,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
@@ -218,15 +176,15 @@
                                             <option value="last_year">Last Year</option>
                                             <option value="period">Period</option>
                                         </select>
-                                     
                                     </div>
+
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date From :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                        <input readonly type="text" class="form-control readonly_field form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
                                     </div>
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date To :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
                                     </div>
 
                                     <div class="col-md-3">
@@ -237,7 +195,6 @@
                                             @foreach ($incomeHeaders as $incomeHeader)
                                                 <option value="{{ $incomeHeader->id }}">{{ $incomeHeader->name }}</option>
                                             @endforeach
-                                            
                                         </select>
                                     </div>
                                 </div>
@@ -257,7 +214,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
@@ -272,17 +228,17 @@
                                             <option value="last_year">Last Year</option>
                                             <option value="period">Period</option>
                                         </select>
-                                     
-                                    </div>
-                                    <div class="col-md-3 period_field_area">
-                                        <label class="m-0">Date From :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
-                                    </div>
-                                    <div class="col-md-3 period_field_area">
-                                        <label class="m-0">Date To :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
                                     </div>
 
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date From :</label>
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                    </div>
+
+                                    <div class="col-md-3 period_field_area">
+                                        <label class="m-0">Date To :</label>
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                    </div>
                                 </div>
                                 <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
@@ -300,7 +256,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
@@ -315,17 +270,16 @@
                                             <option value="last_year">Last Year</option>
                                             <option value="period">Period</option>
                                         </select>
-                                     
                                     </div>
 
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date From :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
                                     </div>
 
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date To :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
                                     </div>
 
                                     <div class="col-md-3">
@@ -336,7 +290,6 @@
                                             @foreach ($expanseHeaders as $expanseHeader)
                                                 <option value="{{ $expanseHeader->id }}">{{ $expanseHeader->name }}</option>
                                             @endforeach
-                                            
                                         </select>
                                     </div>
                                 </div>
@@ -356,7 +309,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
@@ -369,12 +321,12 @@
 
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date From :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_from">
                                     </div>
 
                                     <div class="col-md-3 period_field_area">
                                         <label class="m-0">Date To :</label>
-                                        <input type="text" class="form-control form-control-sm date_picker" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
+                                        <input readonly type="text" class="form-control form-control-sm date_picker readonly_field" placeholder="10/12/2020" value="{{ date('d-m-Y') }}" name="date_to">
                                     </div>
 
                                     <div class="col-md-3 month_wise_year_or_month">
@@ -416,7 +368,6 @@
                                             <option value="no_paid">No-Paid/Due</option>
                                         </select>
                                     </div>
-
                                 </div>
                                 <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
@@ -434,7 +385,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0">Search Type :</label>
                                         <select required name="select_type" id="select_type"
@@ -446,13 +396,13 @@
                                     </div>
 
                                     <div class="col-md-3 fees_month_wise month_wise">
-                                        <label class="m-0">Year :</label>
-                                        <input type="text" value="{{date('Y-F')}}" name="year_month" class="form-control year_month_picker form-control-sm">
+                                        <label class="m-0">Month-year :</label>
+                                        <input readonly type="text" value="{{date('Y-F')}}" name="year_month" class="form-control year_month_picker form-control-sm readonly_field">
                                     </div>
                                     
                                     <div class="col-md-3 fees_year_wise year_wise">
-                                        <label class="m-0">Month :</label>
-                                        <select  name="year" id="year"
+                                        <label class="m-0">Year :</label>
+                                        <select name="year" id="year"
                                             class="form-control form-control-sm ">
                                             <option disabled value="">--- Select Month ---</option>
                                             @foreach ($years as $year)
@@ -472,11 +422,9 @@
                                 </div>
                                 <button style="margin-top: 15px;" type="submit" class="btn btn-sm btn-blue float-right">Search</button>
                             </form>
-                          
                         </div>
 
                         <div class="panel_body table_body mt-3">
-                           
                             <div class="loading"><h4>Loading...</h4> </div>
                             <div class="table_area">
                                 
@@ -487,13 +435,11 @@
             </div>
         </section>
     </div>
-
 @endsection
 
 @push('js')
 
     <script>
-
         var menu = '';
         $('.fees_year_wise').hide();
         $('.fees_month_wise').hide();
@@ -503,7 +449,6 @@
         $('.period_field_area').hide();
 
         $(document).ready(function () {
-
             $('.income_report').on('click', function(e){
                 e.preventDefault();
                 $('.report_form').hide(100);
@@ -585,7 +530,6 @@
                     url:url,
                     type:'get',
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show(100);
                             $('.loading').hide(100); 
@@ -599,7 +543,6 @@
                         }
                     },
                 });
-
             });
 
             $(document).on('click', '.report_menu_link', function (e){
@@ -624,16 +567,11 @@
                     $('.period_field_area').hide(); 
                 }
             });
-
         });
-
-       
     </script> 
 
     <script>
-      
         $(document).ready(function () {
-
             $('.income_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -647,7 +585,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -662,13 +599,10 @@
                 });
             });
         });
-
     </script>  
 
     <script>
-      
         $(document).ready(function () {
-
             $('.income_group_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -682,7 +616,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -698,13 +631,10 @@
                 });
             });
         });
-
     </script>   
     
     <script>
-      
         $(document).ready(function () {
-
             $('.expense_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -718,7 +648,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -734,13 +663,10 @@
                 });
             });
         });
-
     </script> 
     
     <script>
-      
         $(document).ready(function () {
-
             $('.expense_group_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -754,7 +680,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -770,13 +695,10 @@
                 });
             });
         });
-
     </script> 
     
     <script>
-      
         $(document).ready(function () {
-
             $('.salary_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -790,7 +712,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -805,13 +726,10 @@
                 });
             });
         });
-
     </script>
     
     <script>
-      
         $(document).ready(function () {
-
             $('.fees_report_form').on('submit', function(e){
                 e.preventDefault();
                 $('.table_body').show();
@@ -825,7 +743,6 @@
                     type:type,
                     data: request,
                     success:function(data){
-    
                         if (!$.isEmptyObject(data.error)) {
                             $('.table_body').show();
                             $('.loading').hide(100); 
@@ -840,11 +757,9 @@
                 });
             });
         });
-
     </script>  
 
     <script type="text/javascript">
-        
         $('.loading').hide(200);
         $(document).ready(function () {
             $(document).on('change','.select_class', function () {
@@ -874,31 +789,24 @@
                         }
                         
                         if(menu == "guardian_report"){
-
                             $('#guardian_sections').empty();
                             $('#guardian_sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#guardian_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
                             });
-
                         }
                         if(menu == "class_subject_report"){
-
                             $('#class_subject_sections').empty();
                             $('#class_subject_sections').append(' <option value="">--Select Section--</option>');
                             $.each(data, function (key, val) {
                                 $('#class_subject_sections').append(' <option value="' + val.section_id + '">' + val.section.name + '</option>');
                             });
-
                         }
-                        
                     }
                 })
             })
         });
-
     </script>
-
 
     <script>
         $(document).ready(function () {

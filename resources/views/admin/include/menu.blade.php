@@ -28,11 +28,15 @@
                     <ul class="dashboard-menu">
                         <li>
                             @if ( jsn($userPermits->student_module, true)['view'] == 1)
-                                <a href="{{ route('student.create') }}"> Student Admission</a>
+                                <a class="{{ Request::is('admin/student/create') ? 'text_active' : '' }}" href="{{ route('student.create') }}"> Student Admission</a>
                             @endif
-
+                            {{-- {{ Request::is('admin/student/all') ? 'text_active' : '' }} --}}
                             @if (jsn($userPermits->student_module, true)['add'] == 1 )
-                                <a href="{{ route('student.index') }}"> Student Details</a>
+                                <a class="
+                                @if(Request::is('admin/student/all') OR Request::is('admin/student/details*') OR Request::is('admin/student/edit*'))
+                                    text_active
+                                @endif
+                                " href="{{ route('student.index') }}"> Student Details</a>
                             @endif
                         </li>
                     </ul>
@@ -57,7 +61,6 @@
                     <ul class="dashboard-menu">
 
                         <li>
-                           
                             @if (jsn($userPermits->academic_module)['class']['view'] == 1)
                                 <a class="{{ Request::is('admin/academic/class') ? 'text_active' : '' }}" href="{{ route('admin.class.index') }}"> Class</a>
                             @endif
@@ -566,7 +569,10 @@
             <!-- Hostel area end -->
 
             <!-- Hostel area start -->
-            
+            @if (jsn($userPermits->inventory_module)['inventory_issue']['view'] == 0 AND jsn($userPermits->inventory_module)['add_item_stock']['view'] == 0 AND jsn($userPermits->inventory_module)['item_category']['view'] == 0 AND jsn($userPermits->inventory_module)['item_store']['view'] == 0 AND jsn($userPermits->inventory_module)['item_supplier']['view'] == 0 AND
+            jsn($userPermits->inventory_module)['add_item']['view'] == 0)
+                <li></li>
+            @else 
             <li class="single-nav-wrapper {{ Request::is('admin/inventory*') ? 'mm-active' : '' }}">
                 <a class="has-arrow menu-item" href="#" aria-expanded="false">
                     <span class="left-icon"><i class="fas fa-chart-line"></i></span>
@@ -583,21 +589,20 @@
                         <a class="{{ Request::is('admin/inventory/category') ? 'text_active' : '' }}" href="{{route('inventory.category.index')}}">Item Category</a>
                     </li>
                     <li>
-                        <a href="{{route('item.index')}}">Items Store</a>
+                        <a {{ Request::is('admin/inventory/item') ? 'text_active' : '' }} href="{{route('item.index')}}">Items Store</a>
                     </li>
                     <li>
                         <a class="{{ Request::is('admin/inventory/supplier') ? 'text_active' : '' }}" href="{{route('admin.inventory.supplier')}}">Supplier</a>
                     </li>
                     <li>
-                        <a class="{{ Request::is('admin/inventory/item') ? 'text_active' : '' }}" href="{{route('admin.item.index')}}">Add Items</a>
+                        <a class="{{ Request::is('admin/inventory/item/add/items') ? 'text_active' : '' }}" href="{{route('admin.item.index')}}">Add Items</a>
                     </li>
                 </ul>
             </li>
-
+            @endif
             <!-- Hostel area end -->
 
-
-            @if (jsn($userPermits->library_module)['book_list']['view'] == 0 AND jsn($userPermits->library_module)['library_member']['view'] == 0 AND jsn($userPermits->library_module)['library_staff']['view'] == 0)
+            @if (jsn($userPermits->library_module)['book_list']['view'] == 0 AND jsn($userPermits->library_module)['library_member']['view'] == 0 AND jsn($userPermits->library_module)['library_staff']['view'] == 0 AND jsn($userPermits->library_module)['book_issue']['view'] == 0)
                 <li></li>
             @else 
                <li class="single-nav-wrapper {{ Request::is('admin/library*') ? 'mm-active' : '' }}">
@@ -606,12 +611,13 @@
                         <span class="menu-text">Library</span>
                     </a>
                     <ul class="dashboard-menu">
-                        <li><a class="{{ Request::is('admin/library/issue') ? 'text_active' : '' }}" href="{{route('admin.book.issue')}}">Book Issue</a></li>
-                        
+                        @if (jsn($userPermits->library_module)['book_issue']['view'] == 1)
+                            <li><a class="{{ Request::is('admin/library/issue') ? 'text_active' : '' }}" href="{{route('admin.book.issue')}}">Book Issue</a></li>
+                        @endif
+
                         @if (jsn($userPermits->library_module)['book_list']['view'] == 1)
                             <li><a class="{{ Request::is('admin/library/books') ? 'text_active' : '' }}" href="{{route('admin.book.index')}}">Book List</a></li>
                         @endif
-
 
                         @if (jsn($userPermits->library_module)['library_member']['view'] == 1)
                             <li><a class="{{ Request::is('admin/library/member') ? 'text_active' : '' }}" href="{{route('admin.library.members')}}">Library Member</a></li>
@@ -628,34 +634,34 @@
             @if (jsn($userPermits->fees_collection_module)['fees_remember']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_type']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_group']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_master']['view'] == 0 AND jsn($userPermits->fees_collection_module)['fees_collection']['view'] == 0)
                 <li></li>
             @else
-                <li class="single-nav-wrapper">
+                <li class="single-nav-wrapper {{ Request::is('admin/fees*') ? 'mm-active' : '' }}">
                     <a class="has-arrow menu-item" href="#" aria-expanded="false">
                         <span class="left-icon"><i class="fas fa-chart-line"></i></span>
                         <span class="menu-text">Fees Collection</span>
                     </a>
                     <ul class="dashboard-menu">
                         @if (jsn($userPermits->fees_collection_module)['fees_remember']['view'] == 1)
-                            <li><a href="{{route('admin.fees.reminder')}}">Fees Reminder</a></li>
+                            <li><a class="{{ Request::is('admin/fees/reminder') ? 'text_active' : '' }}" href="{{route('admin.fees.reminder')}}">Fees Reminder</a></li>
                         @endif
 
                         @if (jsn($userPermits->fees_collection_module)['fees_type']['view'] == 1)
-                            <li><a href="{{route('admin.fees.type')}}">Fees Types</a></li>
+                            <li><a class="{{ Request::is('admin/fees/type') ? 'text_active' : '' }}" href="{{route('admin.fees.type')}}">Fees Types</a></li>
                         @endif
 
                         @if (jsn($userPermits->fees_collection_module)['fees_discount']['view'] == 1)
-                            <li><a href="{{route('admin.fees.discount')}}">Fees Discount</a></li>
+                            <li><a class="{{ Request::is('admin/fees/discount') ? 'text_active' : '' }}" href="{{route('admin.fees.discount')}}">Fees Discount</a></li>
                         @endif
 
                         @if (jsn($userPermits->fees_collection_module)['fees_group']['view'] == 1)
-                            <li><a href="{{route('admin.fees.group')}}">Fees Group</a></li>
+                            <li><a class="{{ Request::is('admin/fees/group') ? 'text_active' : '' }}" href="{{route('admin.fees.group')}}">Fees Group</a></li>
                         @endif
 
                         @if (jsn($userPermits->fees_collection_module)['fees_master']['view'] == 1)
-                            <li><a href="{{route('admin.fees.master')}}">Fees Master</a></li>
+                            <li><a class="{{ Request::is('admin/fees/master') ? 'text_active' : '' }}" href="{{route('admin.fees.master')}}">Fees Master</a></li>
                         @endif
 
                         @if (jsn($userPermits->fees_collection_module)['fees_collection']['view'] == 1)
-                            <li><a href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
+                            <li><a class="{{ Request::is('admin/fees/collect*') ? 'text_active' : '' }}" href="{{route('admin.fees.collect')}}">Fees Collect</a></li>
                         @endif
                     </ul>
                 </li>

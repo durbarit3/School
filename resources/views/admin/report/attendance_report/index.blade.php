@@ -82,7 +82,6 @@
                                 </div>
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-md-3">
                                         <label class="m-0"> Session :</label>
                                         <select name="session_id" class="form-control form-control-sm" required>
@@ -112,7 +111,7 @@
                                     
                                     <div class="col-md-3">
                                         <label class="m-0">Month :</label>
-                                        <input required type="text" class="form-control form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
+                                        <input readonly type="text" class="form-control readonly_field form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
                                     </div>
 
                                 </div>
@@ -145,7 +144,7 @@
 
                                     <div class="col-md-6">
                                         <label class="m-0">Month :</label>
-                                        <input required type="text" class="form-control form-control-sm date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
+                                        <input readonly type="text" class="form-control form-control-sm readonly_field date_picker" placeholder="YYYY-M" value="{{ date('Y-F') }}" name="year_month">
                                     </div>
                                 
                                 </div>

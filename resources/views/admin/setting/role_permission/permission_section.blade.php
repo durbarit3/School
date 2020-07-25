@@ -1,9 +1,7 @@
 @extends('admin.master')
 @push('css')
     <style>
-        td {
-            line-height: 0px;
-        }
+        td {line-height: 0px;}
     </style>
 @endpush
 @section('content')
@@ -844,6 +842,109 @@
                                     </tr>
                                 </div>
 
+                                <div class="inventory_module">
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b>Inventory</b></td>
+                                        <td>Issue inventory</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['inventory_issue']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="inventory_issue_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['inventory_issue']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="inventory_issue_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['inventory_issue']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="inventory_issue_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['inventory_issue']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="inventory_issue_delete" value="1">
+                                        </td>
+                                    </tr> 
+                                    
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Add item stock</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item_stock']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_stock_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item_stock']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_stock_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item_stock']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_stock_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item_stock']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_stock_delete" value="1">
+                                        </td>
+                                    </tr>
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Item category</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_category']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_category_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_category']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_category_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_category']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_category_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_category']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_category_delete" value="1">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Item store</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_store']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_store_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_store']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_store_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_store']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_store_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_store']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_store_delete" value="1">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Item supplier</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_supplier']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_supplier_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_supplier']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_supplier_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_supplier']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_supplier_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['item_supplier']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="item_supplier_delete" value="1">
+                                        </td>
+                                    </tr> 
+                                    
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Add item</td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->inventory_module)['add_item']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="add_item_delete" value="1">
+                                        </td>
+                                    </tr>
+                                </div> 
+                                
                                 <div class="library_module">
                                     <tr class="text-left">
                                         <td class="text-dark"><b>Library</b></td>
@@ -859,6 +960,23 @@
                                         </td>
                                         <td>
                                             <input {{ json($permits->library_module)['book_list']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="book_list_delete" value="1">
+                                        </td>
+                                    </tr> 
+                                    
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b></b></td>
+                                        <td>Book issue</td>
+                                        <td>
+                                            <input {{ json($permits->library_module)['book_issue']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="book_issue_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->library_module)['book_issue']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="book_issue_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->library_module)['book_issue']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="book_issue_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{ json($permits->library_module)['book_issue']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="book_issue_delete" value="1">
                                         </td>
                                     </tr>
                                     <tr class="text-left">
@@ -1023,7 +1141,7 @@
                     success:function(data){
                        $('.submit_button').show();
                        $('.loading_button').hide();
-                       toastr.success(data);
+                       toastr.success(data, 'Successfull');
                     }
                 });
             

@@ -12,8 +12,11 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="panel_title">
-                            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i
-                                    class="fas fa-plus"></i></span> <span>Add Supplier</span></a>
+                            @if (json_decode($userPermits->inventory_module, true)['item_supplier']['add'] == 1)
+                                <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1">
+                                    <i class="fas fa-plus"></i></span> <span>Add Supplier</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -59,28 +62,38 @@
                             <td>{{$itemsupplier->email}}</td>
                             <td>{{$itemsupplier->address}}</td>
                             <td>{{$itemsupplier->contact_person_name}}</td>
-
-                            
-                            
                             <td>
-                                @if($itemsupplier->status == 1)
-                                <a href="{{ route('room.type.status.update', $itemsupplier->id) }}" class="btn btn-success btn-sm ">
-                                    <i class="fas fa-thumbs-up"></i></a>
-                                @else
-                                <a href="{{ route('room.type.status.update', $itemsupplier->id ) }}" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-thumbs-down"></i>
-                                </a>
+                                @if (json_decode($userPermits->inventory_module, true)['item_supplier']['edit'] == 1)
+                                    @if($itemsupplier->status == 1)
+                                        <a href="{{ route('room.type.status.update', $itemsupplier->id) }}" class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ route('room.type.status.update', $itemsupplier->id ) }}" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                    @endif
+                                @else 
+                                     @if($itemsupplier->status == 1)
+                                        <a href="" class="btn btn-success btn-sm ">
+                                            <i class="fas fa-thumbs-up"></i>
+                                        </a>
+                                    @else
+                                        <a href="" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>
+                                    @endif   
                                 @endif
-                                
                             </td>
              
                             <td>
-                                | <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$itemsupplier->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                <a class="edit_route btn btn-sm btn-blue text-white" data-id="{{$itemsupplier->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> 
 
-                                <a id="delete" href="{{route('inventory.supplier.delete',$itemsupplier->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
-                                    <i class="far fa-trash-alt"></i>
-                                </a>
-                                
+                                @if (json_decode($userPermits->inventory_module, true)['item_supplier']['delete'] == 1)
+                                | <a id="delete" href="{{route('inventory.supplier.delete',$itemsupplier->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                @endif 
                             </td>
                         </tr>
                     @endforeach
@@ -109,7 +122,6 @@
             <div class="modal-body">
                 <form class="form-horizontal" action="{{ route('inventory.supplier.store') }}" method="POST">
                     @csrf
-
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name:</label>
                         <div class="col-sm-8">
@@ -169,7 +181,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->inventory_module, true)['item_supplier']['add'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif 
                     </div>
                 </form>
             </div>
@@ -250,7 +264,9 @@
 
                     <div class="form-group text-right">
                         <button type="button" class="btn btn-default" data-dismiss="modal" aria-label=""> Close</button>
-                        <button type="submit" class="btn btn-blue">Submit</button>
+                        @if (json_decode($userPermits->inventory_module, true)['item_supplier']['edit'] == 1)
+                            <button type="submit" class="btn btn-blue">Submit</button>
+                        @endif     
                     </div>
                 </form>
             </div>

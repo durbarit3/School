@@ -22,6 +22,7 @@ class GeneralSettingsController extends Controller
         $this->validate($request, [
             'app_logo' => 'sometimes|image',
             'print_logo' => 'sometimes|image',
+            'login_background' => 'sometimes|image',
         ]);
 
         $generalSetting = GeneralSetting::where('id', $generalSettingId)->first();
@@ -37,7 +38,6 @@ class GeneralSettingsController extends Controller
             $appLogo->move(public_path('uploads/logos/'),$appLogoName);
             $generalSetting->app_logo =  $appLogoName;
             $generalSetting->save();
-           
         }
         if ($request->file('print_logo')) {
             if ($generalSetting->print_logo) {
@@ -51,7 +51,20 @@ class GeneralSettingsController extends Controller
             $printLogo->move(public_path('uploads/logos/'),$printLogoName);
             $generalSetting->print_logo =  $printLogoName;
             $generalSetting->save();
-           
+        } 
+        
+        if ($request->file('login_background')) {
+            if ($generalSetting->login_background) {
+                if (file_exists(public_path('uploads/login_page_background/'.$generalSetting->login_background))) {
+                    unlink(public_path('uploads/login_page_background/'.$generalSetting->login_background));
+                }
+            }
+            
+            $background = $request->file('login_background');
+            $backgroundName = uniqid() . '.' . $background->getClientOriginalExtension();
+            $background->move(public_path('uploads/login_page_background/'),$backgroundName);
+            $generalSetting->login_background =  $backgroundName;
+            $generalSetting->save();
         }
 
         $notification = array(

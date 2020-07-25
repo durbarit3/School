@@ -21,7 +21,7 @@ class AttendanceReportController extends Controller
         $classes = Classes::where('deleted_status', NULL)->where('status', 1)->get(['id', 'name']);
         $exams = Exam::select(['id', 'name'])->where('deleted_status', NULL)->where('status',1)->get();
         $roles = Role::all();
-        $sessions = Session::where('status', 1)->get();
+        $sessions = Session::where('status', 1)->where('deleted_status', NULL)->get();
         return view('admin.report.attendance_report.index', compact('classes', 'exams', 'sessions', 'roles'));
     }
 
